@@ -89,7 +89,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.jlError = new JLabel();
 		this.jlError.setBounds(45, 390, 250, 25);
 		this.jlError.setForeground(new Color(192, 192, 192));
-		this.jlError.setFont(new Font("serif", Font.BOLD, 22));
+		this.jlError.setFont(new Font("serif", Font.BOLD, 14));
 		this.jlError.setHorizontalAlignment(JLabel.CENTER);
 		this.container.add(jlError);
 
@@ -118,9 +118,29 @@ public final class Login extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+		String username = txtUser.getText();
+		String password = txtPassword.getText();
+		PanelAdministrador panelAdministrador;
+
 		if (e.getSource() == this.btnLogin) {
-			JOptionPane.showMessageDialog(null, "Iniciando Sesión");
+			if (username.equals("admin") && password.equals("1234")) {
+				panelAdministrador = new PanelAdministrador();
+				panelAdministrador.setVisible(true);
+				dispose();
+			} else if (username.equals("tecnico") && password.equals("1234")) {
+				JOptionPane.showMessageDialog(null, "Iniciando Sesión Técnico");
+				dispose();
+			} else {
+				this.jlError.setText("Usuario y/o contraseña erróneos");
+				this.txtUser.setText("");
+				this.txtUser.requestFocus();
+				this.txtPassword.setText("");
+				this.txtPassword2.setText("");
+			}
+
 		}
+		
 		if (e.getSource() == this.btnEye) {
 			if (eyeEstate == false) {
 				this.txtPassword2.setText(txtPassword.getText());
