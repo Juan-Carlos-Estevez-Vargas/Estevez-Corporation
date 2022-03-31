@@ -51,6 +51,7 @@ public class PanelAdministrador extends JFrame implements ActionListener {
 		this.btnManageUser = new JButton();
 		this.btnManageUser.setBounds(270, 80, 120, 100);
 		this.btnManageUser.setIcon(new ImageIcon("src/img/informationuser.png"));
+		this.btnManageUser.addActionListener(this);
 		this.panelBack.add(btnManageUser);
 
 		this.labelManageUser = new JLabel("Gestionar Usuarios");
@@ -77,12 +78,17 @@ public class PanelAdministrador extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		RegisterUser ru ;
+		RegisterUser registerUser;
+		ManagementUsers managementUsers;
     	
 		if (e.getSource() == this.btnRegisterUser) {
-			ru = new RegisterUser();
-	    	ru.setVisible(true);
-	    	this.dispose();
+			registerUser = new RegisterUser();
+	    	registerUser.setVisible(true);
+		}
+		
+		if (e.getSource() == this.btnManageUser) {
+			managementUsers = new ManagementUsers();
+			managementUsers.setVisible(true);
 		}
 	}
 
