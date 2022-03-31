@@ -1,16 +1,9 @@
 package ventanas;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,13 +19,11 @@ import modelo.DatabaseConnection;
 
 public class ManagementUsers extends JFrame implements ActionListener {
 
-	String[] cabe = {"1","2"};
-	String [][] data = {{"a","b"},{"c","d"},{"e","f"}};
-	private JLabel jlabel1, labelFooter;
+	private JLabel jlabel1;
 	private JPanel container;
 	private JTable tableUsers;
 	private JScrollPane scrollPaneUsers;
-	DefaultTableModel model = new DefaultTableModel(data, cabe);
+	DefaultTableModel model = new DefaultTableModel();
 	
 	public ManagementUsers() {
 		this.setSize(630, 340);
@@ -42,6 +33,46 @@ public class ManagementUsers extends JFrame implements ActionListener {
 		this.setLayout(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.initComponents();
+		//Hacemos la conexion a la base de datos
+        try {
+            Connection cn = DatabaseConnection.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "SELECT id_usuario, nombre_usuario, username, tipo_nivel, estatus FROM usuarios");
+
+            ResultSet rs = pst.executeQuery();
+
+            //Creamos la tabla y la añadimos al jScrollPanel
+            this.tableUsers = new JTable(model);
+    		this.scrollPaneUsers = new JScrollPane(this.tableUsers);
+    		this.scrollPaneUsers.setBounds(45,55,520,200);
+    		
+
+            //Añadimos las columnas a la tabla
+            model.addColumn(" ");
+            model.addColumn("Nombre Usuario");
+            model.addColumn("Username");
+            model.addColumn("Permisos");
+            model.addColumn("Estatus");
+
+            //Llenado de la tabla
+            while (rs.next()) { //Cada que la base de datos encuentre resultados
+                Object[] fila = new Object[5];
+
+                for (int i = 0; i < 5; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+
+                model.addRow(fila);
+            }
+
+            cn.close();
+
+        } catch (SQLException e) {
+            System.err.println("Error al llenar Tabla " + e);
+            JOptionPane.showMessageDialog(null, "¡¡Error al mostrar informacion!! Contacte al Administrador");
+        }
+
+        this.container.add(scrollPaneUsers);
 	}
 
 	public void initComponents() {
@@ -55,12 +86,6 @@ public class ManagementUsers extends JFrame implements ActionListener {
 		this.jlabel1.setForeground(new Color(192, 192, 192));
 		this.jlabel1.setFont(new Font("serif", Font.BOLD, 20));
 		this.container.add(jlabel1);
-		
-		this.tableUsers = new JTable(model);
-		this.scrollPaneUsers = new JScrollPane(this.tableUsers);
-		this.scrollPaneUsers.setBounds(45,55,520,200);
-		this.container.add(scrollPaneUsers);
-				
 	}
 
 	@Override
