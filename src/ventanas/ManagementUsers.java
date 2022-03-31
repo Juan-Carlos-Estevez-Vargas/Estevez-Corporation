@@ -41,11 +41,7 @@ public class ManagementUsers extends JFrame implements ActionListener {
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		//this.initComponents();
-		this.tableUsers = new JTable(model);
-		scrollPaneUsers = new JScrollPane(this.tableUsers);
-		scrollPaneUsers.setBounds(40, 40, 200, 200);
-		this.add(scrollPaneUsers);
+		this.initComponents();
 	}
 
 	public void initComponents() {
@@ -59,6 +55,11 @@ public class ManagementUsers extends JFrame implements ActionListener {
 		this.jlabel1.setForeground(new Color(192, 192, 192));
 		this.jlabel1.setFont(new Font("serif", Font.BOLD, 20));
 		this.container.add(jlabel1);
+		
+		this.tableUsers = new JTable(model);
+		this.scrollPaneUsers = new JScrollPane(this.tableUsers);
+		this.scrollPaneUsers.setBounds(45,55,520,200);
+		this.container.add(scrollPaneUsers);
 				
 	}
 
