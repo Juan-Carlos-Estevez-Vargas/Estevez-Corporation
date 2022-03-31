@@ -3,8 +3,15 @@ package ventanas;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.*;
+
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+
+import modelo.DatabaseConnection;
 
 /**
  *
@@ -119,28 +126,56 @@ public final class Login extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		String username = txtUser.getText();
-		String password = txtPassword.getText();
-		PanelAdministrador panelAdministrador;
+		String username;
+		String password;
 
 		if (e.getSource() == this.btnLogin) {
-			if (username.equals("admin") && password.equals("1234")) {
-				panelAdministrador = new PanelAdministrador();
-				panelAdministrador.setVisible(true);
-				dispose();
-			} else if (username.equals("tecnico") && password.equals("1234")) {
-				JOptionPane.showMessageDialog(null, "Iniciando Sesión Técnico");
-				dispose();
-			} else {
-				this.jlError.setText("Usuario y/o contraseña erróneos");
-				this.txtUser.setText("");
-				this.txtUser.requestFocus();
-				this.txtPassword.setText("");
-				this.txtPassword2.setText("");
-			}
+			// Recuperamos los datos introducidos en los TextField
+			username = txtUser.getText().trim();
+			password = txtPassword.getText().trim();
 
+			// Validamos los campos
+			if (!username.equals("") || !password.equals("")) { // Si el usuario o la contraseña no estan vacios
+				try {
+					Connection cn = (Connection) DatabaseConnection.conectar(); // Nos conectamos a la base de datos
+					PreparedStatement pst = (PreparedStatement) cn
+							.prepareStatement("SELECT tipo_nivel, estatus FROM usuarios WHERE username = '" + username
+									+ "' AND password = '" + password + "'");
+					ResultSet rs = pst.executeQuery(); // Ejecutamos el la consulta SQL
+
+					// Si la consulta coincide con algo
+					if (rs.next()) {
+						// Creamos dos variables que almacenan el resultado de los campos de la consulta
+						String tipo_nivel = rs.getString("tipo_nivel");
+						String estatus = rs.getString("estatus");
+
+						// Validamos los datos para saber a que interfaz ira el usuario
+						if (tipo_nivel.equals("Administrador") && estatus.equalsIgnoreCase("Activo")) {
+							this.dispose();
+							new PanelAdministrador().setVisible(true);
+						} else if (tipo_nivel.equals("Capturista") && estatus.equalsIgnoreCase("Activo")) {
+							this.dispose();
+							// new Capturista().setVisible(true);
+						} else if (tipo_nivel.equals("Tecnico") && estatus.equalsIgnoreCase("Activo")) {
+							this.dispose();
+							// new Tecnico().setVisible(true);
+						}
+					} else {
+						this.jlError.setText("Usuario y/o contraseña erróneos");
+						this.txtUser.setText("");
+						this.txtUser.requestFocus();
+						this.txtPassword.setText("");
+						this.txtPassword2.setText("");
+					}
+				} catch (SQLException ex) {
+					System.err.println("Error en el boton Acceder." + ex);
+					JOptionPane.showMessageDialog(null, "¡¡Error al iniciar sesion!! Contactate con el administrador.");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+			}
 		}
-		
+
 		if (e.getSource() == this.btnEye) {
 			if (eyeEstate == false) {
 				this.txtPassword2.setText(txtPassword.getText());
