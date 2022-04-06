@@ -31,8 +31,9 @@ public class ManagementUsers extends JFrame implements ActionListener {
 		this.setTitle("Usuarios registrados - Sesión de ");
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.initComponents();
+		
 		//Hacemos la conexion a la base de datos
         try {
             Connection cn = DatabaseConnection.conectar();
@@ -44,7 +45,7 @@ public class ManagementUsers extends JFrame implements ActionListener {
             //Creamos la tabla y la añadimos al jScrollPanel
             this.tableUsers = new JTable(model);
     		this.scrollPaneUsers = new JScrollPane(this.tableUsers);
-    		this.scrollPaneUsers.setBounds(45,55,520,200);
+    		this.scrollPaneUsers.setBounds(25,55,540,200);
     		
 
             //Añadimos las columnas a la tabla
