@@ -23,7 +23,7 @@ public class RegisterUser extends JFrame  implements ActionListener{
 	public RegisterUser() {
 		this.setSize(630, 360);
 		this.setTitle("Registrar Usuario");
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
@@ -163,8 +163,8 @@ public class RegisterUser extends JFrame  implements ActionListener{
 	        //Convertimos lo que nos retorna el comboBox a String
 	        switch (permissionsCmb) {
 	            case 1 -> permissionsString = "Administrador";
-	            case 2 -> permissionsString = "Capturista";
-	            case 3 -> permissionsString = "Tecnico";
+	            case 3 -> permissionsString = "Capturista";
+	            case 2 -> permissionsString = "Tecnico";
 	            default -> {
 	            }
 	        }
