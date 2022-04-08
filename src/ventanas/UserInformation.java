@@ -37,6 +37,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.setResizable(false);
 		this.setTitle("Información del usuario " + user_update + " - Sesión de " + user);
 		//this.setLocationRelativeTo(null);
+		
 		this.setSize(630, 460);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
