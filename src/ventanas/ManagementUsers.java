@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +24,7 @@ public class ManagementUsers extends JFrame implements ActionListener {
 	private JLabel jlabel1;
 	private JPanel container;
 	private JTable tableUsers;
+	public static String user_update = "";
 	private JScrollPane scrollPaneUsers;
 	DefaultTableModel model = new DefaultTableModel();
 	
@@ -72,7 +75,24 @@ public class ManagementUsers extends JFrame implements ActionListener {
             System.err.println("Error al llenar Tabla " + e);
             JOptionPane.showMessageDialog(null, "¡¡Error al mostrar informacion!! Contacte al Administrador");
         }
+        
+      //Eventos de la tabla para mostrar informacion de los usuario
+        tableUsers.addMouseListener(new MouseAdapter() {
 
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                int fila_point = tableUsers.rowAtPoint(e.getPoint()); //Esta variable almacena la fila seleccionada
+                int columna_point = 2; //Esta variable almacena la columna 2
+
+                if (fila_point > -1) {
+                    user_update = (String) model.getValueAt(fila_point, columna_point);
+                    UserInformation userInformation = new UserInformation();
+                    userInformation.setVisible(true);
+                }
+            }
+        });
+        
         this.container.add(scrollPaneUsers);
 	}
 
