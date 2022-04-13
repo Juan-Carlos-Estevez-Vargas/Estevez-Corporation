@@ -38,7 +38,7 @@ public class UserInformation extends JFrame implements ActionListener {
 
 		this.setResizable(false);
 		this.setTitle("Información del usuario " + user_update + " - Sesión de " + user);
-		// this.setLocationRelativeTo(null);
+		this.setLocationRelativeTo(null);
 
 		this.setSize(630, 460);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -186,11 +186,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 18));
 		btnUpdate.setText("Actualizar Usuario");
 		btnUpdate.setBorder(null);
-		btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// jButton_ActualizarActionPerformed(evt);
-			}
-		});
+		btnUpdate.addActionListener(this);
 		btnUpdate.setBounds(380, 250, 210, 35);
 		this.container.add(btnUpdate);
 
@@ -211,5 +207,95 @@ public class UserInformation extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		if(e.getSource() == this.btnUpdate) {
+			int cmbPermissions, cmbStatus, validation = 0;
+	        String name, email, phone, username, password, permissionsString = "", statusString = "";
+
+	        //Guardamos lo que esta en loc comboBox y en los campos de texto en las variables
+	        email = txtEmail.getText().trim();
+	        name = txtName.getText().trim();
+	        username = txtUsername.getText().trim();
+	        phone = txtPhone.getText().trim();
+	        
+	        cmbPermissions = cmbLevels.getSelectedIndex() + 1;
+	        cmbStatus = this.cmbStatus.getSelectedIndex() + 1;
+
+	        //Validamos que ningun campo este vacio
+	        if (email.equals("")) {
+	            txtEmail.setBackground(Color.red);
+	            validation++;
+	        }
+	        if (username.equals("")) {
+	            txtUsername.setBackground(Color.red);
+	            validation++;
+	        }
+	        if (name.equals("")) {
+	            txtName.setBackground(Color.red);
+	            validation++;
+	        }
+	        if (phone.equals("")) {
+	            txtPhone.setBackground(Color.red);
+	            validation++;
+	        }
+
+	        //Cuando verifique que todos los campos esten llenos
+	        if (validation == 0) {
+	            
+	            switch (cmbPermissions) {
+	                case 1 ->
+	                    permissionsString = "Administrador";
+	                case 2 ->
+	                    permissionsString = "Capturista";
+	                case 3 ->
+	                    permissionsString = "Tecnico";
+	                default -> {
+	                }
+	            }
+	            
+	            if (cmbStatus == 1) {
+	                statusString = "Activo";
+	            } else if (cmbStatus == 2) {
+	                statusString = "Inactivo";
+	            }
+
+	            //Realizamos la actualizacion a la base de datos
+	            try {
+	                Connection cn2 = (Connection) DatabaseConnection.conectar();
+	                PreparedStatement pst2 = (PreparedStatement) cn2.prepareStatement("SELECT username FROM usuarios WHERE username = '" + username + "' AND NOT id_usuario = '" + ID + "'");
+	                
+	                ResultSet rs2 = pst2.executeQuery();
+	                
+	                if (rs2.next()) {
+	                    txtUsername.setBackground(Color.red);
+	                    JOptionPane.showMessageDialog(null, "Nombre de usuario no disponible");
+	                    cn2.close();
+	                } else {
+	                    Connection cn3 = (Connection) DatabaseConnection.conectar();
+	                    PreparedStatement pst3 = (PreparedStatement) cn3.prepareStatement(
+	                            "UPDATE usuarios SET nombre_usuario = ?, email = ?, telefono = ?, username = ?, tipo_nivel = ?,"
+	                            + " estatus = ? WHERE id_usuario = '" + ID + "'");
+	                    
+	                    pst3.setString(1, name);
+	                    pst3.setString(2, email);
+	                    pst3.setString(3, phone);
+	                    pst3.setString(4, username);
+	                    pst3.setString(5, permissionsString);
+	                    pst3.setString(6, statusString);
+	                    
+	                    pst3.executeUpdate();
+	                    
+	                    cn3.close();
+	                    
+	                    JOptionPane.showMessageDialog(null, "Modificación correcta");
+	                }
+	                
+	            } catch (SQLException ex) {
+	                System.err.println("Error al actualizar " + ex);
+	            }
+	            
+	        } else {
+	            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+	        }
+		}
 	}
 }
