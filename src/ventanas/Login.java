@@ -9,6 +9,7 @@ import javax.swing.*;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
+import ventanas.administrator.AdministratorPanel;
 
 /**
  *
