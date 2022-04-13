@@ -1,4 +1,4 @@
-package ventanas;
+package ventanas.administrator;
 
 import java.awt.Color;
 import java.awt.Font;

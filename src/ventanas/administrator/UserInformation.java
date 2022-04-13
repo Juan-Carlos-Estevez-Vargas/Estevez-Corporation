@@ -1,4 +1,4 @@
-package ventanas;
+package ventanas.administrator;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -369,6 +369,13 @@ public class UserInformation extends JFrame implements ActionListener {
 			} else {
 				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
 			}
+		}
+		/**
+		 * Muestra el panel para modificar la contraseña del usuario en cuestión.
+		 */
+		if (e.getSource() == this.btnRestorePassword) {
+			RestorePassword restorePassword = new RestorePassword();
+			restorePassword.setVisible(true);
 		}
 	}
 }

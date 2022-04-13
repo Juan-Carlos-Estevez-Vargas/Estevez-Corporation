@@ -1,9 +1,9 @@
 package clases;
 
 import ventanas.Login;
-import ventanas.ManagementUsers;
-import ventanas.RegisterUser;
-import ventanas.AdministratorPanel;
+import ventanas.administrator.AdministratorPanel;
+import ventanas.administrator.ManagementUsers;
+import ventanas.administrator.RegisterUser;
 
 /**
  *
