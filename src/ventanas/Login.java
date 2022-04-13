@@ -22,10 +22,16 @@ public final class Login extends JFrame implements ActionListener {
 	 * Declaración de Variables
 	 */
 	private JPanel container;
-	private JLabel jlLogo, jlUser, jlPassword, jlForgot, jlError;
-	private JTextField txtUser, txtPassword2;
+	private JLabel jlLogo;
+	private JLabel jlUser;
+	private JLabel jlPassword;
+	private JLabel jlForgot;
+	private JLabel jlError;
+	private JTextField txtUser;
+	private JTextField txtPassword2;
 	private JPasswordField txtPassword;
-	private JButton btnLogin, btnEye;
+	private JButton btnLogin;
+	private JButton btnEye;
 	private JSeparator separator;
 	private boolean eyeEstate;
 
@@ -216,7 +222,7 @@ public final class Login extends JFrame implements ActionListener {
 						 */
 						if (levelType.equals("Administrador") && status.equalsIgnoreCase("Activo")) {
 							this.dispose();
-							new PanelAdministrador().setVisible(true);
+							new AdministratorPanel().setVisible(true);
 						} else if (levelType.equals("Capturista") && status.equalsIgnoreCase("Activo")) {
 							this.dispose();
 							// new Capturista().setVisible(true);

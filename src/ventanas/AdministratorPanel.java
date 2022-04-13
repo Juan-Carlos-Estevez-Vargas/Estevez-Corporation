@@ -11,21 +11,25 @@ import javax.swing.*;
  * @author Juan Carlos Estevez Vargas.
  *
  */
-public class PanelAdministrador extends JFrame implements ActionListener {
+public class AdministratorPanel extends JFrame implements ActionListener {
 
 	/**
 	 * Definición de Variables.
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel labelTittle, labelRegisterUser, labelManageUser;
+	private JLabel labelTittle;
+	private JLabel labelRegisterUser;
+	private JLabel labelManageUser;
 	private JPanel panelBack;
-	private JButton btnRegisterUser, btnManageUser, btnPrueba;
+	private JButton btnRegisterUser;
+	private JButton btnManageUser;
+	private JButton btnPrueba;
 	private JComboBox<String> cmbRole;
 
 	/**
 	 * Constructor de clase.
 	 */
-	public PanelAdministrador() {
+	public AdministratorPanel() {
 		this.setSize(670, 310);
 		this.setTitle("Panel Administrador");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

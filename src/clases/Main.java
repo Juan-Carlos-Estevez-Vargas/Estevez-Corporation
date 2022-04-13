@@ -3,7 +3,7 @@ package clases;
 import ventanas.Login;
 import ventanas.ManagementUsers;
 import ventanas.RegisterUser;
-import ventanas.PanelAdministrador;
+import ventanas.AdministratorPanel;
 
 /**
  *
