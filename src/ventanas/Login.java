@@ -86,7 +86,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.txtUser.setBounds(45, 285, 250, 30);
 		this.txtUser.setBackground(new Color(127, 140, 141));
 		this.txtUser.setFont(new Font("serif", Font.BOLD, 22));
-		this.txtUser.setHorizontalAlignment(JLabel.LEFT);
+		this.txtUser.setHorizontalAlignment(JLabel.CENTER);
 		this.txtUser.setForeground(Color.WHITE);
 		this.txtUser.requestFocus();
 		this.container.add(txtUser);
@@ -109,6 +109,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.txtPassword.setBounds(45, 355, 220, 30);
 		this.txtPassword.setBackground(new Color(127, 140, 141));
 		this.txtPassword.setFont(new Font("serif", Font.BOLD, 22));
+		this.txtPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtPassword.setForeground(Color.WHITE);
 		this.container.add(txtPassword);
 
@@ -120,6 +121,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.txtPassword2.setBounds(45, 355, 220, 30);
 		this.txtPassword2.setBackground(new Color(127, 140, 141));
 		this.txtPassword2.setFont(new Font("serif", Font.BOLD, 22));
+		this.txtPassword2.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtPassword2.setForeground(Color.WHITE);
 		this.txtPassword2.setVisible(false);
 		this.container.add(txtPassword2);

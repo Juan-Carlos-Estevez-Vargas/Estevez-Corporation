@@ -58,8 +58,8 @@ public class UserInformation extends JFrame implements ActionListener {
 		user_update = ManagementUsers.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
 		this.setResizable(false);
 		this.setTitle("Información del usuario " + user_update + " - Sesión de " + user);
-		this.setLocationRelativeTo(null);
 		this.setSize(630, 460);
+		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.labelTittle.setText("Información del usuario " + user_update);
 
