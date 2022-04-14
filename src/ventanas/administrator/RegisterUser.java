@@ -97,7 +97,12 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 * Campo de texto para ingresar el nombre del usuario a registrar.
 		 */
 		this.txtNameUser = new JTextField();
-		this.txtNameUser.setBounds(20, 70, 210, 25);
+		this.txtNameUser.setBounds(20, 70, 230, 25);
+		this.txtNameUser.setBackground(new Color(127, 140, 141));
+		this.txtNameUser.setFont(new Font("serif", Font.BOLD, 20));
+		this.txtNameUser.setHorizontalAlignment(JLabel.LEFT);
+		this.txtNameUser.setForeground(Color.WHITE);
+		this.txtNameUser.requestFocus();
 		this.panelBackUser.add(txtNameUser);
 
 		/**
@@ -113,7 +118,11 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 * Campo de texto para ingresar el Email del usuario a registrar.
 		 */
 		this.txtEmailUser = new JTextField();
-		this.txtEmailUser.setBounds(20, 130, 210, 25);
+		this.txtEmailUser.setBounds(20, 130, 230, 25);
+		this.txtEmailUser.setBackground(new Color(127, 140, 141));
+		this.txtEmailUser.setFont(new Font("serif", Font.BOLD, 20));
+		this.txtEmailUser.setHorizontalAlignment(JLabel.LEFT);
+		this.txtEmailUser.setForeground(Color.WHITE);
 		this.panelBackUser.add(txtEmailUser);
 
 		/**
@@ -129,7 +138,11 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 * Campo de texto para ingresar el teléfono del usuario a registrar.
 		 */
 		this.txtPhoneUser = new JTextField();
-		this.txtPhoneUser.setBounds(20, 190, 210, 25);
+		this.txtPhoneUser.setBounds(20, 190, 230, 25);
+		this.txtPhoneUser.setBackground(new Color(127, 140, 141));
+		this.txtPhoneUser.setFont(new Font("serif", Font.BOLD, 20));
+		this.txtPhoneUser.setHorizontalAlignment(JLabel.LEFT);
+		this.txtPhoneUser.setForeground(Color.WHITE);
 		this.panelBackUser.add(txtPhoneUser);
 
 		/**
@@ -148,14 +161,17 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.cmbPermissions.addItem("Administrador");
 		this.cmbPermissions.addItem("Técnico");
 		this.cmbPermissions.addItem("Capturista");
-		this.cmbPermissions.setBounds(20, 250, 150, 25);
+		this.cmbPermissions.setBounds(20, 250, 170, 25);
+		this.cmbPermissions.setBackground(new Color(127, 140, 141));
+		this.cmbPermissions.setFont(new Font("serif", Font.BOLD, 14));
+		this.cmbPermissions.setForeground(Color.WHITE);
 		this.panelBackUser.add(cmbPermissions);
 
 		/**
 		 * Label Username.
 		 */
 		this.labelUsername = new JLabel("Username:");
-		this.labelUsername.setBounds(380, 50, 100, 25);
+		this.labelUsername.setBounds(360, 50, 100, 25);
 		this.labelUsername.setForeground(new Color(192, 192, 192));
 		this.labelUsername.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackUser.add(labelUsername);
@@ -164,14 +180,18 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 * Campo de texto para ingresar el username del usuario a registrar.
 		 */
 		this.txtUsername = new JTextField();
-		this.txtUsername.setBounds(380, 70, 210, 25);
+		this.txtUsername.setBounds(360, 70, 230, 25);
+		this.txtUsername.setBackground(new Color(127, 140, 141));
+		this.txtUsername.setFont(new Font("serif", Font.BOLD, 20));
+		this.txtUsername.setHorizontalAlignment(JLabel.LEFT);
+		this.txtUsername.setForeground(Color.WHITE);
 		this.panelBackUser.add(txtUsername);
-
+		
 		/**
 		 * Label Password.
 		 */
 		this.labelPassword = new JLabel("Password:");
-		this.labelPassword.setBounds(380, 110, 100, 25);
+		this.labelPassword.setBounds(360, 110, 100, 25);
 		this.labelPassword.setForeground(new Color(192, 192, 192));
 		this.labelPassword.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackUser.add(labelPassword);
@@ -180,9 +200,13 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 * Campo de texto para ingresar la contraseña del usuario a registrar.
 		 */
 		this.txtPassword = new JPasswordField();
-		this.txtPassword.setBounds(380, 130, 210, 25);
+		this.txtPassword.setBounds(360, 130, 230, 25);
+		this.txtPassword.setBackground(new Color(127, 140, 141));
+		this.txtPassword.setFont(new Font("serif", Font.BOLD, 20));
+		this.txtPassword.setHorizontalAlignment(JLabel.LEFT);
+		this.txtPassword.setForeground(Color.WHITE);
 		this.panelBackUser.add(txtPassword);
-
+		
 		/**
 		 * Botón para registrar un usuario en el sistema.
 		 */

@@ -63,6 +63,8 @@ public class ManagementUsers extends JFrame implements ActionListener {
 			 * Creamos la tabla y la añadimos al JScrollPanel.
 			 */
 			this.tableUsers = new JTable(model);
+			this.tableUsers.setFont(new Font("serif", Font.BOLD, 14));
+			this.tableUsers.setForeground(Color.BLACK);
 			this.scrollPaneUsers = new JScrollPane(this.tableUsers);
 			this.scrollPaneUsers.setBounds(25, 55, 540, 200);
 
