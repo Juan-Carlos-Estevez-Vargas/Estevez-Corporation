@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+import ventanas.Login;
+
 /**
  * 
  * @author Juan Carlos Estevez Vargas.
@@ -25,13 +27,15 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 	private JButton btnManageUser;
 	private JButton btnPrueba;
 	private JComboBox<String> cmbRole;
+	private String user;
 
 	/**
 	 * Constructor de clase.
 	 */
 	public AdministratorPanel() {
+		user = Login.user;
 		this.setSize(670, 310);
-		this.setTitle("Panel Administrador");
+		this.setTitle("Administrador - Sesión de " + user);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
@@ -55,7 +59,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		/*
 		 * Label Usuario Logueado.
 		 */
-		this.labelTittle = new JLabel("Holaaaaa");
+		this.labelTittle = new JLabel("Bienvenido - " + user);
 		this.labelTittle.setBounds(10, 10, 280, 27);
 		this.labelTittle.setForeground(new Color(192, 192, 192));
 		this.labelTittle.setFont(new Font("serif", Font.BOLD, 20));

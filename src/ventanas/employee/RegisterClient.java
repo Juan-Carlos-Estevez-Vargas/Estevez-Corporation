@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
+import ventanas.Login;
 
 /**
  * 
@@ -39,13 +40,15 @@ public class RegisterClient extends JFrame implements ActionListener {
 	private JLabel labelTitle;
 	private JPanel panelBackClient;
 	private JButton btnRegisterClient;
+	private String user;
 
 	/**
 	 * Constructor de clase.
 	 */
 	public RegisterClient() {
+		user = Login.user;
+        this.setTitle("Registrar nuevo cliente - Sesión de " + user);
 		this.setSize(530, 350);
-		this.setTitle("Registrar Cliente");
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
