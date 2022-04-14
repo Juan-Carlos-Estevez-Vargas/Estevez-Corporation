@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-
 import ventanas.Login;
 
 /**
@@ -33,9 +32,9 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 	 * Constructor de clase.
 	 */
 	public AdministratorPanel() {
-		user = Login.user;
+		this.user = Login.user;
 		this.setSize(670, 310);
-		this.setTitle("Administrador - Sesión de " + user);
+		this.setTitle("Administrador - Sesión de " + this.user);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
@@ -54,16 +53,16 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.panelBack = new JPanel();
 		this.panelBack.setBackground(new Color(46, 59, 104));
 		this.panelBack.setLayout(null);
-		this.setContentPane(panelBack);
+		this.setContentPane(this.panelBack);
 
 		/*
 		 * Label Usuario Logueado.
 		 */
-		this.labelTittle = new JLabel("Bienvenido - " + user);
+		this.labelTittle = new JLabel("Bienvenido - " + this.user);
 		this.labelTittle.setBounds(10, 10, 280, 27);
 		this.labelTittle.setForeground(new Color(192, 192, 192));
 		this.labelTittle.setFont(new Font("serif", Font.BOLD, 20));
-		this.panelBack.add(labelTittle);
+		this.panelBack.add(this.labelTittle);
 
 		/*
 		 * Botón para registrar un nuevo Usuario en el sistema.
@@ -72,7 +71,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.btnRegisterUser.setBounds(40, 80, 120, 100);
 		this.btnRegisterUser.setIcon(new ImageIcon("src/img/addUser.png"));
 		this.btnRegisterUser.addActionListener(this);
-		this.panelBack.add(btnRegisterUser);
+		this.panelBack.add(this.btnRegisterUser);
 
 		/**
 		 * Label Registrar Usuario.
@@ -81,7 +80,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.labelRegisterUser.setBounds(45, 190, 120, 15);
 		this.labelRegisterUser.setForeground(new Color(192, 192, 192));
 		this.labelRegisterUser.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBack.add(labelRegisterUser);
+		this.panelBack.add(this.labelRegisterUser);
 
 		/**
 		 * Botón encargado de mostrar la lista de usuarios registrados en el sistema.
@@ -90,7 +89,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.btnManageUser.setBounds(270, 80, 120, 100);
 		this.btnManageUser.setIcon(new ImageIcon("src/img/informationuser.png"));
 		this.btnManageUser.addActionListener(this);
-		this.panelBack.add(btnManageUser);
+		this.panelBack.add(this.btnManageUser);
 
 		/**
 		 * Label Gestionar Usuarios.
@@ -99,7 +98,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.labelManageUser.setBounds(270, 190, 120, 15);
 		this.labelManageUser.setForeground(new Color(192, 192, 192));
 		this.labelManageUser.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBack.add(labelManageUser);
+		this.panelBack.add(this.labelManageUser);
 
 		/**
 		 * Botón para modificar.
@@ -107,7 +106,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.btnPrueba = new JButton();
 		this.btnPrueba.setBounds(500, 80, 120, 100);
 		this.btnPrueba.setIcon(new ImageIcon("src/img/informationuser.png"));
-		this.panelBack.add(btnPrueba);
+		this.panelBack.add(this.btnPrueba);
 
 		/**
 		 * ComboBox encargado de mostrar los roles a los que puede acceder el usuario
@@ -119,7 +118,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.cmbRole.addItem("Capturista");
 		this.cmbRole.addItem("Cerrar Sesión");
 		this.cmbRole.setBounds(500, 20, 120, 20);
-		this.panelBack.add(cmbRole);
+		this.panelBack.add(this.cmbRole);
 
 	}
 

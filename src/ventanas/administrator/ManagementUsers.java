@@ -2,8 +2,6 @@ package ventanas.administrator;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -24,16 +22,16 @@ import modelo.DatabaseConnection;
  * @author Juan Carlos Estevez Vargas.
  *
  */
-public class ManagementUsers extends JFrame implements ActionListener {
+public class ManagementUsers extends JFrame{
 
 	/**
 	 * Declaración de Variables.
 	 */
 	private static final long serialVersionUID = 1L;
+	public static String user_update = "";
 	private JLabel jlabel1;
 	private JPanel container;
 	private JTable tableUsers;
-	public static String user_update = "";
 	private JScrollPane scrollPaneUsers;
 	private DefaultTableModel model = new DefaultTableModel();
 
@@ -62,7 +60,7 @@ public class ManagementUsers extends JFrame implements ActionListener {
 			/**
 			 * Creamos la tabla y la añadimos al JScrollPanel.
 			 */
-			this.tableUsers = new JTable(model);
+			this.tableUsers = new JTable(this.model);
 			this.tableUsers.setFont(new Font("serif", Font.BOLD, 14));
 			this.tableUsers.setForeground(Color.BLACK);
 			this.scrollPaneUsers = new JScrollPane(this.tableUsers);
@@ -71,11 +69,11 @@ public class ManagementUsers extends JFrame implements ActionListener {
 			/**
 			 * Añadiendo las columnas a la tabla.
 			 */
-			model.addColumn(" ");
-			model.addColumn("Nombre Usuario");
-			model.addColumn("Username");
-			model.addColumn("Permisos");
-			model.addColumn("Estatus");
+			this.model.addColumn(" ");
+			this.model.addColumn("Nombre Usuario");
+			this.model.addColumn("Username");
+			this.model.addColumn("Permisos");
+			this.model.addColumn("Estatus");
 
 			/**
 			 * Llenado de la tabla
@@ -85,7 +83,7 @@ public class ManagementUsers extends JFrame implements ActionListener {
 				for (int i = 0; i < 5; i++) {
 					row[i] = rs.getObject(i + 1);
 				}
-				model.addRow(row);
+				this.model.addRow(row);
 			}
 			cn.close();
 		} catch (SQLException e) {
@@ -109,7 +107,7 @@ public class ManagementUsers extends JFrame implements ActionListener {
 				}
 			}
 		});
-		this.container.add(scrollPaneUsers);
+		this.container.add(this.scrollPaneUsers);
 	}
 
 	/**
@@ -123,7 +121,7 @@ public class ManagementUsers extends JFrame implements ActionListener {
 		this.container = new JPanel();
 		this.container.setBackground(new Color(46, 59, 104));
 		this.container.setLayout(null);
-		this.setContentPane(container);
+		this.setContentPane(this.container);
 
 		/**
 		 * Título del Panel.
@@ -132,12 +130,7 @@ public class ManagementUsers extends JFrame implements ActionListener {
 		this.jlabel1.setBounds(210, 10, 250, 20);
 		this.jlabel1.setForeground(new Color(192, 192, 192));
 		this.jlabel1.setFont(new Font("serif", Font.BOLD, 20));
-		this.container.add(jlabel1);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
+		this.container.add(this.jlabel1);
 	}
 
 }
