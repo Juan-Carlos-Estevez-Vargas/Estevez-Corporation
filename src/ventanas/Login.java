@@ -18,11 +18,11 @@ import ventanas.employee.EmployeePanel;
  */
 public final class Login extends JFrame implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-
 	/**
 	 * Declaración de Variables
 	 */
+	private static final long serialVersionUID = 1L;
+	public static String user = "";
 	private JPanel container;
 	private JLabel jlLogo;
 	private JLabel jlUser;
@@ -192,6 +192,11 @@ public final class Login extends JFrame implements ActionListener {
 		 * Acción para realizar el logueo a la aplicación.
 		 */
 		if (e.getSource() == this.btnLogin) {
+			
+			/**
+			 * Recuperación del username que inicia sesión.
+			 */
+			user = txtUser.getText().trim();
 
 			/**
 			 * Recuperamos los datos introducidos en los TextField

@@ -12,7 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class EmployeePanel extends JFrame implements ActionListener{
+import ventanas.Login;
+
+public class EmployeePanel extends JFrame implements ActionListener {
 
 	/**
 	 * Definición de Variables.
@@ -27,13 +29,15 @@ public class EmployeePanel extends JFrame implements ActionListener{
 	private JButton btnManageClient;
 	private JButton btnPrintClients;
 	private JComboBox<String> cmbRole;
+	private String user;
 
 	/**
 	 * Constructor de clase.
 	 */
 	public EmployeePanel() {
+		user = Login.user;
 		this.setSize(670, 310);
-		this.setTitle("Panel Capturista");
+		this.setTitle("Capturista - Sesión de " + user);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
@@ -57,7 +61,7 @@ public class EmployeePanel extends JFrame implements ActionListener{
 		/*
 		 * Label Usuario Logueado.
 		 */
-		this.labelTittle = new JLabel("Holaaaaa");
+		this.labelTittle = new JLabel("Bienvenido - " + user);
 		this.labelTittle.setBounds(10, 10, 280, 27);
 		this.labelTittle.setForeground(new Color(192, 192, 192));
 		this.labelTittle.setFont(new Font("serif", Font.BOLD, 20));
@@ -98,7 +102,7 @@ public class EmployeePanel extends JFrame implements ActionListener{
 		this.labelManageClient.setForeground(new Color(192, 192, 192));
 		this.labelManageClient.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBack.add(labelManageClient);
-		
+
 		/**
 		 * Label Imprimir Clientes.
 		 */
@@ -127,15 +131,15 @@ public class EmployeePanel extends JFrame implements ActionListener{
 		this.panelBack.add(cmbRole);
 
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		if (e.getSource() == this.btnRegisterClient) {
 			RegisterClient registerClient = new RegisterClient();
-	        registerClient.setVisible(true);
+			registerClient.setVisible(true);
 		}
-		
+
 	}
 
 }
