@@ -130,7 +130,11 @@ public class EmployeePanel extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
+		if (e.getSource() == this.btnRegisterClient) {
+			RegisterClient registerClient = new RegisterClient();
+	        registerClient.setVisible(true);
+		}
 		
 	}
 
