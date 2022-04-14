@@ -10,6 +10,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
 import ventanas.administrator.AdministratorPanel;
+import ventanas.employee.EmployeePanel;
 
 /**
  *
@@ -228,7 +229,7 @@ public final class Login extends JFrame implements ActionListener {
 							new AdministratorPanel().setVisible(true);
 						} else if (levelType.equals("Capturista") && status.equalsIgnoreCase("Activo")) {
 							this.dispose();
-							// new Capturista().setVisible(true);
+							new EmployeePanel().setVisible(true);
 						} else if (levelType.equals("Tecnico") && status.equalsIgnoreCase("Activo")) {
 							this.dispose();
 							// new Tecnico().setVisible(true);
