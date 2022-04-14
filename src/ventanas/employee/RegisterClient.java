@@ -4,25 +4,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
-
 import modelo.DatabaseConnection;
-import ventanas.administrator.ManagementUsers;
-import ventanas.administrator.RestorePassword;
 
 /**
  * 
@@ -30,6 +22,7 @@ import ventanas.administrator.RestorePassword;
  *
  */
 public class RegisterClient extends JFrame implements ActionListener {
+
 	/**
 	 * Declaración de Variables
 	 */
@@ -192,9 +185,76 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.panelBackClient.add(btnRegisterClient);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
+		if (e.getSource() == this.btnRegisterClient) {
+			int validation = 0;
+			String name, mail, phone, adress;
+
+			// Recuperamos los valores de los text field
+			name = txtNameClient.getText().trim();
+			mail = txtEmailClient.getText().trim();
+			phone = txtPhoneClient.getText().trim();
+			adress = txtAdressClient.getText().trim();
+
+			// Validacion de los campos
+			if (name.equals("")) {
+				txtNameClient.setBackground(Color.red);
+				validation++;
+			}
+			if (mail.equals("")) {
+				txtEmailClient.setBackground(Color.red);
+				validation++;
+			}
+			if (phone.equals("")) {
+				txtPhoneClient.setBackground(Color.red);
+				validation++;
+			}
+			if (adress.equals("")) {
+				txtAdressClient.setBackground(Color.red);
+				validation++;
+			}
+
+			// Insertando clientes a la base de datos
+			if (validation == 0) {
+
+				try {
+
+					Connection cn = (Connection) DatabaseConnection.conectar();
+					PreparedStatement pst = (PreparedStatement) cn
+							.prepareStatement("INSERT INTO clientes VALUES (?,?,?,?,?,?)");
+
+					pst.setInt(1, 0);
+					pst.setString(2, name);
+					pst.setString(3, mail);
+					pst.setString(4, phone);
+					pst.setString(5, adress);
+					pst.setString(6, "hola");
+
+					pst.executeUpdate();
+					cn.close();
+
+					Limpiar();
+
+					txtNameClient.setBackground(Color.green);
+					txtEmailClient.setBackground(Color.green);
+					txtPhoneClient.setBackground(Color.green);
+					txtAdressClient.setBackground(Color.green);
+
+					JOptionPane.showMessageDialog(null, "Registro exitoso");
+
+					this.dispose();
+
+				} catch (SQLException ex) {
+					System.err.println("Error en registrar Cliente " + ex);
+					JOptionPane.showMessageDialog(null, "¡¡Error al registrar cliente, contacte al Administrador!!");
+				}
+
+			} else {
+				JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
+			}
+		}
+
 	}
 }
