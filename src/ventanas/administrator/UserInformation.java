@@ -1,6 +1,7 @@
 package ventanas.administrator;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -106,12 +107,11 @@ public class UserInformation extends JFrame implements ActionListener {
 		/**
 		 * Label Principal.
 		 */
-		labelTittle = new JLabel();
+		labelTittle = new JLabel("Información del Usuario");
 		labelTittle.setFont(new java.awt.Font("Segoe UI", 0, 24));
 		labelTittle.setForeground(new java.awt.Color(192, 192, 192));
 		labelTittle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		labelTittle.setText("Información del Usuario");
-		labelTittle.setBounds(140, 10, 400, 30);
+		labelTittle.setBounds(110, 10, 400, 30);
 		this.container.add(labelTittle);
 
 		/**
@@ -161,7 +161,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		labelUsername.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		labelUsername.setForeground(new java.awt.Color(192, 192, 192));
 		labelUsername.setText("Username :");
-		labelUsername.setBounds(380, 50, 100, 20);
+		labelUsername.setBounds(360, 50, 100, 20);
 		this.container.add(labelUsername);
 
 		/**
@@ -171,7 +171,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		labelStatus.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		labelStatus.setForeground(new java.awt.Color(192, 192, 192));
 		labelStatus.setText("Estatus :");
-		labelStatus.setBounds(380, 110, 100, 20);
+		labelStatus.setBounds(360, 110, 100, 20);
 		this.container.add(labelStatus);
 
 		/**
@@ -181,25 +181,29 @@ public class UserInformation extends JFrame implements ActionListener {
 		labelRegisterBy.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		labelRegisterBy.setForeground(new java.awt.Color(192, 192, 192));
 		labelRegisterBy.setText("Registrado por :");
-		labelRegisterBy.setBounds(380, 160, 100, 20);
+		labelRegisterBy.setBounds(360, 170, 100, 20);
+		this.container.add(this.labelRegisterBy);
 
 		/**
 		 * Campo de texto con la información del nombre del usuario a actualizar.
 		 */
 		txtName = new JTextField();
-		txtName.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		txtName.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		txtName.setBounds(20, 70, 210, 30);
+		txtName.setBounds(20, 70, 230, 30);
+		this.txtName.setBackground(new Color(127, 140, 141));
+		this.txtName.setFont(new Font("serif", Font.BOLD, 20));
+		this.txtName.setHorizontalAlignment(JLabel.LEFT);
+		this.txtName.setForeground(Color.WHITE);
 		this.container.add(txtName);
 
 		/**
 		 * Campo de texto con la información del email del usuario a actualizar.
 		 */
 		txtEmail = new JTextField();
-		txtEmail.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		txtEmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-		txtEmail.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		txtEmail.setBounds(20, 130, 210, 30);
+		txtEmail.setBounds(20, 130, 230, 30);
+		this.txtEmail.setBackground(new Color(127, 140, 141));
+		this.txtEmail.setFont(new Font("serif", Font.BOLD, 20));
+		this.txtEmail.setHorizontalAlignment(JLabel.LEFT);
+		this.txtEmail.setForeground(Color.WHITE);
 		this.container.add(txtEmail);
 
 		/**
@@ -208,28 +212,34 @@ public class UserInformation extends JFrame implements ActionListener {
 		txtPhone = new JTextField();
 		txtPhone.setFont(new java.awt.Font("Segoe UI", 1, 16));
 		txtPhone.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		txtPhone.setBounds(20, 190, 210, 30);
+		txtPhone.setBounds(20, 190, 230, 30);
+		this.txtPhone.setBackground(new Color(127, 140, 141));
+		this.txtPhone.setFont(new Font("serif", Font.BOLD, 20));
+		this.txtPhone.setHorizontalAlignment(JLabel.LEFT);
+		this.txtPhone.setForeground(Color.WHITE);
 		this.container.add(txtPhone);
 
 		/**
 		 * Campo de texto con la información del username del usuario a actualizar.
 		 */
 		txtUsername = new JTextField();
-		txtUsername.setFont(new java.awt.Font("Segoe UI", 1, 16));
 		txtUsername.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-		txtUsername.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		txtUsername.setBounds(380, 70, 210, 30);
+		txtUsername.setBounds(360, 70, 230, 30);
+		this.txtUsername.setBackground(new Color(127, 140, 141));
+		this.txtUsername.setFont(new Font("serif", Font.BOLD, 20));
+		this.txtUsername.setForeground(Color.WHITE);
 		this.container.add(txtUsername);
 
 		/**
 		 * Campo de texto con la información de quién registró el usuario a actualizar.
 		 */
 		txtRegisterBy = new JTextField();
-		txtRegisterBy.setFont(new java.awt.Font("Segoe UI", 1, 16));
 		txtRegisterBy.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-		txtRegisterBy.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		txtRegisterBy.setEnabled(false);
-		txtRegisterBy.setBounds(380, 190, 210, 30);
+		txtRegisterBy.setBounds(360, 190, 230, 30);
+		this.txtRegisterBy.setBackground(new Color(127, 140, 141));
+		this.txtRegisterBy.setFont(new Font("serif", Font.BOLD, 20));
+		this.txtRegisterBy.setForeground(Color.WHITE);
 		this.container.add(txtRegisterBy);
 
 		/**
@@ -237,7 +247,10 @@ public class UserInformation extends JFrame implements ActionListener {
 		 */
 		cmbStatus = new JComboBox<String>();
 		cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
-		cmbStatus.setBounds(380, 130, 150, 30);
+		cmbStatus.setBounds(360, 130, 170, 30);
+		this.cmbStatus.setBackground(new Color(127, 140, 141));
+		this.cmbStatus.setFont(new Font("serif", Font.BOLD, 20));
+		this.cmbStatus.setForeground(Color.WHITE);
 		this.container.add(cmbStatus);
 
 		/**
@@ -246,29 +259,34 @@ public class UserInformation extends JFrame implements ActionListener {
 		cmbLevels = new JComboBox<String>();
 		cmbLevels.setModel(
 				new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Capturista", "Tecnico" }));
-		cmbLevels.setBounds(20, 250, 150, 30);
+		cmbLevels.setBounds(20, 250, 170, 30);
+		this.cmbLevels.setBackground(new Color(127, 140, 141));
+		this.cmbLevels.setFont(new Font("serif", Font.BOLD, 20));
+		this.cmbLevels.setForeground(Color.WHITE);
 		this.container.add(cmbLevels);
 
 		/**
 		 * Botón encargado de actualizar el usuario en cuestión.
 		 */
-		btnUpdate = new JButton();
-		btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 18));
-		btnUpdate.setText("Actualizar Usuario");
-		btnUpdate.setBorder(null);
-		btnUpdate.addActionListener(this);
+		btnUpdate = new JButton("Actualizar Usuario");
 		btnUpdate.setBounds(380, 250, 210, 35);
+		this.btnUpdate.setFont(new Font("serif", Font.BOLD, 20));
+		this.btnUpdate.setBackground(new Color(8, 85, 224));
+		this.btnUpdate.setForeground(Color.WHITE);
+		this.btnUpdate.setHorizontalAlignment(JButton.CENTER);
+		this.btnUpdate.addActionListener(this);
 		this.container.add(btnUpdate);
 
 		/**
 		 * Botón para restaurar la contraseña del usuario en cuestión.
 		 */
-		btnRestorePassword = new JButton();
-		btnRestorePassword.setFont(new java.awt.Font("Tahoma", 1, 18));
-		btnRestorePassword.setText("Restaurar Password");
-		btnRestorePassword.setBorder(null);
-		btnRestorePassword.addActionListener(this);
+		btnRestorePassword = new JButton("Restaurar Password");
 		btnRestorePassword.setBounds(380, 300, 210, 35);
+		this.btnRestorePassword.setFont(new Font("serif", Font.BOLD, 20));
+		this.btnRestorePassword.setBackground(new Color(8, 85, 224));
+		this.btnRestorePassword.setForeground(Color.WHITE);
+		this.btnRestorePassword.setHorizontalAlignment(JButton.CENTER);
+		this.btnRestorePassword.addActionListener(this);
 		this.container.add(btnRestorePassword);
 
 	}
