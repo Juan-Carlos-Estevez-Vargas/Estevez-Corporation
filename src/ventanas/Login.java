@@ -59,7 +59,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.container = new JPanel();
 		this.container.setBackground(new Color(46, 59, 104));
 		this.container.setLayout(null);
-		this.setContentPane(container);
+		this.setContentPane(this.container);
 
 		/**
 		 * Logo del Login.
@@ -68,7 +68,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.jlLogo.setBounds(70, 50, 200, 150);
 		this.jlLogo.setIcon(new ImageIcon("src/img/logo.png"));
 		this.jlLogo.setHorizontalAlignment(JLabel.CENTER);
-		this.container.add(jlLogo);
+		this.container.add(this.jlLogo);
 
 		/**
 		 * JLabel Usuario.
@@ -78,7 +78,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.jlUser.setForeground(new Color(192, 192, 192));
 		this.jlUser.setFont(new Font("serif", Font.BOLD, 20));
 		this.jlUser.setHorizontalAlignment(JLabel.LEFT);
-		this.container.add(jlUser);
+		this.container.add(this.jlUser);
 
 		/**
 		 * Campo de texto donde el usuario ingresa su usuario.
@@ -90,7 +90,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.txtUser.setHorizontalAlignment(JLabel.CENTER);
 		this.txtUser.setForeground(Color.WHITE);
 		this.txtUser.requestFocus();
-		this.container.add(txtUser);
+		this.container.add(this.txtUser);
 
 		/**
 		 * Label indicando al usuario que digite el password.
@@ -100,7 +100,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.jlPassword.setForeground(new Color(192, 192, 192));
 		this.jlPassword.setFont(new Font("serif", Font.BOLD, 20));
 		this.jlPassword.setHorizontalAlignment(JLabel.LEFT);
-		this.container.add(jlPassword);
+		this.container.add(this.jlPassword);
 
 		/**
 		 * Campo de texto de tipo password (***) para ingresar la contraseña del
@@ -112,7 +112,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.txtPassword.setFont(new Font("serif", Font.BOLD, 22));
 		this.txtPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtPassword.setForeground(Color.WHITE);
-		this.container.add(txtPassword);
+		this.container.add(this.txtPassword);
 
 		/**
 		 * Campo de texto con la misma información del JPassword inicial pero muestra el
@@ -125,7 +125,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.txtPassword2.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtPassword2.setForeground(Color.WHITE);
 		this.txtPassword2.setVisible(false);
-		this.container.add(txtPassword2);
+		this.container.add(this.txtPassword2);
 
 		/**
 		 * Botón para mostrar u ocultar el texto del campo de texto password.
@@ -136,7 +136,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.btnEye.setIcon(new ImageIcon("src/img/ojo_opt.png"));
 		this.btnEye.setBorder(null);
 		this.btnEye.addActionListener(this);
-		this.container.add(btnEye);
+		this.container.add(this.btnEye);
 
 		/**
 		 * Label encargado de mostrar un error el caso que el usuario o la contraseña
@@ -147,7 +147,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.jlError.setForeground(new Color(192, 192, 192));
 		this.jlError.setFont(new Font("serif", Font.BOLD, 14));
 		this.jlError.setHorizontalAlignment(JLabel.CENTER);
-		this.container.add(jlError);
+		this.container.add(this.jlError);
 
 		/**
 		 * Botón para realizar el logueo a la aplicación.
@@ -159,7 +159,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.btnLogin.setForeground(Color.WHITE);
 		this.btnLogin.setHorizontalAlignment(JButton.CENTER);
 		this.btnLogin.addActionListener(this);
-		this.container.add(btnLogin);
+		this.container.add(this.btnLogin);
 
 		/**
 		 * Separador de caracter visual.
@@ -167,7 +167,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.separator = new JSeparator();
 		this.separator.setBackground(new Color(192, 192, 192));
 		this.separator.setBounds(45, 510, 250, 5);
-		this.container.add(separator);
+		this.container.add(this.separator);
 
 		/**
 		 * Label para recuperar la contraseña.
@@ -177,7 +177,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.jlForgot.setForeground(new Color(192, 192, 192));
 		this.jlForgot.setFont(new Font("serif", Font.BOLD, 18));
 		this.jlForgot.setHorizontalAlignment(JLabel.CENTER);
-		this.container.add(jlForgot);
+		this.container.add(this.jlForgot);
 
 	}
 
@@ -185,8 +185,7 @@ public final class Login extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		String username;
-		String password;
+		String username, password;
 
 		/**
 		 * Acción para realizar el logueo a la aplicación.
@@ -194,15 +193,11 @@ public final class Login extends JFrame implements ActionListener {
 		if (e.getSource() == this.btnLogin) {
 			
 			/**
-			 * Recuperación del username que inicia sesión.
-			 */
-			user = txtUser.getText().trim();
-
-			/**
 			 * Recuperamos los datos introducidos en los TextField
 			 */
 			username = txtUser.getText().trim();
 			password = txtPassword.getText().trim();
+			user = username;
 
 			/**
 			 * Validamos que los campos no estén vacíos.
@@ -219,6 +214,7 @@ public final class Login extends JFrame implements ActionListener {
 					 * Si la consulta encuentra resultados.
 					 */
 					if (rs.next()) {
+						
 						/**
 						 * Creamos dos variables que almacenan el resultado de los comboBox de la
 						 * consulta
@@ -251,7 +247,7 @@ public final class Login extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "¡¡Error al iniciar sesion!! Contactate con el administrador.");
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+				JOptionPane.showMessageDialog(null, "¡Debes llenar todos los campos!");
 			}
 		}
 

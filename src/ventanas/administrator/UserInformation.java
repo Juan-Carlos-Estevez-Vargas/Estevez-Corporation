@@ -54,14 +54,13 @@ public class UserInformation extends JFrame implements ActionListener {
 	 */
 	public UserInformation() {
 		initComponents();
-		// user = Login.user;
-		user_update = ManagementUsers.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
+		this.user_update = ManagementUsers.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
 		this.setResizable(false);
 		this.setTitle("Información del usuario " + user_update + " - Sesión de " + user);
 		this.setSize(630, 460);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.labelTittle.setText("Información del usuario " + user_update);
+		this.labelTittle.setText("Información del usuario " + this.user_update);
 
 		/**
 		 * Conectando con la base de datos para recuperar la información del usuario
@@ -70,7 +69,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		try {
 			Connection cn = (Connection) DatabaseConnection.conectar();
 			PreparedStatement pst = (PreparedStatement) cn
-					.prepareStatement("SELECT * FROM usuarios WHERE username = '" + user_update + "'");
+					.prepareStatement("SELECT * FROM usuarios WHERE username = '" + this.user_update + "'");
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
@@ -102,192 +101,185 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.container.setBackground(new Color(46, 59, 104));
 		this.container.setLayout(null);
 		this.container.setBounds(630, 460, 630, 460);
-		this.setContentPane(container);
+		this.setContentPane(this.container);
 
 		/**
 		 * Label Principal.
 		 */
-		labelTittle = new JLabel("Información del Usuario");
-		labelTittle.setFont(new java.awt.Font("Segoe UI", 0, 24));
-		labelTittle.setForeground(new java.awt.Color(192, 192, 192));
-		labelTittle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		labelTittle.setBounds(110, 10, 400, 30);
-		this.container.add(labelTittle);
+		this.labelTittle = new JLabel("Información del Usuario");
+		this.labelTittle.setFont(new java.awt.Font("Segoe UI", 0, 24));
+		this.labelTittle.setForeground(new java.awt.Color(192, 192, 192));
+		this.labelTittle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		this.labelTittle.setBounds(110, 10, 400, 30);
+		this.container.add(this.labelTittle);
 
 		/**
 		 * Label Nombre.
 		 */
-		labelName = new JLabel();
-		labelName.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		labelName.setForeground(new java.awt.Color(192, 192, 192));
-		labelName.setText("Nombre :");
-		labelName.setBounds(20, 50, 100, 20);
-		this.container.add(labelName);
+		this.labelName = new JLabel("Nombre :");
+		this.labelName.setFont(new java.awt.Font("Segoe UI", 1, 12));
+		this.labelName.setForeground(new java.awt.Color(192, 192, 192));
+		this.labelName.setBounds(20, 50, 100, 20);
+		this.container.add(this.labelName);
 
 		/**
 		 * Label Email.
 		 */
-		labelEmail = new JLabel();
-		labelEmail.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		labelEmail.setForeground(new java.awt.Color(192, 192, 192));
-		labelEmail.setText("Email :");
-		labelEmail.setBounds(20, 110, 100, 20);
-		this.container.add(labelEmail);
+		this.labelEmail = new JLabel("Email :");
+		this.labelEmail.setFont(new java.awt.Font("Segoe UI", 1, 12));
+		this.labelEmail.setForeground(new java.awt.Color(192, 192, 192));
+		this.labelEmail.setBounds(20, 110, 100, 20);
+		this.container.add(this.labelEmail);
 
 		/**
 		 * Label Phone.
 		 */
-		labelPhone = new JLabel();
-		labelPhone.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		labelPhone.setForeground(new java.awt.Color(192, 192, 192));
-		labelPhone.setText("Teléfono :");
-		labelPhone.setBounds(20, 170, 100, 20);
-		this.container.add(labelPhone);
+		this.labelPhone = new JLabel("Teléfono :");
+		this.labelPhone.setFont(new java.awt.Font("Segoe UI", 1, 12));
+		this.labelPhone.setForeground(new java.awt.Color(192, 192, 192));
+		this.labelPhone.setBounds(20, 170, 100, 20);
+		this.container.add(this.labelPhone);
 
 		/**
 		 * Label Permisos de.
 		 */
-		labelPermissionOf = new JLabel();
-		labelPermissionOf.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		labelPermissionOf.setForeground(new java.awt.Color(192, 192, 192));
-		labelPermissionOf.setText("Permisos de :");
-		labelPermissionOf.setBounds(20, 230, 100, 20);
-		this.container.add(labelPermissionOf);
+		this.labelPermissionOf = new JLabel("Permisos de :");
+		this.labelPermissionOf.setFont(new java.awt.Font("Segoe UI", 1, 12));
+		this.labelPermissionOf.setForeground(new java.awt.Color(192, 192, 192));
+		this.labelPermissionOf.setBounds(20, 230, 100, 20);
+		this.container.add(this.labelPermissionOf);
 
 		/**
 		 * Label Username.
 		 */
-		labelUsername = new JLabel();
-		labelUsername.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		labelUsername.setForeground(new java.awt.Color(192, 192, 192));
-		labelUsername.setText("Username :");
-		labelUsername.setBounds(360, 50, 100, 20);
-		this.container.add(labelUsername);
+		this.labelUsername = new JLabel("Username :");
+		this.labelUsername.setFont(new java.awt.Font("Segoe UI", 1, 12));
+		this.labelUsername.setForeground(new java.awt.Color(192, 192, 192));
+		this.labelUsername.setBounds(360, 50, 100, 20);
+		this.container.add(this.labelUsername);
 
 		/**
 		 * Label Status.
 		 */
-		labelStatus = new JLabel();
-		labelStatus.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		labelStatus.setForeground(new java.awt.Color(192, 192, 192));
-		labelStatus.setText("Estatus :");
-		labelStatus.setBounds(360, 110, 100, 20);
-		this.container.add(labelStatus);
+		this.labelStatus = new JLabel("Estatus :");
+		this.labelStatus.setFont(new java.awt.Font("Segoe UI", 1, 12));
+		this.labelStatus.setForeground(new java.awt.Color(192, 192, 192));
+		this.labelStatus.setBounds(360, 110, 100, 20);
+		this.container.add(this.labelStatus);
 
 		/**
 		 * Label Registrado Por.
 		 */
-		labelRegisterBy = new JLabel();
-		labelRegisterBy.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		labelRegisterBy.setForeground(new java.awt.Color(192, 192, 192));
-		labelRegisterBy.setText("Registrado por :");
-		labelRegisterBy.setBounds(360, 170, 100, 20);
+		this.labelRegisterBy = new JLabel("Registrado por :");
+		this.labelRegisterBy.setFont(new java.awt.Font("Segoe UI", 1, 12));
+		this.labelRegisterBy.setForeground(new java.awt.Color(192, 192, 192));
+		this.labelRegisterBy.setBounds(360, 170, 100, 20);
 		this.container.add(this.labelRegisterBy);
 
 		/**
 		 * Campo de texto con la información del nombre del usuario a actualizar.
 		 */
-		txtName = new JTextField();
-		txtName.setBounds(20, 70, 230, 30);
+		this.txtName = new JTextField();
+		this.txtName.setBounds(20, 70, 230, 30);
 		this.txtName.setBackground(new Color(127, 140, 141));
 		this.txtName.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtName.setHorizontalAlignment(JLabel.LEFT);
 		this.txtName.setForeground(Color.WHITE);
-		this.container.add(txtName);
+		this.container.add(this.txtName);
 
 		/**
 		 * Campo de texto con la información del email del usuario a actualizar.
 		 */
-		txtEmail = new JTextField();
-		txtEmail.setBounds(20, 130, 230, 30);
+		this.txtEmail = new JTextField();
+		this.txtEmail.setBounds(20, 130, 230, 30);
 		this.txtEmail.setBackground(new Color(127, 140, 141));
 		this.txtEmail.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtEmail.setHorizontalAlignment(JLabel.LEFT);
 		this.txtEmail.setForeground(Color.WHITE);
-		this.container.add(txtEmail);
+		this.container.add(this.txtEmail);
 
 		/**
 		 * Campo de texto con la información del teléfono del usuario a actualizar.
 		 */
-		txtPhone = new JTextField();
-		txtPhone.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		txtPhone.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		txtPhone.setBounds(20, 190, 230, 30);
+		this.txtPhone = new JTextField();
+		this.txtPhone.setFont(new java.awt.Font("Segoe UI", 1, 16));
+		this.txtPhone.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		this.txtPhone.setBounds(20, 190, 230, 30);
 		this.txtPhone.setBackground(new Color(127, 140, 141));
 		this.txtPhone.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtPhone.setHorizontalAlignment(JLabel.LEFT);
 		this.txtPhone.setForeground(Color.WHITE);
-		this.container.add(txtPhone);
+		this.container.add(this.txtPhone);
 
 		/**
 		 * Campo de texto con la información del username del usuario a actualizar.
 		 */
-		txtUsername = new JTextField();
-		txtUsername.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-		txtUsername.setBounds(360, 70, 230, 30);
+		this.txtUsername = new JTextField();
+		this.txtUsername.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtUsername.setBounds(360, 70, 230, 30);
 		this.txtUsername.setBackground(new Color(127, 140, 141));
 		this.txtUsername.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtUsername.setForeground(Color.WHITE);
-		this.container.add(txtUsername);
+		this.container.add(this.txtUsername);
 
 		/**
 		 * Campo de texto con la información de quién registró el usuario a actualizar.
 		 */
-		txtRegisterBy = new JTextField();
-		txtRegisterBy.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-		txtRegisterBy.setEnabled(false);
-		txtRegisterBy.setBounds(360, 190, 230, 30);
+		this.txtRegisterBy = new JTextField();
+		this.txtRegisterBy.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtRegisterBy.setEnabled(false);
+		this.txtRegisterBy.setBounds(360, 190, 230, 30);
 		this.txtRegisterBy.setBackground(new Color(127, 140, 141));
 		this.txtRegisterBy.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtRegisterBy.setForeground(Color.WHITE);
-		this.container.add(txtRegisterBy);
+		this.container.add(this.txtRegisterBy);
 
 		/**
 		 * ComboBox con la información del Status del usuario a actualizar.
 		 */
-		cmbStatus = new JComboBox<String>();
-		cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
-		cmbStatus.setBounds(360, 130, 170, 30);
+		this.cmbStatus = new JComboBox<String>();
+		this.cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
+		this.cmbStatus.setBounds(360, 130, 170, 30);
 		this.cmbStatus.setBackground(new Color(127, 140, 141));
 		this.cmbStatus.setFont(new Font("serif", Font.BOLD, 20));
 		this.cmbStatus.setForeground(Color.WHITE);
-		this.container.add(cmbStatus);
+		this.container.add(this.cmbStatus);
 
 		/**
 		 * ComboBox con la información del nivel del usuario a actualizar.
 		 */
-		cmbLevels = new JComboBox<String>();
-		cmbLevels.setModel(
+		this.cmbLevels = new JComboBox<String>();
+		this.cmbLevels.setModel(
 				new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Capturista", "Tecnico" }));
-		cmbLevels.setBounds(20, 250, 170, 30);
+		this.cmbLevels.setBounds(20, 250, 170, 30);
 		this.cmbLevels.setBackground(new Color(127, 140, 141));
 		this.cmbLevels.setFont(new Font("serif", Font.BOLD, 20));
 		this.cmbLevels.setForeground(Color.WHITE);
-		this.container.add(cmbLevels);
+		this.container.add(this.cmbLevels);
 
 		/**
 		 * Botón encargado de actualizar el usuario en cuestión.
 		 */
-		btnUpdate = new JButton("Actualizar Usuario");
-		btnUpdate.setBounds(380, 250, 210, 35);
+		this.btnUpdate = new JButton("Actualizar Usuario");
+		this.btnUpdate.setBounds(380, 250, 210, 35);
 		this.btnUpdate.setFont(new Font("serif", Font.BOLD, 20));
 		this.btnUpdate.setBackground(new Color(8, 85, 224));
 		this.btnUpdate.setForeground(Color.WHITE);
 		this.btnUpdate.setHorizontalAlignment(JButton.CENTER);
 		this.btnUpdate.addActionListener(this);
-		this.container.add(btnUpdate);
+		this.container.add(this.btnUpdate);
 
 		/**
 		 * Botón para restaurar la contraseña del usuario en cuestión.
 		 */
-		btnRestorePassword = new JButton("Restaurar Password");
-		btnRestorePassword.setBounds(380, 300, 210, 35);
+		this.btnRestorePassword = new JButton("Restaurar Password");
+		this.btnRestorePassword.setBounds(380, 300, 210, 35);
 		this.btnRestorePassword.setFont(new Font("serif", Font.BOLD, 20));
 		this.btnRestorePassword.setBackground(new Color(8, 85, 224));
 		this.btnRestorePassword.setForeground(Color.WHITE);
 		this.btnRestorePassword.setHorizontalAlignment(JButton.CENTER);
 		this.btnRestorePassword.addActionListener(this);
-		this.container.add(btnRestorePassword);
+		this.container.add(this.btnRestorePassword);
 
 	}
 
@@ -305,30 +297,30 @@ public class UserInformation extends JFrame implements ActionListener {
 			 * Guardamos lo que esta en loc comboBox y en los campos de texto en las
 			 * variables.
 			 */
-			email = txtEmail.getText().trim();
-			name = txtName.getText().trim();
-			username = txtUsername.getText().trim();
-			phone = txtPhone.getText().trim();
-			cmbPermissions = cmbLevels.getSelectedIndex() + 1;
+			email = this.txtEmail.getText().trim();
+			name = this.txtName.getText().trim();
+			username = this.txtUsername.getText().trim();
+			phone = this.txtPhone.getText().trim();
+			cmbPermissions = this.cmbLevels.getSelectedIndex() + 1;
 			cmbStatus = this.cmbStatus.getSelectedIndex() + 1;
 
 			/**
 			 * Validamos que ningun campo este vacio.
 			 */
 			if (email.equals("")) {
-				txtEmail.setBackground(Color.red);
+				this.txtEmail.setBackground(Color.red);
 				validation++;
 			}
 			if (username.equals("")) {
-				txtUsername.setBackground(Color.red);
+				this.txtUsername.setBackground(Color.red);
 				validation++;
 			}
 			if (name.equals("")) {
-				txtName.setBackground(Color.red);
+				this.txtName.setBackground(Color.red);
 				validation++;
 			}
 			if (phone.equals("")) {
-				txtPhone.setBackground(Color.red);
+				this.txtPhone.setBackground(Color.red);
 				validation++;
 			}
 
@@ -362,7 +354,7 @@ public class UserInformation extends JFrame implements ActionListener {
 					ResultSet rs2 = pst2.executeQuery();
 
 					if (rs2.next()) {
-						txtUsername.setBackground(Color.red);
+						this.txtUsername.setBackground(Color.red);
 						JOptionPane.showMessageDialog(null, "Nombre de usuario no disponible");
 						cn2.close();
 					} else {

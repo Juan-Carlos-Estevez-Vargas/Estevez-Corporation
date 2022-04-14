@@ -46,8 +46,8 @@ public class RegisterClient extends JFrame implements ActionListener {
 	 * Constructor de clase.
 	 */
 	public RegisterClient() {
-		user = Login.user;
-        this.setTitle("Registrar nuevo cliente - Sesión de " + user);
+		this.user = Login.user;
+        this.setTitle("Registrar nuevo cliente - Sesión de " + this.user);
 		this.setSize(530, 350);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
@@ -60,10 +60,10 @@ public class RegisterClient extends JFrame implements ActionListener {
 	 * Limpia los campos de texto.
 	 */
 	public void Limpiar() {
-		txtEmailClient.setText("");
-		txtNameClient.setText("");
-		txtAdressClient.setText("");
-		txtPhoneClient.setText("");
+		this.txtEmailClient.setText("");
+		this.txtNameClient.setText("");
+		this.txtAdressClient.setText("");
+		this.txtPhoneClient.setText("");
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.panelBackClient = new JPanel();
 		this.panelBackClient.setBackground(new Color(46, 59, 104));
 		this.panelBackClient.setLayout(null);
-		this.setContentPane(panelBackClient);
+		this.setContentPane(this.panelBackClient);
 
 		/**
 		 * Título de la ventana.
@@ -86,19 +86,19 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.labelTitle.setBounds(160, 10, 250, 20);
 		this.labelTitle.setForeground(new Color(192, 192, 192));
 		this.labelTitle.setFont(new Font("serif", Font.BOLD, 20));
-		this.panelBackClient.add(labelTitle);
+		this.panelBackClient.add(this.labelTitle);
 
 		/**
-		 * Label Nombre.
+		 * Label Nombre Cliente.
 		 */
 		this.labelNameClient = new JLabel("Nombre:");
 		this.labelNameClient.setBounds(20, 50, 100, 25);
 		this.labelNameClient.setForeground(new Color(192, 192, 192));
 		this.labelNameClient.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackClient.add(labelNameClient);
+		this.panelBackClient.add(this.labelNameClient);
 
 		/**
-		 * Campo de texto para ingresar el nombre del usuario a registrar.
+		 * Campo de texto para ingresar el nombre del cliente a registrar.
 		 */
 		this.txtNameClient = new JTextField();
 		this.txtNameClient.setBounds(20, 70, 230, 25);
@@ -107,19 +107,19 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtNameClient.setHorizontalAlignment(JLabel.LEFT);
 		this.txtNameClient.setForeground(Color.WHITE);
 		this.txtNameClient.requestFocus();
-		this.panelBackClient.add(txtNameClient);
+		this.panelBackClient.add(this.txtNameClient);
 
 		/**
-		 * Label Email.
+		 * Label Email Cliente.
 		 */
 		this.labelEmailClient = new JLabel("Email:");
 		this.labelEmailClient.setBounds(20, 110, 100, 25);
 		this.labelEmailClient.setForeground(new Color(192, 192, 192));
 		this.labelEmailClient.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackClient.add(labelEmailClient);
+		this.panelBackClient.add(this.labelEmailClient);
 
 		/*
-		 * Campo de texto para ingresar el Email del usuario a registrar.
+		 * Campo de texto para ingresar el Email del Cliente a registrar.
 		 */
 		this.txtEmailClient = new JTextField();
 		this.txtEmailClient.setBounds(20, 130, 230, 25);
@@ -127,19 +127,19 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtEmailClient.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtEmailClient.setHorizontalAlignment(JLabel.LEFT);
 		this.txtEmailClient.setForeground(Color.WHITE);
-		this.panelBackClient.add(txtEmailClient);
+		this.panelBackClient.add(this.txtEmailClient);
 
 		/**
-		 * Label Teléfono.
+		 * Label Teléfono Cliente.
 		 */
 		this.labelPhoneClient = new JLabel("Teléfono:");
 		this.labelPhoneClient.setBounds(20, 170, 100, 25);
 		this.labelPhoneClient.setForeground(new Color(192, 192, 192));
 		this.labelPhoneClient.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackClient.add(labelPhoneClient);
+		this.panelBackClient.add(this.labelPhoneClient);
 
 		/**
-		 * Campo de texto para ingresar el teléfono del usuario a registrar.
+		 * Campo de texto para ingresar el teléfono del Cliente a registrar.
 		 */
 		this.txtPhoneClient = new JTextField();
 		this.txtPhoneClient.setBounds(20, 190, 230, 25);
@@ -147,16 +147,16 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtPhoneClient.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtPhoneClient.setHorizontalAlignment(JLabel.LEFT);
 		this.txtPhoneClient.setForeground(Color.WHITE);
-		this.panelBackClient.add(txtPhoneClient);
+		this.panelBackClient.add(this.txtPhoneClient);
 
 		/**
-		 * Label Dirección.
+		 * Label Dirección Cliente.
 		 */
 		this.labelAdressClient = new JLabel("Dirección:");
 		this.labelAdressClient.setBounds(20, 230, 100, 25);
 		this.labelAdressClient.setForeground(new Color(192, 192, 192));
 		this.labelAdressClient.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackClient.add(labelAdressClient);
+		this.panelBackClient.add(this.labelAdressClient);
 
 		/**
 		 * Campo de texto para ingresar la dirección del cliente a registrar.
@@ -167,25 +167,25 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtAdressClient.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtAdressClient.setHorizontalAlignment(JLabel.LEFT);
 		this.txtAdressClient.setForeground(Color.WHITE);
-		this.panelBackClient.add(txtAdressClient);
+		this.panelBackClient.add(this.txtAdressClient);
 
 		/**
-		 * Label Password.
+		 * Label Registrar Cliente.
 		 */
 		this.labelRegisterClient = new JLabel("Registrar Cliente:");
 		this.labelRegisterClient.setBounds(350, 200, 100, 25);
 		this.labelRegisterClient.setForeground(new Color(192, 192, 192));
 		this.labelRegisterClient.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackClient.add(labelRegisterClient);
+		this.panelBackClient.add(this.labelRegisterClient);
 
 		/**
-		 * Botón para registrar un cliente en el sistema.
+		 * Botón para registrar un Cliente en el sistema.
 		 */
 		this.btnRegisterClient = new JButton();
 		this.btnRegisterClient.setBounds(350, 100, 70, 70);
 		this.btnRegisterClient.setIcon(new ImageIcon("src/img/add.png"));
 		this.btnRegisterClient.addActionListener(this);
-		this.panelBackClient.add(btnRegisterClient);
+		this.panelBackClient.add(this.btnRegisterClient);
 	}
 
 	@Override
@@ -195,35 +195,39 @@ public class RegisterClient extends JFrame implements ActionListener {
 			int validation = 0;
 			String name, mail, phone, adress;
 
-			// Recuperamos los valores de los text field
-			name = txtNameClient.getText().trim();
-			mail = txtEmailClient.getText().trim();
-			phone = txtPhoneClient.getText().trim();
-			adress = txtAdressClient.getText().trim();
+			/**
+			 *  Recuperamos los valores de los text field
+			 */
+			name = this.txtNameClient.getText().trim();
+			mail = this.txtEmailClient.getText().trim();
+			phone = this.txtPhoneClient.getText().trim();
+			adress = this.txtAdressClient.getText().trim();
 
-			// Validacion de los campos
+			/**
+			 *  Validacion de los campos
+			 */
 			if (name.equals("")) {
-				txtNameClient.setBackground(Color.red);
+				this.txtNameClient.setBackground(Color.red);
 				validation++;
 			}
 			if (mail.equals("")) {
-				txtEmailClient.setBackground(Color.red);
+				this.txtEmailClient.setBackground(Color.red);
 				validation++;
 			}
 			if (phone.equals("")) {
-				txtPhoneClient.setBackground(Color.red);
+				this.txtPhoneClient.setBackground(Color.red);
 				validation++;
 			}
 			if (adress.equals("")) {
-				txtAdressClient.setBackground(Color.red);
+				this.txtAdressClient.setBackground(Color.red);
 				validation++;
 			}
 
-			// Insertando clientes a la base de datos
+			/**
+			 *  Insertando clientes a la base de datos
+			 */
 			if (validation == 0) {
-
 				try {
-
 					Connection cn = (Connection) DatabaseConnection.conectar();
 					PreparedStatement pst = (PreparedStatement) cn
 							.prepareStatement("INSERT INTO clientes VALUES (?,?,?,?,?,?)");
@@ -234,26 +238,22 @@ public class RegisterClient extends JFrame implements ActionListener {
 					pst.setString(4, phone);
 					pst.setString(5, adress);
 					pst.setString(6, "hola");
-
 					pst.executeUpdate();
 					cn.close();
-
+					
 					Limpiar();
 
-					txtNameClient.setBackground(Color.green);
-					txtEmailClient.setBackground(Color.green);
-					txtPhoneClient.setBackground(Color.green);
-					txtAdressClient.setBackground(Color.green);
+					this.txtNameClient.setBackground(Color.green);
+					this.txtEmailClient.setBackground(Color.green);
+					this.txtPhoneClient.setBackground(Color.green);
+					this.txtAdressClient.setBackground(Color.green);
 
 					JOptionPane.showMessageDialog(null, "Registro exitoso");
-
 					this.dispose();
-
 				} catch (SQLException ex) {
 					System.err.println("Error en registrar Cliente " + ex);
 					JOptionPane.showMessageDialog(null, "¡¡Error al registrar cliente, contacte al Administrador!!");
 				}
-
 			} else {
 				JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
 			}

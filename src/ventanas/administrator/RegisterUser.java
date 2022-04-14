@@ -54,12 +54,12 @@ public class RegisterUser extends JFrame implements ActionListener {
 	 * Limpia los campos de texto.
 	 */
 	public void Limpiar() {
-		txtEmailUser.setText("");
-		txtNameUser.setText("");
-		txtPassword.setText("");
-		txtPhoneUser.setText("");
-		txtUsername.setText("");
-		cmbPermissions.setSelectedIndex(0);
+		this.txtEmailUser.setText("");
+		this.txtNameUser.setText("");
+		this.txtPassword.setText("");
+		this.txtPhoneUser.setText("");
+		this.txtUsername.setText("");
+		this.cmbPermissions.setSelectedIndex(0);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.panelBackUser = new JPanel();
 		this.panelBackUser.setBackground(new Color(46, 59, 104));
 		this.panelBackUser.setLayout(null);
-		this.setContentPane(panelBackUser);
+		this.setContentPane(this.panelBackUser);
 
 		/**
 		 * Título de la ventana.
@@ -82,7 +82,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.labelRegisterUser.setBounds(210, 10, 250, 20);
 		this.labelRegisterUser.setForeground(new Color(192, 192, 192));
 		this.labelRegisterUser.setFont(new Font("serif", Font.BOLD, 20));
-		this.panelBackUser.add(labelRegisterUser);
+		this.panelBackUser.add(this.labelRegisterUser);
 
 		/**
 		 * Label Nombre.
@@ -91,7 +91,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.labelNameUser.setBounds(20, 50, 100, 25);
 		this.labelNameUser.setForeground(new Color(192, 192, 192));
 		this.labelNameUser.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(labelNameUser);
+		this.panelBackUser.add(this.labelNameUser);
 
 		/**
 		 * Campo de texto para ingresar el nombre del usuario a registrar.
@@ -103,7 +103,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtNameUser.setHorizontalAlignment(JLabel.LEFT);
 		this.txtNameUser.setForeground(Color.WHITE);
 		this.txtNameUser.requestFocus();
-		this.panelBackUser.add(txtNameUser);
+		this.panelBackUser.add(this.txtNameUser);
 
 		/**
 		 * Label Email.
@@ -112,7 +112,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.labelEmailUser.setBounds(20, 110, 100, 25);
 		this.labelEmailUser.setForeground(new Color(192, 192, 192));
 		this.labelEmailUser.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(labelEmailUser);
+		this.panelBackUser.add(this.labelEmailUser);
 
 		/*
 		 * Campo de texto para ingresar el Email del usuario a registrar.
@@ -123,7 +123,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtEmailUser.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtEmailUser.setHorizontalAlignment(JLabel.LEFT);
 		this.txtEmailUser.setForeground(Color.WHITE);
-		this.panelBackUser.add(txtEmailUser);
+		this.panelBackUser.add(this.txtEmailUser);
 
 		/**
 		 * Label Teléfono.
@@ -132,7 +132,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.labelPhoneUser.setBounds(20, 170, 100, 25);
 		this.labelPhoneUser.setForeground(new Color(192, 192, 192));
 		this.labelPhoneUser.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(labelPhoneUser);
+		this.panelBackUser.add(this.labelPhoneUser);
 
 		/**
 		 * Campo de texto para ingresar el teléfono del usuario a registrar.
@@ -143,7 +143,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtPhoneUser.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtPhoneUser.setHorizontalAlignment(JLabel.LEFT);
 		this.txtPhoneUser.setForeground(Color.WHITE);
-		this.panelBackUser.add(txtPhoneUser);
+		this.panelBackUser.add(this.txtPhoneUser);
 
 		/**
 		 * Label Permisos de.
@@ -152,7 +152,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.labelPermissionsOf.setBounds(20, 230, 100, 25);
 		this.labelPermissionsOf.setForeground(new Color(192, 192, 192));
 		this.labelPermissionsOf.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(labelPermissionsOf);
+		this.panelBackUser.add(this.labelPermissionsOf);
 
 		/**
 		 * ComboBox con los permisos existentes en la aplicación.
@@ -165,7 +165,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.cmbPermissions.setBackground(new Color(127, 140, 141));
 		this.cmbPermissions.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbPermissions.setForeground(Color.WHITE);
-		this.panelBackUser.add(cmbPermissions);
+		this.panelBackUser.add(this.cmbPermissions);
 
 		/**
 		 * Label Username.
@@ -174,7 +174,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.labelUsername.setBounds(360, 50, 100, 25);
 		this.labelUsername.setForeground(new Color(192, 192, 192));
 		this.labelUsername.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(labelUsername);
+		this.panelBackUser.add(this.labelUsername);
 
 		/**
 		 * Campo de texto para ingresar el username del usuario a registrar.
@@ -185,8 +185,8 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtUsername.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtUsername.setHorizontalAlignment(JLabel.LEFT);
 		this.txtUsername.setForeground(Color.WHITE);
-		this.panelBackUser.add(txtUsername);
-		
+		this.panelBackUser.add(this.txtUsername);
+
 		/**
 		 * Label Password.
 		 */
@@ -194,7 +194,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.labelPassword.setBounds(360, 110, 100, 25);
 		this.labelPassword.setForeground(new Color(192, 192, 192));
 		this.labelPassword.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(labelPassword);
+		this.panelBackUser.add(this.labelPassword);
 
 		/**
 		 * Campo de texto para ingresar la contraseña del usuario a registrar.
@@ -205,8 +205,8 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtPassword.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtPassword.setHorizontalAlignment(JLabel.LEFT);
 		this.txtPassword.setForeground(Color.WHITE);
-		this.panelBackUser.add(txtPassword);
-		
+		this.panelBackUser.add(this.txtPassword);
+
 		/**
 		 * Botón para registrar un usuario en el sistema.
 		 */
@@ -214,7 +214,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.btnRegisterUser.setBounds(470, 180, 120, 100);
 		this.btnRegisterUser.setIcon(new ImageIcon("src/img/addUser.png"));
 		this.btnRegisterUser.addActionListener(this);
-		this.panelBackUser.add(btnRegisterUser);
+		this.panelBackUser.add(this.btnRegisterUser);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -232,34 +232,34 @@ public class RegisterUser extends JFrame implements ActionListener {
 			/**
 			 * Guardamos lo que esta en los txt en las variables que acabamos de crear
 			 */
-			email = txtEmailUser.getText().trim();
-			phone = txtPhoneUser.getText().trim();
-			username = txtUsername.getText().trim();
-			password = txtPassword.getText().trim();
-			name = txtNameUser.getText().trim();
-			permissionsCmb = cmbPermissions.getSelectedIndex() + 1; // Guardamos lo que esta en el comboBox
+			email = this.txtEmailUser.getText().trim();
+			phone = this.txtPhoneUser.getText().trim();
+			username = this.txtUsername.getText().trim();
+			password = this.txtPassword.getText().trim();
+			name = this.txtNameUser.getText().trim();
+			permissionsCmb = this.cmbPermissions.getSelectedIndex() + 1; // Guardamos lo que esta en el comboBox
 
 			/**
 			 * Validacion de campos para que no queden vacios.
 			 */
 			if (email.equals("")) {
-				txtEmailUser.setBackground(Color.red);
+				this.txtEmailUser.setBackground(Color.red);
 				validation++;
 			}
 			if (username.equals("")) {
-				txtUsername.setBackground(Color.red);
+				this.txtUsername.setBackground(Color.red);
 				validation++;
 			}
 			if (password.equals("")) {
-				txtPassword.setBackground(Color.red);
+				this.txtPassword.setBackground(Color.red);
 				validation++;
 			}
 			if (name.equals("")) {
-				txtNameUser.setBackground(Color.red);
+				this.txtNameUser.setBackground(Color.red);
 				validation++;
 			}
 			if (phone.equals("")) {
-				txtPhoneUser.setBackground(Color.red);
+				this.txtPhoneUser.setBackground(Color.red);
 				validation++;
 			}
 
@@ -267,11 +267,11 @@ public class RegisterUser extends JFrame implements ActionListener {
 			 * Convertimos lo que nos retorna el comboBox a String.
 			 */
 			switch (permissionsCmb) {
-				case 1 -> permissionsString = "Administrador";
-				case 3 -> permissionsString = "Capturista";
-				case 2 -> permissionsString = "Tecnico";
-				default -> {
-				}
+			case 1 -> permissionsString = "Administrador";
+			case 3 -> permissionsString = "Capturista";
+			case 2 -> permissionsString = "Tecnico";
+			default -> {
+			}
 			}
 
 			/**
@@ -288,7 +288,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 				 * Si la consulta encontro algo.
 				 */
 				if (rs.next()) {
-					txtUsername.setBackground(Color.red);
+					this.txtUsername.setBackground(Color.red);
 					JOptionPane.showMessageDialog(null, "Nombre de usuario no disponible");
 					cn.close();
 				} else {
@@ -320,19 +320,18 @@ public class RegisterUser extends JFrame implements ActionListener {
 							cn2.close();
 
 							/**
-							 *  Ahora procedemos a limpiar los campos de texto.
+							 * Ahora procedemos a limpiar los campos de texto.
 							 */
 							Limpiar();
 
 							/**
-							 *  Iluminamos los campos de texto de color verde.
+							 * Iluminamos los campos de texto de color verde.
 							 */
-							txtEmailUser.setBackground(Color.green);
-							txtNameUser.setBackground(Color.green);
-							txtPassword.setBackground(Color.green);
-							txtPhoneUser.setBackground(Color.green);
-							txtUsername.setBackground(Color.green);
-
+							this.txtEmailUser.setBackground(Color.green);
+							this.txtNameUser.setBackground(Color.green);
+							this.txtPassword.setBackground(Color.green);
+							this.txtPhoneUser.setBackground(Color.green);
+							this.txtUsername.setBackground(Color.green);
 							JOptionPane.showMessageDialog(null, "Registro exitoso");
 							this.dispose();
 						} catch (SQLException ex) {
