@@ -36,6 +36,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 	private String user = "", user_update = "";
 	private DefaultTableModel model = new DefaultTableModel();
 	public static int idEquipment = 0;
+	public static int idClient = 0;
 	private JLabel labelTittle;
 	private JLabel labelName;
 	private JLabel labelEmail;
@@ -60,11 +61,11 @@ public class ClientInformation extends JFrame implements ActionListener {
 		initComponents();
 		this.user = Login.user;
 		this.user_update = ManagementClients.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
+		idClient = ManagementClients.id_cliente_update;
 		this.setResizable(false);
 		this.setSize(630, 460);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.labelTittle.setText("Información del cliente " + this.user_update);
 
 		/**
 		 * Conexion a la base de datos
@@ -72,21 +73,21 @@ public class ClientInformation extends JFrame implements ActionListener {
 		try {
 			Connection cn = (Connection) DatabaseConnection.conectar();
 			PreparedStatement pst = (PreparedStatement) cn
-					.prepareStatement("SELECT * FROM clientes WHERE id_cliente = '" + user_update + "'");
+					.prepareStatement("SELECT * FROM clientes WHERE id_cliente = '" + idClient + "'");
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
 				this.setTitle("Información del cliente " + rs.getString("nombre_cliente") + " - Sesión de " + user);
-				labelTittle.setText("Información del cliente " + rs.getString("nombre_cliente"));
+				this.labelTittle.setText("Información del cliente " + rs.getString("nombre_cliente"));
 
 				/**
 				 * Llenado de los campos con la base de datos
 				 */
-				txtName.setText(rs.getString("nombre_cliente"));
-				txtEmail.setText(rs.getString("mail_cliente"));
-				txtPhone.setText(rs.getString("tel_cliente"));
-				txtAdress.setText(rs.getString("dir_cliente"));
-				txtModifyBy.setText(rs.getString("ultima_modificacion"));
+				this.txtName.setText(rs.getString("nombre_cliente"));
+				this.txtEmail.setText(rs.getString("mail_cliente"));
+				this.txtPhone.setText(rs.getString("tel_cliente"));
+				this.txtAdress.setText(rs.getString("dir_cliente"));
+				this.txtModifyBy.setText(rs.getString("ultima_modificacion"));
 			}
 			cn.close();
 		} catch (SQLException e) {
