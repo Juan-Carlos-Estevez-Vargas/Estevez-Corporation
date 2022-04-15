@@ -60,7 +60,7 @@ public class ManagementClients extends JFrame {
 			this.tableClients.setFont(new Font("serif", Font.BOLD, 14));
 			this.tableClients.setForeground(Color.BLACK);
 			this.scrollPaneClients = new JScrollPane(this.tableClients);
-			this.scrollPaneClients.setBounds(25, 55, 540, 200);
+			this.scrollPaneClients.setBounds(10, 55, 593, 230);
 			this.scrollPaneClients.setViewportView(this.tableClients);
 
 			/**

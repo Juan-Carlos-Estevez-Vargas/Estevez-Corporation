@@ -8,6 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -53,6 +55,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 	private JPanel container;
 	private JButton btnRegisterEquipment;
 	private JButton btnUpdateEquipment;
+	private JButton btnPrint;
 
 	/**
 	 * Constructor de clase.
@@ -63,7 +66,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.user_update = ManagementClients.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
 		idClient = ManagementClients.id_cliente_update;
 		this.setResizable(false);
-		this.setSize(630, 460);
+		this.setSize(680, 460);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
@@ -109,7 +112,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 			this.tableEquipment.setFont(new Font("serif", Font.BOLD, 14));
 			this.tableEquipment.setForeground(Color.BLACK);
 			this.scrollEquipment = new JScrollPane(this.tableEquipment);
-			this.scrollEquipment.setBounds(280, 65, 315, 170);
+			this.scrollEquipment.setBounds(270, 65, 370, 170);
 			this.scrollEquipment.setViewportView(this.tableEquipment);
 
 			this.model.addColumn("ID equipo");
@@ -159,7 +162,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.container = new JPanel();
 		this.container.setBackground(new Color(46, 59, 104));
 		this.container.setLayout(null);
-		this.container.setBounds(630, 460, 630, 460);
+		this.container.setBounds(680, 460, 680, 460);
 		this.setContentPane(this.container);
 
 		/**
@@ -224,7 +227,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.txtName.setBounds(20, 70, 230, 30);
 		this.txtName.setBackground(new Color(127, 140, 141));
 		this.txtName.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtName.setHorizontalAlignment(JLabel.LEFT);
+		this.txtName.setHorizontalAlignment(JLabel.CENTER);
 		this.txtName.setForeground(Color.WHITE);
 		this.container.add(this.txtName);
 
@@ -235,7 +238,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.txtEmail.setBounds(20, 130, 230, 30);
 		this.txtEmail.setBackground(new Color(127, 140, 141));
 		this.txtEmail.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtEmail.setHorizontalAlignment(JLabel.LEFT);
+		this.txtEmail.setHorizontalAlignment(JLabel.CENTER);
 		this.txtEmail.setForeground(Color.WHITE);
 		this.container.add(this.txtEmail);
 
@@ -248,7 +251,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.txtPhone.setBounds(20, 190, 230, 30);
 		this.txtPhone.setBackground(new Color(127, 140, 141));
 		this.txtPhone.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtPhone.setHorizontalAlignment(JLabel.LEFT);
+		this.txtPhone.setHorizontalAlignment(JLabel.CENTER);
 		this.txtPhone.setForeground(Color.WHITE);
 		this.container.add(this.txtPhone);
 
@@ -298,6 +301,14 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.btnUpdateEquipment.setHorizontalAlignment(JButton.CENTER);
 		this.btnUpdateEquipment.addActionListener(this);
 		this.container.add(this.btnUpdateEquipment);
+		
+		/**
+		 * Botón para imprimir los clientes.
+		 */
+		this.btnPrint = new JButton();
+		this.btnPrint.setBounds(500, 260, 90, 90);
+		this.btnPrint.setIcon(new ImageIcon("src/img/impresora.png"));
+		this.container.add(this.btnPrint);
 
 	}
 	

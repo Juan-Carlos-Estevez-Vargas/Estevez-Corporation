@@ -104,7 +104,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtNameClient.setBounds(20, 70, 230, 25);
 		this.txtNameClient.setBackground(new Color(127, 140, 141));
 		this.txtNameClient.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtNameClient.setHorizontalAlignment(JLabel.LEFT);
+		this.txtNameClient.setHorizontalAlignment(JLabel.CENTER);
 		this.txtNameClient.setForeground(Color.WHITE);
 		this.txtNameClient.requestFocus();
 		this.panelBackClient.add(this.txtNameClient);
@@ -125,7 +125,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtEmailClient.setBounds(20, 130, 230, 25);
 		this.txtEmailClient.setBackground(new Color(127, 140, 141));
 		this.txtEmailClient.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtEmailClient.setHorizontalAlignment(JLabel.LEFT);
+		this.txtEmailClient.setHorizontalAlignment(JLabel.CENTER);
 		this.txtEmailClient.setForeground(Color.WHITE);
 		this.panelBackClient.add(this.txtEmailClient);
 
@@ -145,7 +145,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtPhoneClient.setBounds(20, 190, 230, 25);
 		this.txtPhoneClient.setBackground(new Color(127, 140, 141));
 		this.txtPhoneClient.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtPhoneClient.setHorizontalAlignment(JLabel.LEFT);
+		this.txtPhoneClient.setHorizontalAlignment(JLabel.CENTER);
 		this.txtPhoneClient.setForeground(Color.WHITE);
 		this.panelBackClient.add(this.txtPhoneClient);
 
@@ -165,7 +165,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtAdressClient.setBounds(20, 250, 230, 25);
 		this.txtAdressClient.setBackground(new Color(127, 140, 141));
 		this.txtAdressClient.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtAdressClient.setHorizontalAlignment(JLabel.LEFT);
+		this.txtAdressClient.setHorizontalAlignment(JLabel.CENTER);
 		this.txtAdressClient.setForeground(Color.WHITE);
 		this.panelBackClient.add(this.txtAdressClient);
 
