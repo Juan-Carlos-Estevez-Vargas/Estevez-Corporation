@@ -2,6 +2,8 @@ package ventanas.employee;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -10,24 +12,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.table.DefaultTableModel;
-import ventanas.Login;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import modelo.DatabaseConnection;
 
 /**
  * 
  * @author Juan Carlos Estevez Vargas.
  *
  */
-public class EquipmentInformation extends JFrame{
+public class EquipmentInformation extends JFrame {
 
 	/**
 	 * Declaración de Variables.
 	 */
 	private static final long serialVersionUID = 1L;
-	private String user = "";
-	private int user_update = 0;
-	private DefaultTableModel model = new DefaultTableModel();
+	private String nameClient = "";
 	public static int idEquipment = 0;
+	public static int idClientUpdate = 0;
 	private JLabel labelTittle;
 	private JLabel labelName;
 	private JLabel labelTypeEquip;
@@ -43,26 +45,80 @@ public class EquipmentInformation extends JFrame{
 	private JTextField txtModel;
 	private JTextField txtSerialNumber;
 	private JTextField txtDateOfAdmission;
-	private JTextField txtModifyBy;	
+	private JTextField txtModifyBy;
 	private JComboBox<String> cmbStatus;
 	private JComboBox<String> cmbTypeEquip;
 	private JComboBox<String> cmbMark;
 	private JTextPane textPaneObservations;
 	private JTextPane textPaneComments;
+	private JScrollPane scrollObservations;
+	private JScrollPane scrollComments;
 	private JPanel container;
 	private JButton btnUpdateEquipment;
-	private JScrollPane scrollObservations;
 
 	/**
 	 * Constructor de clase.
 	 */
 	public EquipmentInformation() {
 		initComponents();
-		this.user = Login.user;
 		this.setResizable(false);
 		this.setSize(670, 530);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		idEquipment = ClientInformation.idEquipment;
+		idClientUpdate = ManagementClients.id_cliente_update;
+
+		/*
+		 * Recuperamos el nombre del cliente
+		 */
+		try {
+			Connection cn = (Connection) DatabaseConnection.conectar();
+			PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
+					"SELECT nombre_cliente FROM clientes WHERE id_cliente = '" + idClientUpdate + "'");
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				nameClient = rs.getString("nombre_cliente");
+				this.setTitle("Equipo del cliente " + nameClient);
+			}
+		} catch (SQLException e) {
+			System.err.println("Error al consultar el nombre del cliente " + e);
+		}
+
+		/**
+		 * Consultando la información general del equipo
+		 */
+		try {
+			Connection cn = (Connection) DatabaseConnection.conectar();
+			PreparedStatement pst = (PreparedStatement) cn
+					.prepareStatement("SELECT * FROM equipos WHERE id_equipo = '" + idEquipment + "'");
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				this.cmbTypeEquip.setSelectedItem(rs.getString("tipo_equipo"));
+				this.cmbMark.setSelectedItem(rs.getString("marca"));
+				this.cmbStatus.setSelectedItem(rs.getString("estatus"));
+				this.txtModel.setText(rs.getString("modelo"));
+				this.txtSerialNumber.setText(rs.getString("num_serie"));
+				this.txtModifyBy.setText(rs.getString("ultima_modificacion"));
+
+				/**
+				 * Recuperando la fecha
+				 */
+				String dia = "", mes = "", annio = "";
+				dia = rs.getString("dia_ingreso");
+				mes = rs.getString("mes_ingreso");
+				annio = rs.getString("annio_ingreso");
+
+				this.txtDateOfAdmission.setText(dia + " del " + mes + " del " + annio);
+				this.textPaneObservations.setText(rs.getString("observaciones"));
+				this.textPaneComments.setText(rs.getString("comentarios_tecnicos"));
+				this.labelComments
+						.setText("Comentarios y Actualizacion del técnico " + rs.getString("revision_tecnica_de"));
+			}
+		} catch (SQLException e) {
+			System.err.println("Error en consultar información del equipo " + e);
+		}
 	}
 
 	/**
@@ -133,7 +189,7 @@ public class EquipmentInformation extends JFrame{
 		this.labelSerialNumber.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelSerialNumber.setBounds(10, 300, 200, 20);
 		this.container.add(this.labelSerialNumber);
-		
+
 		/**
 		 * Label Modificado por.
 		 */
@@ -142,7 +198,7 @@ public class EquipmentInformation extends JFrame{
 		this.labelModifyBy.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelModifyBy.setBounds(10, 360, 200, 20);
 		this.container.add(this.labelModifyBy);
-		
+
 		/**
 		 * Label Fecha de Ingreso.
 		 */
@@ -151,7 +207,7 @@ public class EquipmentInformation extends JFrame{
 		this.labelDateOfAdmission.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelDateOfAdmission.setBounds(320, 60, 200, 20);
 		this.container.add(this.labelDateOfAdmission);
-		
+
 		/**
 		 * Label Estatus.
 		 */
@@ -160,7 +216,7 @@ public class EquipmentInformation extends JFrame{
 		this.labelStatus.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelStatus.setBounds(520, 60, 100, 20);
 		this.container.add(this.labelStatus);
-		
+
 		/**
 		 * Label Daño Reportado y Observaciones.
 		 */
@@ -169,7 +225,7 @@ public class EquipmentInformation extends JFrame{
 		this.labelObservations.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelObservations.setBounds(320, 110, 200, 20);
 		this.container.add(this.labelObservations);
-		
+
 		/**
 		 * Label Comentarios y Actualización del Técnico.
 		 */
@@ -245,7 +301,7 @@ public class EquipmentInformation extends JFrame{
 		this.cmbStatus.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbStatus.setForeground(Color.WHITE);
 		this.container.add(this.cmbStatus);
-		
+
 		/**
 		 * ComboBox con el tipo de equipo.
 		 */
@@ -265,9 +321,9 @@ public class EquipmentInformation extends JFrame{
 		this.cmbMark.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbMark.setForeground(Color.WHITE);
 		this.container.add(this.cmbMark);
-		
+
 		/**
-		 * TextPane cons las observaciones generales del equipo.
+		 * TextPane con las observaciones generales del equipo.
 		 */
 		this.textPaneObservations = new JTextPane();
 		this.textPaneObservations.setForeground(Color.BLACK);
@@ -277,7 +333,17 @@ public class EquipmentInformation extends JFrame{
 		this.scrollObservations.setViewportView(this.textPaneObservations);
 		this.container.add(this.scrollObservations);
 
-		
+		/**
+		 * TextPane con las observaciones del técnico.
+		 */
+		this.textPaneComments = new JTextPane();
+		this.textPaneComments.setForeground(Color.BLACK);
+		this.textPaneComments.setFont(new Font("serif", Font.BOLD, 14));
+		this.scrollComments = new JScrollPane(this.textPaneComments);
+		this.scrollComments.setBounds(320, 280, 320, 120);
+		this.scrollComments.setViewportView(this.textPaneComments);
+		this.container.add(this.scrollComments);
+
 		/**
 		 * Botón para actualizar el equipo en cuestión.
 		 */
@@ -287,7 +353,7 @@ public class EquipmentInformation extends JFrame{
 		this.btnUpdateEquipment.setBackground(new Color(8, 85, 224));
 		this.btnUpdateEquipment.setForeground(Color.WHITE);
 		this.btnUpdateEquipment.setHorizontalAlignment(JButton.CENTER);
-		//this.btnUpdateEquipment.addActionListener(this);
+		// this.btnUpdateEquipment.addActionListener(this);
 		this.container.add(this.btnUpdateEquipment);
 
 	}
