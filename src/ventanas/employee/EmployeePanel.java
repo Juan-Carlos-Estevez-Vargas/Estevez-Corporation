@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,6 +14,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+
+import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
@@ -35,6 +41,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 	private JButton btnPrintClients;
 	private JComboBox<String> cmbRole;
 	private String user;
+	private String nameUser;
 
 	/**
 	 * Constructor de clase.
@@ -48,6 +55,21 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
 		this.initComponents();
+		
+		try {
+
+            Connection cn = (Connection) DatabaseConnection.conectar();
+            PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
+                    "SELECT nombre_usuario FROM usuarios WHERE username = '" + user + "'");
+            ResultSet rs = pst.executeQuery();
+            
+            if (rs.next()) {
+                nameUser=rs.getString("nombre_usuario");
+                this.labelTittle.setText(nameUser);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error en consultar capturista");
+        }
 	}
 
 	/**
@@ -66,7 +88,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		/*
 		 * Label Usuario Logueado.
 		 */
-		this.labelTittle = new JLabel("Bienvenido - " + this.user);
+		this.labelTittle = new JLabel();
 		this.labelTittle.setBounds(10, 10, 280, 27);
 		this.labelTittle.setForeground(new Color(192, 192, 192));
 		this.labelTittle.setFont(new Font("serif", Font.BOLD, 20));

@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Calendar;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -24,7 +28,7 @@ import ventanas.Login;
  * @author Juan Carlos Estevez Vargas.
  *
  */
-public class RegisterEquipment extends JFrame implements ActionListener{
+public class RegisterEquipment extends JFrame implements ActionListener {
 
 	/**
 	 * Declaración de Variables
@@ -48,20 +52,35 @@ public class RegisterEquipment extends JFrame implements ActionListener{
 	private JPanel panelBackClient;
 	private JButton btnRegisterEquip;
 	private String user;
+	private String nameClient;
 
 	/**
 	 * Constructor de clase.
 	 */
 	public RegisterEquipment() {
 		this.user = Login.user;
-        this.setTitle("Registrar nuevo Equipo - Sesión de " + this.user);
+		this.setTitle("Registrar nuevo Equipo - Sesión de " + this.user);
 		this.setSize(630, 455);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
 		this.initComponents();
+		this.txtNameClient.setText(this.nameClient);
 		this.idClientUpdate = ManagementClients.id_cliente_update;
+
+		try {
+			Connection cn = (Connection) DatabaseConnection.conectar();
+			PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
+					"SELECT nombre_cliente FROM clientes WHERE id_cliente = '" + idClientUpdate + "'");
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				this.nameClient = rs.getString("nombre_cliente");
+			}
+		} catch (SQLException e) {
+			System.err.println("Error al consultar el nombre del cliente " + e);
+		}
 	}
 
 	/**
@@ -80,7 +99,7 @@ public class RegisterEquipment extends JFrame implements ActionListener{
 		/**
 		 * Título de la ventana.
 		 */
-		this.labelTitle = new JLabel("Registro de Equipo");
+		this.labelTitle = new JLabel("Registro de Equipo para " + this.nameClient);
 		this.labelTitle.setBounds(200, 10, 250, 20);
 		this.labelTitle.setForeground(new Color(192, 192, 192));
 		this.labelTitle.setFont(new Font("serif", Font.BOLD, 20));
@@ -102,9 +121,9 @@ public class RegisterEquipment extends JFrame implements ActionListener{
 		this.txtNameClient.setBounds(10, 80, 230, 25);
 		this.txtNameClient.setBackground(new Color(127, 140, 141));
 		this.txtNameClient.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtNameClient.setHorizontalAlignment(JLabel.LEFT);
+		this.txtNameClient.setHorizontalAlignment(JLabel.CENTER);
 		this.txtNameClient.setForeground(Color.WHITE);
-		this.txtNameClient.requestFocus();
+		this.txtNameClient.setEnabled(false);
 		this.panelBackClient.add(this.txtNameClient);
 
 		/**
@@ -124,6 +143,8 @@ public class RegisterEquipment extends JFrame implements ActionListener{
 		this.cmbTypeEquip.setBackground(new Color(127, 140, 141));
 		this.cmbTypeEquip.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbTypeEquip.setForeground(Color.WHITE);
+		this.cmbTypeEquip.setModel(
+				new DefaultComboBoxModel<>(new String[] { "Laptop", "Desktop", "Impresora", "Multifuncional" }));
 		this.panelBackClient.add(this.cmbTypeEquip);
 
 		/**
@@ -134,7 +155,7 @@ public class RegisterEquipment extends JFrame implements ActionListener{
 		this.labelMark.setForeground(new Color(192, 192, 192));
 		this.labelMark.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackClient.add(this.labelMark);
-		
+
 		/**
 		 * ComboBox con el tipo de equipo.
 		 */
@@ -143,6 +164,8 @@ public class RegisterEquipment extends JFrame implements ActionListener{
 		this.cmbMark.setBackground(new Color(127, 140, 141));
 		this.cmbMark.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbMark.setForeground(Color.WHITE);
+		this.cmbMark.setModel(new DefaultComboBoxModel<>(new String[] { "Acer", "Alienware", "Apple", "Asus", "Brother",
+				"Dell", "HP", "Lenovo", "Samsung", "Toshiba", "Xerox" }));
 		this.panelBackClient.add(this.cmbMark);
 
 		/**
@@ -161,7 +184,7 @@ public class RegisterEquipment extends JFrame implements ActionListener{
 		this.txtModel.setBounds(10, 260, 230, 25);
 		this.txtModel.setBackground(new Color(127, 140, 141));
 		this.txtModel.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtModel.setHorizontalAlignment(JLabel.LEFT);
+		this.txtModel.setHorizontalAlignment(JLabel.CENTER);
 		this.txtModel.setForeground(Color.WHITE);
 		this.panelBackClient.add(this.txtModel);
 
@@ -173,7 +196,7 @@ public class RegisterEquipment extends JFrame implements ActionListener{
 		this.labelSerialNumber.setForeground(new Color(192, 192, 192));
 		this.labelSerialNumber.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackClient.add(this.labelSerialNumber);
-		
+
 		/**
 		 * Campo de texto para ingresar la dirección del cliente a registrar.
 		 */
@@ -181,10 +204,10 @@ public class RegisterEquipment extends JFrame implements ActionListener{
 		this.txtSerialNumber.setBounds(10, 320, 230, 25);
 		this.txtSerialNumber.setBackground(new Color(127, 140, 141));
 		this.txtSerialNumber.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtSerialNumber.setHorizontalAlignment(JLabel.LEFT);
+		this.txtSerialNumber.setHorizontalAlignment(JLabel.CENTER);
 		this.txtSerialNumber.setForeground(Color.WHITE);
 		this.panelBackClient.add(this.txtSerialNumber);
-		
+
 		/**
 		 * Label Registrar Cliente.
 		 */
@@ -193,7 +216,7 @@ public class RegisterEquipment extends JFrame implements ActionListener{
 		this.labelObservations.setForeground(new Color(192, 192, 192));
 		this.labelObservations.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackClient.add(this.labelObservations);
-		
+
 		/**
 		 * TextPane con las observaciones del técnico.
 		 */
@@ -216,80 +239,80 @@ public class RegisterEquipment extends JFrame implements ActionListener{
 		this.btnRegisterEquip.setHorizontalAlignment(JButton.CENTER);
 		this.btnRegisterEquip.addActionListener(this);
 		this.panelBackClient.add(this.btnRegisterEquip);
-		 
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		if (e.getSource() == this.btnRegisterEquip) {
 			int validation = 0;
-	        String typeEquip, mark, model, serialNumber, day, month, year, status, observations;
+			String typeEquip, mark, model, serialNumber, day, month, year, status, observations;
 
-	        typeEquip = this.cmbTypeEquip.getSelectedItem().toString();
-	        mark = this.cmbMark.getSelectedItem().toString();
-	        model = this.txtModel.getText().trim();
-	        serialNumber = this.txtSerialNumber.getText().trim();
-	        observations = this.textPaneObservations.getText();
-	        status = "Nuevo Ingreso";
+			typeEquip = this.cmbTypeEquip.getSelectedItem().toString();
+			mark = this.cmbMark.getSelectedItem().toString();
+			model = this.txtModel.getText().trim();
+			serialNumber = this.txtSerialNumber.getText().trim();
+			observations = this.textPaneObservations.getText();
+			status = "Nuevo Ingreso";
 
-	        Calendar calendar = Calendar.getInstance();
+			Calendar calendar = Calendar.getInstance();
 
-	        day = Integer.toString(calendar.get(Calendar.DATE)); //Recuperamos el dia de ingreso del equipo
-	        month = Integer.toString(calendar.get(Calendar.MONTH)); //Recuperamos el mes de ingreso del equipo
-	        year = Integer.toString(calendar.get(Calendar.YEAR)); //Recuperamos el año de ingreso del equipo
+			day = Integer.toString(calendar.get(Calendar.DATE)); // Recuperamos el dia de ingreso del equipo
+			month = Integer.toString(calendar.get(Calendar.MONTH)); // Recuperamos el mes de ingreso del equipo
+			year = Integer.toString(calendar.get(Calendar.YEAR)); // Recuperamos el año de ingreso del equipo
 
-	        /**
-	         * Validacion de campos
-	         */
-	        if (model.equals("")) {
-	            this.txtModel.setBackground(Color.red);
-	            validation++;
-	        }
-	        if (serialNumber.equals("")) {
-	            this.txtSerialNumber.setBackground(Color.red);
-	            validation++;
-	        }
-	        if (observations.equals("")) {
-	            this.textPaneObservations.setText("Sin observaciones.");
-	        }
+			/**
+			 * Validacion de campos
+			 */
+			if (model.equals("")) {
+				this.txtModel.setBackground(Color.red);
+				validation++;
+			}
+			if (serialNumber.equals("")) {
+				this.txtSerialNumber.setBackground(Color.red);
+				validation++;
+			}
+			if (observations.equals("")) {
+				this.textPaneObservations.setText("Sin observaciones.");
+			}
 
-	        if (validation == 0) {
-	            try {
-	                Connection cn = (Connection) DatabaseConnection.conectar();
-	                PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
-	                        "INSERT INTO equipos VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			if (validation == 0) {
+				try {
+					Connection cn = (Connection) DatabaseConnection.conectar();
+					PreparedStatement pst = (PreparedStatement) cn
+							.prepareStatement("INSERT INTO equipos VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-	                pst.setInt(1, 0);
-	                pst.setInt(2, idClientUpdate);
-	                pst.setString(3, typeEquip);
-	                pst.setString(4, mark);
-	                pst.setString(5, model);
-	                pst.setString(6, serialNumber);
-	                pst.setString(7, day);
-	                pst.setString(8, month);
-	                pst.setString(9, year);
-	                pst.setString(10, observations);
-	                pst.setString(11, status);
-	                pst.setString(12, user);
-	                pst.setString(13, "");
-	                pst.setString(14, "");
-	                pst.executeUpdate();
-	                cn.close();
+					pst.setInt(1, 0);
+					pst.setInt(2, idClientUpdate);
+					pst.setString(3, typeEquip);
+					pst.setString(4, mark);
+					pst.setString(5, model);
+					pst.setString(6, serialNumber);
+					pst.setString(7, day);
+					pst.setString(8, month);
+					pst.setString(9, year);
+					pst.setString(10, observations);
+					pst.setString(11, status);
+					pst.setString(12, user);
+					pst.setString(13, "");
+					pst.setString(14, "");
+					pst.executeUpdate();
+					cn.close();
 
-	                this.txtModel.setBackground(Color.green);
-	                this.txtNameClient.setBackground(Color.green);
-	                this.txtSerialNumber.setBackground(Color.green);
+					this.txtModel.setBackground(Color.green);
+					this.txtNameClient.setBackground(Color.green);
+					this.txtSerialNumber.setBackground(Color.green);
 
-	                JOptionPane.showMessageDialog(null, "Registro exitoso");
-	                this.dispose();
-	            } catch (Exception ex) {
-	                System.err.println("Error en registrar el equipo " + ex);
-	                JOptionPane.showMessageDialog(null, "¡¡Error al registrar el equipo!! Contacte al Administrador");
-	            }
-	        } else {
-	            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
-	        }
+					JOptionPane.showMessageDialog(null, "Registro exitoso");
+					this.dispose();
+				} catch (Exception ex) {
+					System.err.println("Error en registrar el equipo " + ex);
+					JOptionPane.showMessageDialog(null, "¡¡Error al registrar el equipo!! Contacte al Administrador");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+			}
 		}
 	}
 }
