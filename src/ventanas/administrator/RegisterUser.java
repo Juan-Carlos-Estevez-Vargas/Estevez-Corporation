@@ -9,6 +9,7 @@ import java.sql.*;
 import javax.swing.*;
 
 import modelo.DatabaseConnection;
+import ventanas.Login;
 
 /**
  * 
@@ -36,13 +37,15 @@ public class RegisterUser extends JFrame implements ActionListener {
 	private JPanel panelBackUser;
 	private JButton btnRegisterUser;
 	private JComboBox<String> cmbPermissions;
+	private String user;
 
 	/**
 	 * Constructor de clase.
 	 */
 	public RegisterUser() {
+		this.user = Login.user;
 		this.setSize(630, 360);
-		this.setTitle("Registrar Usuario");
+		this.setTitle("Registrar Usuario - Sesión de " + this.user);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
@@ -79,7 +82,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 * Título de la ventana.
 		 */
 		this.labelRegisterUser = new JLabel("Registro de Usuarios");
-		this.labelRegisterUser.setBounds(210, 10, 250, 20);
+		this.labelRegisterUser.setBounds(210, 10, 250, 30);
 		this.labelRegisterUser.setForeground(new Color(192, 192, 192));
 		this.labelRegisterUser.setFont(new Font("serif", Font.BOLD, 20));
 		this.panelBackUser.add(this.labelRegisterUser);
@@ -97,10 +100,10 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 * Campo de texto para ingresar el nombre del usuario a registrar.
 		 */
 		this.txtNameUser = new JTextField();
-		this.txtNameUser.setBounds(20, 70, 230, 25);
+		this.txtNameUser.setBounds(20, 70, 280, 25);
 		this.txtNameUser.setBackground(new Color(127, 140, 141));
 		this.txtNameUser.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtNameUser.setHorizontalAlignment(JLabel.LEFT);
+		this.txtNameUser.setHorizontalAlignment(JLabel.CENTER);
 		this.txtNameUser.setForeground(Color.WHITE);
 		this.txtNameUser.requestFocus();
 		this.panelBackUser.add(this.txtNameUser);
@@ -118,10 +121,10 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 * Campo de texto para ingresar el Email del usuario a registrar.
 		 */
 		this.txtEmailUser = new JTextField();
-		this.txtEmailUser.setBounds(20, 130, 230, 25);
+		this.txtEmailUser.setBounds(20, 130, 280, 25);
 		this.txtEmailUser.setBackground(new Color(127, 140, 141));
 		this.txtEmailUser.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtEmailUser.setHorizontalAlignment(JLabel.LEFT);
+		this.txtEmailUser.setHorizontalAlignment(JLabel.CENTER);
 		this.txtEmailUser.setForeground(Color.WHITE);
 		this.panelBackUser.add(this.txtEmailUser);
 
@@ -141,7 +144,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtPhoneUser.setBounds(20, 190, 230, 25);
 		this.txtPhoneUser.setBackground(new Color(127, 140, 141));
 		this.txtPhoneUser.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtPhoneUser.setHorizontalAlignment(JLabel.LEFT);
+		this.txtPhoneUser.setHorizontalAlignment(JLabel.CENTER);
 		this.txtPhoneUser.setForeground(Color.WHITE);
 		this.panelBackUser.add(this.txtPhoneUser);
 
@@ -183,7 +186,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtUsername.setBounds(360, 70, 230, 25);
 		this.txtUsername.setBackground(new Color(127, 140, 141));
 		this.txtUsername.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtUsername.setHorizontalAlignment(JLabel.LEFT);
+		this.txtUsername.setHorizontalAlignment(JLabel.CENTER);
 		this.txtUsername.setForeground(Color.WHITE);
 		this.panelBackUser.add(this.txtUsername);
 
@@ -203,7 +206,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtPassword.setBounds(360, 130, 230, 25);
 		this.txtPassword.setBackground(new Color(127, 140, 141));
 		this.txtPassword.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtPassword.setHorizontalAlignment(JLabel.LEFT);
+		this.txtPassword.setHorizontalAlignment(JLabel.CENTER);
 		this.txtPassword.setForeground(Color.WHITE);
 		this.panelBackUser.add(this.txtPassword);
 

@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
+import ventanas.Login;
 
 /**
  * 
@@ -54,6 +55,7 @@ public class UserInformation extends JFrame implements ActionListener {
 	 */
 	public UserInformation() {
 		initComponents();
+		this.user = Login.user;
 		this.user_update = ManagementUsers.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
 		this.setResizable(false);
 		this.setTitle("Información del usuario " + user_update + " - Sesión de " + user);
@@ -180,10 +182,10 @@ public class UserInformation extends JFrame implements ActionListener {
 		 * Campo de texto con la información del nombre del usuario a actualizar.
 		 */
 		this.txtName = new JTextField();
-		this.txtName.setBounds(20, 70, 230, 30);
+		this.txtName.setBounds(20, 70, 280, 30);
 		this.txtName.setBackground(new Color(127, 140, 141));
 		this.txtName.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtName.setHorizontalAlignment(JLabel.LEFT);
+		this.txtName.setHorizontalAlignment(JLabel.CENTER);
 		this.txtName.setForeground(Color.WHITE);
 		this.container.add(this.txtName);
 
@@ -191,10 +193,10 @@ public class UserInformation extends JFrame implements ActionListener {
 		 * Campo de texto con la información del email del usuario a actualizar.
 		 */
 		this.txtEmail = new JTextField();
-		this.txtEmail.setBounds(20, 130, 230, 30);
+		this.txtEmail.setBounds(20, 130, 280, 30);
 		this.txtEmail.setBackground(new Color(127, 140, 141));
 		this.txtEmail.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtEmail.setHorizontalAlignment(JLabel.LEFT);
+		this.txtEmail.setHorizontalAlignment(JLabel.CENTER);
 		this.txtEmail.setForeground(Color.WHITE);
 		this.container.add(this.txtEmail);
 
@@ -207,7 +209,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.txtPhone.setBounds(20, 190, 230, 30);
 		this.txtPhone.setBackground(new Color(127, 140, 141));
 		this.txtPhone.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtPhone.setHorizontalAlignment(JLabel.LEFT);
+		this.txtPhone.setHorizontalAlignment(JLabel.CENTER);
 		this.txtPhone.setForeground(Color.WHITE);
 		this.container.add(this.txtPhone);
 
