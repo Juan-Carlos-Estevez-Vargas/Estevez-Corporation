@@ -28,6 +28,7 @@ import ventanas.Login;
  *
  */
 public class ClientInformation extends JFrame implements ActionListener {
+
 	/**
 	 * Declaración de Variables.
 	 */
@@ -68,81 +69,82 @@ public class ClientInformation extends JFrame implements ActionListener {
 		/**
 		 * Conexion a la base de datos
 		 */
-        try {
-            Connection cn = (Connection) DatabaseConnection.conectar();
-            PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
-                    "SELECT * FROM clientes WHERE id_cliente = '" + user_update + "'");
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next()) {
-                this.setTitle("Información del cliente " + rs.getString("nombre_cliente") + " - Sesión de " + user);
-                labelTittle.setText("Información del cliente " + rs.getString("nombre_cliente"));
+		try {
+			Connection cn = (Connection) DatabaseConnection.conectar();
+			PreparedStatement pst = (PreparedStatement) cn
+					.prepareStatement("SELECT * FROM clientes WHERE id_cliente = '" + user_update + "'");
+			ResultSet rs = pst.executeQuery();
 
-                /**
-                 * Llenado de los campos con la base de datos
-                 */
-                txtName.setText(rs.getString("nombre_cliente"));
-                txtEmail.setText(rs.getString("mail_cliente"));
-                txtPhone.setText(rs.getString("tel_cliente"));
-                txtAdress.setText(rs.getString("dir_cliente"));
-                txtModifyBy.setText(rs.getString("ultima_modificacion"));
-            }
-            cn.close();            
-        } catch (SQLException e) {
-            System.err.println("Error al cargar usuario " + e);
-            JOptionPane.showMessageDialog(null, "¡¡Error al cargar!! Contacte al Administrador");
-        }
+			if (rs.next()) {
+				this.setTitle("Información del cliente " + rs.getString("nombre_cliente") + " - Sesión de " + user);
+				labelTittle.setText("Información del cliente " + rs.getString("nombre_cliente"));
 
-        /**
-         * LLenado de la tabla equipos
-         */
-        try {
-            Connection cn = (Connection) DatabaseConnection.conectar();
-            PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
-                    "SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos WHERE id_cliente = '" + user_update + "'");
-            ResultSet rs = pst.executeQuery();
-            
-            this.tableEquipment = new JTable(this.model);
+				/**
+				 * Llenado de los campos con la base de datos
+				 */
+				txtName.setText(rs.getString("nombre_cliente"));
+				txtEmail.setText(rs.getString("mail_cliente"));
+				txtPhone.setText(rs.getString("tel_cliente"));
+				txtAdress.setText(rs.getString("dir_cliente"));
+				txtModifyBy.setText(rs.getString("ultima_modificacion"));
+			}
+			cn.close();
+		} catch (SQLException e) {
+			System.err.println("Error al cargar usuario " + e);
+			JOptionPane.showMessageDialog(null, "¡¡Error al cargar!! Contacte al Administrador");
+		}
+
+		/**
+		 * LLenado de la tabla equipos
+		 */
+		try {
+			Connection cn = (Connection) DatabaseConnection.conectar();
+			PreparedStatement pst = (PreparedStatement) cn
+					.prepareStatement("SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos WHERE id_cliente = '"
+							+ user_update + "'");
+			ResultSet rs = pst.executeQuery();
+
+			this.tableEquipment = new JTable(this.model);
 			this.tableEquipment.setFont(new Font("serif", Font.BOLD, 14));
 			this.tableEquipment.setForeground(Color.BLACK);
 			this.scrollEquipment = new JScrollPane(this.tableEquipment);
 			this.scrollEquipment.setBounds(280, 65, 315, 170);
 			this.scrollEquipment.setViewportView(this.tableEquipment);
-            
-            this.model.addColumn("ID equipo");
-            this.model.addColumn("Tipo de Equipo");
-            this.model.addColumn("Marca");
-            this.model.addColumn("Estatus");
-            
-            while (rs.next()) {
-                Object[] row = new Object[4];
-                for (int i = 0; i < 4; i++) {
-                    row[i] = rs.getObject(i + 1);
-                }
-                model.addRow(row);
-            }
-            cn.close();
-        } catch (SQLException e) {
-            System.err.println("Error en el llenado de la tabla equipos " + e);
-        }
 
-        /**
-         * Evento de accion para seleccionar cliente
-         */
-        tableEquipment.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int rowPoint = tableEquipment.rowAtPoint(e.getPoint());
-                int columnPoint = 0;
-                
-                if (rowPoint > -1) {
-                    idEquipment = (int) model.getValueAt(rowPoint, columnPoint);
-                    //EquipmentInformation equipmentInformation = new EquipmentInformation();
-                    //equipmentInformation.setVisible(true);
-                }
-            }
-        });
-        this.container.add(this.scrollEquipment);
+			this.model.addColumn("ID equipo");
+			this.model.addColumn("Tipo de Equipo");
+			this.model.addColumn("Marca");
+			this.model.addColumn("Estatus");
+
+			while (rs.next()) {
+				Object[] row = new Object[4];
+				for (int i = 0; i < 4; i++) {
+					row[i] = rs.getObject(i + 1);
+				}
+				model.addRow(row);
+			}
+			cn.close();
+		} catch (SQLException e) {
+			System.err.println("Error en el llenado de la tabla equipos " + e);
+		}
+
+		/**
+		 * Evento de accion para seleccionar cliente
+		 */
+		tableEquipment.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int rowPoint = tableEquipment.rowAtPoint(e.getPoint());
+				int columnPoint = 0;
+
+				if (rowPoint > -1) {
+					idEquipment = (int) model.getValueAt(rowPoint, columnPoint);
+					EquipmentInformation equipmentInformation = new EquipmentInformation();
+					equipmentInformation.setVisible(true);
+				}
+			}
+		});
+		this.container.add(this.scrollEquipment);
 	}
 
 	/**
