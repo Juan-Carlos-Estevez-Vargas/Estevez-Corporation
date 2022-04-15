@@ -67,7 +67,7 @@ public class ManagementUsers extends JFrame {
 			this.tableUsers.setFont(new Font("serif", Font.BOLD, 14));
 			this.tableUsers.setForeground(Color.BLACK);
 			this.scrollPaneUsers = new JScrollPane(this.tableUsers);
-			this.scrollPaneUsers.setBounds(25, 55, 540, 200);
+			this.scrollPaneUsers.setBounds(10, 55, 593, 230);
 
 			/**
 			 * Añadiendo las columnas a la tabla.
