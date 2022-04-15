@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -12,8 +14,17 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -145,6 +156,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		this.btnPrintClients = new JButton();
 		this.btnPrintClients.setBounds(500, 80, 120, 100);
 		this.btnPrintClients.setIcon(new ImageIcon("src/img/impresora.png"));
+		this.btnPrintClients.addActionListener(this);
 		this.panelBack.add(this.btnPrintClients);
 
 		/**
@@ -170,6 +182,59 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		if (e.getSource() == this.btnManageClient) {
 			ManagementClients managementClientes = new ManagementClients();
 			managementClientes.setVisible(true);
+		}
+		
+		if (e.getSource() == this.btnPrintClients) {
+			Document document = new Document();
+	        try {
+	            String ruta = System.getProperty("user.home");
+	            PdfWriter.getInstance(document, new FileOutputStream(ruta + "\\Reporte_clientes.pdf"));
+
+	            com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF.jpg");
+	            header.scaleToFit(650, 1000);
+	            header.setAlignment(Chunk.ALIGN_CENTER);
+
+	            Paragraph paragraph = new Paragraph();
+	            paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+	            paragraph.add("Lista de Clientes\n\n");
+	            paragraph.setFont(FontFactory.getFont("Tahoma", 18, Font.BOLD, BaseColor.DARK_GRAY));
+
+	            document.open();
+	            document.add(header);
+	            document.add(paragraph);
+
+	            PdfPTable table = new PdfPTable(5);
+	            table.addCell("ID Cliente");
+	            table.addCell("Nombre");
+	            table.addCell("Email");
+	            table.addCell("Teléfono");
+	            table.addCell("Dirección");
+
+	            try {
+	                Connection cn = (Connection) DatabaseConnection.conectar();
+	                PreparedStatement pst = (PreparedStatement) cn.prepareStatement("SELECT * FROM clientes");
+	                ResultSet rs = pst.executeQuery();
+
+	                if (rs.next()) {
+	                    do {
+	                        table.addCell(rs.getString(1));
+	                        table.addCell(rs.getString(2));
+	                        table.addCell(rs.getString(3));
+	                        table.addCell(rs.getString(4));
+	                        table.addCell(rs.getString(5));
+	                    } while (rs.next());
+	                    document.add(table);
+	                }
+	            } catch (SQLException ex) {
+	                System.err.println("Error al generar lista de clientes " + ex);
+	            }
+	            document.close();
+	            JOptionPane.showMessageDialog(null, "Lista de clientes creada correctamente");
+	        } catch (DocumentException | IOException ex) {
+	            System.err.println("Error al generar PDF " + ex);
+	            JOptionPane.showMessageDialog(null, "¡¡Error al generar PDF!! Contacte al Administrador");
+	        }
+
 		}
 
 	}
