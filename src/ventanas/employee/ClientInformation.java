@@ -300,9 +300,77 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.container.add(this.btnUpdateEquipment);
 
 	}
+	
+	public void clean() {
+        this.txtName.setText("");
+        this.txtAdress.setText("");
+        this.txtEmail.setText("");
+        this.txtPhone.setText("");
+    }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		if (e.getSource() == this.btnUpdateEquipment) {
+			int validation = 0;
+	        String name, mail, phone, adress;
+	        
+	        name = this.txtName.getText().trim();
+	        mail = this.txtEmail.getText().trim();
+	        phone = this.txtPhone.getText().trim();
+	        adress = this.txtAdress.getText().trim();
+
+	        //Validación de campos vacios
+	        if (name.equals("")) {
+	            this.txtName.setBackground(Color.red);
+	            validation++;
+	        }
+	        if (mail.equals("")) {
+	            this.txtEmail.setBackground(Color.red);
+	            validation++;
+	        }
+	        if (phone.equals("")) {
+	            this.txtPhone.setBackground(Color.red);
+	            validation++;
+	        }
+	        if (adress.equals("")) {
+	            this.txtAdress.setBackground(Color.red);
+	            validation++;
+	        }
+	        
+	        if (validation == 0) {
+	            try {
+	                Connection cn = (Connection) DatabaseConnection.conectar();
+	                PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
+	                        "UPDATE clientes SET nombre_cliente = ?, mail_cliente = ?, tel_cliente = ?, dir_cliente = ?, ultima_modificacion = ? "
+	                        + "WHERE id_cliente = '" + idClient + "'");
+	                
+	                pst.setString(1, name);
+	                pst.setString(2, mail);
+	                pst.setString(3, phone);
+	                pst.setString(4, adress);
+	                pst.setString(5, user);
+	                pst.executeUpdate();
+	                cn.close();
+	                
+	                clean();
+	                
+	                this.txtName.setBackground(Color.green);
+	                this.txtEmail.setBackground(Color.green);
+	                this.txtAdress.setBackground(Color.green);
+	                this.txtPhone.setBackground(Color.green);
+	                this.txtModifyBy.setText(user);
+	                
+	                JOptionPane.showMessageDialog(null, "Actualización correcta");
+	                this.dispose();
+	            } catch (Exception ex) {
+	                System.err.println("Error en actualizar cliente " + ex);
+	                JOptionPane.showMessageDialog(null, "¡¡Error al actualizar cliente!! Contacata al Administrador");
+	            }
+	        } else {
+	            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+	        }
+		}
+		
 	}
 }
