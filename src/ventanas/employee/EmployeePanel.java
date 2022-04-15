@@ -144,6 +144,11 @@ public class EmployeePanel extends JFrame implements ActionListener {
 			RegisterClient registerClient = new RegisterClient();
 			registerClient.setVisible(true);
 		}
+		
+		if (e.getSource() == this.btnManageClient) {
+			ManagementClients managementClientes = new ManagementClients();
+			managementClientes.setVisible(true);
+		}
 
 	}
 
