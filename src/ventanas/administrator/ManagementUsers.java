@@ -16,13 +16,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.DatabaseConnection;
+import ventanas.Login;
 
 /**
  * 
  * @author Juan Carlos Estevez Vargas.
  *
  */
-public class ManagementUsers extends JFrame{
+public class ManagementUsers extends JFrame {
 
 	/**
 	 * Declaración de Variables.
@@ -33,15 +34,17 @@ public class ManagementUsers extends JFrame{
 	private JPanel container;
 	private JTable tableUsers;
 	private JScrollPane scrollPaneUsers;
+	private String user;
 	private DefaultTableModel model = new DefaultTableModel();
 
 	/**
 	 * Constructor de Clase.
 	 */
 	public ManagementUsers() {
+		this.user = Login.user;
 		this.setSize(630, 340);
 		this.setResizable(false);
-		this.setTitle("Usuarios registrados - Sesión de ");
+		this.setTitle("Usuarios registrados - Sesión de " + this.user);
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
