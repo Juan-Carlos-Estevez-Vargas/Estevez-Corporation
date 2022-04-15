@@ -1,9 +1,6 @@
 package clases;
 
 import ventanas.Login;
-import ventanas.administrator.AdministratorPanel;
-import ventanas.administrator.ManagementUsers;
-import ventanas.administrator.RegisterUser;
 
 /**
  *
@@ -18,9 +15,6 @@ public class Main {
         Login login = new Login();
         login.setLocationRelativeTo(null);
         login.setVisible(true);
-    	//ManagementUsers mu = new ManagementUsers();
-    	//mu.setLocationRelativeTo(null);
-    	//mu.setVisible(true);
     }
 
 }

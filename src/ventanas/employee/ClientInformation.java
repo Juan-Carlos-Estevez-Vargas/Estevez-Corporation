@@ -310,6 +310,11 @@ public class ClientInformation extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if (e.getSource() == this.btnRegisterEquipment) {
+			RegisterEquipment RegisterEquipment = new RegisterEquipment();
+			RegisterEquipment.setVisible(true);
+		}
 
 		if (e.getSource() == this.btnUpdateEquipment) {
 			int validation = 0;
