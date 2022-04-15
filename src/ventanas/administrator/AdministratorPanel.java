@@ -4,7 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+
 import javax.swing.*;
+
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+
+import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
@@ -27,6 +34,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 	private JButton btnPrueba;
 	private JComboBox<String> cmbRole;
 	private String user;
+	private String nameUser;
 
 	/**
 	 * Constructor de clase.
@@ -40,6 +48,24 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
 		this.initComponents();
+
+		/**
+		 * Recuperando el nombre del usuario.
+		 */
+		try {
+			Connection cn = (Connection) DatabaseConnection.conectar();
+			PreparedStatement pst = (PreparedStatement) cn
+					.prepareStatement("SELECT nombre_usuario FROM usuarios WHERE username = '" + user + "'");
+			ResultSet rs = pst.executeQuery(); // Ejecutamos la sentencia SQL
+
+			if (rs.next()) {
+				nameUser = rs.getString("nombre_usuario");
+				this.labelTittle.setText(nameUser);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Error en conexión desde la interfaz Administrador");
+		}
 	}
 
 	/**
@@ -58,7 +84,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		/*
 		 * Label Usuario Logueado.
 		 */
-		this.labelTittle = new JLabel("Bienvenido - " + this.user);
+		this.labelTittle = new JLabel();
 		this.labelTittle.setBounds(10, 10, 280, 27);
 		this.labelTittle.setForeground(new Color(192, 192, 192));
 		this.labelTittle.setFont(new Font("serif", Font.BOLD, 20));
