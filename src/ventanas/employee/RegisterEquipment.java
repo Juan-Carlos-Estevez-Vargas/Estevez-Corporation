@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -72,7 +71,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		idClientUpdate = ManagementClients.id_cliente_update;
 
 		/**
-		 * Conexion a la base de datos
+		 * Recuperando el nombre del cliente.
 		 */
 		try {
 			Connection cn = (Connection) DatabaseConnection.conectar();
@@ -140,7 +139,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.txtNameClient);
 
 		/**
-		 * Label Email Cliente.
+		 * Label tipo de Equipo.
 		 */
 		this.labelTypeEquipment = new JLabel("Tipo de Equipo :");
 		this.labelTypeEquipment.setBounds(10, 120, 200, 25);
@@ -161,7 +160,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.cmbTypeEquip);
 
 		/**
-		 * Label Teléfono Cliente.
+		 * Label marca del Equipo.
 		 */
 		this.labelMark = new JLabel("Marca :");
 		this.labelMark.setBounds(10, 180, 100, 25);
@@ -170,7 +169,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.labelMark);
 
 		/**
-		 * ComboBox con el tipo de equipo.
+		 * ComboBox con las marcas disponibles.
 		 */
 		this.cmbMark = new JComboBox<String>();
 		this.cmbMark.setBounds(10, 200, 170, 30);
@@ -182,7 +181,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.cmbMark);
 
 		/**
-		 * Label Dirección Cliente.
+		 * Label Model del Equipo.
 		 */
 		this.labelModel = new JLabel("Modelo :");
 		this.labelModel.setBounds(10, 240, 100, 25);
@@ -191,7 +190,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.labelModel);
 
 		/**
-		 * Campo de texto para ingresar la dirección del cliente a registrar.
+		 * Campo de texto para ingresar el model del equipo a registrar.
 		 */
 		this.txtModel = new JTextField();
 		this.txtModel.setBounds(10, 260, 230, 25);
@@ -202,7 +201,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.txtModel);
 
 		/**
-		 * Label Registrar Cliente.
+		 * Label Número Serial del Equipo.
 		 */
 		this.labelSerialNumber = new JLabel("Número de Serie :");
 		this.labelSerialNumber.setBounds(10, 300, 200, 25);
@@ -211,7 +210,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.labelSerialNumber);
 
 		/**
-		 * Campo de texto para ingresar la dirección del cliente a registrar.
+		 * Campo de texto para ingresar el número serial del equipo a registrar.
 		 */
 		this.txtSerialNumber = new JTextField();
 		this.txtSerialNumber.setBounds(10, 320, 230, 25);
@@ -222,7 +221,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.txtSerialNumber);
 
 		/**
-		 * Label Registrar Cliente.
+		 * Label Daño Reportado y Observaciones.
 		 */
 		this.labelObservations = new JLabel("Daño Reportado y Observaciones :");
 		this.labelObservations.setBounds(270, 60, 300, 25);
@@ -242,7 +241,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.scrollObservations);
 
 		/**
-		 * Botón para actualizar el equipo en cuestión.
+		 * Botón para ingresar el equipo en cuestión.
 		 */
 		this.btnRegisterEquip = new JButton("Registrar Equipo");
 		this.btnRegisterEquip.setBounds(390, 310, 210, 35);

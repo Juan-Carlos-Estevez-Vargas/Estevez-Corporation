@@ -50,6 +50,9 @@ public class ManagementClients extends JFrame {
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.initComponents();
 
+		/**
+		 * Rellenando la tabla con los datos de la base de datos.
+		 */
 		try {
 			Connection cn = DatabaseConnection.conectar();
 			PreparedStatement pst = cn.prepareStatement(
@@ -72,7 +75,9 @@ public class ManagementClients extends JFrame {
 			this.model.addColumn("Teléfono");
 			this.model.addColumn("Midificado por");
 
-			// Llenado de la tabla
+			/**
+			 *  Llenado de la tabla
+			 */
 			while (rs.next()) {
 				Object[] row = new Object[5];
 				for (int i = 0; i < 5; i++) {
@@ -85,7 +90,9 @@ public class ManagementClients extends JFrame {
 			System.err.println("Error en el llenado de la tabla clientes " + e);
 		}
 
-		// Evento de accion para seleccionar cliente
+		/**
+		 *  Evento de accion para seleccionar cliente
+		 */
 		tableClients.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
