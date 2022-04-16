@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -19,6 +21,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
@@ -103,9 +114,8 @@ public class ClientInformation extends JFrame implements ActionListener {
 		 */
 		try {
 			Connection cn = (Connection) DatabaseConnection.conectar();
-			PreparedStatement pst = (PreparedStatement) cn
-					.prepareStatement("SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos WHERE id_cliente = '"
-							+ user_update + "'");
+			PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
+					"SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos WHERE id_cliente = '" + idClient + "'");
 			ResultSet rs = pst.executeQuery();
 
 			this.tableEquipment = new JTable(this.model);
@@ -301,27 +311,28 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.btnUpdateEquipment.setHorizontalAlignment(JButton.CENTER);
 		this.btnUpdateEquipment.addActionListener(this);
 		this.container.add(this.btnUpdateEquipment);
-		
+
 		/**
 		 * Botón para imprimir los clientes.
 		 */
 		this.btnPrint = new JButton();
 		this.btnPrint.setBounds(500, 260, 90, 90);
 		this.btnPrint.setIcon(new ImageIcon("src/img/impresora.png"));
+		this.btnPrint.addActionListener(this);
 		this.container.add(this.btnPrint);
 
 	}
-	
+
 	public void clean() {
-        this.txtName.setText("");
-        this.txtAdress.setText("");
-        this.txtEmail.setText("");
-        this.txtPhone.setText("");
-    }
+		this.txtName.setText("");
+		this.txtAdress.setText("");
+		this.txtEmail.setText("");
+		this.txtPhone.setText("");
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		if (e.getSource() == this.btnRegisterEquipment) {
 			RegisterEquipment RegisterEquipment = new RegisterEquipment();
 			RegisterEquipment.setVisible(true);
@@ -329,64 +340,172 @@ public class ClientInformation extends JFrame implements ActionListener {
 
 		if (e.getSource() == this.btnUpdateEquipment) {
 			int validation = 0;
-	        String name, mail, phone, adress;
-	        
-	        name = this.txtName.getText().trim();
-	        mail = this.txtEmail.getText().trim();
-	        phone = this.txtPhone.getText().trim();
-	        adress = this.txtAdress.getText().trim();
+			String name, mail, phone, adress;
 
-	        //Validación de campos vacios
-	        if (name.equals("")) {
-	            this.txtName.setBackground(Color.red);
-	            validation++;
-	        }
-	        if (mail.equals("")) {
-	            this.txtEmail.setBackground(Color.red);
-	            validation++;
-	        }
-	        if (phone.equals("")) {
-	            this.txtPhone.setBackground(Color.red);
-	            validation++;
-	        }
-	        if (adress.equals("")) {
-	            this.txtAdress.setBackground(Color.red);
-	            validation++;
-	        }
-	        
-	        if (validation == 0) {
-	            try {
-	                Connection cn = (Connection) DatabaseConnection.conectar();
-	                PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
-	                        "UPDATE clientes SET nombre_cliente = ?, mail_cliente = ?, tel_cliente = ?, dir_cliente = ?, ultima_modificacion = ? "
-	                        + "WHERE id_cliente = '" + idClient + "'");
-	                
-	                pst.setString(1, name);
-	                pst.setString(2, mail);
-	                pst.setString(3, phone);
-	                pst.setString(4, adress);
-	                pst.setString(5, user);
-	                pst.executeUpdate();
-	                cn.close();
-	                
-	                clean();
-	                
-	                this.txtName.setBackground(Color.green);
-	                this.txtEmail.setBackground(Color.green);
-	                this.txtAdress.setBackground(Color.green);
-	                this.txtPhone.setBackground(Color.green);
-	                this.txtModifyBy.setText(user);
-	                
-	                JOptionPane.showMessageDialog(null, "Actualización correcta");
-	                this.dispose();
-	            } catch (Exception ex) {
-	                System.err.println("Error en actualizar cliente " + ex);
-	                JOptionPane.showMessageDialog(null, "¡¡Error al actualizar cliente!! Contacata al Administrador");
-	            }
-	        } else {
-	            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
-	        }
+			name = this.txtName.getText().trim();
+			mail = this.txtEmail.getText().trim();
+			phone = this.txtPhone.getText().trim();
+			adress = this.txtAdress.getText().trim();
+
+			// Validación de campos vacios
+			if (name.equals("")) {
+				this.txtName.setBackground(Color.red);
+				validation++;
+			}
+			if (mail.equals("")) {
+				this.txtEmail.setBackground(Color.red);
+				validation++;
+			}
+			if (phone.equals("")) {
+				this.txtPhone.setBackground(Color.red);
+				validation++;
+			}
+			if (adress.equals("")) {
+				this.txtAdress.setBackground(Color.red);
+				validation++;
+			}
+
+			if (validation == 0) {
+				try {
+					Connection cn = (Connection) DatabaseConnection.conectar();
+					PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
+							"UPDATE clientes SET nombre_cliente = ?, mail_cliente = ?, tel_cliente = ?, dir_cliente = ?, ultima_modificacion = ? "
+									+ "WHERE id_cliente = '" + idClient + "'");
+
+					pst.setString(1, name);
+					pst.setString(2, mail);
+					pst.setString(3, phone);
+					pst.setString(4, adress);
+					pst.setString(5, user);
+					pst.executeUpdate();
+					cn.close();
+
+					clean();
+
+					this.txtName.setBackground(Color.green);
+					this.txtEmail.setBackground(Color.green);
+					this.txtAdress.setBackground(Color.green);
+					this.txtPhone.setBackground(Color.green);
+					this.txtModifyBy.setText(user);
+
+					JOptionPane.showMessageDialog(null, "Actualización correcta");
+					this.dispose();
+				} catch (Exception ex) {
+					System.err.println("Error en actualizar cliente " + ex);
+					JOptionPane.showMessageDialog(null, "¡¡Error al actualizar cliente!! Contacata al Administrador");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+			}
 		}
-		
+
+		if (e.getSource() == this.btnPrint) {
+			Document documento = new Document(); // Creamos el documento pdf
+			try {
+				String ruta = System.getProperty("user.home"); // Ruta donde guardar el documento
+
+				/**
+				 * Escribimos el documento en es escritorio de la computadora y le asignamos el
+				 * nombre que recuperemos del txt nombre
+				 */
+				PdfWriter.getInstance(documento,
+						new FileOutputStream(ruta + "\\" + this.txtName.getText().trim() + ".pdf"));
+
+				/**
+				 * Creamos una instancia de la clase image de itext, y colocamos la imagen que
+				 * queremos
+				 */
+				com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF.jpg");
+				header.scaleToFit(650, 1000); // Dimensiones de la imagen
+				header.setAlignment(Chunk.ALIGN_CENTER); // Alineacion de la imagen
+
+				Paragraph parrafo = new Paragraph(); // Creamos un parrafo
+				parrafo.setAlignment(Paragraph.ALIGN_CENTER); // Alineación del parrafo
+				parrafo.add("Información del cliente.\n \n"); // Agregamos el título
+				parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY)); // Asignamos fuente
+																									// al parrafo
+
+				documento.open(); // Abrimos el documento
+				documento.add(header);
+				documento.add(parrafo);
+
+				/**
+				 * Creamos una tabla donde se mostraran los datos y añadimos las columnas
+				 */
+				PdfPTable tabla_clientes = new PdfPTable(5);
+				tabla_clientes.addCell("ID");
+				tabla_clientes.addCell("Nombre");
+				tabla_clientes.addCell("Email");
+				tabla_clientes.addCell("Teléfono");
+				tabla_clientes.addCell("Dirección");
+
+				try {
+					Connection cn = (Connection) DatabaseConnection.conectar();
+					PreparedStatement pst = (PreparedStatement) cn
+							.prepareStatement("SELECT * FROM clientes WHERE id_cliente = '" + idClient + "'");
+					ResultSet rs = pst.executeQuery();
+
+					if (rs.next()) {
+						do {
+							/**
+							 * Recuperamos los campos de la base de datos
+							 */
+							tabla_clientes.addCell(rs.getString(1));
+							tabla_clientes.addCell(rs.getString(2));
+							tabla_clientes.addCell(rs.getString(3));
+							tabla_clientes.addCell(rs.getString(4));
+							tabla_clientes.addCell(rs.getString(5));
+						} while (rs.next());
+						documento.add(tabla_clientes);
+					}
+
+					/**
+					 * Creación de un nuevo parrafo
+					 */
+					Paragraph parrafo2 = new Paragraph();
+					parrafo2.setAlignment(Paragraph.ALIGN_CENTER);
+					parrafo2.add("\n\nEquipos registrados.\n\n");
+					parrafo2.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+					documento.add(parrafo2);
+
+					/**
+					 * Creación tabla equipos registrados
+					 */
+					PdfPTable tabla_equipos = new PdfPTable(4);
+					tabla_equipos.addCell("ID equipo");
+					tabla_equipos.addCell("Tipo");
+					tabla_equipos.addCell("Marca");
+					tabla_equipos.addCell("Estatus");
+
+					try {
+						Connection cn2 = (Connection) DatabaseConnection.conectar();
+						PreparedStatement pst2 = (PreparedStatement) cn2.prepareStatement(
+								"SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos WHERE id_cliente = '"
+										+ idClient + "'");
+						ResultSet rs2 = pst2.executeQuery();
+
+						if (rs2.next()) {
+							do {
+								tabla_equipos.addCell(rs2.getString(1));
+								tabla_equipos.addCell(rs2.getString(2));
+								tabla_equipos.addCell(rs2.getString(3));
+								tabla_equipos.addCell(rs2.getString(4));
+							} while (rs.next());
+							documento.add(tabla_equipos);
+						}
+					} catch (DocumentException | SQLException ex) {
+						System.err.println("Error al obtener datos de equipos " + e);
+					}
+				} catch (DocumentException | SQLException ex) {
+					System.err.println("Error al obtener datos del cliente " + e);
+				}
+				documento.close();
+				JOptionPane.showMessageDialog(null, "Reporte creado correctamente");
+			} catch (DocumentException | IOException ex) {
+				System.err.println("Error en pdf o ruta de imagen " + ex);
+				JOptionPane.showMessageDialog(null, "¡¡Error al generar pdf!! Contacte al Administrador");
+			}
+		}
 	}
 }

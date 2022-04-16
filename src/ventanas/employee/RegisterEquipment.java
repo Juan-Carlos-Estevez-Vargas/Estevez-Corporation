@@ -68,18 +68,31 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.initComponents();
 		this.txtNameClient.setText(this.nameClient);
 		this.idClientUpdate = ManagementClients.id_cliente_update;
+		this.nameClient = ManagementClients.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
+		idClientUpdate = ManagementClients.id_cliente_update;
 
+		/**
+		 * Conexion a la base de datos
+		 */
 		try {
 			Connection cn = (Connection) DatabaseConnection.conectar();
-			PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
-					"SELECT nombre_cliente FROM clientes WHERE id_cliente = '" + idClientUpdate + "'");
+			PreparedStatement pst = (PreparedStatement) cn
+					.prepareStatement("SELECT * FROM clientes WHERE id_cliente = '" + idClientUpdate + "'");
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
-				this.nameClient = rs.getString("nombre_cliente");
+				this.labelTitle.setText("Información del cliente " + rs.getString("nombre_cliente"));
+
+				/**
+				 * Llenado de los campos con la base de datos
+				 */
+				this.txtNameClient.setText(rs.getString("nombre_cliente"));
+				
 			}
+			cn.close();
 		} catch (SQLException e) {
-			System.err.println("Error al consultar el nombre del cliente " + e);
+			System.err.println("Error al cargar usuario " + e);
+			JOptionPane.showMessageDialog(null, "¡¡Error al cargar!! Contacte al Administrador");
 		}
 	}
 
