@@ -5,8 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-	
-	// Conexion con base de datos local
+
+	/**
+	 * Conexion con base de datos local
+	 * 
+	 * @return
+	 */
 	public static Connection conectar() {
 		try {
 			Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/data_system", "root", "");
@@ -16,5 +20,5 @@ public class DatabaseConnection {
 		}
 		return (null);
 	}
-	
+
 }

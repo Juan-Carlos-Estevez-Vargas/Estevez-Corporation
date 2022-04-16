@@ -34,7 +34,7 @@ public class RestorePassword extends JFrame implements ActionListener {
 	private JButton btnRestorePassword;
 
 	/**
-	 * Creates new form RestaurarPassword
+	 * Constructor de clase.
 	 */
 	public RestorePassword() {
 		initComponents();
@@ -46,6 +46,9 @@ public class RestorePassword extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
+	/**
+	 * Inicializa los componentes Swing en el Frame.
+	 */
 	public void initComponents() {
 
 		/**
@@ -70,11 +73,10 @@ public class RestorePassword extends JFrame implements ActionListener {
 		/**
 		 * Label New Password.
 		 */
-		this.labelNewPassword = new JLabel();
+		this.labelNewPassword = new JLabel("Nuevo Password");
 		this.labelNewPassword.setFont(new java.awt.Font("Segoe UI", 0, 18));
 		this.labelNewPassword.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelNewPassword.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-		this.labelNewPassword.setText("Nuevo Password");
 		this.labelNewPassword.setBounds(20, 50, 200, 20);
 		this.container.add(this.labelNewPassword);
 
@@ -132,7 +134,9 @@ public class RestorePassword extends JFrame implements ActionListener {
 			password = this.txtNewPassword.getText().trim();
 			confirm_password = this.txtConfirmPassword.getText().trim();
 
-			// Validacion de campos
+			/**
+			 *  Validacion de campos
+			 */
 			if (!password.equals("") && !confirm_password.equals("")) {
 				if (password.equals(confirm_password)) {
 					try {

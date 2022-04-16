@@ -184,14 +184,13 @@ public final class Login extends JFrame implements ActionListener {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 		String username, password;
 
 		/**
 		 * Acción para realizar el logueo a la aplicación.
 		 */
 		if (e.getSource() == this.btnLogin) {
-			
+
 			/**
 			 * Recuperamos los datos introducidos en los TextField
 			 */
@@ -214,7 +213,7 @@ public final class Login extends JFrame implements ActionListener {
 					 * Si la consulta encuentra resultados.
 					 */
 					if (rs.next()) {
-						
+
 						/**
 						 * Creamos dos variables que almacenan el resultado de los comboBox de la
 						 * consulta

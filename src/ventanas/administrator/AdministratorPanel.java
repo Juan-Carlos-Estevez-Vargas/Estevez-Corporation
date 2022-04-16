@@ -5,12 +5,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
-
 import javax.swing.*;
-
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
-
 import modelo.DatabaseConnection;
 import ventanas.Login;
 
@@ -56,13 +53,12 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 			Connection cn = (Connection) DatabaseConnection.conectar();
 			PreparedStatement pst = (PreparedStatement) cn
 					.prepareStatement("SELECT nombre_usuario FROM usuarios WHERE username = '" + user + "'");
-			ResultSet rs = pst.executeQuery(); // Ejecutamos la sentencia SQL
+			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
 				nameUser = rs.getString("nombre_usuario");
 				this.labelTittle.setText(nameUser);
 			}
-
 		} catch (Exception e) {
 			System.err.println("Error en conexión desde la interfaz Administrador");
 		}
@@ -127,7 +123,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.panelBack.add(this.labelManageUser);
 
 		/**
-		 * Botón para modificar.
+		 * Botón para modificar después.
 		 */
 		this.btnPrueba = new JButton();
 		this.btnPrueba.setBounds(500, 80, 120, 100);
