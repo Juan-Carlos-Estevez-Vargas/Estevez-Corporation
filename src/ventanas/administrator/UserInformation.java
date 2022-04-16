@@ -161,7 +161,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.container.add(this.labelUsername);
 
 		/**
-		 * Label Status.
+		 * Label Estatus.
 		 */
 		this.labelStatus = new JLabel("Estatus :");
 		this.labelStatus.setFont(new java.awt.Font("Segoe UI", 1, 12));
@@ -382,6 +382,7 @@ public class UserInformation extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
 			}
 		}
+		
 		/**
 		 * Muestra el panel para modificar la contraseña del usuario en cuestión.
 		 */

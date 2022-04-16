@@ -5,9 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-
 import javax.swing.*;
-
 import modelo.DatabaseConnection;
 import ventanas.Login;
 
@@ -228,7 +226,6 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 * Accción para registrar un nuevo usuario en el sistema.
 		 */
 		if (e.getSource() == this.btnRegisterUser) {
-
 			int permissionsCmb, validation = 0;
 			String name, email, phone, username, password, permissionsString = "";
 
