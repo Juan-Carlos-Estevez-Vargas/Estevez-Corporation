@@ -66,21 +66,23 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
 		this.initComponents();
-		
-		try {
 
-            Connection cn = (Connection) DatabaseConnection.conectar();
-            PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
-                    "SELECT nombre_usuario FROM usuarios WHERE username = '" + user + "'");
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next()) {
-                nameUser=rs.getString("nombre_usuario");
-                this.labelTittle.setText(nameUser);
-            }
-        } catch (SQLException e) {
-            System.err.println("Error en consultar capturista");
-        }
+		/**
+		 * Recuperando el nombre del usuario.
+		 */
+		try {
+			Connection cn = (Connection) DatabaseConnection.conectar();
+			PreparedStatement pst = (PreparedStatement) cn
+					.prepareStatement("SELECT nombre_usuario FROM usuarios WHERE username = '" + user + "'");
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				nameUser = rs.getString("nombre_usuario");
+				this.labelTittle.setText(nameUser);
+			}
+		} catch (SQLException e) {
+			System.err.println("Error en consultar capturista");
+		}
 	}
 
 	/**
@@ -89,7 +91,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 	public void initComponents() {
 
 		/**
-		 * Panel principal.
+		 * Panel Principal.
 		 */
 		this.panelBack = new JPanel();
 		this.panelBack.setBackground(new Color(46, 59, 104));
@@ -97,7 +99,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		this.setContentPane(this.panelBack);
 
 		/*
-		 * Label Usuario Logueado.
+		 * Label Principal.
 		 */
 		this.labelTittle = new JLabel();
 		this.labelTittle.setBounds(10, 10, 280, 27);
@@ -178,62 +180,62 @@ public class EmployeePanel extends JFrame implements ActionListener {
 			RegisterClient registerClient = new RegisterClient();
 			registerClient.setVisible(true);
 		}
-		
+
 		if (e.getSource() == this.btnManageClient) {
 			ManagementClients managementClientes = new ManagementClients();
 			managementClientes.setVisible(true);
 		}
-		
+
 		if (e.getSource() == this.btnPrintClients) {
 			Document document = new Document();
-	        try {
-	            String ruta = System.getProperty("user.home");
-	            PdfWriter.getInstance(document, new FileOutputStream(ruta + "\\Reporte_clientes.pdf"));
+			try {
+				String ruta = System.getProperty("user.home");
+				PdfWriter.getInstance(document, new FileOutputStream(ruta + "\\Reporte_clientes.pdf"));
 
-	            com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF.jpg");
-	            header.scaleToFit(650, 1000);
-	            header.setAlignment(Chunk.ALIGN_CENTER);
+				com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF.jpg");
+				header.scaleToFit(650, 1000);
+				header.setAlignment(Chunk.ALIGN_CENTER);
 
-	            Paragraph paragraph = new Paragraph();
-	            paragraph.setAlignment(Paragraph.ALIGN_CENTER);
-	            paragraph.add("Lista de Clientes\n\n");
-	            paragraph.setFont(FontFactory.getFont("Tahoma", 18, Font.BOLD, BaseColor.DARK_GRAY));
+				Paragraph paragraph = new Paragraph();
+				paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+				paragraph.add("Lista de Clientes\n\n");
+				paragraph.setFont(FontFactory.getFont("Tahoma", 18, Font.BOLD, BaseColor.DARK_GRAY));
 
-	            document.open();
-	            document.add(header);
-	            document.add(paragraph);
+				document.open();
+				document.add(header);
+				document.add(paragraph);
 
-	            PdfPTable table = new PdfPTable(5);
-	            table.addCell("ID Cliente");
-	            table.addCell("Nombre");
-	            table.addCell("Email");
-	            table.addCell("Teléfono");
-	            table.addCell("Dirección");
+				PdfPTable table = new PdfPTable(5);
+				table.addCell("ID Cliente");
+				table.addCell("Nombre");
+				table.addCell("Email");
+				table.addCell("Teléfono");
+				table.addCell("Dirección");
 
-	            try {
-	                Connection cn = (Connection) DatabaseConnection.conectar();
-	                PreparedStatement pst = (PreparedStatement) cn.prepareStatement("SELECT * FROM clientes");
-	                ResultSet rs = pst.executeQuery();
+				try {
+					Connection cn = (Connection) DatabaseConnection.conectar();
+					PreparedStatement pst = (PreparedStatement) cn.prepareStatement("SELECT * FROM clientes");
+					ResultSet rs = pst.executeQuery();
 
-	                if (rs.next()) {
-	                    do {
-	                        table.addCell(rs.getString(1));
-	                        table.addCell(rs.getString(2));
-	                        table.addCell(rs.getString(3));
-	                        table.addCell(rs.getString(4));
-	                        table.addCell(rs.getString(5));
-	                    } while (rs.next());
-	                    document.add(table);
-	                }
-	            } catch (SQLException ex) {
-	                System.err.println("Error al generar lista de clientes " + ex);
-	            }
-	            document.close();
-	            JOptionPane.showMessageDialog(null, "Lista de clientes creada correctamente");
-	        } catch (DocumentException | IOException ex) {
-	            System.err.println("Error al generar PDF " + ex);
-	            JOptionPane.showMessageDialog(null, "¡¡Error al generar PDF!! Contacte al Administrador");
-	        }
+					if (rs.next()) {
+						do {
+							table.addCell(rs.getString(1));
+							table.addCell(rs.getString(2));
+							table.addCell(rs.getString(3));
+							table.addCell(rs.getString(4));
+							table.addCell(rs.getString(5));
+						} while (rs.next());
+						document.add(table);
+					}
+				} catch (SQLException ex) {
+					System.err.println("Error al generar lista de clientes " + ex);
+				}
+				document.close();
+				JOptionPane.showMessageDialog(null, "Lista de clientes creada correctamente");
+			} catch (DocumentException | IOException ex) {
+				System.err.println("Error al generar PDF " + ex);
+				JOptionPane.showMessageDialog(null, "¡¡Error al generar PDF!! Contacte al Administrador");
+			}
 
 		}
 

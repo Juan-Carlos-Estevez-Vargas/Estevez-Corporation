@@ -65,7 +65,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 	private JScrollPane scrollEquipment;
 	private JPanel container;
 	private JButton btnRegisterEquipment;
-	private JButton btnUpdateEquipment;
+	private JButton btnUpdateClient;
 	private JButton btnPrint;
 
 	/**
@@ -213,7 +213,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.container.add(this.labelPhone);
 
 		/**
-		 * Label Permisos de.
+		 * Label Dirección.
 		 */
 		this.labelAdress = new JLabel("Dirección :");
 		this.labelAdress.setFont(new java.awt.Font("Segoe UI", 1, 12));
@@ -222,7 +222,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.container.add(this.labelAdress);
 
 		/**
-		 * Label Username.
+		 * Label Modificado por.
 		 */
 		this.labelModifyBy = new JLabel("Última modificación por :");
 		this.labelModifyBy.setFont(new java.awt.Font("Segoe UI", 1, 12));
@@ -231,7 +231,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.container.add(this.labelModifyBy);
 
 		/**
-		 * Campo de texto con la información del nombre del usuario a actualizar.
+		 * Campo de texto con la información del nombre del cliente.
 		 */
 		this.txtName = new JTextField();
 		this.txtName.setBounds(20, 70, 230, 30);
@@ -242,7 +242,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.container.add(this.txtName);
 
 		/**
-		 * Campo de texto con la información del email del usuario a actualizar.
+		 * Campo de texto con la información del email del cliente.
 		 */
 		this.txtEmail = new JTextField();
 		this.txtEmail.setBounds(20, 130, 230, 30);
@@ -253,7 +253,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.container.add(this.txtEmail);
 
 		/**
-		 * Campo de texto con la información del teléfono del usuario a actualizar.
+		 * Campo de texto con la información del teléfono del cliente.
 		 */
 		this.txtPhone = new JTextField();
 		this.txtPhone.setFont(new java.awt.Font("Segoe UI", 1, 16));
@@ -266,7 +266,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.container.add(this.txtPhone);
 
 		/**
-		 * Campo de texto con la información del username del usuario a actualizar.
+		 * Campo de texto con la información de la dirección del cliente.
 		 */
 		this.txtAdress = new JTextField();
 		this.txtAdress.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -277,7 +277,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.container.add(this.txtAdress);
 
 		/**
-		 * Campo de texto con la información de quién registró el usuario a actualizar.
+		 * Campo de texto con la información de quién modificó el cliente.
 		 */
 		this.txtModifyBy = new JTextField();
 		this.txtModifyBy.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -289,7 +289,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.container.add(this.txtModifyBy);
 
 		/**
-		 * Botón encargado de actualizar el usuario en cuestión.
+		 * Botón encargado de registrar un equipo a un cliente determinado.
 		 */
 		this.btnRegisterEquipment = new JButton("Registrar Equipo");
 		this.btnRegisterEquipment.setBounds(280, 260, 210, 35);
@@ -301,16 +301,16 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.container.add(this.btnRegisterEquipment);
 
 		/**
-		 * Botón para restaurar la contraseña del usuario en cuestión.
+		 * Botón para actualizar un cliente.
 		 */
-		this.btnUpdateEquipment = new JButton("Actualizar Cliente");
-		this.btnUpdateEquipment.setBounds(280, 310, 210, 35);
-		this.btnUpdateEquipment.setFont(new Font("serif", Font.BOLD, 20));
-		this.btnUpdateEquipment.setBackground(new Color(8, 85, 224));
-		this.btnUpdateEquipment.setForeground(Color.WHITE);
-		this.btnUpdateEquipment.setHorizontalAlignment(JButton.CENTER);
-		this.btnUpdateEquipment.addActionListener(this);
-		this.container.add(this.btnUpdateEquipment);
+		this.btnUpdateClient = new JButton("Actualizar Cliente");
+		this.btnUpdateClient.setBounds(280, 310, 210, 35);
+		this.btnUpdateClient.setFont(new Font("serif", Font.BOLD, 20));
+		this.btnUpdateClient.setBackground(new Color(8, 85, 224));
+		this.btnUpdateClient.setForeground(Color.WHITE);
+		this.btnUpdateClient.setHorizontalAlignment(JButton.CENTER);
+		this.btnUpdateClient.addActionListener(this);
+		this.container.add(this.btnUpdateClient);
 
 		/**
 		 * Botón para imprimir los clientes.
@@ -323,6 +323,9 @@ public class ClientInformation extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * Limpia los campos de texto.
+	 */
 	public void clean() {
 		this.txtName.setText("");
 		this.txtAdress.setText("");
@@ -338,7 +341,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 			RegisterEquipment.setVisible(true);
 		}
 
-		if (e.getSource() == this.btnUpdateEquipment) {
+		if (e.getSource() == this.btnUpdateClient) {
 			int validation = 0;
 			String name, mail, phone, adress;
 
@@ -400,15 +403,19 @@ public class ClientInformation extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource() == this.btnPrint) {
-			Document documento = new Document(); // Creamos el documento pdf
+			
+			/**
+			 *  Creamos el documento pdf.
+			 */
+			Document document = new Document(); 
 			try {
 				String ruta = System.getProperty("user.home"); // Ruta donde guardar el documento
 
 				/**
-				 * Escribimos el documento en es escritorio de la computadora y le asignamos el
-				 * nombre que recuperemos del txt nombre
+				 * Escribimos el documento en el escritorio de la computadora y le asignamos el
+				 * nombre que recuperemos del txt nombre.
 				 */
-				PdfWriter.getInstance(documento,
+				PdfWriter.getInstance(document,
 						new FileOutputStream(ruta + "\\" + this.txtName.getText().trim() + ".pdf"));
 
 				/**
@@ -419,25 +426,24 @@ public class ClientInformation extends JFrame implements ActionListener {
 				header.scaleToFit(650, 1000); // Dimensiones de la imagen
 				header.setAlignment(Chunk.ALIGN_CENTER); // Alineacion de la imagen
 
-				Paragraph parrafo = new Paragraph(); // Creamos un parrafo
-				parrafo.setAlignment(Paragraph.ALIGN_CENTER); // Alineación del parrafo
-				parrafo.add("Información del cliente.\n \n"); // Agregamos el título
-				parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY)); // Asignamos fuente
-																									// al parrafo
+				Paragraph paragraph = new Paragraph(); // Creamos un parrafo
+				paragraph.setAlignment(Paragraph.ALIGN_CENTER); // Alineación del parrafo
+				paragraph.add("Información del cliente.\n \n"); // Agregamos el título
+				paragraph.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY)); 
 
-				documento.open(); // Abrimos el documento
-				documento.add(header);
-				documento.add(parrafo);
+				document.open(); // Abrimos el documento
+				document.add(header);
+				document.add(paragraph);
 
 				/**
 				 * Creamos una tabla donde se mostraran los datos y añadimos las columnas
 				 */
-				PdfPTable tabla_clientes = new PdfPTable(5);
-				tabla_clientes.addCell("ID");
-				tabla_clientes.addCell("Nombre");
-				tabla_clientes.addCell("Email");
-				tabla_clientes.addCell("Teléfono");
-				tabla_clientes.addCell("Dirección");
+				PdfPTable tableClients = new PdfPTable(5);
+				tableClients.addCell("ID");
+				tableClients.addCell("Nombre");
+				tableClients.addCell("Email");
+				tableClients.addCell("Teléfono");
+				tableClients.addCell("Dirección");
 
 				try {
 					Connection cn = (Connection) DatabaseConnection.conectar();
@@ -450,33 +456,33 @@ public class ClientInformation extends JFrame implements ActionListener {
 							/**
 							 * Recuperamos los campos de la base de datos
 							 */
-							tabla_clientes.addCell(rs.getString(1));
-							tabla_clientes.addCell(rs.getString(2));
-							tabla_clientes.addCell(rs.getString(3));
-							tabla_clientes.addCell(rs.getString(4));
-							tabla_clientes.addCell(rs.getString(5));
+							tableClients.addCell(rs.getString(1));
+							tableClients.addCell(rs.getString(2));
+							tableClients.addCell(rs.getString(3));
+							tableClients.addCell(rs.getString(4));
+							tableClients.addCell(rs.getString(5));
 						} while (rs.next());
-						documento.add(tabla_clientes);
+						document.add(tableClients);
 					}
 
 					/**
 					 * Creación de un nuevo parrafo
 					 */
-					Paragraph parrafo2 = new Paragraph();
-					parrafo2.setAlignment(Paragraph.ALIGN_CENTER);
-					parrafo2.add("\n\nEquipos registrados.\n\n");
-					parrafo2.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+					Paragraph paragraph2 = new Paragraph();
+					paragraph2.setAlignment(Paragraph.ALIGN_CENTER);
+					paragraph2.add("\n\nEquipos registrados.\n\n");
+					paragraph2.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
 
-					documento.add(parrafo2);
+					document.add(paragraph2);
 
 					/**
 					 * Creación tabla equipos registrados
 					 */
-					PdfPTable tabla_equipos = new PdfPTable(4);
-					tabla_equipos.addCell("ID equipo");
-					tabla_equipos.addCell("Tipo");
-					tabla_equipos.addCell("Marca");
-					tabla_equipos.addCell("Estatus");
+					PdfPTable tableEquipments = new PdfPTable(4);
+					tableEquipments.addCell("ID equipo");
+					tableEquipments.addCell("Tipo");
+					tableEquipments.addCell("Marca");
+					tableEquipments.addCell("Estatus");
 
 					try {
 						Connection cn2 = (Connection) DatabaseConnection.conectar();
@@ -487,12 +493,12 @@ public class ClientInformation extends JFrame implements ActionListener {
 
 						if (rs2.next()) {
 							do {
-								tabla_equipos.addCell(rs2.getString(1));
-								tabla_equipos.addCell(rs2.getString(2));
-								tabla_equipos.addCell(rs2.getString(3));
-								tabla_equipos.addCell(rs2.getString(4));
+								tableEquipments.addCell(rs2.getString(1));
+								tableEquipments.addCell(rs2.getString(2));
+								tableEquipments.addCell(rs2.getString(3));
+								tableEquipments.addCell(rs2.getString(4));
 							} while (rs.next());
-							documento.add(tabla_equipos);
+							document.add(tableEquipments);
 						}
 					} catch (DocumentException | SQLException ex) {
 						System.err.println("Error al obtener datos de equipos " + e);
@@ -500,7 +506,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 				} catch (DocumentException | SQLException ex) {
 					System.err.println("Error al obtener datos del cliente " + e);
 				}
-				documento.close();
+				document.close();
 				JOptionPane.showMessageDialog(null, "Reporte creado correctamente");
 			} catch (DocumentException | IOException ex) {
 				System.err.println("Error en pdf o ruta de imagen " + ex);

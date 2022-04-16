@@ -2,12 +2,15 @@ package ventanas.employee;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -15,19 +18,20 @@ import javax.swing.JTextPane;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
+import ventanas.Login;
 
 /**
  * 
  * @author Juan Carlos Estevez Vargas.
  *
  */
-public class EquipmentInformation extends JFrame {
+public class EquipmentInformation extends JFrame implements ActionListener{
 
 	/**
 	 * Declaración de Variables.
 	 */
 	private static final long serialVersionUID = 1L;
-	private String nameClient = "";
+	private String nameClient = "", user = "";
 	public static int idEquipment = 0;
 	public static int idClientUpdate = 0;
 	private JLabel labelTittle;
@@ -61,6 +65,7 @@ public class EquipmentInformation extends JFrame {
 	 */
 	public EquipmentInformation() {
 		initComponents();
+		this.user = Login.user;
 		this.setResizable(false);
 		this.setSize(670, 530);
 		this.setLocationRelativeTo(null);
@@ -353,9 +358,85 @@ public class EquipmentInformation extends JFrame {
 		this.btnUpdateEquipment.setBackground(new Color(8, 85, 224));
 		this.btnUpdateEquipment.setForeground(Color.WHITE);
 		this.btnUpdateEquipment.setHorizontalAlignment(JButton.CENTER);
-		// this.btnUpdateEquipment.addActionListener(this);
+		this.btnUpdateEquipment.addActionListener(this);
 		this.container.add(this.btnUpdateEquipment);
 
+	}
+	
+	/**
+	 * Limpia los campos de texto.
+	 */
+	public void clean() {
+        this.txtDateOfAdmission.setText("");
+        this.txtModel.setText("");
+        this.txtName.setText("");
+        this.txtSerialNumber.setText("");
+    }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		int validation = 0;
+        String typeEquip, mark, model, serialNumber, status, observations;
+        
+        typeEquip = this.cmbTypeEquip.getSelectedItem().toString();
+        mark = this.cmbMark.getSelectedItem().toString();
+        status = this.cmbStatus.getSelectedItem().toString();
+        
+        model = this.txtModel.getText().trim();
+        serialNumber = this.txtSerialNumber.getText().trim();
+        observations = this.textPaneObservations.getText().trim();
+
+        /**
+         * Validación de campos.
+         */
+        if (model.equals("")) {
+            this.txtModel.setBackground(Color.red);
+            validation++;
+        }
+        if (serialNumber.equals("")) {
+            this.txtSerialNumber.setBackground(Color.red);
+            validation++;
+        }
+        if (observations.equals("")) {
+            this.textPaneObservations.setText("Sin observaciones");
+        }
+        
+        if (validation == 0) {
+            try {
+                Connection cn = (Connection) DatabaseConnection.conectar();
+                PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
+                        "UPDATE equipos SET tipo_equipo = ?, marca = ?, modelo = ?, num_serie = ?, observaciones = ?, estatus = ?, "
+                        + "ultima_modificacion = ? WHERE id_equipo = '" + idEquipment + "'");
+                
+                pst.setString(1, typeEquip);
+                pst.setString(2, mark);
+                pst.setString(3, model);
+                pst.setString(4, serialNumber);
+                pst.setString(5, observations);
+                pst.setString(6, status);
+                pst.setString(7, user);
+                
+                pst.executeUpdate();
+                cn.close();
+                
+                clean();
+                
+                this.txtName.setBackground(Color.green);
+                this.txtDateOfAdmission.setBackground(Color.green);
+                this.txtModel.setBackground(Color.green);
+                this.txtSerialNumber.setBackground(Color.green);
+                this.txtModifyBy.setText(user);
+                
+                JOptionPane.showMessageDialog(null, "Actualización correcta");
+                this.dispose();
+            } catch (SQLException ex) {
+                System.err.println("Error al actualizar equipo " + ex);
+                JOptionPane.showMessageDialog(null, "¡¡Error al actualizar equipo!! Contacte al Administrador");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+        }
+		
 	}
 
 }

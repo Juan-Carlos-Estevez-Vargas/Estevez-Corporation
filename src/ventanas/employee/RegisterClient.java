@@ -59,7 +59,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 	/**
 	 * Limpia los campos de texto.
 	 */
-	public void Limpiar() {
+	public void clean() {
 		this.txtEmailClient.setText("");
 		this.txtNameClient.setText("");
 		this.txtAdressClient.setText("");
@@ -241,7 +241,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 					pst.executeUpdate();
 					cn.close();
 					
-					Limpiar();
+					clean();
 
 					this.txtNameClient.setBackground(Color.green);
 					this.txtEmailClient.setBackground(Color.green);
