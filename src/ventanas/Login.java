@@ -65,7 +65,7 @@ public final class Login extends JFrame implements ActionListener {
 		 * Logo del Login.
 		 */
 		this.jlLogo = new JLabel();
-		this.jlLogo.setBounds(70, 50, 200, 150);
+		this.jlLogo.setBounds(70, 40, 200, 170);
 		this.jlLogo.setIcon(new ImageIcon("src/img/logo.png"));
 		this.jlLogo.setHorizontalAlignment(JLabel.CENTER);
 		this.container.add(this.jlLogo);

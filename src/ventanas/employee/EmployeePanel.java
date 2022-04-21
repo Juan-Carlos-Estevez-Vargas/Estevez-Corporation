@@ -192,7 +192,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 				String ruta = System.getProperty("user.home");
 				PdfWriter.getInstance(document, new FileOutputStream(ruta + "\\Reporte_clientes.pdf"));
 
-				com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF.jpg");
+				com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF2.jpg");
 				header.scaleToFit(650, 1000);
 				header.setAlignment(Chunk.ALIGN_CENTER);
 

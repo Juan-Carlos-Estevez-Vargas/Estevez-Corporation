@@ -422,7 +422,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 				 * Creamos una instancia de la clase image de itext, y colocamos la imagen que
 				 * queremos
 				 */
-				com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF.jpg");
+				com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF2.jpg");
 				header.scaleToFit(650, 1000); // Dimensiones de la imagen
 				header.setAlignment(Chunk.ALIGN_CENTER); // Alineacion de la imagen
 
