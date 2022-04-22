@@ -11,6 +11,7 @@ import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
 import ventanas.administrator.AdministratorPanel;
 import ventanas.employee.EmployeePanel;
+import ventanas.technical.PanelTechnical;
 
 /**
  *
@@ -232,7 +233,7 @@ public final class Login extends JFrame implements ActionListener {
 							new EmployeePanel().setVisible(true);
 						} else if (levelType.equals("Tecnico") && status.equalsIgnoreCase("Activo")) {
 							this.dispose();
-							// new Tecnico().setVisible(true);
+							new PanelTechnical().setVisible(true);
 						}
 					} else {
 						this.jlError.setText("Usuario y/o contraseña erróneos");
