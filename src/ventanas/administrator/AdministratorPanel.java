@@ -29,7 +29,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 	private JButton btnRegisterUser;
 	private JButton btnManageUser;
 	private JButton btnPrueba;
-	private JComboBox<String> cmbRole;
+	private JButton btnRole;
 	private String user;
 	private String nameUser;
 
@@ -134,13 +134,14 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		 * ComboBox encargado de mostrar los roles a los que puede acceder el usuario
 		 * Administrador junto con el apartado de cerrar sesión.
 		 */
-		this.cmbRole = new JComboBox<>();
-		this.cmbRole.addItem("Administrador");
-		this.cmbRole.addItem("Técnico");
-		this.cmbRole.addItem("Capturista");
-		this.cmbRole.addItem("Cerrar Sesión");
-		this.cmbRole.setBounds(500, 20, 120, 20);
-		this.panelBack.add(this.cmbRole);
+		this.btnRole = new JButton("Cerrar Sesión");
+		this.btnRole.setBounds(500, 20, 120, 30);
+		this.btnRole.setFont(new Font("serif", Font.BOLD, 14));
+		this.btnRole.setBackground(new Color(8, 85, 224));
+		this.btnRole.setForeground(Color.WHITE);
+		this.btnRole.setHorizontalAlignment(JButton.CENTER);
+		this.btnRole.addActionListener(this);
+		this.panelBack.add(this.btnRole);
 
 	}
 
@@ -168,6 +169,13 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		if (e.getSource() == this.btnManageUser) {
 			managementUsers = new ManagementUsers();
 			managementUsers.setVisible(true);
+		}
+		
+		if(e.getSource() == this.btnRole) {
+			Login login = new Login();
+			login.setLocationRelativeTo(null);
+			login.setVisible(true);
+			this.dispose();
 		}
 	}
 

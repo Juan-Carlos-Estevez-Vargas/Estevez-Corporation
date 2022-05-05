@@ -59,7 +59,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.user_update = ManagementUsers.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
 		this.setResizable(false);
 		this.setTitle("Información del usuario " + user_update + " - Sesión de " + user);
-		this.setSize(630, 460);
+		this.setSize(630, 360);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.labelTittle.setText("Información del usuario " + this.user_update);
@@ -273,7 +273,7 @@ public class UserInformation extends JFrame implements ActionListener {
 
 		/**
 		 * Botón para restaurar la contraseña del usuario en cuestión.
-		 */
+		 
 		this.btnRestorePassword = new JButton("Restaurar Password");
 		this.btnRestorePassword.setBounds(380, 300, 210, 35);
 		this.btnRestorePassword.setFont(new Font("serif", Font.BOLD, 20));
@@ -281,7 +281,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.btnRestorePassword.setForeground(Color.WHITE);
 		this.btnRestorePassword.setHorizontalAlignment(JButton.CENTER);
 		this.btnRestorePassword.addActionListener(this);
-		this.container.add(this.btnRestorePassword);
+		this.container.add(this.btnRestorePassword);*/
 
 	}
 
