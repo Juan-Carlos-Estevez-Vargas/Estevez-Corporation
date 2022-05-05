@@ -173,7 +173,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 		 * Label Registrar Cliente.
 		 */
 		this.labelRegisterClient = new JLabel("Registrar Cliente:");
-		this.labelRegisterClient.setBounds(350, 200, 100, 25);
+		this.labelRegisterClient.setBounds(300, 220, 150, 25);
 		this.labelRegisterClient.setForeground(new Color(192, 192, 192));
 		this.labelRegisterClient.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackClient.add(this.labelRegisterClient);
@@ -182,7 +182,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 		 * Botón para registrar un Cliente en el sistema.
 		 */
 		this.btnRegisterClient = new JButton();
-		this.btnRegisterClient.setBounds(350, 100, 70, 70);
+		this.btnRegisterClient.setBounds(300, 100, 120, 120);
 		this.btnRegisterClient.setIcon(new ImageIcon("src/img/add.png"));
 		this.btnRegisterClient.addActionListener(this);
 		this.panelBackClient.add(this.btnRegisterClient);

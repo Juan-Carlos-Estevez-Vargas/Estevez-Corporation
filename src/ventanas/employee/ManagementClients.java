@@ -44,7 +44,7 @@ public class ManagementClients extends JFrame {
 		this.user = Login.user;
 		this.setSize(630, 340);
 		this.setResizable(false);
-		this.setTitle("Usuarios registrados - Sesión de " + this.user);
+		this.setTitle("Clientes registrados - Sesión de " + this.user);
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

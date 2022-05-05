@@ -11,7 +11,6 @@ import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -50,7 +49,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 	private JButton btnRegisterClient;
 	private JButton btnManageClient;
 	private JButton btnPrintClients;
-	private JComboBox<String> cmbRole;
+	private JButton btnRole;
 	private String user;
 	private String nameUser;
 
@@ -147,7 +146,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		 * Label Imprimir Clientes.
 		 */
 		this.labelPrintClients = new JLabel("Imprimir Clientes");
-		this.labelPrintClients.setBounds(500, 190, 120, 15);
+		this.labelPrintClients.setBounds(500, 190, 200, 15);
 		this.labelPrintClients.setForeground(new Color(192, 192, 192));
 		this.labelPrintClients.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBack.add(this.labelPrintClients);
@@ -165,11 +164,14 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		 * ComboBox encargado de mostrar los roles a los que puede acceder el cliente
 		 * Capturista junto con el apartado de cerrar sesión.
 		 */
-		this.cmbRole = new JComboBox<>();
-		this.cmbRole.addItem("Capturista");
-		this.cmbRole.addItem("Cerrar Sesión");
-		this.cmbRole.setBounds(500, 20, 120, 20);
-		this.panelBack.add(this.cmbRole);
+		this.btnRole = new JButton("Cerrar Sesión");
+		this.btnRole.setBounds(500, 20, 120, 30);
+		this.btnRole.setFont(new Font("serif", Font.BOLD, 14));
+		this.btnRole.setBackground(new Color(8, 85, 224));
+		this.btnRole.setForeground(Color.WHITE);
+		this.btnRole.setHorizontalAlignment(JButton.CENTER);
+		this.btnRole.addActionListener(this);
+		this.panelBack.add(this.btnRole);
 
 	}
 
@@ -179,6 +181,13 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		if (e.getSource() == this.btnRegisterClient) {
 			RegisterClient registerClient = new RegisterClient();
 			registerClient.setVisible(true);
+		}
+
+		if (e.getSource() == this.btnRole) {
+			Login login = new Login();
+			login.setLocationRelativeTo(null);
+			login.setVisible(true);
+			this.dispose();
 		}
 
 		if (e.getSource() == this.btnManageClient) {
