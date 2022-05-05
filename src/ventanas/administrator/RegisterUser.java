@@ -315,7 +315,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 							pst2.setString(6, password);
 							pst2.setString(7, permissionsString);
 							pst2.setString(8, "Activo");
-							pst2.setString(9, "Hola");
+							pst2.setString(9, user);
 							pst2.executeUpdate();
 							cn2.close();
 

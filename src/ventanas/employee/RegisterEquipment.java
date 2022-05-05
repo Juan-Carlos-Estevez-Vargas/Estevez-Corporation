@@ -155,6 +155,10 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.cmbTypeEquip.setBackground(new Color(127, 140, 141));
 		this.cmbTypeEquip.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbTypeEquip.setForeground(Color.WHITE);
+		// TODO
+		/**
+		 * Consultar datos del combobox y setearlos a un array lost
+		 */
 		this.cmbTypeEquip.setModel(
 				new DefaultComboBoxModel<>(new String[] { "Laptop", "Desktop", "Impresora", "Multifuncional" }));
 		this.panelBackClient.add(this.cmbTypeEquip);
