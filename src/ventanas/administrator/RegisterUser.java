@@ -24,13 +24,11 @@ public class RegisterUser extends JFrame implements ActionListener {
 	private JTextField txtEmailUser;
 	private JTextField txtPhoneUser;
 	private JTextField txtUsername;
-	private JPasswordField txtPassword;
-	private JLabel labelRegisterUser;
+	private JLabel labelTitle;
 	private JLabel labelNameUser;
 	private JLabel labelEmailUser;
 	private JLabel labelPhoneUser;
-	private JLabel labelUsername;
-	private JLabel labelPassword;
+	private JLabel labelRegisterUser;
 	private JLabel labelPermissionsOf;
 	private JPanel panelBackUser;
 	private JButton btnRegisterUser;
@@ -42,7 +40,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 	 */
 	public RegisterUser() {
 		this.user = Login.user;
-		this.setSize(630, 360);
+		this.setSize(630, 340);
 		this.setTitle("Registrar Usuario - Sesión de " + this.user);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
@@ -57,7 +55,6 @@ public class RegisterUser extends JFrame implements ActionListener {
 	public void Limpiar() {
 		this.txtEmailUser.setText("");
 		this.txtNameUser.setText("");
-		this.txtPassword.setText("");
 		this.txtPhoneUser.setText("");
 		this.txtUsername.setText("");
 		this.cmbPermissions.setSelectedIndex(0);
@@ -79,11 +76,11 @@ public class RegisterUser extends JFrame implements ActionListener {
 		/**
 		 * Título de la ventana.
 		 */
-		this.labelRegisterUser = new JLabel("Registro de Usuarios");
-		this.labelRegisterUser.setBounds(210, 10, 250, 30);
-		this.labelRegisterUser.setForeground(new Color(192, 192, 192));
-		this.labelRegisterUser.setFont(new Font("serif", Font.BOLD, 20));
-		this.panelBackUser.add(this.labelRegisterUser);
+		this.labelTitle = new JLabel("Registro de Usuarios");
+		this.labelTitle.setBounds(210, 10, 250, 30);
+		this.labelTitle.setForeground(new Color(192, 192, 192));
+		this.labelTitle.setFont(new Font("serif", Font.BOLD, 20));
+		this.panelBackUser.add(this.labelTitle);
 
 		/**
 		 * Label Nombre.
@@ -171,11 +168,11 @@ public class RegisterUser extends JFrame implements ActionListener {
 		/**
 		 * Label Username.
 		 */
-		this.labelUsername = new JLabel("Username:");
-		this.labelUsername.setBounds(360, 50, 100, 25);
-		this.labelUsername.setForeground(new Color(192, 192, 192));
-		this.labelUsername.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(this.labelUsername);
+		this.labelRegisterUser = new JLabel("Username:");
+		this.labelRegisterUser.setBounds(360, 50, 100, 25);
+		this.labelRegisterUser.setForeground(new Color(192, 192, 192));
+		this.labelRegisterUser.setFont(new Font("serif", Font.BOLD, 14));
+		this.panelBackUser.add(this.labelRegisterUser);
 
 		/**
 		 * Campo de texto para ingresar el username del usuario a registrar.
@@ -189,36 +186,24 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.panelBackUser.add(this.txtUsername);
 
 		/**
-		 * Label Password.
-		 */
-		this.labelPassword = new JLabel("Password:");
-		this.labelPassword.setBounds(360, 110, 100, 25);
-		this.labelPassword.setForeground(new Color(192, 192, 192));
-		this.labelPassword.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(this.labelPassword);
-
-		/**
-		 * Campo de texto para ingresar la contraseña del usuario a registrar.
-		 */
-		this.txtPassword = new JPasswordField();
-		this.txtPassword.setBounds(360, 130, 230, 25);
-		this.txtPassword.setBackground(new Color(127, 140, 141));
-		this.txtPassword.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtPassword.setHorizontalAlignment(JLabel.CENTER);
-		this.txtPassword.setForeground(Color.WHITE);
-		this.panelBackUser.add(this.txtPassword);
-
-		/**
 		 * Botón para registrar un usuario en el sistema.
 		 */
 		this.btnRegisterUser = new JButton();
-		this.btnRegisterUser.setBounds(470, 180, 120, 100);
+		this.btnRegisterUser.setBounds(440, 120, 140, 120);
 		this.btnRegisterUser.setIcon(new ImageIcon("src/img/addUser.png"));
 		this.btnRegisterUser.addActionListener(this);
 		this.panelBackUser.add(this.btnRegisterUser);
+		
+		/**
+		 * Label Username.
+		 */
+		this.labelRegisterUser = new JLabel("Registrar Usuario");
+		this.labelRegisterUser.setBounds(455, 240, 150, 25);
+		this.labelRegisterUser.setForeground(new Color(192, 192, 192));
+		this.labelRegisterUser.setFont(new Font("serif", Font.BOLD, 14));
+		this.panelBackUser.add(this.labelRegisterUser);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -227,7 +212,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 */
 		if (e.getSource() == this.btnRegisterUser) {
 			int permissionsCmb, validation = 0;
-			String name, email, phone, username, password, permissionsString = "";
+			String name, email, phone, username, permissionsString = "";
 
 			/**
 			 * Guardamos lo que esta en los txt en las variables que acabamos de crear
@@ -235,7 +220,6 @@ public class RegisterUser extends JFrame implements ActionListener {
 			email = this.txtEmailUser.getText().trim();
 			phone = this.txtPhoneUser.getText().trim();
 			username = this.txtUsername.getText().trim();
-			password = this.txtPassword.getText().trim();
 			name = this.txtNameUser.getText().trim();
 			permissionsCmb = this.cmbPermissions.getSelectedIndex() + 1; // Guardamos lo que esta en el comboBox
 
@@ -248,10 +232,6 @@ public class RegisterUser extends JFrame implements ActionListener {
 			}
 			if (username.equals("")) {
 				this.txtUsername.setBackground(Color.red);
-				validation++;
-			}
-			if (password.equals("")) {
-				this.txtPassword.setBackground(Color.red);
 				validation++;
 			}
 			if (name.equals("")) {
@@ -312,7 +292,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 							pst2.setString(3, email);
 							pst2.setString(4, phone);
 							pst2.setString(5, username);
-							pst2.setString(6, password);
+							pst2.setString(6, "1234");
 							pst2.setString(7, permissionsString);
 							pst2.setString(8, "Activo");
 							pst2.setString(9, user);
@@ -329,7 +309,6 @@ public class RegisterUser extends JFrame implements ActionListener {
 							 */
 							this.txtEmailUser.setBackground(Color.green);
 							this.txtNameUser.setBackground(Color.green);
-							this.txtPassword.setBackground(Color.green);
 							this.txtPhoneUser.setBackground(Color.green);
 							this.txtUsername.setBackground(Color.green);
 							JOptionPane.showMessageDialog(null, "Registro exitoso");
