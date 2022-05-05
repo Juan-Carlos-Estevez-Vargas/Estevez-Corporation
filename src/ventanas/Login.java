@@ -24,6 +24,7 @@ public final class Login extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	public static String user = "";
+	private String statusUser = "";
 	private JPanel container;
 	private JLabel jlLogo;
 	private JLabel jlUser;
@@ -47,6 +48,23 @@ public final class Login extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.initComponents();
+
+		/**
+		 * Recuperando el setatus del usuario.
+		 */
+		try {
+			Connection cn = (Connection) DatabaseConnection.conectar();
+			PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
+					"SELECT estatus FROM usuarios WHERE username = '" + txtUser.getText().trim() + "'");
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				statusUser = rs.getString("estatus");
+			}
+		} catch (Exception e) {
+			System.err.println("Error en conexión desde la interfaz Administrador");
+		}
+
 	}
 
 	/**
@@ -203,48 +221,54 @@ public final class Login extends JFrame implements ActionListener {
 			 * Validamos que los campos no estén vacíos.
 			 */
 			if (!username.equals("") || !password.equals("")) {
-				try {
-					Connection cn = (Connection) DatabaseConnection.conectar();
-					PreparedStatement pst = (PreparedStatement) cn
-							.prepareStatement("SELECT tipo_nivel, estatus FROM usuarios WHERE username = '" + username
-									+ "' AND password = '" + password + "'");
-					ResultSet rs = pst.executeQuery();
-
-					/**
-					 * Si la consulta encuentra resultados.
-					 */
-					if (rs.next()) {
+				if (statusUser != "Inactivo") {
+					try {
+						Connection cn = (Connection) DatabaseConnection.conectar();
+						PreparedStatement pst = (PreparedStatement) cn
+								.prepareStatement("SELECT tipo_nivel, estatus FROM usuarios WHERE username = '"
+										+ username + "' AND password = '" + password + "'");
+						ResultSet rs = pst.executeQuery();
 
 						/**
-						 * Creamos dos variables que almacenan el resultado de los comboBox de la
-						 * consulta
+						 * Si la consulta encuentra resultados.
 						 */
-						String levelType = rs.getString("tipo_nivel");
-						String status = rs.getString("estatus");
+						if (rs.next()) {
 
-						/**
-						 * Validamos los datos para saber a que interfaz irá el usuario
-						 */
-						if (levelType.equals("Administrador") && status.equalsIgnoreCase("Activo")) {
-							this.dispose();
-							new AdministratorPanel().setVisible(true);
-						} else if (levelType.equals("Capturista") && status.equalsIgnoreCase("Activo")) {
-							this.dispose();
-							new EmployeePanel().setVisible(true);
-						} else if (levelType.equals("Tecnico") && status.equalsIgnoreCase("Activo")) {
-							this.dispose();
-							new PanelTechnical().setVisible(true);
+							/**
+							 * Creamos dos variables que almacenan el resultado de los comboBox de la
+							 * consulta
+							 */
+							String levelType = rs.getString("tipo_nivel");
+							String status = rs.getString("estatus");
+
+							/**
+							 * Validamos los datos para saber a que interfaz irá el usuario
+							 */
+							if (levelType.equals("Administrador") && status.equalsIgnoreCase("Activo")) {
+								this.dispose();
+								new AdministratorPanel().setVisible(true);
+							} else if (levelType.equals("Capturista") && status.equalsIgnoreCase("Activo")) {
+								this.dispose();
+								new EmployeePanel().setVisible(true);
+							} else if (levelType.equals("Tecnico") && status.equalsIgnoreCase("Activo")) {
+								this.dispose();
+								new PanelTechnical().setVisible(true);
+							}
+						} else {
+							this.jlError.setText("Usuario y/o contraseña erróneos");
+							this.txtUser.setText("");
+							this.txtUser.requestFocus();
+							this.txtPassword.setText("");
+							this.txtPassword2.setText("");
 						}
-					} else {
-						this.jlError.setText("Usuario y/o contraseña erróneos");
-						this.txtUser.setText("");
-						this.txtUser.requestFocus();
-						this.txtPassword.setText("");
-						this.txtPassword2.setText("");
+					} catch (SQLException ex) {
+						System.err.println("Error en el boton Acceder." + ex);
+						JOptionPane.showMessageDialog(null,
+								"¡¡Error al iniciar sesion!! Contactate con el administrador.");
 					}
-				} catch (SQLException ex) {
-					System.err.println("Error en el boton Acceder." + ex);
-					JOptionPane.showMessageDialog(null, "¡¡Error al iniciar sesion!! Contactate con el administrador.");
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"El usuario se encuentra inhabilitado. ¡Contacte al administrador!");
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "¡Debes llenar todos los campos!");
