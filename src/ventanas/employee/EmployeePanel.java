@@ -58,7 +58,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 	 */
 	public EmployeePanel() {
 		this.user = Login.user;
-		this.setSize(670, 310);
+		this.setSize(630, 310);
 		this.setTitle("Capturista - Sesión de " + this.user);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -111,8 +111,11 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		 */
 		this.btnRegisterClient = new JButton();
 		this.btnRegisterClient.setBounds(40, 80, 120, 100);
-		this.btnRegisterClient.setIcon(new ImageIcon("src/img/add.png"));
+		this.btnRegisterClient.setIcon(new ImageIcon("src/img/addClient.png"));
 		this.btnRegisterClient.addActionListener(this);
+		this.btnRegisterClient.setBorder(null);
+		this.btnRegisterClient.setBackground(new Color(46, 59, 104));
+		this.btnRegisterClient.setOpaque(true);
 		this.panelBack.add(this.btnRegisterClient);
 
 		/**
@@ -128,16 +131,19 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		 * Botón encargado de mostrar la lista de Clientes registrados en el sistema.
 		 */
 		this.btnManageClient = new JButton();
-		this.btnManageClient.setBounds(270, 80, 120, 100);
+		this.btnManageClient.setBounds(250, 80, 120, 100);
 		this.btnManageClient.setIcon(new ImageIcon("src/img/informationuser.png"));
 		this.btnManageClient.addActionListener(this);
+		this.btnManageClient.setBorder(null);
+		this.btnManageClient.setBackground(new Color(46, 59, 104));
+		this.btnManageClient.setOpaque(true);
 		this.panelBack.add(this.btnManageClient);
 
 		/**
 		 * Label Gestionar Clientes.
 		 */
 		this.labelManageClient = new JLabel("Gestionar Clientes");
-		this.labelManageClient.setBounds(270, 190, 120, 15);
+		this.labelManageClient.setBounds(250, 190, 120, 15);
 		this.labelManageClient.setForeground(new Color(192, 192, 192));
 		this.labelManageClient.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBack.add(this.labelManageClient);
@@ -146,7 +152,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		 * Label Imprimir Clientes.
 		 */
 		this.labelPrintClients = new JLabel("Imprimir Clientes");
-		this.labelPrintClients.setBounds(500, 190, 200, 15);
+		this.labelPrintClients.setBounds(460, 190, 200, 15);
 		this.labelPrintClients.setForeground(new Color(192, 192, 192));
 		this.labelPrintClients.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBack.add(this.labelPrintClients);
@@ -155,9 +161,12 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		 * Botón para imprimir los clientes.
 		 */
 		this.btnPrintClients = new JButton();
-		this.btnPrintClients.setBounds(500, 80, 120, 100);
+		this.btnPrintClients.setBounds(460, 80, 120, 100);
 		this.btnPrintClients.setIcon(new ImageIcon("src/img/impresora.png"));
 		this.btnPrintClients.addActionListener(this);
+		this.btnPrintClients.setBorder(null);
+		this.btnPrintClients.setBackground(new Color(46, 59, 104));
+		this.btnPrintClients.setOpaque(true);
 		this.panelBack.add(this.btnPrintClients);
 
 		/**
@@ -165,7 +174,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		 * Capturista junto con el apartado de cerrar sesión.
 		 */
 		this.btnRole = new JButton("Cerrar Sesión");
-		this.btnRole.setBounds(500, 20, 120, 30);
+		this.btnRole.setBounds(470, 20, 120, 30);
 		this.btnRole.setFont(new Font("serif", Font.BOLD, 14));
 		this.btnRole.setBackground(new Color(8, 85, 224));
 		this.btnRole.setForeground(Color.WHITE);

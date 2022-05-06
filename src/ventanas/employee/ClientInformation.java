@@ -77,7 +77,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.user_update = ManagementClients.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
 		idClient = ManagementClients.id_cliente_update;
 		this.setResizable(false);
-		this.setSize(680, 460);
+		this.setSize(680, 410);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
@@ -316,9 +316,12 @@ public class ClientInformation extends JFrame implements ActionListener {
 		 * Botón para imprimir los clientes.
 		 */
 		this.btnPrint = new JButton();
-		this.btnPrint.setBounds(500, 260, 90, 90);
+		this.btnPrint.setBounds(500, 250, 100, 100);
 		this.btnPrint.setIcon(new ImageIcon("src/img/impresora.png"));
 		this.btnPrint.addActionListener(this);
+		this.btnPrint.setBorder(null);
+		this.btnPrint.setBackground(new Color(46, 59, 104));
+		this.btnPrint.setOpaque(true);
 		this.container.add(this.btnPrint);
 
 	}
