@@ -29,7 +29,7 @@ public final class Login extends JFrame implements ActionListener {
 	private JLabel jlLogo;
 	private JLabel jlUser;
 	private JLabel jlPassword;
-	private JLabel jlForgot;
+	private JButton btnForgot;
 	private JLabel jlError;
 	private JTextField txtUser;
 	private JTextField txtPassword2;
@@ -191,12 +191,16 @@ public final class Login extends JFrame implements ActionListener {
 		/**
 		 * Label para recuperar la contraseña.
 		 */
-		this.jlForgot = new JLabel("¿Olvidó su contraseña?");
-		this.jlForgot.setBounds(45, 515, 250, 35);
-		this.jlForgot.setForeground(new Color(192, 192, 192));
-		this.jlForgot.setFont(new Font("serif", Font.BOLD, 18));
-		this.jlForgot.setHorizontalAlignment(JLabel.CENTER);
-		this.container.add(this.jlForgot);
+		this.btnForgot = new JButton("¿Olvidó su contraseña?");
+		this.btnForgot.setBounds(45, 515, 250, 35);
+		this.btnForgot.setForeground(new Color(192, 192, 192));
+		this.btnForgot.setFont(new Font("serif", Font.BOLD, 18));
+		this.btnForgot.setHorizontalAlignment(JLabel.CENTER);
+		this.btnForgot.setBorder(null);
+		this.btnForgot.setBackground(new Color(46, 59, 104));
+		this.btnForgot.setOpaque(true);
+		this.btnForgot.addActionListener(this);
+		this.container.add(this.btnForgot);
 
 	}
 
@@ -290,6 +294,11 @@ public final class Login extends JFrame implements ActionListener {
 				this.txtPassword.setVisible(true);
 				this.eyeEstate = false;
 			}
+		}
+		
+		if (e.getSource() == this.btnForgot) {
+			RestorePassWithMail restorePassWithMail = new RestorePassWithMail();
+			restorePassWithMail.setVisible(true);
 		}
 	}
 
