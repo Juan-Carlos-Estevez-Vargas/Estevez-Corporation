@@ -48,7 +48,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 	public RegisterClient() {
 		this.user = Login.user;
         this.setTitle("Registrar nuevo cliente - Sesión de " + this.user);
-		this.setSize(530, 350);
+		this.setSize(480, 350);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
@@ -183,8 +183,11 @@ public class RegisterClient extends JFrame implements ActionListener {
 		 */
 		this.btnRegisterClient = new JButton();
 		this.btnRegisterClient.setBounds(300, 100, 120, 120);
-		this.btnRegisterClient.setIcon(new ImageIcon("src/img/add.png"));
+		this.btnRegisterClient.setIcon(new ImageIcon("src/img/registerClient.png"));
 		this.btnRegisterClient.addActionListener(this);
+		this.btnRegisterClient.setBorder(null);
+		this.btnRegisterClient.setBackground(new Color(46, 59, 104));
+		this.btnRegisterClient.setOpaque(true);
 		this.panelBackClient.add(this.btnRegisterClient);
 	}
 
