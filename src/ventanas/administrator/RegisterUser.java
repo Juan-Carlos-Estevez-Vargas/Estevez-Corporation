@@ -40,7 +40,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 	 */
 	public RegisterUser() {
 		this.user = Login.user;
-		this.setSize(630, 340);
+		this.setSize(590, 340);
 		this.setTitle("Registrar Usuario - Sesión de " + this.user);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
@@ -169,7 +169,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 * Label Username.
 		 */
 		this.labelRegisterUser = new JLabel("Username:");
-		this.labelRegisterUser.setBounds(360, 50, 100, 25);
+		this.labelRegisterUser.setBounds(320, 50, 100, 25);
 		this.labelRegisterUser.setForeground(new Color(192, 192, 192));
 		this.labelRegisterUser.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackUser.add(this.labelRegisterUser);
@@ -178,7 +178,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 * Campo de texto para ingresar el username del usuario a registrar.
 		 */
 		this.txtUsername = new JTextField();
-		this.txtUsername.setBounds(360, 70, 230, 25);
+		this.txtUsername.setBounds(320, 70, 230, 25);
 		this.txtUsername.setBackground(new Color(127, 140, 141));
 		this.txtUsername.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtUsername.setHorizontalAlignment(JLabel.CENTER);
@@ -189,16 +189,19 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 * Botón para registrar un usuario en el sistema.
 		 */
 		this.btnRegisterUser = new JButton();
-		this.btnRegisterUser.setBounds(440, 120, 140, 120);
+		this.btnRegisterUser.setBounds(400, 120, 140, 120);
 		this.btnRegisterUser.setIcon(new ImageIcon("src/img/addUser.png"));
 		this.btnRegisterUser.addActionListener(this);
+		this.btnRegisterUser.setBorder(null);
+		this.btnRegisterUser.setBackground(new Color(46, 59, 104));
+		this.btnRegisterUser.setOpaque(true);
 		this.panelBackUser.add(this.btnRegisterUser);
 		
 		/**
 		 * Label Username.
 		 */
 		this.labelRegisterUser = new JLabel("Registrar Usuario");
-		this.labelRegisterUser.setBounds(455, 240, 150, 25);
+		this.labelRegisterUser.setBounds(415, 240, 150, 25);
 		this.labelRegisterUser.setForeground(new Color(192, 192, 192));
 		this.labelRegisterUser.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackUser.add(this.labelRegisterUser);

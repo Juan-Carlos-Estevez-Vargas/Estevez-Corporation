@@ -25,6 +25,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 	private JLabel labelTittle;
 	private JLabel labelRegisterUser;
 	private JLabel labelManageUser;
+	private JLabel labelPrintUsers;
 	private JPanel panelBack;
 	private JButton btnRegisterUser;
 	private JButton btnManageUser;
@@ -38,7 +39,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 	 */
 	public AdministratorPanel() {
 		this.user = Login.user;
-		this.setSize(670, 310);
+		this.setSize(630, 310);
 		this.setTitle("Administrador - Sesión de " + this.user);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -93,6 +94,9 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.btnRegisterUser.setBounds(40, 80, 120, 100);
 		this.btnRegisterUser.setIcon(new ImageIcon("src/img/addUser.png"));
 		this.btnRegisterUser.addActionListener(this);
+		this.btnRegisterUser.setBorder(null);
+		this.btnRegisterUser.setBackground(new Color(46, 59, 104));
+		this.btnRegisterUser.setOpaque(true);
 		this.panelBack.add(this.btnRegisterUser);
 
 		/**
@@ -108,16 +112,19 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		 * Botón encargado de mostrar la lista de usuarios registrados en el sistema.
 		 */
 		this.btnManageUser = new JButton();
-		this.btnManageUser.setBounds(270, 80, 120, 100);
+		this.btnManageUser.setBounds(250, 80, 120, 100);
 		this.btnManageUser.setIcon(new ImageIcon("src/img/informationuser.png"));
 		this.btnManageUser.addActionListener(this);
+		this.btnManageUser.setBorder(null);
+		this.btnManageUser.setBackground(new Color(46, 59, 104));
+		this.btnManageUser.setOpaque(true);
 		this.panelBack.add(this.btnManageUser);
 
 		/**
 		 * Label Gestionar Usuarios.
 		 */
 		this.labelManageUser = new JLabel("Gestionar Usuarios");
-		this.labelManageUser.setBounds(270, 190, 120, 15);
+		this.labelManageUser.setBounds(250, 190, 120, 15);
 		this.labelManageUser.setForeground(new Color(192, 192, 192));
 		this.labelManageUser.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBack.add(this.labelManageUser);
@@ -126,16 +133,25 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		 * Botón para modificar después.
 		 */
 		this.btnPrueba = new JButton();
-		this.btnPrueba.setBounds(500, 80, 120, 100);
-		this.btnPrueba.setIcon(new ImageIcon("src/img/informationuser.png"));
+		this.btnPrueba.setBounds(460, 80, 120, 100);
+		this.btnPrueba.setIcon(new ImageIcon("src/img/impresora.png"));
+		this.btnPrueba.setBorder(null);
+		this.btnPrueba.setBackground(new Color(46, 59, 104));
+		this.btnPrueba.setOpaque(true);
 		this.panelBack.add(this.btnPrueba);
+		
+		this.labelPrintUsers = new JLabel("Imprimir Usuarios");
+		this.labelPrintUsers.setBounds(460, 190, 120, 15);
+		this.labelPrintUsers.setForeground(new Color(192, 192, 192));
+		this.labelPrintUsers.setFont(new Font("serif", Font.BOLD, 14));
+		this.panelBack.add(this.labelPrintUsers);
 
 		/**
 		 * ComboBox encargado de mostrar los roles a los que puede acceder el usuario
 		 * Administrador junto con el apartado de cerrar sesión.
 		 */
 		this.btnRole = new JButton("Cerrar Sesión");
-		this.btnRole.setBounds(500, 20, 120, 30);
+		this.btnRole.setBounds(470, 20, 120, 30);
 		this.btnRole.setFont(new Font("serif", Font.BOLD, 14));
 		this.btnRole.setBackground(new Color(8, 85, 224));
 		this.btnRole.setForeground(Color.WHITE);
