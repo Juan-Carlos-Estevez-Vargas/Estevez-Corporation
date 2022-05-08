@@ -48,7 +48,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 	public RegisterClient() {
 		this.user = Login.user;
         this.setTitle("Registrar nuevo cliente - Sesión de " + this.user);
-		this.setSize(480, 350);
+		this.setSize(480, 340);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
