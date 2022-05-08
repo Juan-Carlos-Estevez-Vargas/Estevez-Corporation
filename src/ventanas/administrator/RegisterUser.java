@@ -190,7 +190,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		 */
 		this.btnRegisterUser = new JButton();
 		this.btnRegisterUser.setBounds(400, 120, 140, 120);
-		this.btnRegisterUser.setIcon(new ImageIcon("src/img/addUser.png"));
+		this.btnRegisterUser.setIcon(new ImageIcon("src/img/addClient.png"));
 		this.btnRegisterUser.addActionListener(this);
 		this.btnRegisterUser.setBorder(null);
 		this.btnRegisterUser.setBackground(new Color(46, 59, 104));
