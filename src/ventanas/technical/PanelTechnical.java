@@ -61,7 +61,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 				this.labelTittle.setText(nameUser);
 			}
 		} catch (SQLException e) {
-			System.err.println("Error en consultar capturista");
+			System.err.println("Error en consultar técnico");
 		}
 	}
 
