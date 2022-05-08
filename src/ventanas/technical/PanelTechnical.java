@@ -144,7 +144,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		 */
 		this.btnStateGraph = new JButton();
 		this.btnStateGraph.setBounds(460, 80, 120, 100);
-		this.btnStateGraph.setIcon(new ImageIcon("src/img/grafica.png"));
+		this.btnStateGraph.setIcon(new ImageIcon("src/img/grafica2.png"));
 		this.btnStateGraph.addActionListener(this);
 		this.btnStateGraph.setBorder(null);
 		this.btnStateGraph.setBackground(new Color(46, 59, 104));
