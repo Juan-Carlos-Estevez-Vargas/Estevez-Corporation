@@ -4,8 +4,21 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.*;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
@@ -29,8 +42,8 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 	private JPanel panelBack;
 	private JButton btnRegisterUser;
 	private JButton btnManageUser;
-	private JButton btnPrueba;
-	private JButton btnRole;
+	private JButton btnPrintUsers;
+	private JButton btnLogout;
 	private String user;
 	private String nameUser;
 
@@ -130,16 +143,20 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.panelBack.add(this.labelManageUser);
 
 		/**
-		 * Botón para modificar después.
+		 * Label para imprimir los usuarios.
 		 */
-		this.btnPrueba = new JButton();
-		this.btnPrueba.setBounds(460, 80, 120, 100);
-		this.btnPrueba.setIcon(new ImageIcon("src/img/impresora.png"));
-		this.btnPrueba.setBorder(null);
-		this.btnPrueba.setBackground(new Color(46, 59, 104));
-		this.btnPrueba.setOpaque(true);
-		this.panelBack.add(this.btnPrueba);
-		
+		this.btnPrintUsers = new JButton();
+		this.btnPrintUsers.setBounds(460, 80, 120, 100);
+		this.btnPrintUsers.setIcon(new ImageIcon("src/img/impresora.png"));
+		this.btnPrintUsers.setBorder(null);
+		this.btnPrintUsers.setBackground(new Color(46, 59, 104));
+		this.btnPrintUsers.setOpaque(true);
+		this.btnPrintUsers.addActionListener(this);
+		this.panelBack.add(this.btnPrintUsers);
+
+		/**
+		 * Botón para imprimir los usuarios.
+		 */
 		this.labelPrintUsers = new JLabel("Imprimir Usuarios");
 		this.labelPrintUsers.setBounds(460, 190, 120, 15);
 		this.labelPrintUsers.setForeground(new Color(192, 192, 192));
@@ -147,17 +164,16 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.panelBack.add(this.labelPrintUsers);
 
 		/**
-		 * ComboBox encargado de mostrar los roles a los que puede acceder el usuario
-		 * Administrador junto con el apartado de cerrar sesión.
+		 * Botón Cerrar Sesión.
 		 */
-		this.btnRole = new JButton("Cerrar Sesión");
-		this.btnRole.setBounds(470, 20, 120, 30);
-		this.btnRole.setFont(new Font("serif", Font.BOLD, 14));
-		this.btnRole.setBackground(new Color(8, 85, 224));
-		this.btnRole.setForeground(Color.WHITE);
-		this.btnRole.setHorizontalAlignment(JButton.CENTER);
-		this.btnRole.addActionListener(this);
-		this.panelBack.add(this.btnRole);
+		this.btnLogout = new JButton("Cerrar Sesión");
+		this.btnLogout.setBounds(470, 20, 120, 30);
+		this.btnLogout.setFont(new Font("serif", Font.BOLD, 14));
+		this.btnLogout.setBackground(new Color(8, 85, 224));
+		this.btnLogout.setForeground(Color.WHITE);
+		this.btnLogout.setHorizontalAlignment(JButton.CENTER);
+		this.btnLogout.addActionListener(this);
+		this.panelBack.add(this.btnLogout);
 
 	}
 
@@ -186,12 +202,70 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 			managementUsers = new ManagementUsers();
 			managementUsers.setVisible(true);
 		}
-		
-		if(e.getSource() == this.btnRole) {
+
+		/**
+		 * Cierra la sesión del usuario en cuestión.
+		 */
+		if (e.getSource() == this.btnLogout) {
 			Login login = new Login();
 			login.setLocationRelativeTo(null);
 			login.setVisible(true);
 			this.dispose();
+		}
+
+		if (e.getSource() == this.btnPrintUsers) {
+			Document document = new Document();
+			try {
+				String ruta = System.getProperty("user.home");
+				PdfWriter.getInstance(document, new FileOutputStream(ruta + "\\Reporte_usuarios.pdf"));
+
+				com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF2.jpg");
+				header.scaleToFit(650, 1000);
+				header.setAlignment(Chunk.ALIGN_CENTER);
+
+				Paragraph paragraph = new Paragraph();
+				paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+				paragraph.add("Lista de Usuarios\n\n");
+				paragraph.setFont(FontFactory.getFont("Tahoma", 18, Font.BOLD, BaseColor.DARK_GRAY));
+
+				document.open();
+				document.add(header);
+				document.add(paragraph);
+
+				PdfPTable table = new PdfPTable(6);
+				table.addCell("Nombre");
+				table.addCell("Email");
+				table.addCell("Teléfono");
+				table.addCell("Nivel");
+				table.addCell("Estado");
+				table.addCell("Registrado por");
+
+				try {
+					Connection cn = (Connection) DatabaseConnection.conectar();
+					PreparedStatement pst = (PreparedStatement) cn.prepareStatement("SELECT * FROM usuarios");
+					ResultSet rs = pst.executeQuery();
+
+					if (rs.next()) {
+						do {
+							table.addCell(rs.getString(2));
+							table.addCell(rs.getString(3));
+							table.addCell(rs.getString(4));
+							table.addCell(rs.getString(7));
+							table.addCell(rs.getString(8));
+							table.addCell(rs.getString(9));
+						} while (rs.next());
+						document.add(table);
+					}
+				} catch (SQLException ex) {
+					System.err.println("Error al generar lista de usuarios " + ex);
+				}
+				document.close();
+				JOptionPane.showMessageDialog(null, "Listado de usuarios creada correctamente");
+			} catch (DocumentException | IOException ex) {
+				System.err.println("Error al generar PDF " + ex);
+				JOptionPane.showMessageDialog(null, "¡¡Error al generar PDF!! Contacte al Administrador");
+			}
+
 		}
 	}
 
