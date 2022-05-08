@@ -69,7 +69,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		initComponents();
 		this.user = Login.user;
 		this.setResizable(false);
-		this.setSize(670, 520);
+		this.setSize(610, 500);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		idEquipment = ClientInformation.idEquipment;
@@ -108,6 +108,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 				this.txtModel.setText(rs.getString("modelo"));
 				this.txtSerialNumber.setText(rs.getString("num_serie"));
 				this.txtModifyBy.setText(rs.getString("ultima_modificacion"));
+				this.textPaneObservations.setText(rs.getString(10));
 
 				/**
 				 * Recuperando la fecha
@@ -140,7 +141,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.container = new JPanel();
 		this.container.setBackground(new Color(46, 59, 104));
 		this.container.setLayout(null);
-		this.container.setBounds(670, 530, 670, 530);
+		this.container.setBounds(610, 500, 610, 500);
 		this.setContentPane(this.container);
 
 		/**
@@ -150,7 +151,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.labelTittle.setFont(new java.awt.Font("Segoe UI", 0, 24));
 		this.labelTittle.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelTittle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		this.labelTittle.setBounds(200, 10, 400, 30);
+		this.labelTittle.setBounds(100, 10, 400, 30);
 		this.container.add(this.labelTittle);
 
 		/**
@@ -213,7 +214,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.labelDateOfAdmission = new JLabel("Fecha de Ingreso :");
 		this.labelDateOfAdmission.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		this.labelDateOfAdmission.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelDateOfAdmission.setBounds(320, 60, 200, 20);
+		this.labelDateOfAdmission.setBounds(260, 60, 200, 20);
 		this.container.add(this.labelDateOfAdmission);
 
 		/**
@@ -222,7 +223,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.labelStatus = new JLabel("Estatus :");
 		this.labelStatus.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		this.labelStatus.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelStatus.setBounds(520, 60, 100, 20);
+		this.labelStatus.setBounds(460, 60, 100, 20);
 		this.container.add(this.labelStatus);
 
 		/**
@@ -231,7 +232,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.labelObservations = new JLabel("Daño reportado y observaciones :");
 		this.labelObservations.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		this.labelObservations.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelObservations.setBounds(320, 110, 200, 20);
+		this.labelObservations.setBounds(260, 110, 200, 20);
 		this.container.add(this.labelObservations);
 
 		/**
@@ -240,7 +241,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.labelComments = new JLabel("Comentarios y Actualización del Técnico :");
 		this.labelComments.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		this.labelComments.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelComments.setBounds(320, 260, 300, 20);
+		this.labelComments.setBounds(260, 260, 300, 20);
 		this.container.add(this.labelComments);
 
 		/**
@@ -283,7 +284,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		 */
 		this.txtDateOfAdmission = new JTextField();
 		this.txtDateOfAdmission.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-		this.txtDateOfAdmission.setBounds(320, 80, 180, 30);
+		this.txtDateOfAdmission.setBounds(260, 80, 180, 30);
 		this.txtDateOfAdmission.setBackground(new Color(127, 140, 141));
 		this.txtDateOfAdmission.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtDateOfAdmission.setForeground(Color.WHITE);
@@ -305,7 +306,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		 * ComboBox con el estatus de equipo.
 		 */
 		this.cmbStatus = new JComboBox<String>();
-		this.cmbStatus.setBounds(520, 80, 120, 30);
+		this.cmbStatus.setBounds(460, 80, 120, 30);
 		this.cmbStatus.setBackground(new Color(127, 140, 141));
 		this.cmbStatus.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbStatus.setForeground(Color.WHITE);
@@ -344,7 +345,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.textPaneObservations.setForeground(Color.BLACK);
 		this.textPaneObservations.setFont(new Font("serif", Font.BOLD, 14));
 		this.scrollObservations = new JScrollPane(this.textPaneObservations);
-		this.scrollObservations.setBounds(320, 130, 320, 120);
+		this.scrollObservations.setBounds(260, 130, 320, 120);
 		this.scrollObservations.setViewportView(this.textPaneObservations);
 		this.container.add(this.scrollObservations);
 
@@ -356,7 +357,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.textPaneComments.setFont(new Font("serif", Font.BOLD, 14));
 		this.textPaneComments.setEditable(false);
 		this.scrollComments = new JScrollPane(this.textPaneComments);
-		this.scrollComments.setBounds(320, 280, 320, 120);
+		this.scrollComments.setBounds(260, 280, 320, 125);
 		this.scrollComments.setViewportView(this.textPaneComments);
 		this.container.add(this.scrollComments);
 
@@ -364,7 +365,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		 * Botón para actualizar el equipo en cuestión.
 		 */
 		this.btnUpdateEquipment = new JButton("Actualizar Equipo");
-		this.btnUpdateEquipment.setBounds(420, 420, 210, 35);
+		this.btnUpdateEquipment.setBounds(370, 415, 210, 35);
 		this.btnUpdateEquipment.setFont(new Font("serif", Font.BOLD, 20));
 		this.btnUpdateEquipment.setBackground(new Color(8, 85, 224));
 		this.btnUpdateEquipment.setForeground(Color.WHITE);

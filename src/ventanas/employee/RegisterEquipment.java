@@ -59,7 +59,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 	public RegisterEquipment() {
 		this.user = Login.user;
 		this.setTitle("Registrar nuevo Equipo - Sesión de " + this.user);
-		this.setSize(630, 455);
+		this.setSize(615, 400);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
@@ -80,7 +80,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
-				this.labelTitle.setText("Información del cliente " + rs.getString("nombre_cliente"));
+				this.labelTitle.setText("Registro de Equipo para " + rs.getString("nombre_cliente"));
 
 				/**
 				 * Llenado de los campos con la base de datos
@@ -111,10 +111,10 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		/**
 		 * Título de la ventana.
 		 */
-		this.labelTitle = new JLabel("Registro de Equipo para " + this.nameClient);
-		this.labelTitle.setBounds(200, 10, 250, 20);
+		this.labelTitle = new JLabel();
+		this.labelTitle.setBounds(140, 10, 400, 30);
 		this.labelTitle.setForeground(new Color(192, 192, 192));
-		this.labelTitle.setFont(new Font("serif", Font.BOLD, 20));
+		this.labelTitle.setFont(new Font("serif", Font.BOLD, 24));
 		this.panelBackClient.add(this.labelTitle);
 
 		/**
@@ -155,10 +155,6 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.cmbTypeEquip.setBackground(new Color(127, 140, 141));
 		this.cmbTypeEquip.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbTypeEquip.setForeground(Color.WHITE);
-		// TODO
-		/**
-		 * Consultar datos del combobox y setearlos a un array lost
-		 */
 		this.cmbTypeEquip.setModel(
 				new DefaultComboBoxModel<>(new String[] { "Laptop", "Desktop", "Impresora", "Multifuncional" }));
 		this.panelBackClient.add(this.cmbTypeEquip);
@@ -228,7 +224,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		 * Label Daño Reportado y Observaciones.
 		 */
 		this.labelObservations = new JLabel("Daño Reportado y Observaciones :");
-		this.labelObservations.setBounds(270, 60, 300, 25);
+		this.labelObservations.setBounds(255, 60, 300, 25);
 		this.labelObservations.setForeground(new Color(192, 192, 192));
 		this.labelObservations.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackClient.add(this.labelObservations);
@@ -240,7 +236,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.textPaneObservations.setForeground(Color.BLACK);
 		this.textPaneObservations.setFont(new Font("serif", Font.BOLD, 14));
 		this.scrollObservations = new JScrollPane(this.textPaneObservations);
-		this.scrollObservations.setBounds(270, 80, 330, 230);
+		this.scrollObservations.setBounds(255, 80, 330, 230);
 		this.scrollObservations.setViewportView(this.textPaneObservations);
 		this.panelBackClient.add(this.scrollObservations);
 
@@ -248,7 +244,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		 * Botón para ingresar el equipo en cuestión.
 		 */
 		this.btnRegisterEquip = new JButton("Registrar Equipo");
-		this.btnRegisterEquip.setBounds(390, 310, 210, 35);
+		this.btnRegisterEquip.setBounds(375, 310, 210, 35);
 		this.btnRegisterEquip.setFont(new Font("serif", Font.BOLD, 20));
 		this.btnRegisterEquip.setBackground(new Color(8, 85, 224));
 		this.btnRegisterEquip.setForeground(Color.WHITE);
