@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,7 +16,7 @@ import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
 import ventanas.Login;
 
-public class PanelTechnical extends JFrame implements ActionListener{
+public class PanelTechnical extends JFrame implements ActionListener {
 
 	/**
 	 * Definición de Variables.
@@ -31,7 +30,7 @@ public class PanelTechnical extends JFrame implements ActionListener{
 	private JButton btnManagementEquips;
 	private JButton btnBrandChart;
 	private JButton btnStateGraph;
-	private JComboBox<String> cmbRole;
+	private JButton btnLogout;
 	private String user;
 	private String nameUser;
 
@@ -40,7 +39,7 @@ public class PanelTechnical extends JFrame implements ActionListener{
 	 */
 	public PanelTechnical() {
 		this.user = Login.user;
-		this.setSize(670, 310);
+		this.setSize(630, 280);
 		this.setTitle("Técnico - Sesión de " + this.user);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -80,7 +79,7 @@ public class PanelTechnical extends JFrame implements ActionListener{
 		this.setContentPane(this.panelBack);
 
 		/*
-		 * Label Principal.
+		 * Label Usuario Logueado.
 		 */
 		this.labelTittle = new JLabel();
 		this.labelTittle.setBounds(10, 10, 280, 27);
@@ -95,6 +94,9 @@ public class PanelTechnical extends JFrame implements ActionListener{
 		this.btnManagementEquips.setBounds(40, 80, 120, 100);
 		this.btnManagementEquips.setIcon(new ImageIcon("src/img/apoyo-tecnico.png"));
 		this.btnManagementEquips.addActionListener(this);
+		this.btnManagementEquips.setBorder(null);
+		this.btnManagementEquips.setBackground(new Color(46, 59, 104));
+		this.btnManagementEquips.setOpaque(true);
 		this.panelBack.add(this.btnManagementEquips);
 
 		/**
@@ -110,16 +112,19 @@ public class PanelTechnical extends JFrame implements ActionListener{
 		 * Botón encargado de mostrar la gráfica de estado de los equipos registrados.
 		 */
 		this.btnBrandChart = new JButton();
-		this.btnBrandChart.setBounds(270, 80, 120, 100);
+		this.btnBrandChart.setBounds(250, 80, 120, 100);
 		this.btnBrandChart.setIcon(new ImageIcon("src/img/grafica.png"));
 		this.btnBrandChart.addActionListener(this);
+		this.btnBrandChart.setBorder(null);
+		this.btnBrandChart.setBackground(new Color(46, 59, 104));
+		this.btnBrandChart.setOpaque(true);
 		this.panelBack.add(this.btnBrandChart);
 
 		/**
 		 * Label Gráfica de Marcas.
 		 */
 		this.labelBrandChart = new JLabel("Gráfica de Marcas");
-		this.labelBrandChart.setBounds(270, 190, 120, 15);
+		this.labelBrandChart.setBounds(250, 190, 120, 15);
 		this.labelBrandChart.setForeground(new Color(192, 192, 192));
 		this.labelBrandChart.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBack.add(this.labelBrandChart);
@@ -128,42 +133,53 @@ public class PanelTechnical extends JFrame implements ActionListener{
 		 * Label Gráfica de Estado.
 		 */
 		this.labelStateGraph = new JLabel("Gráfica de Estado");
-		this.labelStateGraph.setBounds(500, 190, 120, 15);
+		this.labelStateGraph.setBounds(460, 190, 120, 15);
 		this.labelStateGraph.setForeground(new Color(192, 192, 192));
 		this.labelStateGraph.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBack.add(this.labelStateGraph);
 
 		/**
-		 * Botón para mostrar la gráfica de estado de los equipos registrados en el sistema.
+		 * Botón para mostrar la gráfica de estado de los equipos registrados en el
+		 * sistema.
 		 */
 		this.btnStateGraph = new JButton();
-		this.btnStateGraph.setBounds(500, 80, 120, 100);
+		this.btnStateGraph.setBounds(460, 80, 120, 100);
 		this.btnStateGraph.setIcon(new ImageIcon("src/img/grafica.png"));
 		this.btnStateGraph.addActionListener(this);
+		this.btnStateGraph.setBorder(null);
+		this.btnStateGraph.setBackground(new Color(46, 59, 104));
+		this.btnStateGraph.setOpaque(true);
 		this.panelBack.add(this.btnStateGraph);
 
 		/**
-		 * ComboBox encargado de mostrar los roles a los que puede acceder el cliente
-		 * Capturista junto con el apartado de cerrar sesión.
+		 * Botón Cerrar Sesión.
 		 */
-		this.cmbRole = new JComboBox<>();
-		this.cmbRole.addItem("Técnico");
-		this.cmbRole.addItem("Cerrar Sesión");
-		this.cmbRole.setBounds(500, 20, 120, 20);
-		this.panelBack.add(this.cmbRole);
+		this.btnLogout = new JButton("Cerrar Sesión");
+		this.btnLogout.setBounds(470, 20, 120, 30);
+		this.btnLogout.setFont(new Font("serif", Font.BOLD, 14));
+		this.btnLogout.setBackground(new Color(8, 85, 224));
+		this.btnLogout.setForeground(Color.WHITE);
+		this.btnLogout.setHorizontalAlignment(JButton.CENTER);
+		this.btnLogout.addActionListener(this);
+		this.panelBack.add(this.btnLogout);
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		if (e.getSource() == this.btnManagementEquips) {
 			ManagementEquips managementEquips = new ManagementEquips();
 			managementEquips.setVisible(true);
 		}
 		
-	}
+		if (e.getSource() == this.btnLogout) {
+			Login login = new Login();
+			login.setLocationRelativeTo(null);
+			this.dispose();
+			login.setVisible(true);
+		}
 
-	
+	}
 
 }
