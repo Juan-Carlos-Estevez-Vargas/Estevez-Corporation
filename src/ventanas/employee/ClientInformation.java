@@ -77,7 +77,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.user_update = ManagementClients.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
 		idClient = ManagementClients.id_cliente_update;
 		this.setResizable(false);
-		this.setSize(680, 410);
+		this.setSize(680, 405);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
@@ -172,7 +172,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.container = new JPanel();
 		this.container.setBackground(new Color(46, 59, 104));
 		this.container.setLayout(null);
-		this.container.setBounds(680, 460, 680, 460);
+		this.container.setBounds(680, 405, 680, 405);
 		this.setContentPane(this.container);
 
 		/**
@@ -292,7 +292,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		 * Botón encargado de registrar un equipo a un cliente determinado.
 		 */
 		this.btnRegisterEquipment = new JButton("Registrar Equipo");
-		this.btnRegisterEquipment.setBounds(280, 260, 210, 35);
+		this.btnRegisterEquipment.setBounds(275, 255, 210, 35);
 		this.btnRegisterEquipment.setFont(new Font("serif", Font.BOLD, 20));
 		this.btnRegisterEquipment.setBackground(new Color(8, 85, 224));
 		this.btnRegisterEquipment.setForeground(Color.WHITE);
@@ -304,7 +304,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		 * Botón para actualizar un cliente.
 		 */
 		this.btnUpdateClient = new JButton("Actualizar Cliente");
-		this.btnUpdateClient.setBounds(280, 310, 210, 35);
+		this.btnUpdateClient.setBounds(275, 305, 210, 35);
 		this.btnUpdateClient.setFont(new Font("serif", Font.BOLD, 20));
 		this.btnUpdateClient.setBackground(new Color(8, 85, 224));
 		this.btnUpdateClient.setForeground(Color.WHITE);
