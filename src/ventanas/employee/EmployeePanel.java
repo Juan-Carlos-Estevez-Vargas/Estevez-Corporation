@@ -58,7 +58,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 	 */
 	public EmployeePanel() {
 		this.user = Login.user;
-		this.setSize(630, 310);
+		this.setSize(630, 280);
 		this.setTitle("Capturista - Sesión de " + this.user);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);

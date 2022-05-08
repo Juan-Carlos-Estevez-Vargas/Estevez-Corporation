@@ -52,7 +52,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 	 */
 	public AdministratorPanel() {
 		this.user = Login.user;
-		this.setSize(630, 310);
+		this.setSize(630, 280);
 		this.setTitle("Administrador - Sesión de " + this.user);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
