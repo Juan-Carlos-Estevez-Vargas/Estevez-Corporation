@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -25,7 +27,7 @@ import ventanas.Login;
  * @author Juan Carlos Estevez Vargas.
  *
  */
-public class EquipmentInformation extends JFrame implements ActionListener{
+public class EquipmentInformation extends JFrame implements ActionListener {
 
 	/**
 	 * Declaración de Variables.
@@ -67,7 +69,7 @@ public class EquipmentInformation extends JFrame implements ActionListener{
 		initComponents();
 		this.user = Login.user;
 		this.setResizable(false);
-		this.setSize(670, 530);
+		this.setSize(670, 520);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		idEquipment = ClientInformation.idEquipment;
@@ -100,9 +102,9 @@ public class EquipmentInformation extends JFrame implements ActionListener{
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
-				this.cmbTypeEquip.setSelectedItem(rs.getString("tipo_equipo"));
-				this.cmbMark.setSelectedItem(rs.getString("marca"));
-				this.cmbStatus.setSelectedItem(rs.getString("estatus"));
+				this.cmbTypeEquip.setSelectedItem(rs.getString(3));
+				this.cmbMark.setSelectedItem(rs.getString(4));
+				this.cmbStatus.setSelectedItem(rs.getString(11));
 				this.txtModel.setText(rs.getString("modelo"));
 				this.txtSerialNumber.setText(rs.getString("num_serie"));
 				this.txtModifyBy.setText(rs.getString("ultima_modificacion"));
@@ -116,6 +118,7 @@ public class EquipmentInformation extends JFrame implements ActionListener{
 				annio = rs.getString("annio_ingreso");
 
 				this.txtDateOfAdmission.setText(dia + " del " + mes + " del " + annio);
+				this.txtName.setText(nameClient);
 				this.textPaneObservations.setText(rs.getString("observaciones"));
 				this.textPaneComments.setText(rs.getString("comentarios_tecnicos"));
 				this.labelComments
@@ -247,8 +250,9 @@ public class EquipmentInformation extends JFrame implements ActionListener{
 		this.txtName.setBounds(10, 80, 230, 30);
 		this.txtName.setBackground(new Color(127, 140, 141));
 		this.txtName.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtName.setHorizontalAlignment(JLabel.LEFT);
+		this.txtName.setHorizontalAlignment(JLabel.CENTER);
 		this.txtName.setForeground(Color.WHITE);
+		this.txtName.setEditable(false);
 		this.container.add(this.txtName);
 
 		/**
@@ -258,7 +262,7 @@ public class EquipmentInformation extends JFrame implements ActionListener{
 		this.txtModel.setBounds(10, 260, 230, 30);
 		this.txtModel.setBackground(new Color(127, 140, 141));
 		this.txtModel.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtModel.setHorizontalAlignment(JLabel.LEFT);
+		this.txtModel.setHorizontalAlignment(JLabel.CENTER);
 		this.txtModel.setForeground(Color.WHITE);
 		this.container.add(this.txtModel);
 
@@ -270,7 +274,7 @@ public class EquipmentInformation extends JFrame implements ActionListener{
 		this.txtSerialNumber.setBounds(10, 320, 230, 30);
 		this.txtSerialNumber.setBackground(new Color(127, 140, 141));
 		this.txtSerialNumber.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtSerialNumber.setHorizontalAlignment(JLabel.LEFT);
+		this.txtSerialNumber.setHorizontalAlignment(JLabel.CENTER);
 		this.txtSerialNumber.setForeground(Color.WHITE);
 		this.container.add(this.txtSerialNumber);
 
@@ -305,6 +309,8 @@ public class EquipmentInformation extends JFrame implements ActionListener{
 		this.cmbStatus.setBackground(new Color(127, 140, 141));
 		this.cmbStatus.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbStatus.setForeground(Color.WHITE);
+		this.cmbStatus.setModel(new DefaultComboBoxModel<>(
+				new String[] { "Nuevo Ingreso", "No reparado", "En revision", "Reparado", "Entregado" }));
 		this.container.add(this.cmbStatus);
 
 		/**
@@ -315,6 +321,8 @@ public class EquipmentInformation extends JFrame implements ActionListener{
 		this.cmbTypeEquip.setBackground(new Color(127, 140, 141));
 		this.cmbTypeEquip.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbTypeEquip.setForeground(Color.WHITE);
+		this.cmbTypeEquip.setModel(
+				new DefaultComboBoxModel<>(new String[] { "Laptop", "Desktop", "Impresora", "Multifuncional" }));
 		this.container.add(this.cmbTypeEquip);
 
 		/**
@@ -325,6 +333,8 @@ public class EquipmentInformation extends JFrame implements ActionListener{
 		this.cmbMark.setBackground(new Color(127, 140, 141));
 		this.cmbMark.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbMark.setForeground(Color.WHITE);
+		this.cmbMark.setModel(new DefaultComboBoxModel<>(new String[] { "Acer", "Alienware", "Apple", "Asus", "Brother",
+				"Dell", "HP", "Lenovo", "Samsung", "Toshiba", "Xerox" }));
 		this.container.add(this.cmbMark);
 
 		/**
@@ -344,6 +354,7 @@ public class EquipmentInformation extends JFrame implements ActionListener{
 		this.textPaneComments = new JTextPane();
 		this.textPaneComments.setForeground(Color.BLACK);
 		this.textPaneComments.setFont(new Font("serif", Font.BOLD, 14));
+		this.textPaneComments.setEditable(false);
 		this.scrollComments = new JScrollPane(this.textPaneComments);
 		this.scrollComments.setBounds(320, 280, 320, 120);
 		this.scrollComments.setViewportView(this.textPaneComments);
@@ -362,81 +373,81 @@ public class EquipmentInformation extends JFrame implements ActionListener{
 		this.container.add(this.btnUpdateEquipment);
 
 	}
-	
+
 	/**
 	 * Limpia los campos de texto.
 	 */
 	public void clean() {
-        this.txtDateOfAdmission.setText("");
-        this.txtModel.setText("");
-        this.txtName.setText("");
-        this.txtSerialNumber.setText("");
-    }
+		this.txtDateOfAdmission.setText("");
+		this.txtModel.setText("");
+		this.txtName.setText("");
+		this.txtSerialNumber.setText("");
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int validation = 0;
-        String typeEquip, mark, model, serialNumber, status, observations;
-        
-        typeEquip = this.cmbTypeEquip.getSelectedItem().toString();
-        mark = this.cmbMark.getSelectedItem().toString();
-        status = this.cmbStatus.getSelectedItem().toString();
-        
-        model = this.txtModel.getText().trim();
-        serialNumber = this.txtSerialNumber.getText().trim();
-        observations = this.textPaneObservations.getText().trim();
+		String typeEquip, mark, model, serialNumber, status, observations;
 
-        /**
-         * Validación de campos.
-         */
-        if (model.equals("")) {
-            this.txtModel.setBackground(Color.red);
-            validation++;
-        }
-        if (serialNumber.equals("")) {
-            this.txtSerialNumber.setBackground(Color.red);
-            validation++;
-        }
-        if (observations.equals("")) {
-            this.textPaneObservations.setText("Sin observaciones");
-        }
-        
-        if (validation == 0) {
-            try {
-                Connection cn = (Connection) DatabaseConnection.conectar();
-                PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
-                        "UPDATE equipos SET tipo_equipo = ?, marca = ?, modelo = ?, num_serie = ?, observaciones = ?, estatus = ?, "
-                        + "ultima_modificacion = ? WHERE id_equipo = '" + idEquipment + "'");
-                
-                pst.setString(1, typeEquip);
-                pst.setString(2, mark);
-                pst.setString(3, model);
-                pst.setString(4, serialNumber);
-                pst.setString(5, observations);
-                pst.setString(6, status);
-                pst.setString(7, user);
-                
-                pst.executeUpdate();
-                cn.close();
-                
-                clean();
-                
-                this.txtName.setBackground(Color.green);
-                this.txtDateOfAdmission.setBackground(Color.green);
-                this.txtModel.setBackground(Color.green);
-                this.txtSerialNumber.setBackground(Color.green);
-                this.txtModifyBy.setText(user);
-                
-                JOptionPane.showMessageDialog(null, "Actualización correcta");
-                this.dispose();
-            } catch (SQLException ex) {
-                System.err.println("Error al actualizar equipo " + ex);
-                JOptionPane.showMessageDialog(null, "¡¡Error al actualizar equipo!! Contacte al Administrador");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
-        }
-		
+		typeEquip = this.cmbTypeEquip.getSelectedItem().toString();
+		mark = this.cmbMark.getSelectedItem().toString();
+		status = this.cmbStatus.getSelectedItem().toString();
+
+		model = this.txtModel.getText().trim();
+		serialNumber = this.txtSerialNumber.getText().trim();
+		observations = this.textPaneObservations.getText().trim();
+
+		/**
+		 * Validación de campos.
+		 */
+		if (model.equals("")) {
+			this.txtModel.setBackground(Color.red);
+			validation++;
+		}
+		if (serialNumber.equals("")) {
+			this.txtSerialNumber.setBackground(Color.red);
+			validation++;
+		}
+		if (observations.equals("")) {
+			this.textPaneObservations.setText("Sin observaciones");
+		}
+
+		if (validation == 0) {
+			try {
+				Connection cn = (Connection) DatabaseConnection.conectar();
+				PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
+						"UPDATE equipos SET tipo_equipo = ?, marca = ?, modelo = ?, num_serie = ?, observaciones = ?, estatus = ?, "
+								+ "ultima_modificacion = ? WHERE id_equipo = '" + idEquipment + "'");
+
+				pst.setString(1, typeEquip);
+				pst.setString(2, mark);
+				pst.setString(3, model);
+				pst.setString(4, serialNumber);
+				pst.setString(5, observations);
+				pst.setString(6, status);
+				pst.setString(7, user);
+
+				pst.executeUpdate();
+				cn.close();
+
+				clean();
+
+				this.txtName.setBackground(Color.green);
+				this.txtDateOfAdmission.setBackground(Color.green);
+				this.txtModel.setBackground(Color.green);
+				this.txtSerialNumber.setBackground(Color.green);
+				this.txtModifyBy.setText(user);
+
+				JOptionPane.showMessageDialog(null, "Actualización correcta");
+				this.dispose();
+			} catch (SQLException ex) {
+				System.err.println("Error al actualizar equipo " + ex);
+				JOptionPane.showMessageDialog(null, "¡¡Error al actualizar equipo!! Contacte al Administrador");
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+		}
+
 	}
 
 }
