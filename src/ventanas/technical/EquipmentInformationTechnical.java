@@ -33,11 +33,9 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 	 * Declaración de Variables.
 	 */
 	private static final long serialVersionUID = 1L;
-	private String nameClient = "", user = "";
+	private String user = "";
 	public static int idEquipment = 0;
-	public static int idClientUpdate = 0;
 	private JLabel labelTittle;
-	private JLabel labelName;
 	private JLabel labelTypeEquip;
 	private JLabel labelMark;
 	private JLabel labelModel;
@@ -47,7 +45,6 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 	private JLabel labelStatus;
 	private JLabel labelObservations;
 	private JLabel labelComments;
-	private JTextField txtName;
 	private JTextField txtModel;
 	private JTextField txtSerialNumber;
 	private JTextField txtDateOfAdmission;
@@ -69,29 +66,12 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		initComponents();
 		this.user = Login.user;
 		this.setResizable(false);
-		this.setSize(610, 500);
+		this.setSize(610, 460);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		idEquipment = ManagementEquips.id_equip_update;
 		this.setTitle("Equipo registrado con el ID " + idEquipment + " - Sesión de " + user);
 		
-		/*
-		 * Recuperamos el nombre del cliente
-		 */
-		try {
-			Connection cn = (Connection) DatabaseConnection.conectar();
-			PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
-					"SELECT nombre_cliente FROM clientes WHERE id_cliente = '" + idClientUpdate + "'");
-			ResultSet rs = pst.executeQuery();
-
-			if (rs.next()) {
-				nameClient = rs.getString("nombre_cliente");
-				this.setTitle("Equipo del cliente " + nameClient);
-			}
-		} catch (SQLException e) {
-			System.err.println("Error al consultar el nombre del cliente " + e);
-		}
-
 		/**
 		 * Consultando la información general del equipo
 		 */
@@ -119,7 +99,6 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 				annio = rs.getString("annio_ingreso");
 
 				this.txtDateOfAdmission.setText(dia + " del " + mes + " del " + annio);
-				this.txtName.setText(nameClient);
 				this.textPaneObservations.setText(rs.getString("observaciones"));
 				this.textPaneComments.setText(rs.getString("comentarios_tecnicos"));
 				this.labelComments
@@ -141,7 +120,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.container = new JPanel();
 		this.container.setBackground(new Color(46, 59, 104));
 		this.container.setLayout(null);
-		this.container.setBounds(610, 500, 610, 500);
+		this.container.setBounds(610, 460, 610, 460);
 		this.setContentPane(this.container);
 
 		/**
@@ -155,21 +134,12 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.container.add(this.labelTittle);
 
 		/**
-		 * Label Nombre Cliente.
-		 */
-		this.labelName = new JLabel("Nombre del Cliente :");
-		this.labelName.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelName.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelName.setBounds(10, 60, 200, 20);
-		this.container.add(this.labelName);
-
-		/**
 		 * Label Tipo de Equipo.
 		 */
 		this.labelTypeEquip = new JLabel("Tipo de Equipo :");
 		this.labelTypeEquip.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		this.labelTypeEquip.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelTypeEquip.setBounds(10, 120, 200, 20);
+		this.labelTypeEquip.setBounds(10, 60, 200, 20);
 		this.container.add(this.labelTypeEquip);
 
 		/**
@@ -178,7 +148,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.labelMark = new JLabel("Marca :");
 		this.labelMark.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		this.labelMark.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelMark.setBounds(10, 180, 100, 20);
+		this.labelMark.setBounds(10, 120, 100, 20);
 		this.container.add(this.labelMark);
 
 		/**
@@ -187,7 +157,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.labelModel = new JLabel("Modelo :");
 		this.labelModel.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		this.labelModel.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelModel.setBounds(10, 240, 100, 20);
+		this.labelModel.setBounds(10, 180, 100, 20);
 		this.container.add(this.labelModel);
 
 		/**
@@ -196,7 +166,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.labelSerialNumber = new JLabel("Número de Serie :");
 		this.labelSerialNumber.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		this.labelSerialNumber.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelSerialNumber.setBounds(10, 300, 200, 20);
+		this.labelSerialNumber.setBounds(10, 240, 200, 20);
 		this.container.add(this.labelSerialNumber);
 
 		/**
@@ -205,7 +175,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.labelModifyBy = new JLabel("Modificado por :");
 		this.labelModifyBy.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		this.labelModifyBy.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelModifyBy.setBounds(10, 360, 200, 20);
+		this.labelModifyBy.setBounds(10, 300, 200, 20);
 		this.container.add(this.labelModifyBy);
 
 		/**
@@ -245,25 +215,14 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.container.add(this.labelComments);
 
 		/**
-		 * Campo de texto con la información del nombre del cliente.
-		 */
-		this.txtName = new JTextField();
-		this.txtName.setBounds(10, 80, 230, 30);
-		this.txtName.setBackground(new Color(127, 140, 141));
-		this.txtName.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtName.setHorizontalAlignment(JLabel.CENTER);
-		this.txtName.setForeground(Color.WHITE);
-		this.txtName.setEditable(false);
-		this.container.add(this.txtName);
-
-		/**
 		 * Campo de texto con la información del modelo del equipo.
 		 */
 		this.txtModel = new JTextField();
-		this.txtModel.setBounds(10, 260, 230, 30);
+		this.txtModel.setBounds(10, 200, 230, 30);
 		this.txtModel.setBackground(new Color(127, 140, 141));
 		this.txtModel.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtModel.setHorizontalAlignment(JLabel.CENTER);
+		this.txtModel.setEditable(false);
 		this.txtModel.setForeground(Color.WHITE);
 		this.container.add(this.txtModel);
 
@@ -272,11 +231,12 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		 */
 		this.txtSerialNumber = new JTextField();
 		this.txtSerialNumber.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		this.txtSerialNumber.setBounds(10, 320, 230, 30);
+		this.txtSerialNumber.setBounds(10, 260, 230, 30);
 		this.txtSerialNumber.setBackground(new Color(127, 140, 141));
 		this.txtSerialNumber.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtSerialNumber.setHorizontalAlignment(JLabel.CENTER);
 		this.txtSerialNumber.setForeground(Color.WHITE);
+		this.txtSerialNumber.setEditable(false);
 		this.container.add(this.txtSerialNumber);
 
 		/**
@@ -288,6 +248,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.txtDateOfAdmission.setBackground(new Color(127, 140, 141));
 		this.txtDateOfAdmission.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtDateOfAdmission.setForeground(Color.WHITE);
+		this.txtDateOfAdmission.setEditable(false);
 		this.container.add(this.txtDateOfAdmission);
 
 		/**
@@ -296,7 +257,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.txtModifyBy = new JTextField();
 		this.txtModifyBy.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 		this.txtModifyBy.setEnabled(false);
-		this.txtModifyBy.setBounds(10, 380, 230, 30);
+		this.txtModifyBy.setBounds(10, 320, 230, 30);
 		this.txtModifyBy.setBackground(new Color(127, 140, 141));
 		this.txtModifyBy.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtModifyBy.setForeground(Color.WHITE);
@@ -318,7 +279,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		 * ComboBox con el tipo de equipo.
 		 */
 		this.cmbTypeEquip = new JComboBox<String>();
-		this.cmbTypeEquip.setBounds(10, 140, 170, 30);
+		this.cmbTypeEquip.setBounds(10, 80, 170, 30);
 		this.cmbTypeEquip.setBackground(new Color(127, 140, 141));
 		this.cmbTypeEquip.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbTypeEquip.setForeground(Color.WHITE);
@@ -330,7 +291,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		 * ComboBox con la marca del equipo.
 		 */
 		this.cmbMark = new JComboBox<String>();
-		this.cmbMark.setBounds(10, 200, 170, 30);
+		this.cmbMark.setBounds(10, 140, 170, 30);
 		this.cmbMark.setBackground(new Color(127, 140, 141));
 		this.cmbMark.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbMark.setForeground(Color.WHITE);
@@ -365,7 +326,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		 * Botón para actualizar el equipo en cuestión.
 		 */
 		this.btnUpdateEquipment = new JButton("Actualizar Equipo");
-		this.btnUpdateEquipment.setBounds(370, 415, 210, 35);
+		this.btnUpdateEquipment.setBounds(20, 368, 210, 35);
 		this.btnUpdateEquipment.setFont(new Font("serif", Font.BOLD, 20));
 		this.btnUpdateEquipment.setBackground(new Color(8, 85, 224));
 		this.btnUpdateEquipment.setForeground(Color.WHITE);
@@ -381,7 +342,6 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 	public void clean() {
 		this.txtDateOfAdmission.setText("");
 		this.txtModel.setText("");
-		this.txtName.setText("");
 		this.txtSerialNumber.setText("");
 	}
 
@@ -433,7 +393,6 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 
 				clean();
 
-				this.txtName.setBackground(Color.green);
 				this.txtDateOfAdmission.setBackground(Color.green);
 				this.txtModel.setBackground(Color.green);
 				this.txtSerialNumber.setBackground(Color.green);
