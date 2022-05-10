@@ -1,10 +1,12 @@
 package ventanas.technical;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -25,7 +27,7 @@ public class StateGraph extends JFrame{
     public StateGraph() {
     	//initComponents();
         user = Login.user;
-        this.setSize(550, 460);
+        this.setSize(515, 360);
         this.setResizable(false);
         this.setTitle("Técnico - Sesión de " + user);
         this.setLocationRelativeTo(null);
@@ -69,7 +71,6 @@ public class StateGraph extends JFrame{
             JOptionPane.showMessageDialog(null, "¡¡Error!! Contacte al Administrador");
         }
         
-        repaint();
     }
 
     public int estatusMasRepetido(int NuevoIngreso, int NoReparado, int EnRevision, int Reparado, int Entregado) {
@@ -101,6 +102,9 @@ public class StateGraph extends JFrame{
         int largo_en_revision = en_revision * 400 / estatus_mas_repetido;
         int largo_reparado = reparado * 400 / estatus_mas_repetido;
         int largo_entragado = entregado * 400 / estatus_mas_repetido;
+        
+        g.setColor(new Color(46, 59, 104));
+        g.fillRect(0, 0, 515, 360);
 
         //Pintando la gráfica de barras
         g.setColor(Color.yellow);
