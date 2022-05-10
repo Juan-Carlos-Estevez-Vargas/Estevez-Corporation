@@ -178,6 +178,11 @@ public class PanelTechnical extends JFrame implements ActionListener {
 			stateGraph.setVisible(true);
 		}
 		
+		if (e.getSource() == this.btnBrandChart) {
+			MarkGraph markGraph = new MarkGraph();
+			markGraph.setVisible(true);
+		}
+		
 		if (e.getSource() == this.btnLogout) {
 			Login login = new Login();
 			login.setLocationRelativeTo(null);
