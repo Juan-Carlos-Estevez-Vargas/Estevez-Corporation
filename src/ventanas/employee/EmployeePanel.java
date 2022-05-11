@@ -31,6 +31,7 @@ import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
+ * Frame principal del empleado (Vendedor, Capturista).
  * 
  * @author Juan Carlos Estevez Vargas.
  *
@@ -49,7 +50,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 	private JButton btnRegisterClient;
 	private JButton btnManageClient;
 	private JButton btnPrintClients;
-	private JButton btnRole;
+	private JButton btnLogout;
 	private String user;
 	private String nameUser;
 
@@ -170,40 +171,51 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		this.panelBack.add(this.btnPrintClients);
 
 		/**
-		 * ComboBox encargado de mostrar los roles a los que puede acceder el cliente
-		 * Capturista junto con el apartado de cerrar sesión.
+		 * Botón para cerrar sesión.
 		 */
-		this.btnRole = new JButton("Cerrar Sesión");
-		this.btnRole.setBounds(470, 20, 120, 30);
-		this.btnRole.setFont(new Font("serif", Font.BOLD, 14));
-		this.btnRole.setBackground(new Color(8, 85, 224));
-		this.btnRole.setForeground(Color.WHITE);
-		this.btnRole.setHorizontalAlignment(JButton.CENTER);
-		this.btnRole.addActionListener(this);
-		this.panelBack.add(this.btnRole);
+		this.btnLogout = new JButton("Cerrar Sesión");
+		this.btnLogout.setBounds(470, 20, 120, 30);
+		this.btnLogout.setFont(new Font("serif", Font.BOLD, 14));
+		this.btnLogout.setBackground(new Color(8, 85, 224));
+		this.btnLogout.setForeground(Color.WHITE);
+		this.btnLogout.setHorizontalAlignment(JButton.CENTER);
+		this.btnLogout.addActionListener(this);
+		this.panelBack.add(this.btnLogout);
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		/**
+		 * Registro de clientes en la base de datos.
+		 */
 		if (e.getSource() == this.btnRegisterClient) {
 			RegisterClient registerClient = new RegisterClient();
 			registerClient.setVisible(true);
 		}
 
-		if (e.getSource() == this.btnRole) {
+		/**
+		 * Cierra la sesión del usuario actual.
+		 */
+		if (e.getSource() == this.btnLogout) {
 			Login login = new Login();
 			login.setLocationRelativeTo(null);
 			login.setVisible(true);
 			this.dispose();
 		}
 
+		/**
+		 * Redirección al panel con los clientes registrados.
+		 */
 		if (e.getSource() == this.btnManageClient) {
 			ManagementClients managementClientes = new ManagementClients();
 			managementClientes.setVisible(true);
 		}
 
+		/**
+		 * Impresión de los clientes registrados en el sistema.
+		 */
 		if (e.getSource() == this.btnPrintClients) {
 			Document document = new Document();
 			try {

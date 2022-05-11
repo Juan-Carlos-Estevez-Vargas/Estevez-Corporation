@@ -11,15 +11,26 @@ import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
 import ventanas.Login;
 
+/**
+ * Gráfica de torta con la cantidad de equipos registrados en el sistema.
+ * 
+ * @author Juan Carlos Estevez Vargas.
+ *
+ */
 public class MarkGraph extends JFrame{
 
+	/**
+	 * Variables.
+	 */
 	private static final long serialVersionUID = 1L;
     private int[] vectorCantMarks = new int[11];
     private int hp, lenovo, dell, acer, apple, toshiba, brother, samsung, asus, alienware, xerox;
     private String[] vectorNameMarks = new String[11];
     private String user;
    
-    
+    /**
+     * Constructor de clase.
+     */
     public MarkGraph() {
     	user = Login.user;
         this.setSize(550, 460);
@@ -95,67 +106,89 @@ public class MarkGraph extends JFrame{
         g.setColor(new Color(46, 59, 104));
         g.fillRect(0, 0, 550, 460);
         
-        //Marca acer Morado
+        /**
+         * Marca acer Morado
+         */
         g.setColor(new Color(175, 122, 197));
         g.fillArc(25, 100, 270, 270, 0, degreesAcer);
         g.fillRect(310, 120, 20, 20);
         g.drawString(acer + " de Acer", 340, 135);
 
-        //Marca alienware Verde
+        /**
+         * Marca alienware Verde
+         */
         g.setColor(new Color(0, 255, 0));
         g.fillArc(25, 100, 270, 270, degreesAcer, degreesAlienware);
         g.fillRect(310, 150, 20, 20);
         g.drawString(alienware + " de Alienware", 340, 165);
 
-        //Marca apple Verde Agua
+        /**
+         * Marca apple Verde Agua
+         */
         g.setColor(new Color(0, 255, 255));
         g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware, degreesApple);
         g.fillRect(310, 180, 20, 20);
         g.drawString(apple + " de Apple", 340, 195);
 
-        //Marca asus Azul
+        /**
+         * Marca asus Azul
+         */
         g.setColor(new Color(0, 0, 0));
         g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple, degreesAsus);
         g.fillRect(310, 210, 20, 20);
         g.drawString(asus + " de Asus", 340, 225);
 
-        //Marca acer Brother
+        /**
+         * Marca acer Brother
+         */
         g.setColor(new Color(255, 255, 255));
         g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus, degreesBrother);
         g.fillRect(310, 240, 20, 20);
         g.drawString(brother + " de Brother", 340, 255);
 
-        //Marca dell Amarillo
+        /**
+         * Marca dell Amarillo
+         */
         g.setColor(new Color(247, 220, 111));
         g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother, degreesDell);
         g.fillRect(310, 270, 20, 20);
         g.drawString(dell + " de Dell", 340, 285);
 
-        //Marca hp Azul Marino
+        /**
+         * Marca hp Azul Marino
+         */
         g.setColor(new Color(8, 85, 224));
         g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell, degreesHp);
         g.fillRect(310, 300, 20, 20);
         g.drawString(hp + " de HP", 340, 315);
 
-        //Marca lenovo Naranja
+        /**
+         * Marca lenovo Naranja
+         */
         g.setColor(new Color(255, 0, 0));
         g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell + degreesHp, degreesLenovo);
         g.fillRect(310, 330, 20, 20);
         g.drawString(lenovo + " de Lenovo", 340, 345);
 
-        //Marca samsung Rosa
+        /**
+         * Marca samsung Rosa
+         */
         g.setColor(new Color(215, 96, 140));
         g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell + degreesHp + degreesLenovo, degreesSamsung);
         g.fillRect(430, 120, 20, 20);
         g.drawString(samsung + " de Samsung", 460, 135);
 
-        //Marca toshiba Amarillo Canario
+        /**
+         * Marca toshiba Amarillo Canario
+         */
         g.setColor(new Color(215, 196, 25));
         g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell + degreesHp + degreesLenovo + degreesSamsung, degreesToshiba);
         g.fillRect(430, 150, 20, 20);
         g.drawString(toshiba + " de Toshiba", 460, 165);
 
-        //Marca xerox Azul Celeste
+        /**
+         * Marca xerox Azul Celeste
+         */
         g.setColor(new Color(93, 173, 226));
         g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell + degreesHp + degreesLenovo + degreesSamsung + degreesToshiba, degreesXerox);
         g.fillRect(430, 180, 20, 20);

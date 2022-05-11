@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
+ * Vista para recuperar contraseña.
  * 
  * @author Juan Carlos Estevez Vargas.
  *

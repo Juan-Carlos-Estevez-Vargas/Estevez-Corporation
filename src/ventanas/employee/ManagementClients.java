@@ -18,6 +18,7 @@ import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
+ * Frame que lista los clientes registrados en el sistema.
  * 
  * @author Juan Carlos Estevez Vargas.
  *
@@ -58,7 +59,7 @@ public class ManagementClients extends JFrame {
 			PreparedStatement pst = cn.prepareStatement(
 					"SELECT id_cliente, nombre_cliente, mail_cliente, tel_cliente, ultima_modificacion FROM clientes");
 			ResultSet rs = pst.executeQuery();
-			
+
 			this.tableClients = new JTable(this.model);
 			this.tableClients.setFont(new Font("serif", Font.BOLD, 14));
 			this.tableClients.setForeground(Color.BLACK);
@@ -76,7 +77,7 @@ public class ManagementClients extends JFrame {
 			this.model.addColumn("Midificado por");
 
 			/**
-			 *  Llenado de la tabla
+			 * Llenado de la tabla
 			 */
 			while (rs.next()) {
 				Object[] row = new Object[5];
@@ -91,7 +92,7 @@ public class ManagementClients extends JFrame {
 		}
 
 		/**
-		 *  Evento de accion para seleccionar cliente
+		 * Evento de accion para seleccionar cliente
 		 */
 		tableClients.addMouseListener(new MouseAdapter() {
 			@Override

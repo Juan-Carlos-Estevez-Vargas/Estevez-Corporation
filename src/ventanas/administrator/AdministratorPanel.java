@@ -8,9 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.swing.*;
-
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -25,6 +23,7 @@ import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
+ * Vista principal del administrador.
  * 
  * @author Juan Carlos Estevez Vargas.
  *
@@ -71,7 +70,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 
 			if (rs.next()) {
 				nameUser = rs.getString("nombre_usuario");
-				this.labelTittle.setText(nameUser);
+				this.labelTittle.setText("Bienvenido " + nameUser);
 			}
 		} catch (Exception e) {
 			System.err.println("Error en conexión desde la interfaz Administrador");
@@ -92,7 +91,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.setContentPane(this.panelBack);
 
 		/*
-		 * Label Usuario Logueado.
+		 * Label Principal.
 		 */
 		this.labelTittle = new JLabel();
 		this.labelTittle.setBounds(10, 10, 280, 27);
@@ -143,7 +142,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.panelBack.add(this.labelManageUser);
 
 		/**
-		 * Label para imprimir los usuarios.
+		 * Label para imprimir los usuarios existentes en el sistema.
 		 */
 		this.btnPrintUsers = new JButton();
 		this.btnPrintUsers.setBounds(460, 80, 120, 100);
@@ -213,6 +212,9 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 			this.dispose();
 		}
 
+		/**
+		 * Imprime los usuarios existentes en el sistema.
+		 */
 		if (e.getSource() == this.btnPrintUsers) {
 			Document document = new Document();
 			try {

@@ -18,6 +18,7 @@ import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
+ * Frame con la lista de equipos registrados en el sistema.
  * 
  * @author Juan Carlos Estevez Vargas.
  *
@@ -57,7 +58,7 @@ public class ManagementEquips extends JFrame {
 			Connection cn = DatabaseConnection.conectar();
 			PreparedStatement pst = cn.prepareStatement("SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos");
 			ResultSet rs = pst.executeQuery();
-			
+
 			this.tableEquips = new JTable(this.model);
 			this.tableEquips.setFont(new Font("serif", Font.BOLD, 14));
 			this.tableEquips.setForeground(Color.BLACK);
@@ -74,7 +75,7 @@ public class ManagementEquips extends JFrame {
 			this.model.addColumn("Estado");
 
 			/**
-			 *  Llenado de la tabla
+			 * Llenado de la tabla
 			 */
 			while (rs.next()) {
 				Object[] row = new Object[4];
@@ -89,7 +90,7 @@ public class ManagementEquips extends JFrame {
 		}
 
 		/**
-		 *  Evento de accion para seleccionar cliente
+		 * Evento de accion para seleccionar equipo.
 		 */
 		tableEquips.addMouseListener(new MouseAdapter() {
 			@Override
