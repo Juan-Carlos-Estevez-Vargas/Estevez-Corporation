@@ -19,6 +19,7 @@ import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
+ * Vista con el listado de los usuario registrados en el sistema.
  * 
  * @author Juan Carlos Estevez Vargas.
  *

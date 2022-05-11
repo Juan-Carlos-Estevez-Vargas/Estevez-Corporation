@@ -23,6 +23,7 @@ import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
+ * Frame encargado de registrar un equipo asociado a un cliente específico.
  * 
  * @author Juan Carlos Estevez Vargas.
  *
@@ -86,7 +87,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 				 * Llenado de los campos con la base de datos
 				 */
 				this.txtNameClient.setText(rs.getString("nombre_cliente"));
-				
+
 			}
 			cn.close();
 		} catch (SQLException e) {
@@ -181,7 +182,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.cmbMark);
 
 		/**
-		 * Label Model del Equipo.
+		 * Label Modelo del Equipo.
 		 */
 		this.labelModel = new JLabel("Modelo :");
 		this.labelModel.setBounds(10, 240, 100, 25);
@@ -190,7 +191,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.labelModel);
 
 		/**
-		 * Campo de texto para ingresar el model del equipo a registrar.
+		 * Campo de texto para ingresar el modelo del equipo a registrar.
 		 */
 		this.txtModel = new JTextField();
 		this.txtModel.setBounds(10, 260, 230, 25);
@@ -257,6 +258,9 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		/**
+		 * Ingresa un equipo a la base de datos y lo asocia a un cliente.
+		 */
 		if (e.getSource() == this.btnRegisterEquip) {
 			int validation = 0;
 			String typeEquip, mark, model, serialNumber, day, month, year, status, observations;

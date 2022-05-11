@@ -10,6 +10,7 @@ import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
+ * Vista encargada de registrar un nuevo usuario en el sistema.
  * 
  * @author Juan Carlos Estevez Vargas.
  *
@@ -25,6 +26,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 	private JTextField txtPhoneUser;
 	private JTextField txtUsername;
 	private JLabel labelTitle;
+	private JLabel labelUsername;
 	private JLabel labelNameUser;
 	private JLabel labelEmailUser;
 	private JLabel labelPhoneUser;
@@ -52,7 +54,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 	/**
 	 * Limpia los campos de texto.
 	 */
-	public void Limpiar() {
+	public void clean() {
 		this.txtEmailUser.setText("");
 		this.txtNameUser.setText("");
 		this.txtPhoneUser.setText("");
@@ -168,11 +170,11 @@ public class RegisterUser extends JFrame implements ActionListener {
 		/**
 		 * Label Username.
 		 */
-		this.labelRegisterUser = new JLabel("Username:");
-		this.labelRegisterUser.setBounds(320, 50, 100, 25);
-		this.labelRegisterUser.setForeground(new Color(192, 192, 192));
-		this.labelRegisterUser.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(this.labelRegisterUser);
+		this.labelUsername = new JLabel("Username:");
+		this.labelUsername.setBounds(320, 50, 100, 25);
+		this.labelUsername.setForeground(new Color(192, 192, 192));
+		this.labelUsername.setFont(new Font("serif", Font.BOLD, 14));
+		this.panelBackUser.add(this.labelUsername);
 
 		/**
 		 * Campo de texto para ingresar el username del usuario a registrar.
@@ -196,9 +198,9 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.btnRegisterUser.setBackground(new Color(46, 59, 104));
 		this.btnRegisterUser.setOpaque(true);
 		this.panelBackUser.add(this.btnRegisterUser);
-		
+
 		/**
-		 * Label Username.
+		 * Label Registrar Usuario.
 		 */
 		this.labelRegisterUser = new JLabel("Registrar Usuario");
 		this.labelRegisterUser.setBounds(415, 240, 150, 25);
@@ -305,7 +307,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 							/**
 							 * Ahora procedemos a limpiar los campos de texto.
 							 */
-							Limpiar();
+							clean();
 
 							/**
 							 * Iluminamos los campos de texto de color verde.

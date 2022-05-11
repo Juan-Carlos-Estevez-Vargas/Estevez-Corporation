@@ -19,6 +19,7 @@ import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
+ * Vista con la información de un usuario.
  * 
  * @author Juan Carlos Estevez Vargas.
  *
@@ -48,7 +49,6 @@ public class UserInformation extends JFrame implements ActionListener {
 	private JComboBox<String> cmbStatus;
 	private JPanel container;
 	private JButton btnUpdate;
-	private JButton btnRestorePassword;
 
 	/**
 	 * Constructor de clase.
@@ -161,7 +161,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.container.add(this.labelUsername);
 
 		/**
-		 * Label Estatus.
+		 * Label Estado.
 		 */
 		this.labelStatus = new JLabel("Estatus :");
 		this.labelStatus.setFont(new java.awt.Font("Segoe UI", 1, 12));
@@ -271,18 +271,6 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.btnUpdate.addActionListener(this);
 		this.container.add(this.btnUpdate);
 
-		/**
-		 * Botón para restaurar la contraseña del usuario en cuestión.
-		 
-		this.btnRestorePassword = new JButton("Restaurar Password");
-		this.btnRestorePassword.setBounds(380, 300, 210, 35);
-		this.btnRestorePassword.setFont(new Font("serif", Font.BOLD, 20));
-		this.btnRestorePassword.setBackground(new Color(8, 85, 224));
-		this.btnRestorePassword.setForeground(Color.WHITE);
-		this.btnRestorePassword.setHorizontalAlignment(JButton.CENTER);
-		this.btnRestorePassword.addActionListener(this);
-		this.container.add(this.btnRestorePassword);*/
-
 	}
 
 	@Override
@@ -296,7 +284,7 @@ public class UserInformation extends JFrame implements ActionListener {
 			String name, email, phone, username, permissionsString = "", statusString = "";
 
 			/**
-			 * Guardamos lo que esta en loc comboBox y en los campos de texto en las
+			 * Guardamos lo que esta en los comboBox y en los campos de texto en las
 			 * variables.
 			 */
 			email = this.txtEmail.getText().trim();
@@ -382,13 +370,6 @@ public class UserInformation extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
 			}
 		}
-		
-		/**
-		 * Muestra el panel para modificar la contraseña del usuario en cuestión.
-		 */
-		if (e.getSource() == this.btnRestorePassword) {
-			RestorePassword restorePassword = new RestorePassword();
-			restorePassword.setVisible(true);
-		}
+
 	}
 }

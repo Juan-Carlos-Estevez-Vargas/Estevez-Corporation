@@ -36,6 +36,7 @@ import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
+ * Vista con le información de un cliente previamente seleccionado.
  * 
  * @author Juan Carlos Estevez Vargas.
  *
@@ -339,11 +340,17 @@ public class ClientInformation extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		/**
+		 * Registro del nuevo cliente en la base de datos.
+		 */
 		if (e.getSource() == this.btnRegisterEquipment) {
 			RegisterEquipment RegisterEquipment = new RegisterEquipment();
 			RegisterEquipment.setVisible(true);
 		}
 
+		/**
+		 * Actualización de un cliente en la base de datos.
+		 */
 		if (e.getSource() == this.btnUpdateClient) {
 			int validation = 0;
 			String name, mail, phone, adress;
@@ -353,7 +360,9 @@ public class ClientInformation extends JFrame implements ActionListener {
 			phone = this.txtPhone.getText().trim();
 			adress = this.txtAdress.getText().trim();
 
-			// Validación de campos vacios
+			/*
+			 * Validación de campos vacios
+			 */
 			if (name.equals("")) {
 				this.txtName.setBackground(Color.red);
 				validation++;
@@ -398,25 +407,28 @@ public class ClientInformation extends JFrame implements ActionListener {
 					this.dispose();
 				} catch (Exception ex) {
 					System.err.println("Error en actualizar cliente " + ex);
-					JOptionPane.showMessageDialog(null, "¡¡Error al actualizar cliente!! Contacata al Administrador");
+					JOptionPane.showMessageDialog(null, "¡¡Error al actualizar cliente!! Contacta al Administrador");
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
 			}
 		}
 
+		/**
+		 * Impresión de los usuarios existentes en el sistema.
+		 */
 		if (e.getSource() == this.btnPrint) {
-			
+
 			/**
-			 *  Creamos el documento pdf.
+			 * Creamos el documento pdf.
 			 */
-			Document document = new Document(); 
+			Document document = new Document();
 			try {
 				String ruta = System.getProperty("user.home"); // Ruta donde guardar el documento
 
 				/**
-				 * Escribimos el documento en el escritorio de la computadora y le asignamos el
-				 * nombre que recuperemos del txt nombre.
+				 * Escribimos el documento en la computadora y le asignamos el nombre que
+				 * recuperemos del txt nombre.
 				 */
 				PdfWriter.getInstance(document,
 						new FileOutputStream(ruta + "\\" + this.txtName.getText().trim() + ".pdf"));
@@ -432,7 +444,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 				Paragraph paragraph = new Paragraph(); // Creamos un parrafo
 				paragraph.setAlignment(Paragraph.ALIGN_CENTER); // Alineación del parrafo
 				paragraph.add("Información del cliente.\n \n"); // Agregamos el título
-				paragraph.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY)); 
+				paragraph.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
 
 				document.open(); // Abrimos el documento
 				document.add(header);

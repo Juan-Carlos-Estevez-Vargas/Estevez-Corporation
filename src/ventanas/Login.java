@@ -14,6 +14,7 @@ import ventanas.employee.EmployeePanel;
 import ventanas.technical.PanelTechnical;
 
 /**
+ * Inicio de sesión del aplicativo.
  *
  * @author Juan Carlos Estevez Vargas
  */
@@ -50,7 +51,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.initComponents();
 
 		/**
-		 * Recuperando el setatus del usuario.
+		 * Recuperando el estado del usuario.
 		 */
 		try {
 			Connection cn = (Connection) DatabaseConnection.conectar();
@@ -62,7 +63,7 @@ public final class Login extends JFrame implements ActionListener {
 				statusUser = rs.getString("estatus");
 			}
 		} catch (Exception e) {
-			System.err.println("Error en conexión desde la interfaz Administrador");
+			System.err.println("Error en conexión desde la interfaz Login");
 		}
 
 	}
@@ -159,7 +160,7 @@ public final class Login extends JFrame implements ActionListener {
 
 		/**
 		 * Label encargado de mostrar un error el caso que el usuario o la contraseña
-		 * digitados sean erróneos.
+		 * digitados sean erróneos o el usuario este inactivo.
 		 */
 		this.jlError = new JLabel();
 		this.jlError.setBounds(45, 390, 250, 25);
@@ -189,7 +190,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.container.add(this.separator);
 
 		/**
-		 * Label para recuperar la contraseña.
+		 * Botón para recuperar la contraseña.
 		 */
 		this.btnForgot = new JButton("¿Olvidó su contraseña?");
 		this.btnForgot.setBounds(45, 515, 250, 35);
@@ -257,6 +258,8 @@ public final class Login extends JFrame implements ActionListener {
 							} else if (levelType.equals("Tecnico") && status.equalsIgnoreCase("Activo")) {
 								this.dispose();
 								new PanelTechnical().setVisible(true);
+							} else {
+								this.jlError.setText("Usuario inactivo");
 							}
 						} else {
 							this.jlError.setText("Usuario y/o contraseña erróneos");
@@ -295,7 +298,10 @@ public final class Login extends JFrame implements ActionListener {
 				this.eyeEstate = false;
 			}
 		}
-		
+
+		/**
+		 * Redirecciona al panel para recuperar contraseña.
+		 */
 		if (e.getSource() == this.btnForgot) {
 			RestorePassWithMail restorePassWithMail = new RestorePassWithMail();
 			restorePassWithMail.setVisible(true);

@@ -16,6 +16,12 @@ import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
 import ventanas.Login;
 
+/**
+ * Panel principal del tipo de usuario Técnico.
+ * 
+ * @author Juan Carlos Estevez Vargas.
+ *
+ */
 public class PanelTechnical extends JFrame implements ActionListener {
 
 	/**
@@ -79,7 +85,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		this.setContentPane(this.panelBack);
 
 		/*
-		 * Label Usuario Logueado.
+		 * Label Principal.
 		 */
 		this.labelTittle = new JLabel();
 		this.labelTittle.setBounds(10, 10, 280, 27);
@@ -109,7 +115,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		this.panelBack.add(this.labelManagementEquips);
 
 		/**
-		 * Botón encargado de mostrar la gráfica de estado de los equipos registrados.
+		 * Botón encargado de mostrar la gráfica de marcas de los equipos registrados.
 		 */
 		this.btnBrandChart = new JButton();
 		this.btnBrandChart.setBounds(250, 80, 120, 100);
@@ -168,21 +174,34 @@ public class PanelTechnical extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		/**
+		 * Redirección al panel con el listado de equipos registrados en el sistema.
+		 */
 		if (e.getSource() == this.btnManagementEquips) {
 			ManagementEquips managementEquips = new ManagementEquips();
 			managementEquips.setVisible(true);
 		}
-		
+
+		/**
+		 * Redirección al panel con el reporte del estado de los equipos.
+		 */
 		if (e.getSource() == this.btnStateGraph) {
 			StateGraph stateGraph = new StateGraph();
 			stateGraph.setVisible(true);
 		}
-		
+
+		/**
+		 * Redirección al panel con el reporte de marcas de los equipos registrados en
+		 * el sistema.
+		 */
 		if (e.getSource() == this.btnBrandChart) {
 			MarkGraph markGraph = new MarkGraph();
 			markGraph.setVisible(true);
 		}
-		
+
+		/**
+		 * Cierra la sesión del usuario.
+		 */
 		if (e.getSource() == this.btnLogout) {
 			Login login = new Login();
 			login.setLocationRelativeTo(null);

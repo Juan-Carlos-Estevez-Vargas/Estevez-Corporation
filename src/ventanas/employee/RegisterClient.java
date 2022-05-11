@@ -47,7 +47,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 	 */
 	public RegisterClient() {
 		this.user = Login.user;
-        this.setTitle("Registrar nuevo cliente - Sesión de " + this.user);
+		this.setTitle("Registrar nuevo cliente - Sesión de " + this.user);
 		this.setSize(480, 340);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
@@ -194,12 +194,15 @@ public class RegisterClient extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		/**
+		 * Inserta un cliente en la base de datos.
+		 */
 		if (e.getSource() == this.btnRegisterClient) {
 			int validation = 0;
 			String name, mail, phone, adress;
 
 			/**
-			 *  Recuperamos los valores de los text field
+			 * Recuperamos los valores de los text field
 			 */
 			name = this.txtNameClient.getText().trim();
 			mail = this.txtEmailClient.getText().trim();
@@ -207,7 +210,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 			adress = this.txtAdressClient.getText().trim();
 
 			/**
-			 *  Validacion de los campos
+			 * Validacion de los campos
 			 */
 			if (name.equals("")) {
 				this.txtNameClient.setBackground(Color.red);
@@ -227,7 +230,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 			}
 
 			/**
-			 *  Insertando clientes a la base de datos
+			 * Insertando clientes a la base de datos
 			 */
 			if (validation == 0) {
 				try {
@@ -243,7 +246,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 					pst.setString(6, "hola");
 					pst.executeUpdate();
 					cn.close();
-					
+
 					clean();
 
 					this.txtNameClient.setBackground(Color.green);
