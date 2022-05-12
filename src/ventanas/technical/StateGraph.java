@@ -25,8 +25,8 @@ public class StateGraph extends JFrame {
 	private static final long serialVersionUID = 1L;
 	int newEntry, notRepaired, inReview, repaired, delivered;
 	int[] vectorCantStatus = new int[5];
-	String user;
-	String[] vectorNameStatus = new String[5];
+	private String user;
+	private String[] vectorNameStatus = new String[5];
 
 	/**
 	 * Constructor de clase.
@@ -115,7 +115,7 @@ public class StateGraph extends JFrame {
 
 		g.setColor(new Color(46, 59, 104));
 		g.fillRect(0, 0, 515, 360);
-
+		
 		/**
 		 * Pintando la gráfica de barras.
 		 */
