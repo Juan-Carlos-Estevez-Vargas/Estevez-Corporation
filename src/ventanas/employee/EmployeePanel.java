@@ -31,6 +31,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import modelo.DatabaseConnection;
 import ventanas.Login;
+import ventanas.RestorePassword;
 
 /**
  * Frame principal del empleado (Vendedor, Capturista).
@@ -55,6 +56,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 	private JButton btnLogout;
 	private String user;
 	private String nameUser;
+	private String passwordUser;
 
 	/**
 	 * Constructor de clase.
@@ -67,24 +69,33 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		this.setResizable(false);
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
-		this.initComponents();
-
+		
 		/**
 		 * Recuperando el nombre del usuario.
 		 */
 		try {
 			Connection cn = (Connection) DatabaseConnection.conectar();
 			PreparedStatement pst = (PreparedStatement) cn
-					.prepareStatement("SELECT nombre_usuario FROM usuarios WHERE username = '" + user + "'");
+					.prepareStatement("SELECT nombre_usuario, password FROM usuarios WHERE username = '" + user + "'");
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
 				nameUser = rs.getString("nombre_usuario");
+				passwordUser = rs.getString("password");
 				this.labelTittle.setText(nameUser);
 			}
 		} catch (SQLException e) {
 			System.err.println("Error en consultar capturista");
 		}
+		
+		if(passwordUser.trim().equals("1234")) {
+			this.dispose();
+			JOptionPane.showMessageDialog(null, "A continuación, te recomendamos cambiar tu contraseña");
+			RestorePassword restorePassword = new RestorePassword();
+			restorePassword.setVisible(true);
+		}
+		
+		this.initComponents();
 	}
 
 	/**
