@@ -362,6 +362,9 @@ public class UserInformation extends JFrame implements ActionListener {
 						pst3.executeUpdate();
 						cn3.close();
 						JOptionPane.showMessageDialog(null, "Modificación exitosa!!");
+						this.dispose();
+						ManagementUsers managementUsers = new ManagementUsers();
+						managementUsers.setVisible(true);
 					}
 				} catch (SQLException ex) {
 					System.err.println("Error al actualizar " + ex);

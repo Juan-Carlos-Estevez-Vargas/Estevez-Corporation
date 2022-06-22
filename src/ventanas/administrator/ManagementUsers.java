@@ -108,6 +108,7 @@ public class ManagementUsers extends JFrame {
 					user_update = (String) model.getValueAt(row_point, column_point);
 					UserInformation userInformation = new UserInformation();
 					userInformation.setVisible(true);
+					dispose();
 				}
 			}
 		});
