@@ -1,6 +1,7 @@
 package ventanas.technical;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -193,5 +194,9 @@ public class MarkGraph extends JFrame{
         g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell + degreesHp + degreesLenovo + degreesSamsung + degreesToshiba, degreesXerox);
         g.fillRect(430, 180, 20, 20);
         g.drawString(xerox + " de Xerox", 460, 195);
+        
+        g.setColor(Color.white);
+		g.setFont(new Font("arial", Font.BOLD, 20));
+		g.drawString("Gráfica de marcas registradas", 150, 68);
     }
 }

@@ -1,6 +1,7 @@
 package ventanas.technical;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -58,7 +59,7 @@ public class StateGraph extends JFrame {
 						inReview = vectorCantStatus[position];
 					} else if (vectorNameStatus[position].equalsIgnoreCase("Entregado")) {
 						delivered = vectorCantStatus[position];
-					} else if (vectorNameStatus[position].equalsIgnoreCase("No repaired")) {
+					} else if (vectorNameStatus[position].equalsIgnoreCase("No reparado")) {
 						notRepaired = vectorCantStatus[position];
 					} else if (vectorNameStatus[position].equalsIgnoreCase("Nuevo ingreso")) {
 						newEntry = vectorCantStatus[position];
@@ -121,7 +122,7 @@ public class StateGraph extends JFrame {
 		 */
 		g.setColor(Color.yellow);
 		g.fillRect(100, 100, longNewEntry, 40);
-		g.drawString("Nuevo Ingreso", 10, 118);
+		g.drawString("prueba Ingreso", 10, 118);
 		g.drawString("Cantidad " + newEntry, 10, 133);
 
 		g.setColor(Color.red);
@@ -143,6 +144,10 @@ public class StateGraph extends JFrame {
 		g.fillRect(100, 300, longDelivered, 40);
 		g.drawString("Entregado", 10, 318);
 		g.drawString("Cantidad " + delivered, 10, 333);
+		
+		g.setColor(Color.white);
+		g.setFont(new Font("arial", Font.BOLD, 20));
+		g.drawString("Gráfica de estado del equipo", 150, 68);
 
 	}
 
