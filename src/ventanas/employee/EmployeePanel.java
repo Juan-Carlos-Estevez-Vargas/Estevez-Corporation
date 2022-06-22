@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,7 +35,7 @@ import ventanas.Login;
 /**
  * Frame principal del empleado (Vendedor, Capturista).
  * 
- * @author 
+ * @author
  *
  */
 public class EmployeePanel extends JFrame implements ActionListener {
@@ -218,47 +220,59 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		 */
 		if (e.getSource() == this.btnPrintClients) {
 			Document document = new Document();
+
 			try {
-				String ruta = System.getProperty("user.home");
-				PdfWriter.getInstance(document, new FileOutputStream(ruta + "\\Reporte_clientes.pdf"));
+				JFileChooser fc = new JFileChooser();
+				// Mostrar la ventana para abrir archivo y recoger la respuesta
+				// En el parámetro del showOpenDialog se indica la ventana
+				// al que estará asociado. Con el valor this se asocia a la
+				// ventana que la abre.
+				int response = fc.showSaveDialog(this);
+				// Comprobar si se ha pulsado Aceptar
+				if (response == JFileChooser.APPROVE_OPTION) {
+					// Crear un objeto File con el archivo elegido
+					File chosenFile = fc.getSelectedFile();
 
-				com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF2.jpg");
-				header.scaleToFit(650, 1000);
-				header.setAlignment(Chunk.ALIGN_CENTER);
+					PdfWriter.getInstance(document, new FileOutputStream(chosenFile + ".pdf"));
 
-				Paragraph paragraph = new Paragraph();
-				paragraph.setAlignment(Paragraph.ALIGN_CENTER);
-				paragraph.add("Lista de Clientes\n\n");
-				paragraph.setFont(FontFactory.getFont("Tahoma", 18, Font.BOLD, BaseColor.DARK_GRAY));
+					com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF2.jpg");
+					header.scaleToFit(650, 1000);
+					header.setAlignment(Chunk.ALIGN_CENTER);
 
-				document.open();
-				document.add(header);
-				document.add(paragraph);
+					Paragraph paragraph = new Paragraph();
+					paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+					paragraph.add("Lista de Clientes\n\n");
+					paragraph.setFont(FontFactory.getFont("Tahoma", 18, Font.BOLD, BaseColor.DARK_GRAY));
 
-				PdfPTable table = new PdfPTable(5);
-				table.addCell("ID Cliente");
-				table.addCell("Nombre");
-				table.addCell("Email");
-				table.addCell("Teléfono");
-				table.addCell("Dirección");
+					document.open();
+					document.add(header);
+					document.add(paragraph);
 
-				try {
-					Connection cn = (Connection) DatabaseConnection.conectar();
-					PreparedStatement pst = (PreparedStatement) cn.prepareStatement("SELECT * FROM clientes");
-					ResultSet rs = pst.executeQuery();
+					PdfPTable table = new PdfPTable(5);
+					table.addCell("ID Cliente");
+					table.addCell("Nombre");
+					table.addCell("Email");
+					table.addCell("Teléfono");
+					table.addCell("Dirección");
 
-					if (rs.next()) {
-						do {
-							table.addCell(rs.getString(1));
-							table.addCell(rs.getString(2));
-							table.addCell(rs.getString(3));
-							table.addCell(rs.getString(4));
-							table.addCell(rs.getString(5));
-						} while (rs.next());
-						document.add(table);
+					try {
+						Connection cn = (Connection) DatabaseConnection.conectar();
+						PreparedStatement pst = (PreparedStatement) cn.prepareStatement("SELECT * FROM clientes");
+						ResultSet rs = pst.executeQuery();
+
+						if (rs.next()) {
+							do {
+								table.addCell(rs.getString(1));
+								table.addCell(rs.getString(2));
+								table.addCell(rs.getString(3));
+								table.addCell(rs.getString(4));
+								table.addCell(rs.getString(5));
+							} while (rs.next());
+							document.add(table);
+						}
+					} catch (SQLException ex) {
+						System.err.println("Error al generar lista de clientes " + ex);
 					}
-				} catch (SQLException ex) {
-					System.err.println("Error al generar lista de clientes " + ex);
 				}
 				document.close();
 				JOptionPane.showMessageDialog(null, "Lista de clientes creada correctamente");

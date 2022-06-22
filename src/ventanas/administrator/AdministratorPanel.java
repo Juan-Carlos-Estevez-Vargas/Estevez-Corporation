@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -25,7 +26,7 @@ import ventanas.Login;
 /**
  * Vista principal del administrador.
  * 
- * @author 
+ * @author
  *
  */
 public class AdministratorPanel extends JFrame implements ActionListener {
@@ -217,49 +218,62 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		 */
 		if (e.getSource() == this.btnPrintUsers) {
 			Document document = new Document();
+			
 			try {
-				String ruta = System.getProperty("user.home");
-				PdfWriter.getInstance(document, new FileOutputStream(ruta + "\\Reporte_usuarios.pdf"));
 
-				com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF2.jpg");
-				header.scaleToFit(650, 1000);
-				header.setAlignment(Chunk.ALIGN_CENTER);
+				JFileChooser fc = new JFileChooser();
+				// Mostrar la ventana para abrir archivo y recoger la respuesta
+				// En el parámetro del showOpenDialog se indica la ventana
+				// al que estará asociado. Con el valor this se asocia a la
+				// ventana que la abre.
+				int response = fc.showSaveDialog(this);
+				// Comprobar si se ha pulsado Aceptar
+				if (response == JFileChooser.APPROVE_OPTION) {
+					// Crear un objeto File con el archivo elegido
+					File chosenFile = fc.getSelectedFile();
 
-				Paragraph paragraph = new Paragraph();
-				paragraph.setAlignment(Paragraph.ALIGN_CENTER);
-				paragraph.add("Lista de Usuarios\n\n");
-				paragraph.setFont(FontFactory.getFont("Tahoma", 18, Font.BOLD, BaseColor.DARK_GRAY));
+					PdfWriter.getInstance(document, new FileOutputStream(chosenFile + ".pdf"));
 
-				document.open();
-				document.add(header);
-				document.add(paragraph);
+					com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF2.jpg");
+					header.scaleToFit(650, 1000);
+					header.setAlignment(Chunk.ALIGN_CENTER);
 
-				PdfPTable table = new PdfPTable(6);
-				table.addCell("Nombre");
-				table.addCell("Email");
-				table.addCell("Teléfono");
-				table.addCell("Nivel");
-				table.addCell("Estado");
-				table.addCell("Registrado por");
+					Paragraph paragraph = new Paragraph();
+					paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+					paragraph.add("Lista de Usuarios\n\n");
+					paragraph.setFont(FontFactory.getFont("Tahoma", 18, Font.BOLD, BaseColor.DARK_GRAY));
 
-				try {
-					Connection cn = (Connection) DatabaseConnection.conectar();
-					PreparedStatement pst = (PreparedStatement) cn.prepareStatement("SELECT * FROM usuarios");
-					ResultSet rs = pst.executeQuery();
+					document.open();
+					document.add(header);
+					document.add(paragraph);
 
-					if (rs.next()) {
-						do {
-							table.addCell(rs.getString(2));
-							table.addCell(rs.getString(3));
-							table.addCell(rs.getString(4));
-							table.addCell(rs.getString(7));
-							table.addCell(rs.getString(8));
-							table.addCell(rs.getString(9));
-						} while (rs.next());
-						document.add(table);
+					PdfPTable table = new PdfPTable(6);
+					table.addCell("Nombre");
+					table.addCell("Email");
+					table.addCell("Teléfono");
+					table.addCell("Nivel");
+					table.addCell("Estado");
+					table.addCell("Registrado por");
+
+					try {
+						Connection cn = (Connection) DatabaseConnection.conectar();
+						PreparedStatement pst = (PreparedStatement) cn.prepareStatement("SELECT * FROM usuarios");
+						ResultSet rs = pst.executeQuery();
+
+						if (rs.next()) {
+							do {
+								table.addCell(rs.getString(2));
+								table.addCell(rs.getString(3));
+								table.addCell(rs.getString(4));
+								table.addCell(rs.getString(7));
+								table.addCell(rs.getString(8));
+								table.addCell(rs.getString(9));
+							} while (rs.next());
+							document.add(table);
+						}
+					} catch (SQLException ex) {
+						System.err.println("Error al generar lista de usuarios " + ex);
 					}
-				} catch (SQLException ex) {
-					System.err.println("Error al generar lista de usuarios " + ex);
 				}
 				document.close();
 				JOptionPane.showMessageDialog(null, "Listado de usuarios creada correctamente");

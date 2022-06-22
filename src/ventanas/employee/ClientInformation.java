@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,7 +40,7 @@ import ventanas.Login;
 /**
  * Vista con le información de un cliente previamente seleccionado.
  * 
- * @author 
+ * @author
  *
  */
 public class ClientInformation extends JFrame implements ActionListener {
@@ -424,103 +426,109 @@ public class ClientInformation extends JFrame implements ActionListener {
 			 * Creamos el documento pdf.
 			 */
 			Document document = new Document();
+			
 			try {
-				String ruta = System.getProperty("user.home"); // Ruta donde guardar el documento
+				JFileChooser fc = new JFileChooser();
+				// Mostrar la ventana para abrir archivo y recoger la respuesta
+				// En el parámetro del showOpenDialog se indica la ventana
+				// al que estará asociado. Con el valor this se asocia a la
+				// ventana que la abre.
+				int response = fc.showSaveDialog(this);
+				// Comprobar si se ha pulsado Aceptar
+				if (response == JFileChooser.APPROVE_OPTION) {
+					// Crear un objeto File con el archivo elegido
+					File chosenFile = fc.getSelectedFile();
 
-				/**
-				 * Escribimos el documento en la computadora y le asignamos el nombre que
-				 * recuperemos del txt nombre.
-				 */
-				PdfWriter.getInstance(document,
-						new FileOutputStream(ruta + "\\" + this.txtName.getText().trim() + ".pdf"));
-
-				/**
-				 * Creamos una instancia de la clase image de itext, y colocamos la imagen que
-				 * queremos
-				 */
-				com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF2.jpg");
-				header.scaleToFit(650, 1000); // Dimensiones de la imagen
-				header.setAlignment(Chunk.ALIGN_CENTER); // Alineacion de la imagen
-
-				Paragraph paragraph = new Paragraph(); // Creamos un parrafo
-				paragraph.setAlignment(Paragraph.ALIGN_CENTER); // Alineación del parrafo
-				paragraph.add("Información del cliente.\n \n"); // Agregamos el título
-				paragraph.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
-
-				document.open(); // Abrimos el documento
-				document.add(header);
-				document.add(paragraph);
-
-				/**
-				 * Creamos una tabla donde se mostraran los datos y añadimos las columnas
-				 */
-				PdfPTable tableClients = new PdfPTable(5);
-				tableClients.addCell("ID");
-				tableClients.addCell("Nombre");
-				tableClients.addCell("Email");
-				tableClients.addCell("Teléfono");
-				tableClients.addCell("Dirección");
-
-				try {
-					Connection cn = (Connection) DatabaseConnection.conectar();
-					PreparedStatement pst = (PreparedStatement) cn
-							.prepareStatement("SELECT * FROM clientes WHERE id_cliente = '" + idClient + "'");
-					ResultSet rs = pst.executeQuery();
-
-					if (rs.next()) {
-						do {
-							/**
-							 * Recuperamos los campos de la base de datos
-							 */
-							tableClients.addCell(rs.getString(1));
-							tableClients.addCell(rs.getString(2));
-							tableClients.addCell(rs.getString(3));
-							tableClients.addCell(rs.getString(4));
-							tableClients.addCell(rs.getString(5));
-						} while (rs.next());
-						document.add(tableClients);
-					}
+					PdfWriter.getInstance(document, new FileOutputStream(chosenFile + ".pdf"));
 
 					/**
-					 * Creación de un nuevo parrafo
+					 * Creamos una instancia de la clase image de itext, y colocamos la imagen que
+					 * queremos
 					 */
-					Paragraph paragraph2 = new Paragraph();
-					paragraph2.setAlignment(Paragraph.ALIGN_CENTER);
-					paragraph2.add("\n\nEquipos registrados.\n\n");
-					paragraph2.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+					com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF2.jpg");
+					header.scaleToFit(650, 1000); // Dimensiones de la imagen
+					header.setAlignment(Chunk.ALIGN_CENTER); // Alineacion de la imagen
 
-					document.add(paragraph2);
+					Paragraph paragraph = new Paragraph(); // Creamos un parrafo
+					paragraph.setAlignment(Paragraph.ALIGN_CENTER); // Alineación del parrafo
+					paragraph.add("Información del cliente.\n \n"); // Agregamos el título
+					paragraph.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+					document.open(); // Abrimos el documento
+					document.add(header);
+					document.add(paragraph);
 
 					/**
-					 * Creación tabla equipos registrados
+					 * Creamos una tabla donde se mostraran los datos y añadimos las columnas
 					 */
-					PdfPTable tableEquipments = new PdfPTable(4);
-					tableEquipments.addCell("ID equipo");
-					tableEquipments.addCell("Tipo");
-					tableEquipments.addCell("Marca");
-					tableEquipments.addCell("Estatus");
+					PdfPTable tableClients = new PdfPTable(5);
+					tableClients.addCell("ID");
+					tableClients.addCell("Nombre");
+					tableClients.addCell("Email");
+					tableClients.addCell("Teléfono");
+					tableClients.addCell("Dirección");
 
 					try {
-						Connection cn2 = (Connection) DatabaseConnection.conectar();
-						PreparedStatement pst2 = (PreparedStatement) cn2.prepareStatement(
-								"SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos WHERE id_cliente = '"
-										+ idClient + "'");
-						ResultSet rs2 = pst2.executeQuery();
+						Connection cn = (Connection) DatabaseConnection.conectar();
+						PreparedStatement pst = (PreparedStatement) cn
+								.prepareStatement("SELECT * FROM clientes WHERE id_cliente = '" + idClient + "'");
+						ResultSet rs = pst.executeQuery();
 
-						if (rs2.next()) {
+						if (rs.next()) {
 							do {
-								tableEquipments.addCell(rs2.getString(1));
-								tableEquipments.addCell(rs2.getString(2));
-								tableEquipments.addCell(rs2.getString(3));
-								tableEquipments.addCell(rs2.getString(4));
+								/**
+								 * Recuperamos los campos de la base de datos
+								 */
+								tableClients.addCell(rs.getString(1));
+								tableClients.addCell(rs.getString(2));
+								tableClients.addCell(rs.getString(3));
+								tableClients.addCell(rs.getString(4));
+								tableClients.addCell(rs.getString(5));
 							} while (rs.next());
-							document.add(tableEquipments);
+							document.add(tableClients);
+						}
+
+						/**
+						 * Creación de un nuevo parrafo
+						 */
+						Paragraph paragraph2 = new Paragraph();
+						paragraph2.setAlignment(Paragraph.ALIGN_CENTER);
+						paragraph2.add("\n\nEquipos registrados.\n\n");
+						paragraph2.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+						document.add(paragraph2);
+
+						/**
+						 * Creación tabla equipos registrados
+						 */
+						PdfPTable tableEquipments = new PdfPTable(4);
+						tableEquipments.addCell("ID equipo");
+						tableEquipments.addCell("Tipo");
+						tableEquipments.addCell("Marca");
+						tableEquipments.addCell("Estatus");
+
+						try {
+							Connection cn2 = (Connection) DatabaseConnection.conectar();
+							PreparedStatement pst2 = (PreparedStatement) cn2.prepareStatement(
+									"SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos WHERE id_cliente = '"
+											+ idClient + "'");
+							ResultSet rs2 = pst2.executeQuery();
+
+							if (rs2.next()) {
+								do {
+									tableEquipments.addCell(rs2.getString(1));
+									tableEquipments.addCell(rs2.getString(2));
+									tableEquipments.addCell(rs2.getString(3));
+									tableEquipments.addCell(rs2.getString(4));
+								} while (rs.next());
+								document.add(tableEquipments);
+							}
+						} catch (DocumentException | SQLException ex) {
+							System.err.println("Error al obtener datos de equipos " + e);
 						}
 					} catch (DocumentException | SQLException ex) {
-						System.err.println("Error al obtener datos de equipos " + e);
+						System.err.println("Error al obtener datos del cliente " + e);
 					}
-				} catch (DocumentException | SQLException ex) {
-					System.err.println("Error al obtener datos del cliente " + e);
 				}
 				document.close();
 				JOptionPane.showMessageDialog(null, "Reporte creado correctamente");
