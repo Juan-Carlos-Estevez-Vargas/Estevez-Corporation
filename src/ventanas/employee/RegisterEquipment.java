@@ -25,7 +25,7 @@ import ventanas.Login;
 /**
  * Frame encargado de registrar un equipo asociado a un cliente específico.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class RegisterEquipment extends JFrame implements ActionListener {
@@ -322,6 +322,8 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 
 					JOptionPane.showMessageDialog(null, "Registro exitoso");
 					this.dispose();
+					ClientInformation clientInformation = new ClientInformation();
+					clientInformation.setVisible(true);
 				} catch (Exception ex) {
 					System.err.println("Error en registrar el equipo " + ex);
 					JOptionPane.showMessageDialog(null, "¡¡Error al registrar el equipo!! Contacte al Administrador");

@@ -19,7 +19,7 @@ import ventanas.Login;
 
 /**
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author
  *
  */
 public class RegisterClient extends JFrame implements ActionListener {
@@ -243,7 +243,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 					pst.setString(3, mail);
 					pst.setString(4, phone);
 					pst.setString(5, adress);
-					pst.setString(6, "hola");
+					pst.setString(6, this.user);
 					pst.executeUpdate();
 					cn.close();
 

@@ -25,7 +25,7 @@ import ventanas.Login;
 /**
  * Vista principal del administrador.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class AdministratorPanel extends JFrame implements ActionListener {
@@ -94,7 +94,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		 * Label Principal.
 		 */
 		this.labelTittle = new JLabel();
-		this.labelTittle.setBounds(10, 10, 280, 27);
+		this.labelTittle.setBounds(10, 10, 380, 27);
 		this.labelTittle.setForeground(new Color(192, 192, 192));
 		this.labelTittle.setFont(new Font("serif", Font.BOLD, 20));
 		this.panelBack.add(this.labelTittle);

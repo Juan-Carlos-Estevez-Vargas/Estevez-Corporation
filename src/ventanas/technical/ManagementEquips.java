@@ -20,7 +20,7 @@ import ventanas.Login;
 /**
  * Frame con la lista de equipos registrados en el sistema.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class ManagementEquips extends JFrame {

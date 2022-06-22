@@ -21,7 +21,7 @@ import ventanas.Login;
 /**
  * Vista con el listado de los usuario registrados en el sistema.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class ManagementUsers extends JFrame {

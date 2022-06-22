@@ -21,7 +21,7 @@ import ventanas.Login;
 /**
  * Vista con la información de un usuario.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class UserInformation extends JFrame implements ActionListener {

@@ -16,7 +16,7 @@ import ventanas.technical.PanelTechnical;
 /**
  * Inicio de sesión del aplicativo.
  *
- * @author Juan Carlos Estevez Vargas
+ * @author 
  */
 public final class Login extends JFrame implements ActionListener {
 

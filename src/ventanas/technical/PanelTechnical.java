@@ -19,7 +19,7 @@ import ventanas.Login;
 /**
  * Panel principal del tipo de usuario Técnico.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class PanelTechnical extends JFrame implements ActionListener {

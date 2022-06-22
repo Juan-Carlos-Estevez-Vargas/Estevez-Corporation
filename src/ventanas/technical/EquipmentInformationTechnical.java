@@ -24,7 +24,7 @@ import ventanas.Login;
 /**
  * Frame con la información general de un equipo específico.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class EquipmentInformationTechnical extends JFrame implements ActionListener {

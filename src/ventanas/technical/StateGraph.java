@@ -14,7 +14,7 @@ import ventanas.Login;
 /**
  * Reporte del estado de los equipos.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class StateGraph extends JFrame {

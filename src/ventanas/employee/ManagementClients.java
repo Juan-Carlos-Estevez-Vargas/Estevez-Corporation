@@ -20,7 +20,7 @@ import ventanas.Login;
 /**
  * Frame que lista los clientes registrados en el sistema.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class ManagementClients extends JFrame {
@@ -104,6 +104,7 @@ public class ManagementClients extends JFrame {
 					id_cliente_update = (int) model.getValueAt(rowPoint, columnPoint);
 					ClientInformation clientInformation = new ClientInformation();
 					clientInformation.setVisible(true);
+					dispose();
 				}
 			}
 		});
