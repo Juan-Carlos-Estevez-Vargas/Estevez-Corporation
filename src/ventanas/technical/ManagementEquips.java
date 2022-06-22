@@ -102,6 +102,7 @@ public class ManagementEquips extends JFrame {
 					id_equip_update = (int) model.getValueAt(rowPoint, columnPoint);
 					EquipmentInformationTechnical equipmentInformationTechnical = new EquipmentInformationTechnical();
 					equipmentInformationTechnical.setVisible(true);
+					dispose();
 				}
 			}
 		});

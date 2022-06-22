@@ -402,6 +402,8 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 
 					JOptionPane.showMessageDialog(null, "Actualización correcta");
 					this.dispose();
+					ManagementEquips managementEquips = new ManagementEquips();
+					managementEquips.setVisible(true);
 				} catch (SQLException ex) {
 					System.err.println("Error al actualizar equipo " + ex);
 					JOptionPane.showMessageDialog(null, "¡¡Error al actualizar equipo!! Contacte al Administrador");
