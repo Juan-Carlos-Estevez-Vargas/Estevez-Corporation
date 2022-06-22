@@ -38,7 +38,7 @@ import ventanas.Login;
 /**
  * Vista con le información de un cliente previamente seleccionado.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class ClientInformation extends JFrame implements ActionListener {
@@ -156,6 +156,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 					idEquipment = (int) model.getValueAt(rowPoint, columnPoint);
 					EquipmentInformation equipmentInformation = new EquipmentInformation();
 					equipmentInformation.setVisible(true);
+					dispose();
 				}
 			}
 		});

@@ -4,7 +4,7 @@ import ventanas.Login;
 
 /**
  *
- * @author Juan Carlos Estevez Vargas
+ * @author 
  */
 public class Main {
 

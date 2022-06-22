@@ -14,7 +14,7 @@ import ventanas.Login;
 /**
  * Gráfica de torta con la cantidad de equipos registrados en el sistema.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class MarkGraph extends JFrame{

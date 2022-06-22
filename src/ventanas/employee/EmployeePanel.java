@@ -33,7 +33,7 @@ import ventanas.Login;
 /**
  * Frame principal del empleado (Vendedor, Capturista).
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class EmployeePanel extends JFrame implements ActionListener {

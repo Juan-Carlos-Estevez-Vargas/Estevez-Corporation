@@ -12,7 +12,7 @@ import ventanas.Login;
 /**
  * Vista encargada de registrar un nuevo usuario en el sistema.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class RegisterUser extends JFrame implements ActionListener {

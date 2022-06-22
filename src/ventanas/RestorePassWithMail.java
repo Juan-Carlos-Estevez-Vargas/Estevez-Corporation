@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 /**
  * Vista para recuperar contraseña.
  * 
- * @author Juan Carlos Estevez Vargas.
+ * @author 
  *
  */
 public class RestorePassWithMail extends JFrame implements ActionListener {
