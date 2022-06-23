@@ -93,9 +93,9 @@ public class EmployeePanel extends JFrame implements ActionListener {
 			RestorePassword restorePassword = new RestorePassword();
 			restorePassword.setVisible(true);
 			dispose();
+		} else {
+			this.initComponents();
 		}
-
-		this.initComponents();
 	}
 
 	/**

@@ -303,8 +303,8 @@ public final class Login extends JFrame implements ActionListener {
 		 * Redirecciona al panel para recuperar contraseña.
 		 */
 		if (e.getSource() == this.btnForgot) {
-			RestorePassword restorePassWithMail = new RestorePassword();
-			restorePassWithMail.setVisible(true);
+			ForgotPassword forgotPassword = new ForgotPassword();
+			forgotPassword.setVisible(true);
 		}
 	}
 
