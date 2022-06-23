@@ -10,11 +10,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
 import ventanas.Login;
+import ventanas.RestorePassword;
 
 /**
  * Panel principal del tipo de usuario Técnico.
@@ -39,6 +41,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 	private JButton btnLogout;
 	private String user;
 	private String nameUser;
+	private String passwordUser;
 
 	/**
 	 * Constructor de clase.
@@ -59,15 +62,25 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		try {
 			Connection cn = (Connection) DatabaseConnection.conectar();
 			PreparedStatement pst = (PreparedStatement) cn
-					.prepareStatement("SELECT nombre_usuario FROM usuarios WHERE username = '" + user + "'");
+					.prepareStatement("SELECT nombre_usuario, password FROM usuarios WHERE username = '" + user + "'");
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
 				nameUser = rs.getString("nombre_usuario");
+				passwordUser = rs.getString("password");
 				this.labelTittle.setText(nameUser);
 			}
 		} catch (SQLException e) {
-			System.err.println("Error en consultar técnico");
+			System.err.println("Error en consultar Técnico");
+		}
+
+		if (passwordUser.trim().equals("1234")) {
+			JOptionPane.showMessageDialog(null, "A continuación, te recomendamos cambiar tu contraseña");
+			RestorePassword restorePassword = new RestorePassword();
+			restorePassword.setVisible(true);
+			dispose();
+		} else {
+			this.initComponents();
 		}
 	}
 
