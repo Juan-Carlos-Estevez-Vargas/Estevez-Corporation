@@ -69,7 +69,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		this.setResizable(false);
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
-		
+
 		/**
 		 * Recuperando el nombre del usuario.
 		 */
@@ -87,14 +87,14 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		} catch (SQLException e) {
 			System.err.println("Error en consultar capturista");
 		}
-		
-		if(passwordUser.trim().equals("1234")) {
-			this.dispose();
+
+		if (passwordUser.trim().equals("1234")) {
 			JOptionPane.showMessageDialog(null, "A continuación, te recomendamos cambiar tu contraseña");
 			RestorePassword restorePassword = new RestorePassword();
 			restorePassword.setVisible(true);
+			dispose();
 		}
-		
+
 		this.initComponents();
 	}
 
