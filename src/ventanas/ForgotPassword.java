@@ -119,8 +119,8 @@ public class ForgotPassword extends JFrame implements ActionListener {
 					email = rs.getString("email");
 					if (email.equalsIgnoreCase(this.txtEmailUser.getText().trim())) {
 						this.dispose();
-						RestorePassword restorePassword = new RestorePassword();
-						restorePassword.setVisible(true);
+						RestorePasswordWithEmail restorePasswordWithEmail = new RestorePasswordWithEmail(email);
+						restorePasswordWithEmail.setVisible(true);
 					}
 				} else {
 					JOptionPane.showMessageDialog(null,
