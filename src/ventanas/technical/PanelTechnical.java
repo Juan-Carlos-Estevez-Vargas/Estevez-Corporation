@@ -21,7 +21,7 @@ import ventanas.RestorePassword;
 /**
  * Panel principal del tipo de usuario Técnico.
  * 
- * @author 
+ * @author
  *
  */
 public class PanelTechnical extends JFrame implements ActionListener {
@@ -78,9 +78,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(null, "A continuación, te recomendamos cambiar tu contraseña");
 			RestorePassword restorePassword = new RestorePassword();
 			restorePassword.setVisible(true);
-			dispose();
-		} else {
-			this.initComponents();
+			this.dispose();
 		}
 	}
 
