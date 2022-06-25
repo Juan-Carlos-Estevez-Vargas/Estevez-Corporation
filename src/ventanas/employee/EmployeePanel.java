@@ -69,6 +69,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		this.setResizable(false);
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
+		this.initComponents();
 
 		/**
 		 * Recuperando el nombre del usuario.
@@ -93,8 +94,6 @@ public class EmployeePanel extends JFrame implements ActionListener {
 			RestorePassword restorePassword = new RestorePassword();
 			restorePassword.setVisible(true);
 			dispose();
-		} else {
-			this.initComponents();
 		}
 	}
 
