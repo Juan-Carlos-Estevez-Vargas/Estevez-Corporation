@@ -98,6 +98,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.labelTittle.setBounds(10, 10, 380, 27);
 		this.labelTittle.setForeground(new Color(192, 192, 192));
 		this.labelTittle.setFont(new Font("serif", Font.BOLD, 20));
+		this.labelTittle.setFocusable(false);
 		this.panelBack.add(this.labelTittle);
 
 		/*
@@ -110,6 +111,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.btnRegisterUser.setBorder(null);
 		this.btnRegisterUser.setBackground(new Color(46, 59, 104));
 		this.btnRegisterUser.setOpaque(true);
+		this.btnRegisterUser.setFocusable(false);
 		this.panelBack.add(this.btnRegisterUser);
 
 		/**
@@ -119,6 +121,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.labelRegisterUser.setBounds(45, 190, 120, 15);
 		this.labelRegisterUser.setForeground(new Color(192, 192, 192));
 		this.labelRegisterUser.setFont(new Font("serif", Font.BOLD, 14));
+		this.labelRegisterUser.setFocusable(false);
 		this.panelBack.add(this.labelRegisterUser);
 
 		/**
@@ -131,6 +134,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.btnManageUser.setBorder(null);
 		this.btnManageUser.setBackground(new Color(46, 59, 104));
 		this.btnManageUser.setOpaque(true);
+		this.btnManageUser.setFocusable(false);
 		this.panelBack.add(this.btnManageUser);
 
 		/**
@@ -140,6 +144,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.labelManageUser.setBounds(250, 190, 120, 15);
 		this.labelManageUser.setForeground(new Color(192, 192, 192));
 		this.labelManageUser.setFont(new Font("serif", Font.BOLD, 14));
+		this.labelManageUser.setFocusable(false);
 		this.panelBack.add(this.labelManageUser);
 
 		/**
@@ -152,6 +157,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.btnPrintUsers.setBackground(new Color(46, 59, 104));
 		this.btnPrintUsers.setOpaque(true);
 		this.btnPrintUsers.addActionListener(this);
+		this.btnPrintUsers.setFocusable(false);
 		this.panelBack.add(this.btnPrintUsers);
 
 		/**
@@ -161,6 +167,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.labelPrintUsers.setBounds(460, 190, 120, 15);
 		this.labelPrintUsers.setForeground(new Color(192, 192, 192));
 		this.labelPrintUsers.setFont(new Font("serif", Font.BOLD, 14));
+		this.labelPrintUsers.setFocusable(false);
 		this.panelBack.add(this.labelPrintUsers);
 
 		/**
@@ -173,6 +180,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.btnLogout.setForeground(Color.WHITE);
 		this.btnLogout.setHorizontalAlignment(JButton.CENTER);
 		this.btnLogout.addActionListener(this);
+		this.btnLogout.setFocusable(false);
 		this.panelBack.add(this.btnLogout);
 
 	}
