@@ -11,7 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -20,7 +19,6 @@ import com.mysql.jdbc.PreparedStatement;
 
 import modelo.DatabaseConnection;
 import ventanas.Login;
-import ventanas.RestorePassword;
 
 /**
  * Panel principal del tipo de usuario Técnico.
@@ -45,7 +43,6 @@ public class PanelTechnical extends JFrame implements ActionListener {
 	private JButton btnLogout;
 	private String user;
 	private String nameUser;
-	private String passwordUser;
 
 	/**
 	 * Constructor de clase.
@@ -71,19 +68,12 @@ public class PanelTechnical extends JFrame implements ActionListener {
 
 			if (rs.next()) {
 				nameUser = rs.getString("nombre_usuario");
-				passwordUser = rs.getString("password");
 				this.labelTittle.setText(nameUser);
 			}
 		} catch (SQLException e) {
 			System.err.println("Error en consultar Técnico");
 		}
 
-		if (passwordUser.trim().equals("1234")) {
-			JOptionPane.showMessageDialog(null, "A continuación, te recomendamos cambiar tu contraseña");
-			RestorePassword restorePassword = new RestorePassword();
-			restorePassword.setVisible(true);
-			this.dispose();
-		}
 	}
 
 	/**
@@ -182,6 +172,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		this.btnLogout.setForeground(Color.WHITE);
 		this.btnLogout.setHorizontalAlignment(SwingConstants.CENTER);
 		this.btnLogout.addActionListener(this);
+		this.btnLogout.setFocusable(false);
 		this.panelBack.add(this.btnLogout);
 
 	}
