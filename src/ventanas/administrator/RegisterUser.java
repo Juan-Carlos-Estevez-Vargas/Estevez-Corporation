@@ -5,14 +5,19 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.*;
 import modelo.DatabaseConnection;
+import util.ValidateCharacters;
+import util.ValidateNumbers;
 import ventanas.Login;
 
 /**
  * Vista encargada de registrar un nuevo usuario en el sistema.
  * 
- * @author 
+ * @author
  *
  */
 public class RegisterUser extends JFrame implements ActionListener {
@@ -103,6 +108,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtNameUser.setHorizontalAlignment(JLabel.CENTER);
 		this.txtNameUser.setForeground(Color.WHITE);
 		this.txtNameUser.requestFocus();
+		this.txtNameUser.addKeyListener(new ValidateCharacters());
 		this.panelBackUser.add(this.txtNameUser);
 
 		/**
@@ -142,6 +148,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtPhoneUser.setBackground(new Color(127, 140, 141));
 		this.txtPhoneUser.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtPhoneUser.setHorizontalAlignment(JLabel.CENTER);
+		this.txtPhoneUser.addKeyListener(new ValidateNumbers());
 		this.txtPhoneUser.setForeground(Color.WHITE);
 		this.panelBackUser.add(this.txtPhoneUser);
 
@@ -229,22 +236,39 @@ public class RegisterUser extends JFrame implements ActionListener {
 			permissionsCmb = this.cmbPermissions.getSelectedIndex() + 1; // Guardamos lo que esta en el comboBox
 
 			/**
-			 * Validacion de campos para que no queden vacios.
+			 * Validacion de campos para que no queden vacios y no se pasen del rango de
+			 * caracyeres permitido.
 			 */
-			if (email.equals("")) {
+			if (email.equals("") || email.length() >= 40) {
 				this.txtEmailUser.setBackground(Color.red);
+				if (email.length() >= 40) {
+					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 40 caracteres");
+					this.txtEmailUser.requestFocus();
+				}
 				validation++;
 			}
-			if (username.equals("")) {
+			if (username.equals("") || username.length() >= 30) {
 				this.txtUsername.setBackground(Color.red);
+				if (username.length() >= 30) {
+					JOptionPane.showMessageDialog(null, "El campo USERNAME no debe contener más de 30 caracteres");
+					this.txtUsername.requestFocus();
+				}
 				validation++;
 			}
-			if (name.equals("")) {
+			if (name.equals("") || name.length() >= 35) {
 				this.txtNameUser.setBackground(Color.red);
+				if (name.length() >= 35) {
+					JOptionPane.showMessageDialog(null, "El campo NOMBRE no debe contener más de 35 caracteres");
+					this.txtNameUser.requestFocus();
+				}
 				validation++;
 			}
-			if (phone.equals("")) {
+			if (phone.equals("") || phone.length() >= 12) {
 				this.txtPhoneUser.setBackground(Color.red);
+				if (phone.length() >= 12) {
+					JOptionPane.showMessageDialog(null, "El campo TELÉFONO no debe contener más de 12 caracteres");
+					this.txtPhoneUser.requestFocus();
+				}
 				validation++;
 			}
 
@@ -323,7 +347,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 							JOptionPane.showMessageDialog(null,
 									"¡¡Error al registrar usuario!! Contacte al Administrador");
 						}
-					} else {
+					} else if (validation == 4) {
 						JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
 					}
 				}
