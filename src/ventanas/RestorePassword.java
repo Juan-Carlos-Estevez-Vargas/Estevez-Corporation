@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,13 +13,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import modelo.DatabaseConnection;
 
 /**
  * Vista para recuperar contraseña.
- * 
+ *
  * @author
  *
  */
@@ -89,29 +93,29 @@ public class RestorePassword extends JFrame implements ActionListener {
 		this.labelNewPassword.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 		this.labelNewPassword.setBounds(20, 50, 250, 20);
 		this.container.add(this.labelNewPassword);
-		
+
 		/**
 		 * Campo de texto de tipo JPasswordField para el nuevo password del usuario en cuestión.
 		 */
 		this.txtnewPasswordField = new JPasswordField();
 		this.txtnewPasswordField.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		this.txtnewPasswordField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtnewPasswordField.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtnewPasswordField.setBounds(20, 70, 250, 30);
 		this.txtnewPasswordField.setBackground(new Color(127, 140, 141));
 		this.txtnewPasswordField.setForeground(Color.WHITE);
 		this.container.add(this.txtnewPasswordField);
-		
+
 		/**
 		 * Campo de texto para el nuevo password del usuario en cuestión.
 		 */
 		this.txtNewPassword = new JTextField();
 		this.txtNewPassword.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		this.txtNewPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtNewPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtNewPassword.setBounds(20, 70, 250, 30);
 		this.txtNewPassword.setBackground(new Color(127, 140, 141));
 		this.txtNewPassword.setForeground(Color.WHITE);
 		this.container.add(this.txtNewPassword);
-		
+
 		/**
 		 * Botón para mostrar u ocultar el texto del campo de texto password.
 		 */
@@ -138,23 +142,23 @@ public class RestorePassword extends JFrame implements ActionListener {
 		 */
 		this.txtConfirmPasswordField = new JPasswordField();
 		this.txtConfirmPasswordField.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		this.txtConfirmPasswordField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtConfirmPasswordField.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtConfirmPasswordField.setBounds(20, 130, 250, 30);
 		this.txtConfirmPasswordField.setBackground(new Color(127, 140, 141));
 		this.txtConfirmPasswordField.setForeground(Color.WHITE);
 		this.container.add(this.txtConfirmPasswordField);
-		
+
 		/**
 		 * Campo de texto para el nuevo password del usuario en cuestión.
 		 */
 		this.txtConfirmPassword = new JTextField();
 		this.txtConfirmPassword.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		this.txtConfirmPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtConfirmPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtConfirmPassword.setBounds(20, 130, 250, 30);
 		this.txtConfirmPassword.setBackground(new Color(127, 140, 141));
 		this.txtConfirmPassword.setForeground(Color.WHITE);
 		this.container.add(this.txtConfirmPassword);
-		
+
 		/**
 		 * Botón para mostrar u ocultar el texto del campo de texto password.
 		 */
@@ -209,12 +213,12 @@ public class RestorePassword extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Los campos no coinciden.");
 			}
 		}
-		
+
 		/**
 		 * Acción para que el usuario pueda visualizar el password digitado.
 		 */
 		if (e.getSource() == this.btnEyeNewPassword) {
-			if (eyeEstateNewPassword == false) {
+			if (!eyeEstateNewPassword) {
 				this.txtNewPassword.setText(txtnewPasswordField.getText());
 				this.txtNewPassword.setVisible(true);
 				this.txtnewPasswordField.setVisible(false);
@@ -226,12 +230,12 @@ public class RestorePassword extends JFrame implements ActionListener {
 				this.eyeEstateNewPassword = false;
 			}
 		}
-		
+
 		/**
 		 * Acción para que el usuario pueda visualizar el password digitado.
 		 */
 		if (e.getSource() == this.btnEyeConfirmPassword) {
-			if (eyeEstateConfirmPassword == false) {
+			if (!eyeEstateConfirmPassword) {
 				this.txtConfirmPassword.setText(txtConfirmPasswordField.getText());
 				this.txtConfirmPassword.setVisible(true);
 				this.txtConfirmPasswordField.setVisible(false);

@@ -4,8 +4,21 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
-import javax.swing.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import modelo.DatabaseConnection;
 import util.ValidateCharacters;
 import util.ValidateNumbers;
@@ -13,7 +26,7 @@ import ventanas.Login;
 
 /**
  * Vista encargada de registrar un nuevo usuario en el sistema.
- * 
+ *
  * @author
  *
  */
@@ -102,7 +115,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtNameUser.setBounds(20, 70, 280, 25);
 		this.txtNameUser.setBackground(new Color(127, 140, 141));
 		this.txtNameUser.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtNameUser.setHorizontalAlignment(JLabel.CENTER);
+		this.txtNameUser.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtNameUser.setForeground(Color.WHITE);
 		this.txtNameUser.requestFocus();
 		this.txtNameUser.addKeyListener(new ValidateCharacters());
@@ -124,7 +137,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtEmailUser.setBounds(20, 130, 280, 25);
 		this.txtEmailUser.setBackground(new Color(127, 140, 141));
 		this.txtEmailUser.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtEmailUser.setHorizontalAlignment(JLabel.CENTER);
+		this.txtEmailUser.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtEmailUser.setForeground(Color.WHITE);
 		this.panelBackUser.add(this.txtEmailUser);
 
@@ -144,7 +157,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtPhoneUser.setBounds(20, 190, 230, 25);
 		this.txtPhoneUser.setBackground(new Color(127, 140, 141));
 		this.txtPhoneUser.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtPhoneUser.setHorizontalAlignment(JLabel.CENTER);
+		this.txtPhoneUser.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtPhoneUser.addKeyListener(new ValidateNumbers());
 		this.txtPhoneUser.setForeground(Color.WHITE);
 		this.panelBackUser.add(this.txtPhoneUser);
@@ -161,7 +174,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		/**
 		 * ComboBox con los permisos existentes en la aplicación.
 		 */
-		this.cmbPermissions = new JComboBox<String>();
+		this.cmbPermissions = new JComboBox<>();
 		this.cmbPermissions.addItem("Administrador");
 		this.cmbPermissions.addItem("Técnico");
 		this.cmbPermissions.addItem("Capturista");
@@ -187,7 +200,7 @@ public class RegisterUser extends JFrame implements ActionListener {
 		this.txtUsername.setBounds(320, 70, 230, 25);
 		this.txtUsername.setBackground(new Color(127, 140, 141));
 		this.txtUsername.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtUsername.setHorizontalAlignment(JLabel.CENTER);
+		this.txtUsername.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtUsername.setForeground(Color.WHITE);
 		this.panelBackUser.add(this.txtUsername);
 

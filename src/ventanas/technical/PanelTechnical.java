@@ -6,21 +6,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import modelo.DatabaseConnection;
 import ventanas.Login;
 import ventanas.RestorePassword;
 
 /**
  * Panel principal del tipo de usuario Técnico.
- * 
+ *
  * @author
  *
  */
@@ -176,7 +180,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		this.btnLogout.setFont(new Font("serif", Font.BOLD, 14));
 		this.btnLogout.setBackground(new Color(8, 85, 224));
 		this.btnLogout.setForeground(Color.WHITE);
-		this.btnLogout.setHorizontalAlignment(JButton.CENTER);
+		this.btnLogout.setHorizontalAlignment(SwingConstants.CENTER);
 		this.btnLogout.addActionListener(this);
 		this.panelBack.add(this.btnLogout);
 

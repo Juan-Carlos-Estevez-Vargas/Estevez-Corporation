@@ -1,13 +1,26 @@
 package ventanas;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import modelo.DatabaseConnection;
 import ventanas.administrator.AdministratorPanel;
 import ventanas.employee.EmployeePanel;
@@ -16,7 +29,7 @@ import ventanas.technical.PanelTechnical;
 /**
  * Inicio de sesión del aplicativo.
  *
- * @author 
+ * @author
  */
 public final class Login extends JFrame implements ActionListener {
 
@@ -87,7 +100,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.jlLogo = new JLabel();
 		this.jlLogo.setBounds(70, 40, 200, 170);
 		this.jlLogo.setIcon(new ImageIcon("src/img/logo.png"));
-		this.jlLogo.setHorizontalAlignment(JLabel.CENTER);
+		this.jlLogo.setHorizontalAlignment(SwingConstants.CENTER);
 		this.container.add(this.jlLogo);
 
 		/**
@@ -97,7 +110,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.jlUser.setBounds(45, 250, 210, 30);
 		this.jlUser.setForeground(new Color(192, 192, 192));
 		this.jlUser.setFont(new Font("serif", Font.BOLD, 20));
-		this.jlUser.setHorizontalAlignment(JLabel.LEFT);
+		this.jlUser.setHorizontalAlignment(SwingConstants.LEFT);
 		this.container.add(this.jlUser);
 
 		/**
@@ -107,7 +120,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.txtUser.setBounds(45, 285, 250, 30);
 		this.txtUser.setBackground(new Color(127, 140, 141));
 		this.txtUser.setFont(new Font("serif", Font.BOLD, 22));
-		this.txtUser.setHorizontalAlignment(JLabel.CENTER);
+		this.txtUser.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtUser.setForeground(Color.WHITE);
 		this.txtUser.requestFocus();
 		this.container.add(this.txtUser);
@@ -119,7 +132,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.jlPassword.setBounds(45, 320, 210, 30);
 		this.jlPassword.setForeground(new Color(192, 192, 192));
 		this.jlPassword.setFont(new Font("serif", Font.BOLD, 20));
-		this.jlPassword.setHorizontalAlignment(JLabel.LEFT);
+		this.jlPassword.setHorizontalAlignment(SwingConstants.LEFT);
 		this.container.add(this.jlPassword);
 
 		/**
@@ -166,7 +179,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.jlError.setBounds(45, 390, 250, 25);
 		this.jlError.setForeground(new Color(192, 192, 192));
 		this.jlError.setFont(new Font("serif", Font.BOLD, 14));
-		this.jlError.setHorizontalAlignment(JLabel.CENTER);
+		this.jlError.setHorizontalAlignment(SwingConstants.CENTER);
 		this.container.add(this.jlError);
 
 		/**
@@ -177,7 +190,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.btnLogin.setFont(new Font("serif", Font.BOLD, 22));
 		this.btnLogin.setBackground(new Color(8, 85, 224));
 		this.btnLogin.setForeground(Color.WHITE);
-		this.btnLogin.setHorizontalAlignment(JButton.CENTER);
+		this.btnLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		this.btnLogin.addActionListener(this);
 		this.container.add(this.btnLogin);
 
@@ -196,7 +209,7 @@ public final class Login extends JFrame implements ActionListener {
 		this.btnForgot.setBounds(45, 515, 250, 35);
 		this.btnForgot.setForeground(new Color(192, 192, 192));
 		this.btnForgot.setFont(new Font("serif", Font.BOLD, 18));
-		this.btnForgot.setHorizontalAlignment(JLabel.CENTER);
+		this.btnForgot.setHorizontalAlignment(SwingConstants.CENTER);
 		this.btnForgot.setBorder(null);
 		this.btnForgot.setBackground(new Color(46, 59, 104));
 		this.btnForgot.setOpaque(true);
@@ -286,7 +299,7 @@ public final class Login extends JFrame implements ActionListener {
 		 * Acción para que el usuario pueda visualizar el password digitado.
 		 */
 		if (e.getSource() == this.btnEye) {
-			if (eyeEstate == false) {
+			if (!eyeEstate) {
 				this.txtPassword2.setText(txtPassword.getText());
 				this.txtPassword2.setVisible(true);
 				this.txtPassword.setVisible(false);

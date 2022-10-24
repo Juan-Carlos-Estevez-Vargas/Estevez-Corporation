@@ -5,19 +5,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import modelo.DatabaseConnection;
 
 /**
  * Vista para recuperar contraseña por si el usuario olvidó la misma.
- * 
+ *
  * @author
  *
  */
@@ -85,7 +89,7 @@ public class ForgotPassword extends JFrame implements ActionListener {
 		 */
 		this.txtEmailUser = new JTextField();
 		this.txtEmailUser.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		this.txtEmailUser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtEmailUser.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtEmailUser.setBounds(20, 70, 300, 30);
 		this.txtEmailUser.setBackground(new Color(127, 140, 141));
 		this.txtEmailUser.setForeground(Color.WHITE);

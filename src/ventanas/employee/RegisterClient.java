@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,13 +13,18 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import modelo.DatabaseConnection;
+import util.ValidateCharacters;
+import util.ValidateNumbers;
 import ventanas.Login;
 
 /**
- * 
+ *
  * @author
  *
  */
@@ -104,9 +110,10 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtNameClient.setBounds(20, 70, 230, 25);
 		this.txtNameClient.setBackground(new Color(127, 140, 141));
 		this.txtNameClient.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtNameClient.setHorizontalAlignment(JLabel.CENTER);
+		this.txtNameClient.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtNameClient.setForeground(Color.WHITE);
 		this.txtNameClient.requestFocus();
+		this.txtNameClient.addKeyListener(new ValidateCharacters());
 		this.panelBackClient.add(this.txtNameClient);
 
 		/**
@@ -125,7 +132,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtEmailClient.setBounds(20, 130, 230, 25);
 		this.txtEmailClient.setBackground(new Color(127, 140, 141));
 		this.txtEmailClient.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtEmailClient.setHorizontalAlignment(JLabel.CENTER);
+		this.txtEmailClient.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtEmailClient.setForeground(Color.WHITE);
 		this.panelBackClient.add(this.txtEmailClient);
 
@@ -145,8 +152,9 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtPhoneClient.setBounds(20, 190, 230, 25);
 		this.txtPhoneClient.setBackground(new Color(127, 140, 141));
 		this.txtPhoneClient.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtPhoneClient.setHorizontalAlignment(JLabel.CENTER);
+		this.txtPhoneClient.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtPhoneClient.setForeground(Color.WHITE);
+		this.txtPhoneClient.addKeyListener(new ValidateNumbers());
 		this.panelBackClient.add(this.txtPhoneClient);
 
 		/**
@@ -165,7 +173,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtAdressClient.setBounds(20, 250, 230, 25);
 		this.txtAdressClient.setBackground(new Color(127, 140, 141));
 		this.txtAdressClient.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtAdressClient.setHorizontalAlignment(JLabel.CENTER);
+		this.txtAdressClient.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtAdressClient.setForeground(Color.WHITE);
 		this.panelBackClient.add(this.txtAdressClient);
 
@@ -212,20 +220,36 @@ public class RegisterClient extends JFrame implements ActionListener {
 			/**
 			 * Validacion de los campos
 			 */
-			if (name.equals("")) {
+			if (name.equals("") || name.length() >= 35) {
 				this.txtNameClient.setBackground(Color.red);
+				if (name.length() >= 35) {
+					JOptionPane.showMessageDialog(null, "El campo NOMBRE no debe contener más de 35 caracteres");
+					this.txtNameClient.requestFocus();
+				}
 				validation++;
 			}
-			if (mail.equals("")) {
+			if (mail.equals("") || mail.length() >= 40) {
 				this.txtEmailClient.setBackground(Color.red);
+				if (mail.length() >= 40) {
+					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 40 caracteres");
+					this.txtEmailClient.requestFocus();
+				}
 				validation++;
 			}
-			if (phone.equals("")) {
+			if (phone.equals("") || phone.length() >= 12) {
 				this.txtPhoneClient.setBackground(Color.red);
+				if (phone.length() >= 12) {
+					JOptionPane.showMessageDialog(null, "El campo TELÉFONO no debe contener más de 12 caracteres");
+					this.txtPhoneClient.requestFocus();
+				}
 				validation++;
 			}
-			if (adress.equals("")) {
+			if (adress.equals("") || adress.length() >= 60) {
 				this.txtAdressClient.setBackground(Color.red);
+				if (adress.length() >= 60) {
+					JOptionPane.showMessageDialog(null, "El campo DIRECCIÓN no debe contener más de 60 caracteres");
+					this.txtAdressClient.requestFocus();
+				}
 				validation++;
 			}
 
@@ -260,7 +284,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 					System.err.println("Error en registrar Cliente " + ex);
 					JOptionPane.showMessageDialog(null, "¡¡Error al registrar cliente, contacte al Administrador!!");
 				}
-			} else {
+			} else if(validation == 4){
 				JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
 			}
 		}

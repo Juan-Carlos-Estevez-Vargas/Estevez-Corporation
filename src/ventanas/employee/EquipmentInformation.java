@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,15 +17,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
  * Frame con la información del equipo asociado a un cliente específico.
- * 
- * @author 
+ *
+ * @author
  *
  */
 public class EquipmentInformation extends JFrame implements ActionListener {
@@ -251,7 +255,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.txtName.setBounds(10, 80, 230, 30);
 		this.txtName.setBackground(new Color(127, 140, 141));
 		this.txtName.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtName.setHorizontalAlignment(JLabel.CENTER);
+		this.txtName.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtName.setForeground(Color.WHITE);
 		this.txtName.setEditable(false);
 		this.container.add(this.txtName);
@@ -263,7 +267,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.txtModel.setBounds(10, 260, 230, 30);
 		this.txtModel.setBackground(new Color(127, 140, 141));
 		this.txtModel.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtModel.setHorizontalAlignment(JLabel.CENTER);
+		this.txtModel.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtModel.setForeground(Color.WHITE);
 		this.container.add(this.txtModel);
 
@@ -275,7 +279,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.txtSerialNumber.setBounds(10, 320, 230, 30);
 		this.txtSerialNumber.setBackground(new Color(127, 140, 141));
 		this.txtSerialNumber.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtSerialNumber.setHorizontalAlignment(JLabel.CENTER);
+		this.txtSerialNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtSerialNumber.setForeground(Color.WHITE);
 		this.container.add(this.txtSerialNumber);
 
@@ -283,18 +287,19 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		 * Campo de texto con la información de la fecha de ingreso del equipo.
 		 */
 		this.txtDateOfAdmission = new JTextField();
-		this.txtDateOfAdmission.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtDateOfAdmission.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtDateOfAdmission.setBounds(260, 80, 180, 30);
 		this.txtDateOfAdmission.setBackground(new Color(127, 140, 141));
 		this.txtDateOfAdmission.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtDateOfAdmission.setForeground(Color.WHITE);
+		this.txtDateOfAdmission.setEnabled(false);
 		this.container.add(this.txtDateOfAdmission);
 
 		/**
 		 * Campo de texto con la información de quién modificó por última vez el equipo.
 		 */
 		this.txtModifyBy = new JTextField();
-		this.txtModifyBy.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtModifyBy.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtModifyBy.setEnabled(false);
 		this.txtModifyBy.setBounds(10, 380, 230, 30);
 		this.txtModifyBy.setBackground(new Color(127, 140, 141));
@@ -305,7 +310,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		/**
 		 * ComboBox con el estado de equipo.
 		 */
-		this.cmbStatus = new JComboBox<String>();
+		this.cmbStatus = new JComboBox<>();
 		this.cmbStatus.setBounds(460, 80, 120, 30);
 		this.cmbStatus.setBackground(new Color(127, 140, 141));
 		this.cmbStatus.setFont(new Font("serif", Font.BOLD, 14));
@@ -317,7 +322,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		/**
 		 * ComboBox con el tipo de equipo.
 		 */
-		this.cmbTypeEquip = new JComboBox<String>();
+		this.cmbTypeEquip = new JComboBox<>();
 		this.cmbTypeEquip.setBounds(10, 140, 170, 30);
 		this.cmbTypeEquip.setBackground(new Color(127, 140, 141));
 		this.cmbTypeEquip.setFont(new Font("serif", Font.BOLD, 14));
@@ -329,7 +334,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		/**
 		 * ComboBox con la marca del equipo.
 		 */
-		this.cmbMark = new JComboBox<String>();
+		this.cmbMark = new JComboBox<>();
 		this.cmbMark.setBounds(10, 200, 170, 30);
 		this.cmbMark.setBackground(new Color(127, 140, 141));
 		this.cmbMark.setFont(new Font("serif", Font.BOLD, 14));
@@ -369,7 +374,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.btnUpdateEquipment.setFont(new Font("serif", Font.BOLD, 20));
 		this.btnUpdateEquipment.setBackground(new Color(8, 85, 224));
 		this.btnUpdateEquipment.setForeground(Color.WHITE);
-		this.btnUpdateEquipment.setHorizontalAlignment(JButton.CENTER);
+		this.btnUpdateEquipment.setHorizontalAlignment(SwingConstants.CENTER);
 		this.btnUpdateEquipment.addActionListener(this);
 		this.container.add(this.btnUpdateEquipment);
 

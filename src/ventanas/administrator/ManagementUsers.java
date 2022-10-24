@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,13 +16,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
  * Vista con el listado de los usuario registrados en el sistema.
- * 
- * @author 
+ *
+ * @author
  *
  */
 public class ManagementUsers extends JFrame {
