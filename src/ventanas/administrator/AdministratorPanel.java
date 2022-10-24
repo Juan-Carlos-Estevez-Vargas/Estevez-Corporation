@@ -71,7 +71,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 
 			if (rs.next()) {
 				nameUser = rs.getString("nombre_usuario");
-				this.labelTittle.setText("Bienvenido " + nameUser);
+				this.labelTittle.setText(nameUser);
 			}
 		} catch (Exception e) {
 			System.err.println("Error en conexión desde la interfaz Administrador");
