@@ -5,9 +5,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.swing.*;
 import modelo.DatabaseConnection;
 import util.ValidateCharacters;

@@ -16,12 +16,14 @@ import javax.swing.JTextField;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import modelo.DatabaseConnection;
+import util.ValidateCharacters;
+import util.ValidateNumbers;
 import ventanas.Login;
 
 /**
  * Vista con la información de un usuario.
  * 
- * @author 
+ * @author
  *
  */
 public class UserInformation extends JFrame implements ActionListener {
@@ -187,6 +189,8 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.txtName.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtName.setHorizontalAlignment(JLabel.CENTER);
 		this.txtName.setForeground(Color.WHITE);
+		this.txtName.requestFocus();
+		this.txtName.addKeyListener(new ValidateCharacters());
 		this.container.add(this.txtName);
 
 		/**
@@ -211,6 +215,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.txtPhone.setFont(new Font("serif", Font.BOLD, 20));
 		this.txtPhone.setHorizontalAlignment(JLabel.CENTER);
 		this.txtPhone.setForeground(Color.WHITE);
+		this.txtPhone.addKeyListener(new ValidateNumbers());
 		this.container.add(this.txtPhone);
 
 		/**
@@ -295,22 +300,39 @@ public class UserInformation extends JFrame implements ActionListener {
 			cmbStatus = this.cmbStatus.getSelectedIndex() + 1;
 
 			/**
-			 * Validamos que ningun campo este vacio.
+			 * Validacion de campos para que no queden vacios y no se pasen del rango de
+			 * caracyeres permitido.
 			 */
-			if (email.equals("")) {
+			if (email.equals("") || email.length() >= 40) {
 				this.txtEmail.setBackground(Color.red);
+				if (email.length() >= 40) {
+					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 40 caracteres");
+					this.txtEmail.requestFocus();
+				}
 				validation++;
 			}
-			if (username.equals("")) {
+			if (username.equals("") || username.length() >= 30) {
 				this.txtUsername.setBackground(Color.red);
+				if (username.length() >= 30) {
+					JOptionPane.showMessageDialog(null, "El campo USERNAME no debe contener más de 30 caracteres");
+					this.txtUsername.requestFocus();
+				}
 				validation++;
 			}
-			if (name.equals("")) {
+			if (name.equals("") || name.length() >= 35) {
 				this.txtName.setBackground(Color.red);
+				if (name.length() >= 35) {
+					JOptionPane.showMessageDialog(null, "El campo NOMBRE no debe contener más de 35 caracteres");
+					this.txtName.requestFocus();
+				}
 				validation++;
 			}
-			if (phone.equals("")) {
+			if (phone.equals("") || phone.length() >= 12) {
 				this.txtPhone.setBackground(Color.red);
+				if (phone.length() >= 12) {
+					JOptionPane.showMessageDialog(null, "El campo TELÉFONO no debe contener más de 12 caracteres");
+					this.txtPhone.requestFocus();
+				}
 				validation++;
 			}
 
@@ -369,8 +391,8 @@ public class UserInformation extends JFrame implements ActionListener {
 				} catch (SQLException ex) {
 					System.err.println("Error al actualizar " + ex);
 				}
-			} else {
-				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+			} else if (validation == 4) {
+				JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
 			}
 		}
 
