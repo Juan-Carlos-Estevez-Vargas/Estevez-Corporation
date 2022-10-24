@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -13,8 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import modelo.DatabaseConnection;
 import util.ValidateCharacters;
 import util.ValidateNumbers;
@@ -22,7 +26,7 @@ import ventanas.Login;
 
 /**
  * Vista con la información de un usuario.
- * 
+ *
  * @author
  *
  */
@@ -187,7 +191,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.txtName.setBounds(20, 70, 280, 30);
 		this.txtName.setBackground(new Color(127, 140, 141));
 		this.txtName.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtName.setHorizontalAlignment(JLabel.CENTER);
+		this.txtName.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtName.setForeground(Color.WHITE);
 		this.txtName.requestFocus();
 		this.txtName.addKeyListener(new ValidateCharacters());
@@ -200,7 +204,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.txtEmail.setBounds(20, 130, 280, 30);
 		this.txtEmail.setBackground(new Color(127, 140, 141));
 		this.txtEmail.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtEmail.setHorizontalAlignment(JLabel.CENTER);
+		this.txtEmail.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtEmail.setForeground(Color.WHITE);
 		this.container.add(this.txtEmail);
 
@@ -213,7 +217,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.txtPhone.setBounds(20, 190, 230, 30);
 		this.txtPhone.setBackground(new Color(127, 140, 141));
 		this.txtPhone.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtPhone.setHorizontalAlignment(JLabel.CENTER);
+		this.txtPhone.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtPhone.setForeground(Color.WHITE);
 		this.txtPhone.addKeyListener(new ValidateNumbers());
 		this.container.add(this.txtPhone);
@@ -222,7 +226,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		 * Campo de texto con la información del username del usuario a actualizar.
 		 */
 		this.txtUsername = new JTextField();
-		this.txtUsername.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtUsername.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtUsername.setBounds(360, 70, 230, 30);
 		this.txtUsername.setBackground(new Color(127, 140, 141));
 		this.txtUsername.setFont(new Font("serif", Font.BOLD, 20));
@@ -233,7 +237,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		 * Campo de texto con la información de quién registró el usuario a actualizar.
 		 */
 		this.txtRegisterBy = new JTextField();
-		this.txtRegisterBy.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtRegisterBy.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtRegisterBy.setEnabled(false);
 		this.txtRegisterBy.setBounds(360, 190, 230, 30);
 		this.txtRegisterBy.setBackground(new Color(127, 140, 141));
@@ -244,7 +248,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		/**
 		 * ComboBox con la información del Status del usuario a actualizar.
 		 */
-		this.cmbStatus = new JComboBox<String>();
+		this.cmbStatus = new JComboBox<>();
 		this.cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
 		this.cmbStatus.setBounds(360, 130, 170, 30);
 		this.cmbStatus.setBackground(new Color(127, 140, 141));
@@ -255,7 +259,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		/**
 		 * ComboBox con la información del nivel del usuario a actualizar.
 		 */
-		this.cmbLevels = new JComboBox<String>();
+		this.cmbLevels = new JComboBox<>();
 		this.cmbLevels.setModel(
 				new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Capturista", "Tecnico" }));
 		this.cmbLevels.setBounds(20, 250, 170, 30);
@@ -272,7 +276,7 @@ public class UserInformation extends JFrame implements ActionListener {
 		this.btnUpdate.setFont(new Font("serif", Font.BOLD, 20));
 		this.btnUpdate.setBackground(new Color(8, 85, 224));
 		this.btnUpdate.setForeground(Color.WHITE);
-		this.btnUpdate.setHorizontalAlignment(JButton.CENTER);
+		this.btnUpdate.setHorizontalAlignment(SwingConstants.CENTER);
 		this.btnUpdate.addActionListener(this);
 		this.container.add(this.btnUpdate);
 

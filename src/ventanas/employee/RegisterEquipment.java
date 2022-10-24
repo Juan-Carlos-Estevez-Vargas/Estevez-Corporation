@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,15 +18,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
  * Frame encargado de registrar un equipo asociado a un cliente específico.
- * 
- * @author 
+ *
+ * @author
  *
  */
 public class RegisterEquipment extends JFrame implements ActionListener {
@@ -134,7 +138,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.txtNameClient.setBounds(10, 80, 230, 25);
 		this.txtNameClient.setBackground(new Color(127, 140, 141));
 		this.txtNameClient.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtNameClient.setHorizontalAlignment(JLabel.CENTER);
+		this.txtNameClient.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtNameClient.setForeground(Color.WHITE);
 		this.txtNameClient.setEnabled(false);
 		this.panelBackClient.add(this.txtNameClient);
@@ -151,7 +155,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		/**
 		 * ComboBox con el tipo de equipo.
 		 */
-		this.cmbTypeEquip = new JComboBox<String>();
+		this.cmbTypeEquip = new JComboBox<>();
 		this.cmbTypeEquip.setBounds(10, 140, 170, 30);
 		this.cmbTypeEquip.setBackground(new Color(127, 140, 141));
 		this.cmbTypeEquip.setFont(new Font("serif", Font.BOLD, 14));
@@ -172,7 +176,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		/**
 		 * ComboBox con las marcas disponibles.
 		 */
-		this.cmbMark = new JComboBox<String>();
+		this.cmbMark = new JComboBox<>();
 		this.cmbMark.setBounds(10, 200, 170, 30);
 		this.cmbMark.setBackground(new Color(127, 140, 141));
 		this.cmbMark.setFont(new Font("serif", Font.BOLD, 14));
@@ -197,7 +201,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.txtModel.setBounds(10, 260, 230, 25);
 		this.txtModel.setBackground(new Color(127, 140, 141));
 		this.txtModel.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtModel.setHorizontalAlignment(JLabel.CENTER);
+		this.txtModel.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtModel.setForeground(Color.WHITE);
 		this.panelBackClient.add(this.txtModel);
 
@@ -217,7 +221,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.txtSerialNumber.setBounds(10, 320, 230, 25);
 		this.txtSerialNumber.setBackground(new Color(127, 140, 141));
 		this.txtSerialNumber.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtSerialNumber.setHorizontalAlignment(JLabel.CENTER);
+		this.txtSerialNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtSerialNumber.setForeground(Color.WHITE);
 		this.panelBackClient.add(this.txtSerialNumber);
 
@@ -249,7 +253,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.btnRegisterEquip.setFont(new Font("serif", Font.BOLD, 20));
 		this.btnRegisterEquip.setBackground(new Color(8, 85, 224));
 		this.btnRegisterEquip.setForeground(Color.WHITE);
-		this.btnRegisterEquip.setHorizontalAlignment(JButton.CENTER);
+		this.btnRegisterEquip.setHorizontalAlignment(SwingConstants.CENTER);
 		this.btnRegisterEquip.addActionListener(this);
 		this.panelBackClient.add(this.btnRegisterEquip);
 
@@ -275,7 +279,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 			Calendar calendar = Calendar.getInstance();
 
 			day = Integer.toString(calendar.get(Calendar.DATE)); // Recuperamos el dia de ingreso del equipo
-			month = Integer.toString(calendar.get(Calendar.MONTH)); // Recuperamos el mes de ingreso del equipo
+			month = Integer.toString(calendar.get(Calendar.MONTH) + 1); // Recuperamos el mes de ingreso del equipo
 			year = Integer.toString(calendar.get(Calendar.YEAR)); // Recuperamos el año de ingreso del equipo
 
 			/**

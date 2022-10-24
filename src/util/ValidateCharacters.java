@@ -6,12 +6,13 @@ import java.awt.event.KeyEvent;
 /**
  * Se encarga de validar que no se ingresen caracteres al campo de texto, y que
  * la longitud no supere cierto tamaño.
- * 
+ *
  * @author Juan Carlos Estevez Vargas.
  *
  */
 public class ValidateCharacters extends KeyAdapter {
-	
+
+	@Override
 	public void keyTyped(KeyEvent ev) {
 		int key = ev.getKeyChar();
 		boolean mayusculas = key >= 65 && key <= 90;

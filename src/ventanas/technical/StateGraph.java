@@ -5,17 +5,20 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
  * Reporte del estado de los equipos.
- * 
- * @author 
+ *
+ * @author
  *
  */
 public class StateGraph extends JFrame {
@@ -116,7 +119,7 @@ public class StateGraph extends JFrame {
 
 		g.setColor(new Color(46, 59, 104));
 		g.fillRect(0, 0, 515, 360);
-		
+
 		/**
 		 * Pintando la gráfica de barras.
 		 */
@@ -144,7 +147,7 @@ public class StateGraph extends JFrame {
 		g.fillRect(100, 300, longDelivered, 40);
 		g.drawString("Entregado", 10, 318);
 		g.drawString("Cantidad " + delivered, 10, 333);
-		
+
 		g.setColor(Color.white);
 		g.setFont(new Font("arial", Font.BOLD, 20));
 		g.drawString("Gráfica de estado del equipo", 150, 68);

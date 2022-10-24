@@ -4,7 +4,7 @@ import ventanas.Login;
 
 /**
  *
- * @author 
+ * @author
  */
 public class Main {
 

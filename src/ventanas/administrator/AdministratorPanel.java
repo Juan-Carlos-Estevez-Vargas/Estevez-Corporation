@@ -9,23 +9,33 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
  * Vista principal del administrador.
- * 
+ *
  * @author
  *
  */
@@ -178,7 +188,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.btnLogout.setFont(new Font("serif", Font.BOLD, 14));
 		this.btnLogout.setBackground(new Color(8, 85, 224));
 		this.btnLogout.setForeground(Color.WHITE);
-		this.btnLogout.setHorizontalAlignment(JButton.CENTER);
+		this.btnLogout.setHorizontalAlignment(SwingConstants.CENTER);
 		this.btnLogout.addActionListener(this);
 		this.btnLogout.setFocusable(false);
 		this.panelBack.add(this.btnLogout);
@@ -226,7 +236,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		 */
 		if (e.getSource() == this.btnPrintUsers) {
 			Document document = new Document();
-			
+
 			try {
 
 				JFileChooser fc = new JFileChooser();
@@ -244,10 +254,10 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 
 					com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF2.jpg");
 					header.scaleToFit(650, 1000);
-					header.setAlignment(Chunk.ALIGN_CENTER);
+					header.setAlignment(Element.ALIGN_CENTER);
 
 					Paragraph paragraph = new Paragraph();
-					paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+					paragraph.setAlignment(Element.ALIGN_CENTER);
 					paragraph.add("Lista de Usuarios\n\n");
 					paragraph.setFont(FontFactory.getFont("Tahoma", 18, Font.BOLD, BaseColor.DARK_GRAY));
 

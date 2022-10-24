@@ -5,17 +5,20 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import modelo.DatabaseConnection;
 import ventanas.Login;
 
 /**
  * Gráfica de torta con la cantidad de equipos registrados en el sistema.
- * 
- * @author 
+ *
+ * @author
  *
  */
 public class MarkGraph extends JFrame{
@@ -28,7 +31,7 @@ public class MarkGraph extends JFrame{
     private int hp, lenovo, dell, acer, apple, toshiba, brother, samsung, asus, alienware, xerox;
     private String[] vectorNameMarks = new String[11];
     private String user;
-   
+
     /**
      * Constructor de clase.
      */
@@ -85,7 +88,7 @@ public class MarkGraph extends JFrame{
             JOptionPane.showMessageDialog(null, "Error al consultar datos. Contacte al Administrador.");
         }
     }
-    
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -106,7 +109,7 @@ public class MarkGraph extends JFrame{
 
         g.setColor(new Color(46, 59, 104));
         g.fillRect(0, 0, 550, 460);
-        
+
         /**
          * Marca acer Morado
          */
@@ -194,7 +197,7 @@ public class MarkGraph extends JFrame{
         g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell + degreesHp + degreesLenovo + degreesSamsung + degreesToshiba, degreesXerox);
         g.fillRect(430, 180, 20, 20);
         g.drawString(xerox + " de Xerox", 460, 195);
-        
+
         g.setColor(Color.white);
 		g.setFont(new Font("arial", Font.BOLD, 20));
 		g.drawString("Gráfica de marcas registradas", 150, 68);

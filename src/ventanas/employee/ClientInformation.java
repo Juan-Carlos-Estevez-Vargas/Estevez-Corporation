@@ -22,24 +22,28 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import modelo.DatabaseConnection;
+import util.ValidateCharacters;
+import util.ValidateNumbers;
 import ventanas.Login;
 
 /**
  * Vista con le información de un cliente previamente seleccionado.
- * 
+ *
  * @author
  *
  */
@@ -241,8 +245,9 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.txtName.setBounds(20, 70, 230, 30);
 		this.txtName.setBackground(new Color(127, 140, 141));
 		this.txtName.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtName.setHorizontalAlignment(JLabel.CENTER);
+		this.txtName.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtName.setForeground(Color.WHITE);
+		this.txtName.addKeyListener(new ValidateCharacters());
 		this.container.add(this.txtName);
 
 		/**
@@ -252,7 +257,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.txtEmail.setBounds(20, 130, 230, 30);
 		this.txtEmail.setBackground(new Color(127, 140, 141));
 		this.txtEmail.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtEmail.setHorizontalAlignment(JLabel.CENTER);
+		this.txtEmail.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtEmail.setForeground(Color.WHITE);
 		this.container.add(this.txtEmail);
 
@@ -265,15 +270,16 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.txtPhone.setBounds(20, 190, 230, 30);
 		this.txtPhone.setBackground(new Color(127, 140, 141));
 		this.txtPhone.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtPhone.setHorizontalAlignment(JLabel.CENTER);
+		this.txtPhone.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtPhone.setForeground(Color.WHITE);
+		this.txtPhone.addKeyListener(new ValidateNumbers());
 		this.container.add(this.txtPhone);
 
 		/**
 		 * Campo de texto con la información de la dirección del cliente.
 		 */
 		this.txtAdress = new JTextField();
-		this.txtAdress.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtAdress.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtAdress.setBounds(20, 250, 230, 30);
 		this.txtAdress.setBackground(new Color(127, 140, 141));
 		this.txtAdress.setFont(new Font("serif", Font.BOLD, 20));
@@ -284,7 +290,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		 * Campo de texto con la información de quién modificó el cliente.
 		 */
 		this.txtModifyBy = new JTextField();
-		this.txtModifyBy.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		this.txtModifyBy.setHorizontalAlignment(SwingConstants.CENTER);
 		this.txtModifyBy.setEnabled(false);
 		this.txtModifyBy.setBounds(20, 310, 230, 30);
 		this.txtModifyBy.setBackground(new Color(127, 140, 141));
@@ -300,7 +306,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.btnRegisterEquipment.setFont(new Font("serif", Font.BOLD, 20));
 		this.btnRegisterEquipment.setBackground(new Color(8, 85, 224));
 		this.btnRegisterEquipment.setForeground(Color.WHITE);
-		this.btnRegisterEquipment.setHorizontalAlignment(JButton.CENTER);
+		this.btnRegisterEquipment.setHorizontalAlignment(SwingConstants.CENTER);
 		this.btnRegisterEquipment.addActionListener(this);
 		this.container.add(this.btnRegisterEquipment);
 
@@ -312,7 +318,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 		this.btnUpdateClient.setFont(new Font("serif", Font.BOLD, 20));
 		this.btnUpdateClient.setBackground(new Color(8, 85, 224));
 		this.btnUpdateClient.setForeground(Color.WHITE);
-		this.btnUpdateClient.setHorizontalAlignment(JButton.CENTER);
+		this.btnUpdateClient.setHorizontalAlignment(SwingConstants.CENTER);
 		this.btnUpdateClient.addActionListener(this);
 		this.container.add(this.btnUpdateClient);
 
@@ -344,7 +350,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		/**
-		 * Registro del nuevo cliente en la base de datos.
+		 * Registro del nuevo equipo del cliente en la base de datos.
 		 */
 		if (e.getSource() == this.btnRegisterEquipment) {
 			RegisterEquipment RegisterEquipment = new RegisterEquipment();
@@ -366,20 +372,36 @@ public class ClientInformation extends JFrame implements ActionListener {
 			/*
 			 * Validación de campos vacios
 			 */
-			if (name.equals("")) {
-				this.txtName.setBackground(Color.red);
-				validation++;
-			}
-			if (mail.equals("")) {
+			if (mail.equals("") || mail.length() >= 40) {
 				this.txtEmail.setBackground(Color.red);
+				if (mail.length() >= 40) {
+					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 40 caracteres");
+					this.txtEmail.requestFocus();
+				}
 				validation++;
 			}
-			if (phone.equals("")) {
+			if (name.equals("") || name.length() >= 35) {
+				this.txtName.setBackground(Color.red);
+				if (name.length() >= 35) {
+					JOptionPane.showMessageDialog(null, "El campo NOMBRE no debe contener más de 35 caracteres");
+					this.txtName.requestFocus();
+				}
+				validation++;
+			}
+			if (phone.equals("") || phone.length() >= 12) {
 				this.txtPhone.setBackground(Color.red);
+				if (phone.length() >= 12) {
+					JOptionPane.showMessageDialog(null, "El campo TELÉFONO no debe contener más de 12 caracteres");
+					this.txtPhone.requestFocus();
+				}
 				validation++;
 			}
-			if (adress.equals("")) {
+			if (adress.equals("") || adress.length() >= 60) {
 				this.txtAdress.setBackground(Color.red);
+				if (adress.length() >= 60) {
+					JOptionPane.showMessageDialog(null, "El campo DIRECCIÓN no debe contener más de 60 caracteres");
+					this.txtAdress.requestFocus();
+				}
 				validation++;
 			}
 
@@ -412,7 +434,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 					System.err.println("Error en actualizar cliente " + ex);
 					JOptionPane.showMessageDialog(null, "¡¡Error al actualizar cliente!! Contacta al Administrador");
 				}
-			} else {
+			} else if (validation == 4){
 				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
 			}
 		}
@@ -426,7 +448,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 			 * Creamos el documento pdf.
 			 */
 			Document document = new Document();
-			
+
 			try {
 				JFileChooser fc = new JFileChooser();
 				// Mostrar la ventana para abrir archivo y recoger la respuesta
@@ -447,10 +469,10 @@ public class ClientInformation extends JFrame implements ActionListener {
 					 */
 					com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/img/BannerPDF2.jpg");
 					header.scaleToFit(650, 1000); // Dimensiones de la imagen
-					header.setAlignment(Chunk.ALIGN_CENTER); // Alineacion de la imagen
+					header.setAlignment(Element.ALIGN_CENTER); // Alineacion de la imagen
 
 					Paragraph paragraph = new Paragraph(); // Creamos un parrafo
-					paragraph.setAlignment(Paragraph.ALIGN_CENTER); // Alineación del parrafo
+					paragraph.setAlignment(Element.ALIGN_CENTER); // Alineación del parrafo
 					paragraph.add("Información del cliente.\n \n"); // Agregamos el título
 					paragraph.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
 
@@ -492,7 +514,7 @@ public class ClientInformation extends JFrame implements ActionListener {
 						 * Creación de un nuevo parrafo
 						 */
 						Paragraph paragraph2 = new Paragraph();
-						paragraph2.setAlignment(Paragraph.ALIGN_CENTER);
+						paragraph2.setAlignment(Element.ALIGN_CENTER);
 						paragraph2.add("\n\nEquipos registrados.\n\n");
 						paragraph2.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
 

@@ -8,7 +8,7 @@ public class DatabaseConnection {
 
 	/**
 	 * Conexion con base de datos local
-	 * 
+	 *
 	 * @return
 	 */
 	public static Connection conectar() {
