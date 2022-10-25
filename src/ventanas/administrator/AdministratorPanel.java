@@ -32,6 +32,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import modelo.DatabaseConnection;
 import ventanas.Login;
+import ventanas.RestorePassword;
 
 /**
  * Vista principal del administrador.
@@ -53,6 +54,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 	private JButton btnRegisterUser;
 	private JButton btnManageUser;
 	private JButton btnPrintUsers;
+	private JButton btnRestorePass;
 	private JButton btnLogout;
 	private String user;
 	private String nameUser;
@@ -179,6 +181,19 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.labelPrintUsers.setFont(new Font("serif", Font.BOLD, 14));
 		this.labelPrintUsers.setFocusable(false);
 		this.panelBack.add(this.labelPrintUsers);
+		
+		/**
+		 * Botón Restaurar Contraseña.
+		 */
+		this.btnRestorePass = new JButton();
+		this.btnRestorePass.setBounds(430, 20, 40, 30);
+		this.btnRestorePass.setIcon(new ImageIcon("src/img/padlock.png"));
+		this.btnRestorePass.setBorder(null);
+		this.btnRestorePass.setBackground(new Color(46, 59, 104));
+		this.btnRestorePass.setOpaque(true);
+		this.btnRestorePass.addActionListener(this);
+		this.btnRestorePass.setFocusable(false);
+		this.panelBack.add(this.btnRestorePass);
 
 		/**
 		 * Botón Cerrar Sesión.
@@ -203,6 +218,16 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		 */
 		RegisterUser registerUser;
 		ManagementUsers managementUsers;
+		RestorePassword restorePassword;
+		
+		/**
+		 * Muestra el panel para registrar un usuario si se seleccionó dicha acción.
+		 */
+		if (e.getSource() == this.btnRestorePass) {
+			restorePassword = new RestorePassword();
+			restorePassword.setVisible(true);
+			this.dispose();
+		}
 
 		/**
 		 * Muestra el panel para registrar un usuario si se seleccionó dicha acción.
