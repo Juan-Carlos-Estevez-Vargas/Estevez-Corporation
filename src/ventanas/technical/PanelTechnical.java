@@ -19,6 +19,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import modelo.DatabaseConnection;
 import ventanas.Login;
+import ventanas.RestorePassword;
 
 /**
  * Panel principal del tipo de usuario Técnico.
@@ -40,6 +41,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 	private JButton btnManagementEquips;
 	private JButton btnBrandChart;
 	private JButton btnStateGraph;
+	private JButton btnRestorePass;
 	private JButton btnLogout;
 	private String user;
 	private String nameUser;
@@ -108,6 +110,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		this.btnManagementEquips.setBorder(null);
 		this.btnManagementEquips.setBackground(new Color(46, 59, 104));
 		this.btnManagementEquips.setOpaque(true);
+		this.btnManagementEquips.setFocusable(false);
 		this.panelBack.add(this.btnManagementEquips);
 
 		/**
@@ -129,6 +132,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		this.btnBrandChart.setBorder(null);
 		this.btnBrandChart.setBackground(new Color(46, 59, 104));
 		this.btnBrandChart.setOpaque(true);
+		this.btnBrandChart.setFocusable(false);
 		this.panelBack.add(this.btnBrandChart);
 
 		/**
@@ -160,7 +164,22 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		this.btnStateGraph.setBorder(null);
 		this.btnStateGraph.setBackground(new Color(46, 59, 104));
 		this.btnStateGraph.setOpaque(true);
+		this.btnStateGraph.setFocusable(false);
 		this.panelBack.add(this.btnStateGraph);
+		
+		/**
+		 * Botón Restaurar Contraseña.
+		 */
+		this.btnRestorePass = new JButton();
+		this.btnRestorePass.setBounds(430, 20, 40, 30);
+		this.btnRestorePass.setIcon(new ImageIcon("src/img/padlock.png"));
+		this.btnRestorePass.setBorder(null);
+		this.btnRestorePass.setBackground(new Color(46, 59, 104));
+		this.btnRestorePass.setOpaque(true);
+		this.btnRestorePass.addActionListener(this);
+		this.btnRestorePass.setFocusable(false);
+		this.btnRestorePass.setFocusable(false);
+		this.panelBack.add(this.btnRestorePass);
 
 		/**
 		 * Botón Cerrar Sesión.
@@ -179,6 +198,15 @@ public class PanelTechnical extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		/**
+		 * Muestra el panel para restaurar la contraseña.
+		 */
+		if (e.getSource() == this.btnRestorePass) {
+			RestorePassword restorePassword = new RestorePassword();
+			restorePassword.setVisible(true);
+			this.dispose();
+		}
 
 		/**
 		 * Redirección al panel con el listado de equipos registrados en el sistema.

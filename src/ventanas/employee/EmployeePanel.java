@@ -32,6 +32,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import modelo.DatabaseConnection;
 import ventanas.Login;
+import ventanas.RestorePassword;
 
 /**
  * Frame principal del empleado (Vendedor, Capturista).
@@ -53,6 +54,7 @@ public class EmployeePanel extends JFrame implements ActionListener {
 	private JButton btnRegisterClient;
 	private JButton btnManageClient;
 	private JButton btnPrintClients;
+	private JButton btnRestorePass;
 	private JButton btnLogout;
 	private String user;
 	private String nameUser;
@@ -174,6 +176,19 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		this.panelBack.add(this.btnPrintClients);
 
 		/**
+		 * Botón Restaurar Contraseña.
+		 */
+		this.btnRestorePass = new JButton();
+		this.btnRestorePass.setBounds(430, 20, 40, 30);
+		this.btnRestorePass.setIcon(new ImageIcon("src/img/padlock.png"));
+		this.btnRestorePass.setBorder(null);
+		this.btnRestorePass.setBackground(new Color(46, 59, 104));
+		this.btnRestorePass.setOpaque(true);
+		this.btnRestorePass.addActionListener(this);
+		this.btnRestorePass.setFocusable(false);
+		this.panelBack.add(this.btnRestorePass);
+
+		/**
 		 * Botón para cerrar sesión.
 		 */
 		this.btnLogout = new JButton("Cerrar Sesión");
@@ -190,6 +205,15 @@ public class EmployeePanel extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+		/**
+		 * Muestra el panel para restaurar la contraseña.
+		 */
+		if (e.getSource() == this.btnRestorePass) {
+			RestorePassword restorePassword = new RestorePassword();
+			restorePassword.setVisible(true);
+			this.dispose();
+		}
 
 		/**
 		 * Registro de clientes en la base de datos.
