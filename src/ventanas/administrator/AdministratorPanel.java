@@ -221,7 +221,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		RestorePassword restorePassword;
 		
 		/**
-		 * Muestra el panel para registrar un usuario si se seleccionó dicha acción.
+		 * Muestra el panel para restaurar la contraseña.
 		 */
 		if (e.getSource() == this.btnRestorePass) {
 			restorePassword = new RestorePassword();
