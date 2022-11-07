@@ -247,13 +247,18 @@ public class RegisterUser extends JFrame implements ActionListener {
 
 			/**
 			 * Validacion de campos para que no queden vacios y no se pasen del rango de
-			 * caracyeres permitido.
+			 * caracteres permitido.
 			 */
-			if (email.equals("") || email.length() >= 40 || email.length() < 5) {
+			if (email.equals("") || email.length() >= 40 || email.length() < 5
+					|| !(email.contains("@") && email.contains("."))) {
 				this.txtEmailUser.setBackground(Color.red);
 				if (email.length() >= 40 || email.length() < 5) {
 					JOptionPane.showMessageDialog(null,
 							"El campo EMAIL no debe contener más de 40 caracteres ni menos de 5");
+					this.txtEmailUser.requestFocus();
+				}
+				if (!(email.contains("@") && email.contains("."))) {
+					JOptionPane.showMessageDialog(null, "El campo EMAIL no es válido");
 					this.txtEmailUser.requestFocus();
 				}
 				validation++;
