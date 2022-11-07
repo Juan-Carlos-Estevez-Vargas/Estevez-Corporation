@@ -249,34 +249,34 @@ public class RegisterUser extends JFrame implements ActionListener {
 			 * Validacion de campos para que no queden vacios y no se pasen del rango de
 			 * caracyeres permitido.
 			 */
-			if (email.equals("") || email.length() >= 40) {
+			if (email.equals("") || email.length() >= 40 || email.length() < 5) {
 				this.txtEmailUser.setBackground(Color.red);
-				if (email.length() >= 40) {
-					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 40 caracteres");
+				if (email.length() >= 40 || email.length() < 5) {
+					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 40 caracteres ni menos de 5");
 					this.txtEmailUser.requestFocus();
 				}
 				validation++;
 			}
-			if (username.equals("") || username.length() >= 30) {
+			if (username.equals("") || username.length() >= 30 || username.length() < 4) {
 				this.txtUsername.setBackground(Color.red);
-				if (username.length() >= 30) {
-					JOptionPane.showMessageDialog(null, "El campo USERNAME no debe contener más de 30 caracteres");
+				if (username.length() >= 30 || username.length() < 4) {
+					JOptionPane.showMessageDialog(null, "El campo USERNAME no debe contener más de 30 caracteres ni menos de 4");
 					this.txtUsername.requestFocus();
 				}
 				validation++;
 			}
-			if (name.equals("") || name.length() >= 35) {
+			if (name.equals("") || name.length() >= 35 || name.length() < 4) {
 				this.txtNameUser.setBackground(Color.red);
-				if (name.length() >= 35) {
-					JOptionPane.showMessageDialog(null, "El campo NOMBRE no debe contener más de 35 caracteres");
+				if (name.length() >= 35 || name.length() < 4) {
+					JOptionPane.showMessageDialog(null, "El campo NOMBRE no debe contener más de 35 caracteres ni menos de 4");
 					this.txtNameUser.requestFocus();
 				}
 				validation++;
 			}
-			if (phone.equals("") || phone.length() >= 12) {
+			if (phone.equals("") || phone.length() >= 12 || phone.length() < 10) {
 				this.txtPhoneUser.setBackground(Color.red);
-				if (phone.length() >= 12) {
-					JOptionPane.showMessageDialog(null, "El campo TELÉFONO no debe contener más de 12 caracteres");
+				if (phone.length() >= 12 || phone.length() < 10) {
+					JOptionPane.showMessageDialog(null, "El campo TELÉFONO no debe contener más de 12 caracteres ni menos de 10");
 					this.txtPhoneUser.requestFocus();
 				}
 				validation++;
