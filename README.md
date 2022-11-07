@@ -6,15 +6,15 @@ Este proyecto es una adaptación del proyecto "Data System" realizado en el cana
 No olvides importar a algún servidor como XAMPP la [base de datos del proyecto](https://github.com/Juan-Carlos-Estevez-Vargas/Estevez-Corporation/tree/master/database) para que el programa funcione correctamente; por último, para ejecutar el programa debes hacerlo desde la clase Main.java
 
 ## Administrador: 
-Es quien registra los usuarios con sus respectivos roles, los modifica y también, puede generar reporte en PDF de dichos usuarios. ::
+Es quien registra los usuarios con sus respectivos roles, los modifica y también, puede generar reporte en PDF de dichos usuarios.
 
-  *Usuario    =   Administrador
-  *Contraseña =   administrador123*
+  `*Usuario    =   Administrador
+  *Contraseña =   administrador123*`
 
-* ## Capturista o Empleado de mostrador:
+## Capturista o Empleado de mostrador:
 Ingresa los clientes, es capaz de registrar los equipos puestos para mantenimiento a un cliente en específico; también, administra la información de los mismos y genera reportes de los clientes en específico junto con los equipos registrados.
 
-* ##Técnico:
+## Técnico:
 Este rol es capaz de observar los equipos registrados, la descripción general de los problemas suministrados por el cliente, el tipo de equipo y sus datos básicos para así poder arreglar dicho equipo; además, es capaz de cambiar el estado del equipo a "En revisión", "Entregado", "Reparado", etc.
 
 # Mis redes sociales
