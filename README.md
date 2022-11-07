@@ -8,8 +8,7 @@ No olvides importar a algún servidor como XAMPP la [base de datos del proyecto]
 ## Administrador: 
 Es quien registra los usuarios con sus respectivos roles, los modifica y también, puede generar reporte en PDF de dichos usuarios.
 
-  > *Usuario    =   Administrador
-  > *Contraseña =   administrador123*
+  > `Usuario    =   Administrador                 Contraseña =   administrador123*`
 
 ## Capturista o Empleado de mostrador:
 Ingresa los clientes, es capaz de registrar los equipos puestos para mantenimiento a un cliente en específico; también, administra la información de los mismos y genera reportes de los clientes en específico junto con los equipos registrados.
