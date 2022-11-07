@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-06-2022 a las 22:23:02
--- Versión del servidor: 10.4.22-MariaDB
--- Versión de PHP: 8.1.2
+-- Tiempo de generación: 07-11-2022 a las 23:33:40
+-- Versión del servidor: 10.4.24-MariaDB
+-- Versión de PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,6 +38,14 @@ CREATE TABLE `clientes` (
   `ultima_modificacion` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='esta tabla es para el registro de los clientes';
 
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`id_cliente`, `nombre_cliente`, `mail_cliente`, `tel_cliente`, `dir_cliente`, `ultima_modificacion`) VALUES
+(11, 'CLIENTE', 'kgbn', '123456', '8746egy34n', 'luz'),
+(12, 'cliente armando', 'uyfvby', '56789', 'uytfvbyvbh', 'luz');
+
 -- --------------------------------------------------------
 
 --
@@ -60,6 +68,14 @@ CREATE TABLE `equipos` (
   `comentarios_tecnicos` longtext COLLATE utf8_unicode_ci NOT NULL,
   `revision_tecnica_de` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Tabla para el registro de equipos';
+
+--
+-- Volcado de datos para la tabla `equipos`
+--
+
+INSERT INTO `equipos` (`id_equipo`, `id_cliente`, `tipo_equipo`, `marca`, `modelo`, `num_serie`, `dia_ingreso`, `mes_ingreso`, `annio_ingreso`, `observaciones`, `estatus`, `ultima_modificacion`, `comentarios_tecnicos`, `revision_tecnica_de`) VALUES
+(14, 11, 'Impresora', 'Toshiba', '8u7dyev', '876545', '24', '9', '2022', 'esta vuelto mierda', 'Entregado', 'pedro', '', ''),
+(15, 12, 'Laptop', 'Acer', 'puta', 'puta2', '24', '10', '2022', 'puta', 'Nuevo Ingreso', 'luz', '', '');
 
 -- --------------------------------------------------------
 
@@ -84,7 +100,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `email`, `telefono`, `username`, `password`, `tipo_nivel`, `estatus`, `registrado_por`) VALUES
-(1, 'Juan Carlos Estevez Vargas', 'juank@example.com', '3213213213', 'JuanK', '12345', 'Administrador', 'Activo', 'JuanK');
+(1, 'Super Administrador', 'administrador@example.com', '3152550000', 'Administrador', 'administrador123*', 'Administrador', 'Activo', 'Administrador');
 
 --
 -- Índices para tablas volcadas
@@ -116,19 +132,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `equipos`
 --
 ALTER TABLE `equipos`
-  MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
