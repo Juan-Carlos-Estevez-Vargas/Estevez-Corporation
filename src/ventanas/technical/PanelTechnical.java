@@ -166,7 +166,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		this.btnStateGraph.setOpaque(true);
 		this.btnStateGraph.setFocusable(false);
 		this.panelBack.add(this.btnStateGraph);
-		
+
 		/**
 		 * Botón Restaurar Contraseña.
 		 */
@@ -198,7 +198,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		/**
 		 * Muestra el panel para restaurar la contraseña.
 		 */

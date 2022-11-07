@@ -37,7 +37,7 @@ public class UserInformation extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String user = "", user_update = "";
-	private int ID;
+	private int ID, idSuperAdministrador;
 	private JLabel labelTittle;
 	private JLabel labelName;
 	private JLabel labelEmail;
@@ -91,6 +91,23 @@ public class UserInformation extends JFrame implements ActionListener {
 				this.cmbStatus.setSelectedItem(rs.getString("estatus"));
 			}
 			cn.close();
+		} catch (SQLException ex) {
+			System.err.println("Error en cargar usuario " + ex);
+			JOptionPane.showMessageDialog(null, "¡¡Error al cargar!! Contacte al Administrador");
+		}
+
+		try {
+			Connection conecction = (Connection) DatabaseConnection.conectar();
+			PreparedStatement superAdministrador = (PreparedStatement) conecction
+					.prepareStatement("SELECT * FROM usuarios WHERE id_usuario = 1");
+			ResultSet resultset = superAdministrador.executeQuery();
+
+			if (resultset.next()) {
+				this.idSuperAdministrador = resultset.getInt("id_usuario");
+			}
+			conecction.close();
+
+			conecction.close();
 		} catch (SQLException ex) {
 			System.err.println("Error en cargar usuario " + ex);
 			JOptionPane.showMessageDialog(null, "¡¡Error al cargar!! Contacte al Administrador");
@@ -340,65 +357,70 @@ public class UserInformation extends JFrame implements ActionListener {
 				validation++;
 			}
 
-			/**
-			 * Cuando verifiquemos que todos los campos esten llenos.
-			 */
-			if (validation == 0) {
-
-				switch (cmbPermissions) {
-				case 1 -> permissionsString = "Administrador";
-				case 2 -> permissionsString = "Capturista";
-				case 3 -> permissionsString = "Tecnico";
-				default -> {
-				}
-				}
-
-				if (cmbStatus == 1) {
-					statusString = "Activo";
-				} else if (cmbStatus == 2) {
-					statusString = "Inactivo";
-				}
+			if (!(idSuperAdministrador == ID)) {
 
 				/**
-				 * Realizamos la actualizacion en la base de datos
+				 * Cuando verifiquemos que todos los campos esten llenos.
 				 */
-				try {
-					Connection cn2 = (Connection) DatabaseConnection.conectar();
-					PreparedStatement pst2 = (PreparedStatement) cn2
-							.prepareStatement("SELECT username FROM usuarios WHERE username = '" + username
-									+ "' AND NOT id_usuario = '" + ID + "'");
-					ResultSet rs2 = pst2.executeQuery();
+				if (validation == 0) {
 
-					if (rs2.next()) {
-						this.txtUsername.setBackground(Color.red);
-						JOptionPane.showMessageDialog(null, "Nombre de usuario no disponible");
-						cn2.close();
-					} else {
-						Connection cn3 = (Connection) DatabaseConnection.conectar();
-						PreparedStatement pst3 = (PreparedStatement) cn3.prepareStatement(
-								"UPDATE usuarios SET nombre_usuario = ?, email = ?, telefono = ?, username = ?, tipo_nivel = ?,"
-										+ " estatus = ? WHERE id_usuario = '" + ID + "'");
-
-						pst3.setString(1, name);
-						pst3.setString(2, email);
-						pst3.setString(3, phone);
-						pst3.setString(4, username);
-						pst3.setString(5, permissionsString);
-						pst3.setString(6, statusString);
-						pst3.executeUpdate();
-						cn3.close();
-						JOptionPane.showMessageDialog(null, "Modificación exitosa!!");
-						this.dispose();
-						ManagementUsers managementUsers = new ManagementUsers();
-						managementUsers.setVisible(true);
+					switch (cmbPermissions) {
+					case 1 -> permissionsString = "Administrador";
+					case 2 -> permissionsString = "Capturista";
+					case 3 -> permissionsString = "Tecnico";
+					default -> {
 					}
-				} catch (SQLException ex) {
-					System.err.println("Error al actualizar " + ex);
-				}
-			} else if (validation == 4) {
-				JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
-			}
-		}
+					}
 
+					if (cmbStatus == 1) {
+						statusString = "Activo";
+					} else if (cmbStatus == 2) {
+						statusString = "Inactivo";
+					}
+
+					/**
+					 * Realizamos la actualizacion en la base de datos
+					 */
+					try {
+						Connection cn2 = (Connection) DatabaseConnection.conectar();
+						PreparedStatement pst2 = (PreparedStatement) cn2
+								.prepareStatement("SELECT username FROM usuarios WHERE username = '" + username
+										+ "' AND NOT id_usuario = '" + ID + "'");
+						ResultSet rs2 = pst2.executeQuery();
+
+						if (rs2.next()) {
+							this.txtUsername.setBackground(Color.red);
+							JOptionPane.showMessageDialog(null, "Nombre de usuario no disponible");
+							cn2.close();
+						} else {
+							Connection cn3 = (Connection) DatabaseConnection.conectar();
+							PreparedStatement pst3 = (PreparedStatement) cn3.prepareStatement(
+									"UPDATE usuarios SET nombre_usuario = ?, email = ?, telefono = ?, username = ?, tipo_nivel = ?,"
+											+ " estatus = ? WHERE id_usuario = '" + ID + "'");
+
+							pst3.setString(1, name);
+							pst3.setString(2, email);
+							pst3.setString(3, phone);
+							pst3.setString(4, username);
+							pst3.setString(5, permissionsString);
+							pst3.setString(6, statusString);
+							pst3.executeUpdate();
+							cn3.close();
+							JOptionPane.showMessageDialog(null, "Modificación exitosa!!");
+							this.dispose();
+							ManagementUsers managementUsers = new ManagementUsers();
+							managementUsers.setVisible(true);
+						}
+					} catch (SQLException ex) {
+						System.err.println("Error al actualizar " + ex);
+					}
+				} else if (validation == 4) {
+					JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "No es posible actualizar el super administrador");
+			}
+
+		}
 	}
 }

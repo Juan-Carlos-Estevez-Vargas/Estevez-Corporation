@@ -181,7 +181,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		this.labelPrintUsers.setFont(new Font("serif", Font.BOLD, 14));
 		this.labelPrintUsers.setFocusable(false);
 		this.panelBack.add(this.labelPrintUsers);
-		
+
 		/**
 		 * Botón Restaurar Contraseña.
 		 */
@@ -219,7 +219,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		RegisterUser registerUser;
 		ManagementUsers managementUsers;
 		RestorePassword restorePassword;
-		
+
 		/**
 		 * Muestra el panel para restaurar la contraseña.
 		 */
