@@ -330,10 +330,14 @@ public class UserInformation extends JFrame implements ActionListener {
 			 * Validacion de campos para que no queden vacios y no se pasen del rango de
 			 * caracyeres permitido.
 			 */
-			if (email.equals("") || email.length() >= 40) {
+			if (email.equals("") || email.length() >= 40 || !(email.contains("@") && email.contains("."))) {
 				this.txtEmail.setBackground(Color.red);
 				if (email.length() >= 40) {
 					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 40 caracteres");
+					this.txtEmail.requestFocus();
+				}
+				if (!(email.contains("@") && email.contains("."))) {
+					JOptionPane.showMessageDialog(null, "El campo EMAIL no es válido");
 					this.txtEmail.requestFocus();
 				}
 				validation++;
