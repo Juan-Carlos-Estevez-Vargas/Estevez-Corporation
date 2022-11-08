@@ -44,7 +44,7 @@ import util.ValidateNumbers;
 /**
  * Vista con le información de un cliente previamente seleccionado.
  *
- * @author
+ * @author Juan Carlos Estevez Vargas.
  *
  */
 public class ClientInformation extends JFrame implements ActionListener {
@@ -110,6 +110,9 @@ public class ClientInformation extends JFrame implements ActionListener {
 				this.txtAdress.setText(rs.getString("dir_cliente"));
 				this.txtModifyBy.setText(rs.getString("ultima_modificacion"));
 			}
+			
+			rs.close();
+			pst.close();
 			cn.close();
 		} catch (SQLException e) {
 			System.err.println("Error al cargar usuario " + e);
@@ -144,6 +147,9 @@ public class ClientInformation extends JFrame implements ActionListener {
 				}
 				model.addRow(row);
 			}
+			
+			rs.close();
+			pst.close();
 			cn.close();
 		} catch (SQLException e) {
 			System.err.println("Error en el llenado de la tabla equipos " + e);
@@ -372,10 +378,14 @@ public class ClientInformation extends JFrame implements ActionListener {
 			/*
 			 * Validación de campos vacios
 			 */
-			if (mail.equals("") || mail.length() >= 40) {
+			if (mail.equals("") || mail.length() >= 40 || !(mail.contains("@") && mail.contains("."))) {
 				this.txtEmail.setBackground(Color.red);
 				if (mail.length() >= 40) {
 					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 40 caracteres");
+					this.txtEmail.requestFocus();
+				}
+				if (!(mail.contains("@") && mail.contains("."))) {
+					JOptionPane.showMessageDialog(null, "El campo EMAIL no es válido");
 					this.txtEmail.requestFocus();
 				}
 				validation++;
@@ -418,6 +428,8 @@ public class ClientInformation extends JFrame implements ActionListener {
 					pst.setString(4, adress);
 					pst.setString(5, user);
 					pst.executeUpdate();
+					
+					pst.close();
 					cn.close();
 
 					clean();

@@ -88,6 +88,9 @@ public class ManagementClients extends JFrame {
 				}
 				this.model.addRow(row);
 			}
+			
+			rs.close();
+			pst.close();
 			cn.close();
 		} catch (SQLException e) {
 			System.err.println("Error en el llenado de la tabla clientes " + e);

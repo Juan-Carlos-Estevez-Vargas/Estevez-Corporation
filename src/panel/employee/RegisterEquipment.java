@@ -29,7 +29,7 @@ import util.DatabaseConnection;
 /**
  * Frame encargado de registrar un equipo asociado a un cliente específico.
  *
- * @author
+ * @author Juan Carlos Estevez Vargas.
  *
  */
 public class RegisterEquipment extends JFrame implements ActionListener {
@@ -86,13 +86,11 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 
 			if (rs.next()) {
 				this.labelTitle.setText("Registro de Equipo para " + rs.getString("nombre_cliente"));
-
-				/**
-				 * Llenado de los campos con la base de datos
-				 */
 				this.txtNameClient.setText(rs.getString("nombre_cliente"));
-
 			}
+
+			rs.close();
+			pst.close();
 			cn.close();
 		} catch (SQLException e) {
 			System.err.println("Error al cargar usuario " + e);
@@ -285,12 +283,20 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 			/**
 			 * Validacion de campos
 			 */
-			if (model.equals("")) {
+			if (model.equals("") || model.length() >= 50) {
 				this.txtModel.setBackground(Color.red);
+				if (model.length() >= 50) {
+					JOptionPane.showMessageDialog(null, "El campo MODELO no debe contener más de 50 caracteres");
+					this.txtModel.requestFocus();
+				}
 				validation++;
 			}
-			if (serialNumber.equals("")) {
+			if (serialNumber.equals("") || serialNumber.length() >= 50) {
 				this.txtSerialNumber.setBackground(Color.red);
+				if (serialNumber.length() >= 50) {
+					JOptionPane.showMessageDialog(null, "El campo NÚMERO SERIAL no debe contener más de 50 caracteres");
+					this.txtModel.requestFocus();
+				}
 				validation++;
 			}
 			if (observations.equals("")) {
@@ -318,6 +324,8 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 					pst.setString(13, "");
 					pst.setString(14, "");
 					pst.executeUpdate();
+
+					pst.close();
 					cn.close();
 
 					this.txtModel.setBackground(Color.green);
