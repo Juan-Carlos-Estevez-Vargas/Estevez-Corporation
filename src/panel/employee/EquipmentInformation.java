@@ -92,6 +92,10 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 				nameClient = rs.getString("nombre_cliente");
 				this.setTitle("Equipo del cliente " + nameClient);
 			}
+
+			rs.close();
+			pst.close();
+			cn.close();
 		} catch (SQLException e) {
 			System.err.println("Error al consultar el nombre del cliente " + e);
 		}
@@ -128,6 +132,10 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 				this.textPaneComments.setText(rs.getString("comentarios_tecnicos"));
 				this.labelComments
 						.setText("Comentarios y Actualizacion del técnico " + rs.getString("revision_tecnica_de"));
+
+				rs.close();
+				pst.close();
+				cn.close();
 			}
 		} catch (SQLException e) {
 			System.err.println("Error en consultar información del equipo " + e);
@@ -315,6 +323,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.cmbStatus.setBackground(new Color(127, 140, 141));
 		this.cmbStatus.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbStatus.setForeground(Color.WHITE);
+		this.cmbStatus.setEnabled(false);
 		this.cmbStatus.setModel(new DefaultComboBoxModel<>(
 				new String[] { "Nuevo Ingreso", "No repaired", "En revision", "Reparado", "Entregado" }));
 		this.container.add(this.cmbStatus);
@@ -408,12 +417,20 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 			/**
 			 * Validación de campos.
 			 */
-			if (model.equals("")) {
+			if (model.equals("") || model.length() >= 50) {
 				this.txtModel.setBackground(Color.red);
+				if (model.length() >= 50) {
+					JOptionPane.showMessageDialog(null, "El campo MODELO no debe contener más de 50 caracteres");
+					this.txtModel.requestFocus();
+				}
 				validation++;
 			}
-			if (serialNumber.equals("")) {
+			if (serialNumber.equals("") || serialNumber.length() >= 50) {
 				this.txtSerialNumber.setBackground(Color.red);
+				if (serialNumber.length() >= 50) {
+					JOptionPane.showMessageDialog(null, "El campo NÚMERO SERIAL no debe contener más de 50 caracteres");
+					this.txtModel.requestFocus();
+				}
 				validation++;
 			}
 			if (observations.equals("")) {
@@ -434,8 +451,9 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 					pst.setString(5, observations);
 					pst.setString(6, status);
 					pst.setString(7, user);
-
 					pst.executeUpdate();
+
+					pst.close();
 					cn.close();
 
 					clean();
