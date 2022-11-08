@@ -24,8 +24,9 @@ import util.ValidateCharacters;
 import util.ValidateNumbers;
 
 /**
+ * Interface encargada de registrar clientes al sistema.
  *
- * @author
+ * @author Juan Carlos Estevez Vargas.
  *
  */
 public class RegisterClient extends JFrame implements ActionListener {
@@ -228,18 +229,22 @@ public class RegisterClient extends JFrame implements ActionListener {
 				}
 				validation++;
 			}
-			if (mail.equals("") || mail.length() >= 40) {
+			if (mail.equals("") || mail.length() >= 40 || !(mail.contains("@") && mail.contains("."))) {
 				this.txtEmailClient.setBackground(Color.red);
 				if (mail.length() >= 40) {
 					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 40 caracteres");
+					this.txtEmailClient.requestFocus();
+				}
+				if (!(mail.contains("@") && mail.contains("."))) {
+					JOptionPane.showMessageDialog(null, "El campo EMAIL no es válido");
 					this.txtEmailClient.requestFocus();
 				}
 				validation++;
 			}
 			if (phone.equals("") || phone.length() >= 12) {
 				this.txtPhoneClient.setBackground(Color.red);
-				if (phone.length() >= 12) {
-					JOptionPane.showMessageDialog(null, "El campo TELÉFONO no debe contener más de 12 caracteres");
+				if (phone.length() >= 12 || phone.length() < 10) {
+					JOptionPane.showMessageDialog(null, "El campo TELÉFONO no debe contener más de 12 caracteres ni menos de 10");
 					this.txtPhoneClient.requestFocus();
 				}
 				validation++;
@@ -269,6 +274,8 @@ public class RegisterClient extends JFrame implements ActionListener {
 					pst.setString(5, adress);
 					pst.setString(6, this.user);
 					pst.executeUpdate();
+					
+					pst.close();
 					cn.close();
 
 					clean();
@@ -284,7 +291,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 					System.err.println("Error en registrar Cliente " + ex);
 					JOptionPane.showMessageDialog(null, "¡¡Error al registrar cliente, contacte al Administrador!!");
 				}
-			} else if(validation == 4){
+			} else if (validation == 4) {
 				JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
 			}
 		}

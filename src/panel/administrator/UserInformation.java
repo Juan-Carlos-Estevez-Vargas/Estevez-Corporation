@@ -360,8 +360,8 @@ public class UserInformation extends JFrame implements ActionListener {
 			}
 			if (phone.equals("") || phone.length() >= 12) {
 				this.txtPhone.setBackground(Color.red);
-				if (phone.length() >= 12) {
-					JOptionPane.showMessageDialog(null, "El campo TELÉFONO no debe contener más de 12 caracteres");
+				if (phone.length() >= 12 || phone.length() < 10) {
+					JOptionPane.showMessageDialog(null, "El campo TELÉFONO no debe contener más de 12 caracteres ni menos de 10");
 					this.txtPhone.requestFocus();
 				}
 				validation++;
