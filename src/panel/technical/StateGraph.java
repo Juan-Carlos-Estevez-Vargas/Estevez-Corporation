@@ -125,7 +125,7 @@ public class StateGraph extends JFrame {
 		 */
 		g.setColor(Color.yellow);
 		g.fillRect(100, 100, longNewEntry, 40);
-		g.drawString("prueba Ingreso", 10, 118);
+		g.drawString("Nuevo Ingreso", 10, 118);
 		g.drawString("Cantidad " + newEntry, 10, 133);
 
 		g.setColor(Color.red);

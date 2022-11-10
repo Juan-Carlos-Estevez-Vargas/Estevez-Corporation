@@ -336,6 +336,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.cmbTypeEquip.setBackground(new Color(127, 140, 141));
 		this.cmbTypeEquip.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbTypeEquip.setForeground(Color.WHITE);
+		this.cmbTypeEquip.setEnabled(false);
 		this.cmbTypeEquip.setModel(
 				new DefaultComboBoxModel<>(new String[] { "Laptop", "Desktop", "Impresora", "Multifuncional" }));
 		this.container.add(this.cmbTypeEquip);
@@ -348,6 +349,7 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.cmbMark.setBackground(new Color(127, 140, 141));
 		this.cmbMark.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbMark.setForeground(Color.WHITE);
+		this.cmbMark.setEnabled(false);
 		this.cmbMark.setModel(new DefaultComboBoxModel<>(new String[] { "Acer", "Alienware", "Apple", "Asus", "Brother",
 				"Dell", "HP", "Lenovo", "Samsung", "Toshiba", "Xerox" }));
 		this.container.add(this.cmbMark);
