@@ -275,6 +275,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.cmbStatus.setBackground(new Color(127, 140, 141));
 		this.cmbStatus.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbStatus.setForeground(Color.WHITE);
+		this.cmbStatus.setEnabled(false);
 		this.cmbStatus.setModel(new DefaultComboBoxModel<>(
 				new String[] { "Nuevo Ingreso", "No repaired", "En revision", "Reparado", "Entregado" }));
 		this.container.add(this.cmbStatus);
@@ -287,6 +288,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.cmbTypeEquip.setBackground(new Color(127, 140, 141));
 		this.cmbTypeEquip.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbTypeEquip.setForeground(Color.WHITE);
+		this.cmbTypeEquip.setEnabled(false);
 		this.cmbTypeEquip.setModel(
 				new DefaultComboBoxModel<>(new String[] { "Laptop", "Desktop", "Impresora", "Multifuncional" }));
 		this.container.add(this.cmbTypeEquip);
@@ -299,6 +301,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.cmbMark.setBackground(new Color(127, 140, 141));
 		this.cmbMark.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbMark.setForeground(Color.WHITE);
+		this.cmbMark.setEnabled(false);
 		this.cmbMark.setModel(new DefaultComboBoxModel<>(new String[] { "Acer", "Alienware", "Apple", "Asus", "Brother",
 				"Dell", "HP", "Lenovo", "Samsung", "Toshiba", "Xerox" }));
 		this.container.add(this.cmbMark);
@@ -354,15 +357,15 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 
 		if (e.getSource() == this.btnUpdateEquipment) {
 			int validation = 0;
-			String typeEquip, mark, model, serialNumber, status, observations;
+			String typeEquip, mark, model, serialNumber, status, observations, coments;
 
 			typeEquip = this.cmbTypeEquip.getSelectedItem().toString();
 			mark = this.cmbMark.getSelectedItem().toString();
 			status = this.cmbStatus.getSelectedItem().toString();
-
 			model = this.txtModel.getText().trim();
 			serialNumber = this.txtSerialNumber.getText().trim();
 			observations = this.textPaneObservations.getText().trim();
+			coments = this.textPaneComments.getText().trim();
 
 			/**
 			 * Validación de campos.
@@ -378,13 +381,16 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 			if (observations.equals("")) {
 				this.textPaneObservations.setText("Sin observaciones");
 			}
+			if (coments.equals("")) {
+				this.textPaneComments.setText("Sin comentarios.");
+			}
 
 			if (validation == 0) {
 				try {
 					Connection cn = (Connection) DatabaseConnection.conectar();
 					PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
 							"UPDATE equipos SET tipo_equipo = ?, marca = ?, modelo = ?, num_serie = ?, observaciones = ?, estatus = ?, "
-									+ "ultima_modificacion = ? WHERE id_equipo = '" + idEquipment + "'");
+									+ "ultima_modificacion = ?, comentarios_tecnicos = ? WHERE id_equipo = '" + idEquipment + "'");
 
 					pst.setString(1, typeEquip);
 					pst.setString(2, mark);
@@ -393,6 +399,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 					pst.setString(5, observations);
 					pst.setString(6, status);
 					pst.setString(7, user);
+					pst.setString(8, coments);
 
 					pst.executeUpdate();
 					cn.close();

@@ -249,12 +249,10 @@ public class RegisterUser extends JFrame implements ActionListener {
 			 * Validacion de campos para que no queden vacios y no se pasen del rango de
 			 * caracteres permitido.
 			 */
-			if (email.equals("") || email.length() >= 40 || email.length() < 5
-					|| !(email.contains("@") && email.contains("."))) {
+			if (email.equals("") || email.length() >= 50 || !(email.contains("@") && email.contains("."))) {
 				this.txtEmailUser.setBackground(Color.red);
-				if (email.length() >= 40 || email.length() < 5) {
-					JOptionPane.showMessageDialog(null,
-							"El campo EMAIL no debe contener más de 40 caracteres ni menos de 5");
+				if (email.length() >= 50) {
+					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 50 caracteres");
 					this.txtEmailUser.requestFocus();
 				}
 				if (!(email.contains("@") && email.contains("."))) {
@@ -263,20 +261,19 @@ public class RegisterUser extends JFrame implements ActionListener {
 				}
 				validation++;
 			}
-			if (username.equals("") || username.length() >= 30 || username.length() < 4) {
+			if (username.equals("") || username.length() >= 50) {
 				this.txtUsername.setBackground(Color.red);
-				if (username.length() >= 30 || username.length() < 4) {
-					JOptionPane.showMessageDialog(null,
-							"El campo USERNAME no debe contener más de 30 caracteres ni menos de 4");
+				if (username.length() >= 50) {
+					JOptionPane.showMessageDialog(null, "El campo USERNAME no debe contener más de 50 caracteres");
 					this.txtUsername.requestFocus();
 				}
 				validation++;
 			}
-			if (name.equals("") || name.length() >= 35 || name.length() < 4) {
+			if (name.equals("") || name.length() >= 40 || name.length() < 4) {
 				this.txtNameUser.setBackground(Color.red);
-				if (name.length() >= 35 || name.length() < 4) {
+				if (name.length() >= 40 || name.length() < 4) {
 					JOptionPane.showMessageDialog(null,
-							"El campo NOMBRE no debe contener más de 35 caracteres ni menos de 4");
+							"El campo NOMBRE no debe contener más de 40 caracteres ni menos de 4");
 					this.txtNameUser.requestFocus();
 				}
 				validation++;

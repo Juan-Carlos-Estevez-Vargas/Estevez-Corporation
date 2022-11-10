@@ -110,8 +110,8 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		/*
 		 * Label Principal.
 		 */
-		this.labelTittle = new JLabel();
-		this.labelTittle.setBounds(10, 10, 380, 27);
+		this.labelTittle = new JLabel("", SwingConstants.CENTER);
+		this.labelTittle.setBounds(10, 25, 410, 27);
 		this.labelTittle.setForeground(new Color(192, 192, 192));
 		this.labelTittle.setFont(new Font("serif", Font.BOLD, 20));
 		this.labelTittle.setFocusable(false);
