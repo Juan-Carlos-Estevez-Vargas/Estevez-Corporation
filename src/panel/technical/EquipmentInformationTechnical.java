@@ -7,9 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -53,9 +51,9 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 	private JTextField txtSerialNumber;
 	private JTextField txtDateOfAdmission;
 	private JTextField txtModifyBy;
-	private JComboBox<String> cmbStatus;
-	private JComboBox<String> cmbTypeEquip;
-	private JComboBox<String> cmbMark;
+	private JTextField txtStatus;
+	private JTextField cmbTypeEquip;
+	private JTextField txtMark;
 	private JTextPane textPaneObservations;
 	private JTextPane textPaneComments;
 	private JScrollPane scrollObservations;
@@ -86,9 +84,9 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
-				this.cmbTypeEquip.setSelectedItem(rs.getString(3));
-				this.cmbMark.setSelectedItem(rs.getString(4));
-				this.cmbStatus.setSelectedItem(rs.getString(11));
+				this.cmbTypeEquip.setText(rs.getString(3));
+				this.txtMark.setText(rs.getString(4));
+				this.txtStatus.setText(rs.getString(11));
 				this.txtModel.setText(rs.getString("modelo"));
 				this.txtSerialNumber.setText(rs.getString("num_serie"));
 				this.txtModifyBy.setText(rs.getString("ultima_modificacion"));
@@ -270,41 +268,35 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		/**
 		 * ComboBox con el estado de equipo.
 		 */
-		this.cmbStatus = new JComboBox<>();
-		this.cmbStatus.setBounds(460, 80, 120, 30);
-		this.cmbStatus.setBackground(new Color(127, 140, 141));
-		this.cmbStatus.setFont(new Font("serif", Font.BOLD, 14));
-		this.cmbStatus.setForeground(Color.WHITE);
-		this.cmbStatus.setEnabled(false);
-		this.cmbStatus.setModel(new DefaultComboBoxModel<>(
-				new String[] { "Nuevo Ingreso", "No repaired", "En revision", "Reparado", "Entregado" }));
-		this.container.add(this.cmbStatus);
+		this.txtStatus = new JTextField();
+		this.txtStatus.setBounds(460, 80, 120, 30);
+		this.txtStatus.setBackground(new Color(127, 140, 141));
+		this.txtStatus.setFont(new Font("serif", Font.BOLD, 14));
+		this.txtStatus.setForeground(Color.WHITE);
+		this.txtStatus.setEnabled(false);
+		this.container.add(this.txtStatus);
 
 		/**
 		 * ComboBox con el tipo de equipo.
 		 */
-		this.cmbTypeEquip = new JComboBox<>();
+		this.cmbTypeEquip = new JTextField();
 		this.cmbTypeEquip.setBounds(10, 80, 170, 30);
 		this.cmbTypeEquip.setBackground(new Color(127, 140, 141));
 		this.cmbTypeEquip.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbTypeEquip.setForeground(Color.WHITE);
 		this.cmbTypeEquip.setEnabled(false);
-		this.cmbTypeEquip.setModel(
-				new DefaultComboBoxModel<>(new String[] { "Laptop", "Desktop", "Impresora", "Multifuncional" }));
 		this.container.add(this.cmbTypeEquip);
 
 		/**
 		 * ComboBox con la marca del equipo.
 		 */
-		this.cmbMark = new JComboBox<>();
-		this.cmbMark.setBounds(10, 140, 170, 30);
-		this.cmbMark.setBackground(new Color(127, 140, 141));
-		this.cmbMark.setFont(new Font("serif", Font.BOLD, 14));
-		this.cmbMark.setForeground(Color.WHITE);
-		this.cmbMark.setEnabled(false);
-		this.cmbMark.setModel(new DefaultComboBoxModel<>(new String[] { "Acer", "Alienware", "Apple", "Asus", "Brother",
-				"Dell", "HP", "Lenovo", "Samsung", "Toshiba", "Xerox" }));
-		this.container.add(this.cmbMark);
+		this.txtMark = new JTextField();
+		this.txtMark.setBounds(10, 140, 170, 30);
+		this.txtMark.setBackground(new Color(127, 140, 141));
+		this.txtMark.setFont(new Font("serif", Font.BOLD, 14));
+		this.txtMark.setForeground(Color.WHITE);
+		this.txtMark.setEnabled(false);
+		this.container.add(this.txtMark);
 
 		/**
 		 * TextPane con las observaciones generales del equipo.
@@ -359,9 +351,9 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 			int validation = 0;
 			String typeEquip, mark, model, serialNumber, status, observations, coments;
 
-			typeEquip = this.cmbTypeEquip.getSelectedItem().toString();
-			mark = this.cmbMark.getSelectedItem().toString();
-			status = this.cmbStatus.getSelectedItem().toString();
+			typeEquip = this.cmbTypeEquip.getText().trim();
+			mark = this.txtMark.getText().trim();
+			status = this.txtStatus.getText().trim();
 			model = this.txtModel.getText().trim();
 			serialNumber = this.txtSerialNumber.getText().trim();
 			observations = this.textPaneObservations.getText().trim();
