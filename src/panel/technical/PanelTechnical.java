@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -237,10 +238,12 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		 * Cierra la sesión del usuario.
 		 */
 		if (e.getSource() == this.btnLogout) {
-			Login login = new Login();
-			login.setLocationRelativeTo(null);
-			this.dispose();
-			login.setVisible(true);
+			if (JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar la sesión?") == 0) {
+				Login login = new Login();
+				login.setLocationRelativeTo(null);
+				login.setVisible(true);
+				this.dispose();
+			}
 		}
 
 	}

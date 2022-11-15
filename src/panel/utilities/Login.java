@@ -29,7 +29,7 @@ import util.DatabaseConnection;
 /**
  * Inicio de sesión del aplicativo.
  *
- * @author
+ * @author Juan Carlos Estevez Vargas.
  */
 public final class Login extends JFrame implements ActionListener {
 
@@ -75,6 +75,10 @@ public final class Login extends JFrame implements ActionListener {
 			if (rs.next()) {
 				statusUser = rs.getString("estatus");
 			}
+			
+			rs.close();
+			pst.close();
+			cn.close();
 		} catch (Exception e) {
 			System.err.println("Error en conexión desde la interfaz Login");
 		}
@@ -274,6 +278,10 @@ public final class Login extends JFrame implements ActionListener {
 							} else {
 								this.jlError.setText("Usuario inactivo");
 							}
+							
+							rs.close();
+							pst.close();
+							cn.close();
 						} else {
 							this.jlError.setText("Usuario y/o contraseña erróneos");
 							this.txtUser.setText("");

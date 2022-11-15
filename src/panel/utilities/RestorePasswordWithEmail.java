@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,6 +20,10 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import util.DatabaseConnection;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  * Vista para recuperar contraseña.
@@ -95,7 +100,8 @@ public class RestorePasswordWithEmail extends JFrame implements ActionListener {
 		this.container.add(this.labelNewPassword);
 
 		/**
-		 * Campo de texto de tipo JPasswordField para el nuevo password del usuario en cuestión.
+		 * Campo de texto de tipo JPasswordField para el nuevo password del usuario en
+		 * cuestión.
 		 */
 		this.txtnewPasswordField = new JPasswordField();
 		this.txtnewPasswordField.setFont(new java.awt.Font("Segoe UI", 1, 16));
@@ -138,7 +144,8 @@ public class RestorePasswordWithEmail extends JFrame implements ActionListener {
 		this.container.add(this.labelConfirmPassword);
 
 		/**
-		 * Campo de texto de tipo JPasswordFiel para el nuevo password del usuario en cuestión.
+		 * Campo de texto de tipo JPasswordFiel para el nuevo password del usuario en
+		 * cuestión.
 		 */
 		this.txtConfirmPasswordField = new JPasswordField();
 		this.txtConfirmPasswordField.setFont(new java.awt.Font("Segoe UI", 1, 16));
@@ -246,6 +253,40 @@ public class RestorePasswordWithEmail extends JFrame implements ActionListener {
 				this.txtConfirmPasswordField.setVisible(true);
 				this.eyeEstateConfirmPassword = false;
 			}
+		}
+
+	}
+
+	public void SendMail() {
+		try {
+		Properties props =  new Properties();
+		props.setProperty("mail.smtp.host", "smtp.gmail.com");
+		props.setProperty("mail.smtp.starttls.enable", "true");
+		props.setProperty("mail.smtp.port", "587");
+		props.setProperty("mail.smtp.auth", "true");
+		
+		Session sesion = Session.getDefaultInstance(props);
+		
+		String remitente = "juank2001estevez@gmail.com";
+		String password = "";
+		String receptor = "juank2001estevezvargas@gmail.com";
+		String asunto = "correoooo";
+		String mensaje = "contenio";
+		
+		MimeMessage mesage = new MimeMessage(sesion);
+		
+			mesage.setFrom(new InternetAddress(remitente));
+			mesage.addRecipient(Message.RecipientType.TO, new InternetAddress(receptor));
+			mesage.setSubject(asunto);
+			mesage.setText(mensaje);
+			
+			Transport t =  sesion.getTransport("smtp");
+			t.connect(remitente, password);
+			t.sendMessage(mesage, mesage.getRecipients(Message.RecipientType.TO));
+			t.close();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
