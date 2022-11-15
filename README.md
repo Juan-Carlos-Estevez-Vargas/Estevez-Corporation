@@ -21,13 +21,13 @@ Es quien registra los usuarios con sus respectivos roles, los modifica y tambié
 ### Capturista o Empleado de mostrador:
 Ingresa los clientes, es capaz de registrar los equipos puestos para mantenimiento a un cliente en específico; también, administra la información de los mismos y genera reportes de los clientes en específico junto con los equipos registrados.
 
-  > Usuario    =   CAPGEN
+  > Usuario    =   CAPGEN   
   > Contraseña =   capgen123
 
 ### Técnico:
 Este rol es capaz de observar los equipos registrados, la descripción general de los problemas suministrados por el cliente, el tipo de equipo y sus datos básicos para así poder arreglar dicho equipo; además, es capaz de cambiar el estado del equipo a "En revisión", "Entregado", "Reparado", etc.
 
-  > Usuario    =   TECGEN
+  > Usuario    =   TECGEN   
   > Contraseña =   tecgen123
   
 Si te ha gustado el proyecto invitame un café
