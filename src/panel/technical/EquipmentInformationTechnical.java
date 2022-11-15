@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,7 +28,7 @@ import util.DatabaseConnection;
 /**
  * Frame con la información general de un equipo específico.
  *
- * @author
+ * @author Juan Carlos Estevez Vargas.
  *
  */
 public class EquipmentInformationTechnical extends JFrame implements ActionListener {
@@ -51,7 +53,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 	private JTextField txtSerialNumber;
 	private JTextField txtDateOfAdmission;
 	private JTextField txtModifyBy;
-	private JTextField txtStatus;
+	private JComboBox<String> cmbStatus;
 	private JTextField cmbTypeEquip;
 	private JTextField txtMark;
 	private JTextPane textPaneObservations;
@@ -86,7 +88,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 			if (rs.next()) {
 				this.cmbTypeEquip.setText(rs.getString(3));
 				this.txtMark.setText(rs.getString(4));
-				this.txtStatus.setText(rs.getString(11));
+				this.cmbStatus.setSelectedItem(rs.getString(11));
 				this.txtModel.setText(rs.getString("modelo"));
 				this.txtSerialNumber.setText(rs.getString("num_serie"));
 				this.txtModifyBy.setText(rs.getString("ultima_modificacion"));
@@ -268,13 +270,14 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		/**
 		 * ComboBox con el estado de equipo.
 		 */
-		this.txtStatus = new JTextField();
-		this.txtStatus.setBounds(460, 80, 120, 30);
-		this.txtStatus.setBackground(new Color(127, 140, 141));
-		this.txtStatus.setFont(new Font("serif", Font.BOLD, 14));
-		this.txtStatus.setForeground(Color.WHITE);
-		this.txtStatus.setEnabled(false);
-		this.container.add(this.txtStatus);
+		this.cmbStatus = new JComboBox<String>();
+		this.cmbStatus.setBounds(460, 80, 120, 30);
+		this.cmbStatus.setBackground(new Color(127, 140, 141));
+		this.cmbStatus.setFont(new Font("serif", Font.BOLD, 14));
+		this.cmbStatus.setForeground(Color.WHITE);
+		this.cmbStatus.setModel(new DefaultComboBoxModel<>(
+				new String[] { "Nuevo Ingreso", "En Revisión", "Entregado", "No Reparado", "Reparado" }));
+		this.container.add(this.cmbStatus);
 
 		/**
 		 * ComboBox con el tipo de equipo.
@@ -353,7 +356,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 
 			typeEquip = this.cmbTypeEquip.getText().trim();
 			mark = this.txtMark.getText().trim();
-			status = this.txtStatus.getText().trim();
+			status = (String) this.cmbStatus.getSelectedItem();
 			model = this.txtModel.getText().trim();
 			serialNumber = this.txtSerialNumber.getText().trim();
 			observations = this.textPaneObservations.getText().trim();
@@ -382,7 +385,8 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 					Connection cn = (Connection) DatabaseConnection.conectar();
 					PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
 							"UPDATE equipos SET tipo_equipo = ?, marca = ?, modelo = ?, num_serie = ?, observaciones = ?, estatus = ?, "
-									+ "ultima_modificacion = ?, comentarios_tecnicos = ? WHERE id_equipo = '" + idEquipment + "'");
+									+ "ultima_modificacion = ?, comentarios_tecnicos = ? WHERE id_equipo = '"
+									+ idEquipment + "'");
 
 					pst.setString(1, typeEquip);
 					pst.setString(2, mark);
