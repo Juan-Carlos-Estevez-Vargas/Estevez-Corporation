@@ -1,20 +1,19 @@
 package panel.utilities;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -28,7 +27,7 @@ import javax.mail.internet.MimeMessage;
 /**
  * Vista para recuperar contraseña.
  *
- * @author
+ * @author Juan Carlos Estevez Vargas.
  *
  */
 public class RestorePasswordWithEmail extends JFrame implements ActionListener {
@@ -39,17 +38,10 @@ public class RestorePasswordWithEmail extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel container;
 	private JLabel labelTittle;
-	private JLabel labelNewPassword;
-	private JLabel labelConfirmPassword;
-	private JPasswordField txtnewPasswordField;
-	private JPasswordField txtConfirmPasswordField;
-	private JTextField txtNewPassword;
-	private JTextField txtConfirmPassword;
+	private JLabel labelIndications;
+	private JTextPane textPaneIndications;
+	private JScrollPane scrollIndications;
 	private JButton btnRestorePassword;
-	private JButton btnEyeNewPassword;
-	private JButton btnEyeConfirmPassword;
-	private boolean eyeEstateConfirmPassword;
-	private boolean eyeEstateNewPassword;
 	private String email;
 
 	/**
@@ -90,92 +82,31 @@ public class RestorePasswordWithEmail extends JFrame implements ActionListener {
 		this.container.add(this.labelTittle);
 
 		/**
-		 * Label New Password.
+		 * Label Indicaciones.
 		 */
-		this.labelNewPassword = new JLabel("Ingrese su nueva contraseña.");
-		this.labelNewPassword.setFont(new java.awt.Font("Segoe UI", 0, 18));
-		this.labelNewPassword.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelNewPassword.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-		this.labelNewPassword.setBounds(20, 50, 250, 20);
-		this.container.add(this.labelNewPassword);
+		this.labelIndications = new JLabel("Indicaciones");
+		this.labelIndications.setFont(new java.awt.Font("Segoe UI", 0, 18));
+		this.labelIndications.setForeground(new java.awt.Color(192, 192, 192));
+		this.labelIndications.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+		this.labelIndications.setBounds(20, 50, 250, 20);
+		this.container.add(this.labelIndications);
 
 		/**
-		 * Campo de texto de tipo JPasswordField para el nuevo password del usuario en
-		 * cuestión.
+		 * Texto con las indicaciones suministradas.
 		 */
-		this.txtnewPasswordField = new JPasswordField();
-		this.txtnewPasswordField.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		this.txtnewPasswordField.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtnewPasswordField.setBounds(20, 70, 250, 30);
-		this.txtnewPasswordField.setBackground(new Color(127, 140, 141));
-		this.txtnewPasswordField.setForeground(Color.WHITE);
-		this.container.add(this.txtnewPasswordField);
-
 		/**
-		 * Campo de texto para el nuevo password del usuario en cuestión.
+		 * TextPane con las observaciones generales del equipo.
 		 */
-		this.txtNewPassword = new JTextField();
-		this.txtNewPassword.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		this.txtNewPassword.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtNewPassword.setBounds(20, 70, 250, 30);
-		this.txtNewPassword.setBackground(new Color(127, 140, 141));
-		this.txtNewPassword.setForeground(Color.WHITE);
-		this.container.add(this.txtNewPassword);
-
-		/**
-		 * Botón para mostrar u ocultar el texto del campo de texto password.
-		 */
-		this.btnEyeNewPassword = new JButton();
-		this.btnEyeNewPassword.setBounds(275, 70, 50, 30);
-		this.btnEyeNewPassword.setBackground(new Color(46, 59, 104));
-		this.btnEyeNewPassword.setIcon(new ImageIcon("src/img/ojo_opt.png"));
-		this.btnEyeNewPassword.setBorder(null);
-		this.btnEyeNewPassword.addActionListener(this);
-		this.container.add(this.btnEyeNewPassword);
-
-		/**
-		 * Label New Password.
-		 */
-		this.labelConfirmPassword = new JLabel("Vuelva a ingresar la contraseña.");
-		this.labelConfirmPassword.setFont(new java.awt.Font("Segoe UI", 0, 18));
-		this.labelConfirmPassword.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelConfirmPassword.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-		this.labelConfirmPassword.setBounds(20, 110, 300, 20);
-		this.container.add(this.labelConfirmPassword);
-
-		/**
-		 * Campo de texto de tipo JPasswordFiel para el nuevo password del usuario en
-		 * cuestión.
-		 */
-		this.txtConfirmPasswordField = new JPasswordField();
-		this.txtConfirmPasswordField.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		this.txtConfirmPasswordField.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtConfirmPasswordField.setBounds(20, 130, 250, 30);
-		this.txtConfirmPasswordField.setBackground(new Color(127, 140, 141));
-		this.txtConfirmPasswordField.setForeground(Color.WHITE);
-		this.container.add(this.txtConfirmPasswordField);
-
-		/**
-		 * Campo de texto para el nuevo password del usuario en cuestión.
-		 */
-		this.txtConfirmPassword = new JTextField();
-		this.txtConfirmPassword.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		this.txtConfirmPassword.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtConfirmPassword.setBounds(20, 130, 250, 30);
-		this.txtConfirmPassword.setBackground(new Color(127, 140, 141));
-		this.txtConfirmPassword.setForeground(Color.WHITE);
-		this.container.add(this.txtConfirmPassword);
-
-		/**
-		 * Botón para mostrar u ocultar el texto del campo de texto password.
-		 */
-		this.btnEyeConfirmPassword = new JButton();
-		this.btnEyeConfirmPassword.setBounds(275, 130, 50, 30);
-		this.btnEyeConfirmPassword.setBackground(new Color(46, 59, 104));
-		this.btnEyeConfirmPassword.setIcon(new ImageIcon("src/img/ojo_opt.png"));
-		this.btnEyeConfirmPassword.setBorder(null);
-		this.btnEyeConfirmPassword.addActionListener(this);
-		this.container.add(this.btnEyeConfirmPassword);
+		this.textPaneIndications = new JTextPane();
+		this.textPaneIndications.setForeground(Color.BLACK);
+		this.textPaneIndications.setFont(new Font("serif", Font.BOLD, 14));
+		this.textPaneIndications.setEditable(false);
+		this.textPaneIndications.setText(
+				"A continuación, se enviará la nueva contraseña generada por el sistema a tu correo electrónico, por favor revisa en spam o notificaciones, cuando tengas la clave ingresa al sistema y cambiala inmediatamente.");
+		this.scrollIndications = new JScrollPane(this.textPaneIndications);
+		this.scrollIndications.setBounds(20, 75, 300, 80);
+		this.scrollIndications.setViewportView(this.textPaneIndications);
+		this.container.add(this.scrollIndications);
 
 		/**
 		 * Botón para restaurar la contraseña del usuario en cuestión.
@@ -190,20 +121,21 @@ public class RestorePasswordWithEmail extends JFrame implements ActionListener {
 		this.container.add(this.btnRestorePassword);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == this.btnRestorePassword) {
-
-			if (this.txtNewPassword.getText().trim().equals(this.txtConfirmPassword.getText().trim())) {
+			String newPassword = SendMail(email);
+			if (newPassword != null) {
 				try {
 					Connection cn = (Connection) DatabaseConnection.conectar();
-					PreparedStatement pst = (PreparedStatement) cn.prepareStatement("UPDATE usuarios SET password = '"
-							+ this.txtnewPasswordField.getText().trim() + "'  WHERE email = '" + this.email + "'");
+					PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
+							"UPDATE usuarios SET password = '" + newPassword + "'  WHERE email = '" + this.email + "'");
 					pst.executeUpdate();
 					cn.close();
 					this.dispose();
+					
+					JOptionPane.showMessageDialog(null, "Contraseña enviada al correo");
 
 					/**
 					 * Llamado al Login para que inicie sesión con su nuevo password.
@@ -212,82 +144,54 @@ public class RestorePasswordWithEmail extends JFrame implements ActionListener {
 					login.setVisible(true);
 					login.setLocationRelativeTo(null);
 				} catch (SQLException ex) {
-					System.err.println("Error en consultar capturista");
+					JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado. Contacta al Administrador");
 				}
-			} else {
-				this.txtNewPassword.setBackground(Color.red);
-				this.txtNewPassword.setBackground(Color.red);
-				JOptionPane.showMessageDialog(null, "Los campos no coinciden.");
-			}
-		}
-
-		/**
-		 * Acción para que el usuario pueda visualizar el password digitado.
-		 */
-		if (e.getSource() == this.btnEyeNewPassword) {
-			if (!eyeEstateNewPassword) {
-				this.txtNewPassword.setText(txtnewPasswordField.getText());
-				this.txtNewPassword.setVisible(true);
-				this.txtnewPasswordField.setVisible(false);
-				this.eyeEstateNewPassword = true;
-			} else {
-				this.txtnewPasswordField.setText(txtnewPasswordField.getText());
-				this.txtNewPassword.setVisible(false);
-				this.txtnewPasswordField.setVisible(true);
-				this.eyeEstateNewPassword = false;
-			}
-		}
-
-		/**
-		 * Acción para que el usuario pueda visualizar el password digitado.
-		 */
-		if (e.getSource() == this.btnEyeConfirmPassword) {
-			if (!eyeEstateConfirmPassword) {
-				this.txtConfirmPassword.setText(txtConfirmPasswordField.getText());
-				this.txtConfirmPassword.setVisible(true);
-				this.txtConfirmPasswordField.setVisible(false);
-				this.eyeEstateConfirmPassword = true;
-			} else {
-				this.txtConfirmPasswordField.setText(txtConfirmPasswordField.getText());
-				this.txtConfirmPassword.setVisible(false);
-				this.txtConfirmPasswordField.setVisible(true);
-				this.eyeEstateConfirmPassword = false;
 			}
 		}
 
 	}
 
-	public void SendMail() {
+	public String SendMail(String email) {
+		String sender = "juank2001estevez@gmail.com";
+		String password = "dguiukhvunpaqxfx";
+		String emailReceived = email;
+		String affair = "Clave Estevez Corporation";
+		String messageToSend = "";
+		String newPasswordGenerated = null;
+
 		try {
-		Properties props =  new Properties();
-		props.setProperty("mail.smtp.host", "smtp.gmail.com");
-		props.setProperty("mail.smtp.starttls.enable", "true");
-		props.setProperty("mail.smtp.port", "587");
-		props.setProperty("mail.smtp.auth", "true");
-		
-		Session sesion = Session.getDefaultInstance(props);
-		
-		String remitente = "juank2001estevez@gmail.com";
-		String password = "";
-		String receptor = "juank2001estevezvargas@gmail.com";
-		String asunto = "correoooo";
-		String mensaje = "contenio";
-		
-		MimeMessage mesage = new MimeMessage(sesion);
-		
-			mesage.setFrom(new InternetAddress(remitente));
-			mesage.addRecipient(Message.RecipientType.TO, new InternetAddress(receptor));
-			mesage.setSubject(asunto);
-			mesage.setText(mensaje);
-			
-			Transport t =  sesion.getTransport("smtp");
-			t.connect(remitente, password);
-			t.sendMessage(mesage, mesage.getRecipients(Message.RecipientType.TO));
+			Properties props = new Properties();
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+			props.setProperty("mail.smtp.starttls.enable", "true");
+			props.setProperty("mail.smtp.port", "587");
+			props.setProperty("mail.smtp.user", sender);
+			props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+			props.setProperty("mail.smtp.auth", "true");
+
+			Session session = Session.getDefaultInstance(props);
+
+			MimeMessage message = new MimeMessage(session);
+
+			message.setFrom(new InternetAddress(sender));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailReceived));
+			message.setSubject(affair);
+			newPasswordGenerated = "Sqrt.983@*kjdg";
+			messageToSend = "Tu nueva contraseña es la siguiente:\n\n" + newPasswordGenerated
+					+ "\n\nSe recomienda cambiarla tan pronto ingreses al sistema.";
+			message.setText(messageToSend);
+
+			Transport t = session.getTransport("smtp");
+			t.connect(sender, password);
+			t.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
 			t.close();
+			return newPasswordGenerated;
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+					"¡Ocurrió un error al intentar enviar la clave al correo electrónico! Contacta al Administrador");
 		}
+		return newPasswordGenerated;
 	}
 
 }
