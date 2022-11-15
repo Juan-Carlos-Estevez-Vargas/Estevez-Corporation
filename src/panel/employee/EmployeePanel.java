@@ -227,10 +227,12 @@ public class EmployeePanel extends JFrame implements ActionListener {
 		 * Cierra la sesión del usuario actual.
 		 */
 		if (e.getSource() == this.btnLogout) {
-			Login login = new Login();
-			login.setLocationRelativeTo(null);
-			login.setVisible(true);
-			this.dispose();
+			if (JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar la sesión?") == 0) {
+				Login login = new Login();
+				login.setLocationRelativeTo(null);
+				login.setVisible(true);
+				this.dispose();
+			}
 		}
 
 		/**

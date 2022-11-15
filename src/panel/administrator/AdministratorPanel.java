@@ -254,10 +254,12 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 		 * Cierra la sesión del usuario en cuestión.
 		 */
 		if (e.getSource() == this.btnLogout) {
-			Login login = new Login();
-			login.setLocationRelativeTo(null);
-			login.setVisible(true);
-			this.dispose();
+			if (JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar la sesión?") == 0) {
+				Login login = new Login();
+				login.setLocationRelativeTo(null);
+				login.setVisible(true);
+				this.dispose();
+			}
 		}
 
 		/**
@@ -318,7 +320,7 @@ public class AdministratorPanel extends JFrame implements ActionListener {
 							} while (rs.next());
 							document.add(table);
 						}
-						
+
 						rs.close();
 						pst.close();
 						cn.close();
