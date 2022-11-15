@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-11-2022 a las 23:33:40
+-- Tiempo de generación: 15-11-2022 a las 21:18:30
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -43,8 +43,8 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `nombre_cliente`, `mail_cliente`, `tel_cliente`, `dir_cliente`, `ultima_modificacion`) VALUES
-(11, 'CLIENTE', 'kgbn', '123456', '8746egy34n', 'luz'),
-(12, 'cliente armando', 'uyfvby', '56789', 'uytfvbyvbh', 'luz');
+(15, 'Marco Antonio Solis Guerra', 'marco.solis@gmail.com', '3214567721', 'Colombia', 'capgen'),
+(16, 'Marina Gonzales Cabanzo', 'marina.g@gmail.com', '3214596533', 'Pereira - Colombia', 'capgen');
 
 -- --------------------------------------------------------
 
@@ -74,8 +74,9 @@ CREATE TABLE `equipos` (
 --
 
 INSERT INTO `equipos` (`id_equipo`, `id_cliente`, `tipo_equipo`, `marca`, `modelo`, `num_serie`, `dia_ingreso`, `mes_ingreso`, `annio_ingreso`, `observaciones`, `estatus`, `ultima_modificacion`, `comentarios_tecnicos`, `revision_tecnica_de`) VALUES
-(14, 11, 'Impresora', 'Toshiba', '8u7dyev', '876545', '24', '9', '2022', 'esta vuelto mierda', 'Entregado', 'pedro', '', ''),
-(15, 12, 'Laptop', 'Acer', 'puta', 'puta2', '24', '10', '2022', 'puta', 'Nuevo Ingreso', 'luz', '', '');
+(18, 15, 'Desktop', 'Samsung', 'AFZ-78F-3', '2349762927-G', '15', '11', '2022', 'El cliente informa que el equipo se calienta mucho y en ocasiones llega a oler un poco a quemado, además, comenta que se torna un poco lento.', 'En Revisión', 'tecgen', 'El equipo se encuentra en revisión en este momento, se estima su reparación para el dia 16/11/2022.', ''),
+(19, 15, 'Laptop', 'HP', 'ASD-65G-D', '29725271-K', '15', '11', '2022', 'El cliente afirma problemas en la batería, no carga y la poca batería que llega a tener se termina muy rápido. Se requiere prioridad en su reparación.', 'Reparado', 'tecgen', 'Se cambio la bateria junto con el puerto de carga por componente totalmente nuevos.', ''),
+(20, 16, 'Impresora', 'Brother', 'IMP-RE45-F', '98765-AMI', '15', '11', '2022', 'No detecta los cartuchos de color verde, además, el cliente menciona mucha demora a la hora de imprimir.', 'Nuevo Ingreso', 'capgen', '', '');
 
 -- --------------------------------------------------------
 
@@ -88,7 +89,7 @@ CREATE TABLE `usuarios` (
   `nombre_usuario` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `telefono` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `tipo_nivel` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `estatus` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -100,7 +101,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre_usuario`, `email`, `telefono`, `username`, `password`, `tipo_nivel`, `estatus`, `registrado_por`) VALUES
-(1, 'Super Administrador', 'administrador@example.com', '3152550000', 'Administrador', 'administrador123*', 'Administrador', 'Activo', 'Administrador');
+(1, 'Administrador General', 'juank2001estevez@gmail.com', '3152550000', 'JCEV', 'admin123', 'Administrador', 'Activo', 'JCEV'),
+(43, 'Capturista General', 'capgen@gmail.com', '3154567890', 'CAPGEN', 'capgen123', 'Capturista', 'Activo', 'JCEV'),
+(44, 'Tecnico Gneral', 'tecgen@gmail.com', '3457864000', 'TECGEN', 'tecgen123', 'Tecnico', 'Activo', 'JCEV');
 
 --
 -- Índices para tablas volcadas
@@ -132,19 +135,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `equipos`
 --
 ALTER TABLE `equipos`
-  MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
