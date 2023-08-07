@@ -1,0 +1,24 @@
+package dev.juan.estevez.utils;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DatabaseConnection {
+
+	/**
+	 * Conexion con base de datos local
+	 *
+	 * @return
+	 */
+	public static Connection conectar() {
+		try {
+			Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/estevez_corporation", "root", "");
+			return cn;
+		} catch (SQLException ex) {
+			System.out.println("Error en la conexion local " + ex);
+		}
+		return (null);
+	}
+
+}

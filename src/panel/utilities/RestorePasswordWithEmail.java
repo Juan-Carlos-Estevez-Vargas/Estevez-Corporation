@@ -18,11 +18,12 @@ import javax.swing.JTextPane;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-import util.DatabaseConnection;
+import dev.juan.estevez.utils.DatabaseConnection;
 
+/*
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage;*/
 
 /**
  * Vista para recuperar contraseña.
@@ -30,7 +31,7 @@ import javax.mail.internet.MimeMessage;
  * @author Juan Carlos Estevez Vargas.
  *
  */
-public class RestorePasswordWithEmail extends JFrame implements ActionListener {
+public class RestorePasswordWithEmail extends JFrame /*implements ActionListener*/ {
 
 	/**
 	 * Declaración de Variables.
@@ -114,15 +115,15 @@ public class RestorePasswordWithEmail extends JFrame implements ActionListener {
 		this.btnRestorePassword = new JButton("Restaurar Password");
 		this.btnRestorePassword.setFont(new java.awt.Font("Tahoma", 1, 18));
 		this.btnRestorePassword.setBorder(null);
-		this.btnRestorePassword.addActionListener(this);
+		//this.btnRestorePassword.addActionListener(this);
 		this.btnRestorePassword.setBounds(20, 180, 300, 35);
 		this.btnRestorePassword.setBackground(new Color(8, 85, 224));
 		this.btnRestorePassword.setForeground(Color.WHITE);
 		this.container.add(this.btnRestorePassword);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
+	//@Override
+	/*public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == this.btnRestorePassword) {
 			String newPassword = SendMail(email);
@@ -137,9 +138,6 @@ public class RestorePasswordWithEmail extends JFrame implements ActionListener {
 					
 					JOptionPane.showMessageDialog(null, "Contraseña enviada al correo");
 
-					/**
-					 * Llamado al Login para que inicie sesión con su nuevo password.
-					 */
 					Login login = new Login();
 					login.setVisible(true);
 					login.setLocationRelativeTo(null);
@@ -148,10 +146,9 @@ public class RestorePasswordWithEmail extends JFrame implements ActionListener {
 				}
 			}
 		}
+	}*/
 
-	}
-
-	public String SendMail(String email) {
+	/*public String SendMail(String email) {
 		String sender = "juank2001estevez@gmail.com";
 		String password = "dguiukhvunpaqxfx";
 		String emailReceived = email;
@@ -192,6 +189,6 @@ public class RestorePasswordWithEmail extends JFrame implements ActionListener {
 					"¡Ocurrió un error al intentar enviar la clave al correo electrónico! Contacta al Administrador");
 		}
 		return newPasswordGenerated;
-	}
+	}*/
 
 }

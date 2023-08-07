@@ -21,10 +21,10 @@ import javax.swing.SwingConstants;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-import panel.administrator.AdministratorPanel;
-import panel.employee.EmployeePanel;
-import panel.technical.PanelTechnical;
-import util.DatabaseConnection;
+import dev.juan.estevez.utils.DatabaseConnection;
+import dev.juan.estevez.views.administrator.AdministratorPanel;
+import dev.juan.estevez.views.employee.EmployeePanel;
+import dev.juan.estevez.views.technical.PanelTechnical;
 
 /**
  * Inicio de sesión del aplicativo.
