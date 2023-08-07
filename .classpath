@@ -8,10 +8,5 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="external libraries/itext5-itextpdf-5.5.12.jar"/>
 	<classpathentry kind="lib" path="external libraries/mysql-connector-java-5.1.46.jar"/>
-	<classpathentry kind="lib" path="D:/Documents/Programacion/Java/5. JDBC/Estevez-Corporation/external libraries/mail/javax.activation-1.1.0.v201105071233.jar"/>
-	<classpathentry kind="lib" path="D:/Documents/Programacion/Java/5. JDBC/Estevez-Corporation/external libraries/mail/javax.ejb.jar"/>
-	<classpathentry kind="lib" path="D:/Documents/Programacion/Java/5. JDBC/Estevez-Corporation/external libraries/mail/javax.faces-api-2.0.jar"/>
-	<classpathentry kind="lib" path="D:/Documents/Programacion/Java/5. JDBC/Estevez-Corporation/external libraries/mail/javax-inject.jar"/>
-	<classpathentry kind="lib" path="D:/Documents/Programacion/Java/5. JDBC/Estevez-Corporation/external libraries/mail/mail.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

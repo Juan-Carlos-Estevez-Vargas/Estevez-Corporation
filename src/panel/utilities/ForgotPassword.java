@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-import util.DatabaseConnection;
+import dev.juan.estevez.utils.DatabaseConnection;
 
 /**
  * Vista para recuperar contraseña por si el usuario olvidó la misma.
