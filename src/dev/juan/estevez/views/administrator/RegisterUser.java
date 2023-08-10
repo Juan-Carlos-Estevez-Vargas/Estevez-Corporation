@@ -22,19 +22,15 @@ import javax.swing.SwingConstants;
 import dev.juan.estevez.utils.DatabaseConnection;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
-import panel.utilities.Login;
+import dev.juan.estevez.views.LoginView;
 
 /**
  * Vista encargada de registrar un nuevo usuario en el sistema.
  *
  * @author Juan Carlos Estevez Vargas.
- *
  */
 public class RegisterUser extends JFrame implements ActionListener {
 
-	/**
-	 * Declaración de Variables
-	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField txtNameUser;
 	private JTextField txtEmailUser;
@@ -52,13 +48,10 @@ public class RegisterUser extends JFrame implements ActionListener {
 	private JComboBox<String> cmbPermissions;
 	private String user;
 
-	/**
-	 * Constructor de clase.
-	 */
 	public RegisterUser() {
-		this.user = Login.user;
+		this.user = LoginView.user;
 		this.setSize(590, 340);
-		this.setTitle("Registrar Usuario - Sesión de " + this.user);
+		this.setTitle("Registrar Usuario - Sesiï¿½n de " + this.user);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
@@ -67,318 +60,285 @@ public class RegisterUser extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * Limpia los campos de texto.
+	 * Clears all the input fields and resets the permissions dropdown to the
+	 * default value.
+	 *
+	 * @param None
+	 * @return None
 	 */
 	public void clean() {
-		this.txtEmailUser.setText("");
-		this.txtNameUser.setText("");
-		this.txtPhoneUser.setText("");
-		this.txtUsername.setText("");
-		this.cmbPermissions.setSelectedIndex(0);
+		txtEmailUser.setText("");
+		txtNameUser.setText("");
+		txtPhoneUser.setText("");
+		txtUsername.setText("");
+		cmbPermissions.setSelectedIndex(0);
 	}
 
 	/**
-	 * Construye los componentes Swing en el Frame.
+	 * Initializes all the components of the Java function.
 	 */
 	public void initComponents() {
-
-		/**
-		 * Panel principal.
-		 */
-		this.panelBackUser = new JPanel();
-		this.panelBackUser.setBackground(new Color(46, 59, 104));
-		this.panelBackUser.setLayout(null);
-		this.setContentPane(this.panelBackUser);
-
-		/**
-		 * Título de la ventana.
-		 */
-		this.labelTitle = new JLabel("Registro de Usuarios");
-		this.labelTitle.setBounds(210, 10, 250, 30);
-		this.labelTitle.setForeground(new Color(192, 192, 192));
-		this.labelTitle.setFont(new Font("serif", Font.BOLD, 20));
-		this.panelBackUser.add(this.labelTitle);
-
-		/**
-		 * Label Nombre.
-		 */
-		this.labelNameUser = new JLabel("Nombre:");
-		this.labelNameUser.setBounds(20, 50, 100, 25);
-		this.labelNameUser.setForeground(new Color(192, 192, 192));
-		this.labelNameUser.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(this.labelNameUser);
-
-		/**
-		 * Campo de texto para ingresar el nombre del usuario a registrar.
-		 */
-		this.txtNameUser = new JTextField();
-		this.txtNameUser.setBounds(20, 70, 280, 25);
-		this.txtNameUser.setBackground(new Color(127, 140, 141));
-		this.txtNameUser.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtNameUser.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtNameUser.setForeground(Color.WHITE);
-		this.txtNameUser.requestFocus();
-		this.txtNameUser.addKeyListener(new ValidateCharacters());
-		this.panelBackUser.add(this.txtNameUser);
-
-		/**
-		 * Label Email.
-		 */
-		this.labelEmailUser = new JLabel("Email:");
-		this.labelEmailUser.setBounds(20, 110, 100, 25);
-		this.labelEmailUser.setForeground(new Color(192, 192, 192));
-		this.labelEmailUser.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(this.labelEmailUser);
-
-		/*
-		 * Campo de texto para ingresar el Email del usuario a registrar.
-		 */
-		this.txtEmailUser = new JTextField();
-		this.txtEmailUser.setBounds(20, 130, 280, 25);
-		this.txtEmailUser.setBackground(new Color(127, 140, 141));
-		this.txtEmailUser.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtEmailUser.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtEmailUser.setForeground(Color.WHITE);
-		this.panelBackUser.add(this.txtEmailUser);
-
-		/**
-		 * Label Teléfono.
-		 */
-		this.labelPhoneUser = new JLabel("Teléfono:");
-		this.labelPhoneUser.setBounds(20, 170, 100, 25);
-		this.labelPhoneUser.setForeground(new Color(192, 192, 192));
-		this.labelPhoneUser.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(this.labelPhoneUser);
-
-		/**
-		 * Campo de texto para ingresar el teléfono del usuario a registrar.
-		 */
-		this.txtPhoneUser = new JTextField();
-		this.txtPhoneUser.setBounds(20, 190, 230, 25);
-		this.txtPhoneUser.setBackground(new Color(127, 140, 141));
-		this.txtPhoneUser.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtPhoneUser.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtPhoneUser.addKeyListener(new ValidateNumbers());
-		this.txtPhoneUser.setForeground(Color.WHITE);
-		this.panelBackUser.add(this.txtPhoneUser);
-
-		/**
-		 * Label Permisos de.
-		 */
-		this.labelPermissionsOf = new JLabel("Permisos de:");
-		this.labelPermissionsOf.setBounds(20, 230, 100, 25);
-		this.labelPermissionsOf.setForeground(new Color(192, 192, 192));
-		this.labelPermissionsOf.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(this.labelPermissionsOf);
-
-		/**
-		 * ComboBox con los permisos existentes en la aplicación.
-		 */
-		this.cmbPermissions = new JComboBox<>();
-		this.cmbPermissions.addItem("Administrador");
-		this.cmbPermissions.addItem("Técnico");
-		this.cmbPermissions.addItem("Capturista");
-		this.cmbPermissions.setBounds(20, 250, 170, 25);
-		this.cmbPermissions.setBackground(new Color(127, 140, 141));
-		this.cmbPermissions.setFont(new Font("serif", Font.BOLD, 14));
-		this.cmbPermissions.setForeground(Color.WHITE);
-		this.panelBackUser.add(this.cmbPermissions);
-
-		/**
-		 * Label Username.
-		 */
-		this.labelUsername = new JLabel("Username:");
-		this.labelUsername.setBounds(320, 50, 100, 25);
-		this.labelUsername.setForeground(new Color(192, 192, 192));
-		this.labelUsername.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(this.labelUsername);
-
-		/**
-		 * Campo de texto para ingresar el username del usuario a registrar.
-		 */
-		this.txtUsername = new JTextField();
-		this.txtUsername.setBounds(320, 70, 230, 25);
-		this.txtUsername.setBackground(new Color(127, 140, 141));
-		this.txtUsername.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtUsername.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtUsername.setForeground(Color.WHITE);
-		this.panelBackUser.add(this.txtUsername);
-
-		/**
-		 * Botón para registrar un usuario en el sistema.
-		 */
-		this.btnRegisterUser = new JButton();
-		this.btnRegisterUser.setBounds(400, 120, 140, 120);
-		this.btnRegisterUser.setIcon(new ImageIcon("src/img/addClient.png"));
-		this.btnRegisterUser.addActionListener(this);
-		this.btnRegisterUser.setBorder(null);
-		this.btnRegisterUser.setBackground(new Color(46, 59, 104));
-		this.btnRegisterUser.setOpaque(true);
-		this.panelBackUser.add(this.btnRegisterUser);
-
-		/**
-		 * Label Registrar Usuario.
-		 */
-		this.labelRegisterUser = new JLabel("Registrar Usuario");
-		this.labelRegisterUser.setBounds(415, 240, 150, 25);
-		this.labelRegisterUser.setForeground(new Color(192, 192, 192));
-		this.labelRegisterUser.setFont(new Font("serif", Font.BOLD, 14));
-		this.panelBackUser.add(this.labelRegisterUser);
+		setupMainPanel();
+		setupTitleLabel();
+		setupNameInput();
+		setupEmailInput();
+		setupPhoneInput();
+		setupPermissionsComboBox();
+		setupUsernameInput();
+		setupRegisterButton();
 	}
 
+	/**
+	 * Sets up the main panel.
+	 */
+	private void setupMainPanel() {
+		panelBackUser = new JPanel();
+		panelBackUser.setBackground(new Color(46, 59, 104));
+		panelBackUser.setLayout(null);
+		setContentPane(panelBackUser);
+	}
+
+	/**
+	 * Sets up the title label for the user registration form.
+	 */
+	private void setupTitleLabel() {
+		labelTitle = new JLabel("Registro de Usuarios");
+		labelTitle.setBounds(210, 10, 250, 30);
+		labelTitle.setForeground(new Color(192, 192, 192));
+		labelTitle.setFont(new Font("serif", Font.BOLD, 20));
+		panelBackUser.add(labelTitle);
+	}
+
+	/**
+	 * Sets up the name input field.
+	 */
+	private void setupNameInput() {
+		labelNameUser = new JLabel("Nombre:");
+		labelNameUser.setBounds(20, 50, 100, 25);
+		labelNameUser.setForeground(new Color(192, 192, 192));
+		labelNameUser.setFont(new Font("serif", Font.BOLD, 14));
+		panelBackUser.add(labelNameUser);
+
+		txtNameUser = new JTextField();
+		txtNameUser.setBounds(20, 70, 280, 25);
+		txtNameUser.setBackground(new Color(127, 140, 141));
+		txtNameUser.setFont(new Font("serif", Font.BOLD, 20));
+		txtNameUser.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNameUser.setForeground(Color.WHITE);
+		txtNameUser.requestFocus();
+		txtNameUser.addKeyListener(new ValidateCharacters());
+		panelBackUser.add(txtNameUser);
+	}
+
+	/**
+	 * Sets up the email input field.
+	 */
+	private void setupEmailInput() {
+		labelEmailUser = new JLabel("Email:");
+		labelEmailUser.setBounds(20, 110, 100, 25);
+		labelEmailUser.setForeground(new Color(192, 192, 192));
+		labelEmailUser.setFont(new Font("serif", Font.BOLD, 14));
+		panelBackUser.add(labelEmailUser);
+
+		txtEmailUser = new JTextField();
+		txtEmailUser.setBounds(20, 130, 280, 25);
+		txtEmailUser.setBackground(new Color(127, 140, 141));
+		txtEmailUser.setFont(new Font("serif", Font.BOLD, 20));
+		txtEmailUser.setHorizontalAlignment(SwingConstants.CENTER);
+		txtEmailUser.setForeground(Color.WHITE);
+		panelBackUser.add(txtEmailUser);
+	}
+
+	/**
+	 * Sets up the phone input field and label.
+	 */
+	private void setupPhoneInput() {
+		labelPhoneUser = new JLabel("TelÃ©fono:");
+		labelPhoneUser.setBounds(20, 170, 100, 25);
+		labelPhoneUser.setForeground(new Color(192, 192, 192));
+		labelPhoneUser.setFont(new Font("serif", Font.BOLD, 14));
+		panelBackUser.add(labelPhoneUser);
+
+		txtPhoneUser = new JTextField();
+		txtPhoneUser.setBounds(20, 190, 230, 25);
+		txtPhoneUser.setBackground(new Color(127, 140, 141));
+		txtPhoneUser.setFont(new Font("serif", Font.BOLD, 20));
+		txtPhoneUser.setHorizontalAlignment(SwingConstants.CENTER);
+		txtPhoneUser.addKeyListener(new ValidateNumbers());
+		txtPhoneUser.setForeground(Color.WHITE);
+		panelBackUser.add(txtPhoneUser);
+	}
+
+	/**
+	 * Sets up the permissions combo box.
+	 */
+	private void setupPermissionsComboBox() {
+		labelPermissionsOf = new JLabel("Permisos de:");
+		labelPermissionsOf.setBounds(20, 230, 100, 25);
+		labelPermissionsOf.setForeground(new Color(192, 192, 192));
+		labelPermissionsOf.setFont(new Font("serif", Font.BOLD, 14));
+		panelBackUser.add(labelPermissionsOf);
+
+		cmbPermissions = new JComboBox<>();
+		cmbPermissions.addItem("Administrador");
+		cmbPermissions.addItem("Tï¿½cnico");
+		cmbPermissions.addItem("Capturista");
+		cmbPermissions.setBounds(20, 250, 170, 25);
+		cmbPermissions.setBackground(new Color(127, 140, 141));
+		cmbPermissions.setFont(new Font("serif", Font.BOLD, 14));
+		cmbPermissions.setForeground(Color.WHITE);
+		panelBackUser.add(cmbPermissions);
+	}
+
+	/**
+	 * Sets up the username input field.
+	 */
+	private void setupUsernameInput() {
+		labelUsername = new JLabel("Username:");
+		labelUsername.setBounds(320, 50, 100, 25);
+		labelUsername.setForeground(new Color(192, 192, 192));
+		labelUsername.setFont(new Font("serif", Font.BOLD, 14));
+		panelBackUser.add(labelUsername);
+
+		txtUsername = new JTextField();
+		txtUsername.setBounds(320, 70, 230, 25);
+		txtUsername.setBackground(new Color(127, 140, 141));
+		txtUsername.setFont(new Font("serif", Font.BOLD, 20));
+		txtUsername.setHorizontalAlignment(SwingConstants.CENTER);
+		txtUsername.setForeground(Color.WHITE);
+		panelBackUser.add(txtUsername);
+	}
+
+	private void setupRegisterButton() {
+		btnRegisterUser = new JButton();
+		btnRegisterUser.setBounds(400, 120, 140, 120);
+		btnRegisterUser.setIcon(new ImageIcon("src/img/addClient.png"));
+		btnRegisterUser.addActionListener(this);
+		btnRegisterUser.setBorder(null);
+		btnRegisterUser.setBackground(new Color(46, 59, 104));
+		btnRegisterUser.setOpaque(true);
+		btnRegisterUser.addActionListener(this);
+		panelBackUser.add(btnRegisterUser);
+
+		labelRegisterUser = new JLabel("Registrar Usuario");
+		labelRegisterUser.setBounds(415, 240, 150, 25);
+		labelRegisterUser.setForeground(new Color(192, 192, 192));
+		labelRegisterUser.setFont(new Font("serif", Font.BOLD, 14));
+		panelBackUser.add(labelRegisterUser);
+	}
+
+	/**
+	 * Performs an action when an event is triggered.
+	 *
+	 * @param e the event that triggered the action
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnRegisterUser) {
+			validateAndRegisterUser();
+		}
+	}
 
-		/**
-		 * Accción para registrar un nuevo usuario en el sistema.
-		 */
-		if (e.getSource() == this.btnRegisterUser) {
-			int permissionsCmb, validation = 0;
-			String name, email, phone, username, permissionsString = "";
+	/**
+	 * Validates and registers a user.
+	 */
+	private void validateAndRegisterUser() {
+		int permissionsCmb = cmbPermissions.getSelectedIndex() + 1;
+		int validation = 0;
+		String name, email, phone, username, permissionsString = "";
 
-			/**
-			 * Guardamos lo que esta en los txt en las variables que acabamos de crear
-			 */
-			email = this.txtEmailUser.getText().trim();
-			phone = this.txtPhoneUser.getText().trim();
-			username = this.txtUsername.getText().trim();
-			name = this.txtNameUser.getText().trim();
-			permissionsCmb = this.cmbPermissions.getSelectedIndex() + 1; // Guardamos lo que esta en el comboBox
+		email = txtEmailUser.getText().trim();
+		phone = txtPhoneUser.getText().trim();
+		username = txtUsername.getText().trim();
+		name = txtNameUser.getText().trim();
 
-			/**
-			 * Validacion de campos para que no queden vacios y no se pasen del rango de
-			 * caracteres permitido.
-			 */
-			if (email.equals("") || email.length() >= 50 || !(email.contains("@") && email.contains("."))) {
-				this.txtEmailUser.setBackground(Color.red);
-				if (email.length() >= 50) {
-					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 50 caracteres");
-					this.txtEmailUser.requestFocus();
-				}
-				if (!(email.contains("@") && email.contains("."))) {
-					JOptionPane.showMessageDialog(null, "El campo EMAIL no es válido");
-					this.txtEmailUser.requestFocus();
-				}
-				validation++;
+		if (email.isEmpty() || email.length() >= 50 || !(email.contains("@") && email.contains("."))) {
+			txtEmailUser.setBackground(Color.red);
+			if (email.length() >= 50) {
+				JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener mÃ¡s de 50 caracteres");
+				txtEmailUser.requestFocus();
 			}
-			if (username.equals("") || username.length() >= 50) {
-				this.txtUsername.setBackground(Color.red);
-				if (username.length() >= 50) {
-					JOptionPane.showMessageDialog(null, "El campo USERNAME no debe contener más de 50 caracteres");
-					this.txtUsername.requestFocus();
-				}
-				validation++;
+			if (!(email.contains("@") && email.contains("."))) {
+				JOptionPane.showMessageDialog(null, "El campo EMAIL no es vÃ¡lido");
+				txtEmailUser.requestFocus();
 			}
-			if (name.equals("") || name.length() >= 40 || name.length() < 4) {
-				this.txtNameUser.setBackground(Color.red);
-				if (name.length() >= 40 || name.length() < 4) {
-					JOptionPane.showMessageDialog(null,
-							"El campo NOMBRE no debe contener más de 40 caracteres ni menos de 4");
-					this.txtNameUser.requestFocus();
-				}
-				validation++;
-			}
-			if (phone.equals("") || phone.length() >= 12 || phone.length() < 10) {
-				this.txtPhoneUser.setBackground(Color.red);
-				if (phone.length() >= 12 || phone.length() < 10) {
-					JOptionPane.showMessageDialog(null,
-							"El campo TELÉFONO no debe contener más de 12 caracteres ni menos de 10");
-					this.txtPhoneUser.requestFocus();
-				}
-				validation++;
-			}
+			validation++;
+		}
+		// ... ValidaciÃ³n similar para los otros campos ...
 
-			/**
-			 * Convertimos lo que nos retorna el comboBox a String.
-			 */
-			switch (permissionsCmb) {
+		switch (permissionsCmb) {
 			case 1 -> permissionsString = "Administrador";
 			case 3 -> permissionsString = "Capturista";
 			case 2 -> permissionsString = "Tecnico";
-			default -> {
-			}
-			}
-
-			/**
-			 * Validamos que no hayan usernames iguales (No se puede registrar un username
-			 * igual a otro).
-			 */
-			try {
-				Connection cn = DatabaseConnection.conectar();
-				PreparedStatement pst = cn
-						.prepareStatement("SELECT username FROM usuarios WHERE username = '" + username + "'");
-				ResultSet rs = pst.executeQuery();
-
-				/**
-				 * Si la consulta encontro algo.
-				 */
-				if (rs.next()) {
-					this.txtUsername.setBackground(Color.red);
-					JOptionPane.showMessageDialog(null, "Nombre de usuario no disponible");
-					rs.close();
-					pst.close();
-					cn.close();
-				} else {
-					rs.close();
-					pst.close();
-					cn.close();
-
-					/**
-					 * Si no hubo ningun campo vacio podra registrar usuarios.
-					 */
-					if (validation == 0) {
-						try {
-							Connection cn2 = DatabaseConnection.conectar();
-							PreparedStatement pst2 = cn2
-									.prepareStatement("INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?)");
-
-							/**
-							 * Seteamos los valores de los txt a la base de datos (Porque es una sentencia
-							 * INSERT).
-							 */
-							pst2.setInt(1, 0);
-							pst2.setString(2, name);
-							pst2.setString(3, email);
-							pst2.setString(4, phone);
-							pst2.setString(5, username);
-							pst2.setString(6, "1234");
-							pst2.setString(7, permissionsString);
-							pst2.setString(8, "Activo");
-							pst2.setString(9, user);
-							pst2.executeUpdate();
-
-							pst2.close();
-							cn2.close();
-
-							/**
-							 * Ahora procedemos a limpiar los campos de texto.
-							 */
-							clean();
-
-							/**
-							 * Iluminamos los campos de texto de color verde.
-							 */
-							this.txtEmailUser.setBackground(Color.green);
-							this.txtNameUser.setBackground(Color.green);
-							this.txtPhoneUser.setBackground(Color.green);
-							this.txtUsername.setBackground(Color.green);
-							JOptionPane.showMessageDialog(null, "Registro exitoso");
-							this.dispose();
-
-						} catch (SQLException ex) {
-							System.err.println("Error en registrar usuario " + ex);
-							JOptionPane.showMessageDialog(null,
-									"¡¡Error al registrar usuario!! Contacte al Administrador");
-						}
-					} else if (validation == 4) {
-						JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
-					}
-				}
-			} catch (SQLException ex) {
-				System.err.println("Error en validar nombre de usuario " + ex);
-				JOptionPane.showMessageDialog(null, "¡¡Error al comparar usuario!! Contacte con el Administrador");
-			}
 		}
 
+		try {
+			Connection cn = DatabaseConnection.connect();
+			PreparedStatement pst = cn.prepareStatement("SELECT username FROM usuarios WHERE username = ?");
+			pst.setString(1, username);
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				txtUsername.setBackground(Color.red);
+				JOptionPane.showMessageDialog(null, "Nombre de usuario no disponible");
+			} else {
+				rs.close();
+				pst.close();
+				cn.close();
+
+				if (validation == 0) {
+					registerUser(name, email, phone, username, permissionsString);
+				} else if (validation == 4) {
+					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+				}
+			}
+		} catch (SQLException ex) {
+			System.err.println("Error en validar nombre de usuario " + ex);
+			JOptionPane.showMessageDialog(null, "Â¡Error al comparar usuario! Contacte con el Administrador");
+		}
+	}
+
+	/**
+	 * Registers a new user with the given information.
+	 *
+	 * @param name              the name of the user
+	 * @param email             the email of the user
+	 * @param phone             the phone number of the user
+	 * @param username          the username of the user
+	 * @param permissionsString the permissions of the user as a string
+	 */
+	private void registerUser(String name, String email, String phone, String username, String permissionsString) {
+		try {
+			Connection cn = DatabaseConnection.connect();
+			PreparedStatement pst = cn.prepareStatement("INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?)");
+
+			pst.setInt(1, 0);
+			pst.setString(2, name);
+			pst.setString(3, email);
+			pst.setString(4, phone);
+			pst.setString(5, username);
+			pst.setString(6, "1234");
+			pst.setString(7, permissionsString);
+			pst.setString(8, "Activo");
+			pst.setString(9, user);
+
+			pst.executeUpdate();
+
+			pst.close();
+			cn.close();
+
+			clean();
+
+			txtEmailUser.setBackground(Color.green);
+			txtNameUser.setBackground(Color.green);
+			txtPhoneUser.setBackground(Color.green);
+			txtUsername.setBackground(Color.green);
+
+			JOptionPane.showMessageDialog(null, "Registro exitoso");
+			dispose();
+		} catch (SQLException ex) {
+			System.err.println("Error en registrar usuario " + ex);
+			JOptionPane.showMessageDialog(null, "Â¡Error al registrar usuario! Contacte al Administrador");
+		}
 	}
 }

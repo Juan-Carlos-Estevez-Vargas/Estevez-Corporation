@@ -23,10 +23,10 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import dev.juan.estevez.utils.DatabaseConnection;
-import panel.utilities.Login;
+import dev.juan.estevez.views.LoginView;
 
 /**
- * Frame con la información general de un equipo específico.
+ * Frame con la informaciï¿½n general de un equipo especï¿½fico.
  *
  * @author Juan Carlos Estevez Vargas.
  *
@@ -34,7 +34,7 @@ import panel.utilities.Login;
 public class EquipmentInformationTechnical extends JFrame implements ActionListener {
 
 	/**
-	 * Declaración de Variables.
+	 * Declaraciï¿½n de Variables.
 	 */
 	private static final long serialVersionUID = 1L;
 	private String user = "";
@@ -68,19 +68,19 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 	 */
 	public EquipmentInformationTechnical() {
 		initComponents();
-		this.user = Login.user;
+		this.user = LoginView.user;
 		this.setResizable(false);
 		this.setSize(610, 460);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		idEquipment = ManagementEquips.id_equip_update;
-		this.setTitle("Equipo registrado con el ID " + idEquipment + " - Sesión de " + user);
+		this.setTitle("Equipo registrado con el ID " + idEquipment + " - Sesiï¿½n de " + user);
 
 		/**
-		 * Consultando la información general del equipo
+		 * Consultando la informaciï¿½n general del equipo
 		 */
 		try {
-			Connection cn = (Connection) DatabaseConnection.conectar();
+			Connection cn = (Connection) DatabaseConnection.connect();
 			PreparedStatement pst = (PreparedStatement) cn
 					.prepareStatement("SELECT * FROM equipos WHERE id_equipo = '" + idEquipment + "'");
 			ResultSet rs = pst.executeQuery();
@@ -106,10 +106,10 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 				this.textPaneObservations.setText(rs.getString("observaciones"));
 				this.textPaneComments.setText(rs.getString("comentarios_tecnicos"));
 				this.labelComments
-						.setText("Comentarios y Actualizacion del técnico " + rs.getString("revision_tecnica_de"));
+						.setText("Comentarios y Actualizacion del tï¿½cnico " + rs.getString("revision_tecnica_de"));
 			}
 		} catch (SQLException e) {
-			System.err.println("Error en consultar información del equipo " + e);
+			System.err.println("Error en consultar informaciï¿½n del equipo " + e);
 		}
 	}
 
@@ -130,7 +130,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		/**
 		 * Label Principal.
 		 */
-		this.labelTittle = new JLabel("Información del Equipo");
+		this.labelTittle = new JLabel("Informaciï¿½n del Equipo");
 		this.labelTittle.setFont(new java.awt.Font("Segoe UI", 0, 24));
 		this.labelTittle.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelTittle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -165,9 +165,9 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.container.add(this.labelModel);
 
 		/**
-		 * Label Número de Serie.
+		 * Label Nï¿½mero de Serie.
 		 */
-		this.labelSerialNumber = new JLabel("Número de Serie :");
+		this.labelSerialNumber = new JLabel("Nï¿½mero de Serie :");
 		this.labelSerialNumber.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		this.labelSerialNumber.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelSerialNumber.setBounds(10, 240, 200, 20);
@@ -201,25 +201,25 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.container.add(this.labelStatus);
 
 		/**
-		 * Label Daño Reportado y Observaciones.
+		 * Label Daï¿½o Reportado y Observaciones.
 		 */
-		this.labelObservations = new JLabel("Daño reportado y observaciones :");
+		this.labelObservations = new JLabel("Daï¿½o reportado y observaciones :");
 		this.labelObservations.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		this.labelObservations.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelObservations.setBounds(260, 110, 200, 20);
 		this.container.add(this.labelObservations);
 
 		/**
-		 * Label Comentarios y Actualización del Técnico.
+		 * Label Comentarios y Actualizaciï¿½n del Tï¿½cnico.
 		 */
-		this.labelComments = new JLabel("Comentarios y Actualización del Técnico :");
+		this.labelComments = new JLabel("Comentarios y Actualizaciï¿½n del Tï¿½cnico :");
 		this.labelComments.setFont(new java.awt.Font("Segoe UI", 1, 12));
 		this.labelComments.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelComments.setBounds(260, 260, 300, 20);
 		this.container.add(this.labelComments);
 
 		/**
-		 * Campo de texto con la información del modelo del equipo.
+		 * Campo de texto con la informaciï¿½n del modelo del equipo.
 		 */
 		this.txtModel = new JTextField();
 		this.txtModel.setBounds(10, 200, 230, 30);
@@ -231,7 +231,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.container.add(this.txtModel);
 
 		/**
-		 * Campo de texto con la información del número de serie del equipo.
+		 * Campo de texto con la informaciï¿½n del nï¿½mero de serie del equipo.
 		 */
 		this.txtSerialNumber = new JTextField();
 		this.txtSerialNumber.setFont(new java.awt.Font("Segoe UI", 1, 16));
@@ -244,7 +244,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.container.add(this.txtSerialNumber);
 
 		/**
-		 * Campo de texto con la información de la fecha de ingreso del equipo.
+		 * Campo de texto con la informaciï¿½n de la fecha de ingreso del equipo.
 		 */
 		this.txtDateOfAdmission = new JTextField();
 		this.txtDateOfAdmission.setHorizontalAlignment(SwingConstants.CENTER);
@@ -256,7 +256,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.container.add(this.txtDateOfAdmission);
 
 		/**
-		 * Campo de texto con la información de quién modificó por última vez el equipo.
+		 * Campo de texto con la informaciï¿½n de quiï¿½n modificï¿½ por ï¿½ltima vez el equipo.
 		 */
 		this.txtModifyBy = new JTextField();
 		this.txtModifyBy.setHorizontalAlignment(SwingConstants.CENTER);
@@ -276,7 +276,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.cmbStatus.setFont(new Font("serif", Font.BOLD, 14));
 		this.cmbStatus.setForeground(Color.WHITE);
 		this.cmbStatus.setModel(new DefaultComboBoxModel<>(
-				new String[] { "Nuevo Ingreso", "En Revisión", "Entregado", "No Reparado", "Reparado" }));
+				new String[] { "Nuevo Ingreso", "En Revisiï¿½n", "Entregado", "No Reparado", "Reparado" }));
 		this.container.add(this.cmbStatus);
 
 		/**
@@ -314,7 +314,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.container.add(this.scrollObservations);
 
 		/**
-		 * TextPane con las observaciones del técnico.
+		 * TextPane con las observaciones del tï¿½cnico.
 		 */
 		this.textPaneComments = new JTextPane();
 		this.textPaneComments.setForeground(Color.BLACK);
@@ -325,7 +325,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 		this.container.add(this.scrollComments);
 
 		/**
-		 * Botón para actualizar el equipo en cuestión.
+		 * Botï¿½n para actualizar el equipo en cuestiï¿½n.
 		 */
 		this.btnUpdateEquipment = new JButton("Actualizar Equipo");
 		this.btnUpdateEquipment.setBounds(20, 368, 210, 35);
@@ -363,7 +363,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 			coments = this.textPaneComments.getText().trim();
 
 			/**
-			 * Validación de campos.
+			 * Validaciï¿½n de campos.
 			 */
 			if (model.equals("")) {
 				this.txtModel.setBackground(Color.red);
@@ -382,7 +382,7 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 
 			if (validation == 0) {
 				try {
-					Connection cn = (Connection) DatabaseConnection.conectar();
+					Connection cn = (Connection) DatabaseConnection.connect();
 					PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
 							"UPDATE equipos SET tipo_equipo = ?, marca = ?, modelo = ?, num_serie = ?, observaciones = ?, estatus = ?, "
 									+ "ultima_modificacion = ?, comentarios_tecnicos = ? WHERE id_equipo = '"
@@ -407,13 +407,13 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 					this.txtSerialNumber.setBackground(Color.green);
 					this.txtModifyBy.setText(user);
 
-					JOptionPane.showMessageDialog(null, "Actualización correcta");
+					JOptionPane.showMessageDialog(null, "Actualizaciï¿½n correcta");
 					this.dispose();
 					ManagementEquips managementEquips = new ManagementEquips();
 					managementEquips.setVisible(true);
 				} catch (SQLException ex) {
 					System.err.println("Error al actualizar equipo " + ex);
-					JOptionPane.showMessageDialog(null, "¡¡Error al actualizar equipo!! Contacte al Administrador");
+					JOptionPane.showMessageDialog(null, "ï¿½ï¿½Error al actualizar equipo!! Contacte al Administrador");
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");

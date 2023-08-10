@@ -21,19 +21,13 @@ import com.mysql.jdbc.PreparedStatement;
 import dev.juan.estevez.utils.DatabaseConnection;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
-import panel.utilities.Login;
+import dev.juan.estevez.views.LoginView;
 
 /**
- * Interface encargada de registrar clientes al sistema.
- *
  * @author Juan Carlos Estevez Vargas.
- *
  */
 public class RegisterClient extends JFrame implements ActionListener {
 
-	/**
-	 * Declaración de Variables
-	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField txtNameClient;
 	private JTextField txtEmailClient;
@@ -49,12 +43,9 @@ public class RegisterClient extends JFrame implements ActionListener {
 	private JButton btnRegisterClient;
 	private String user;
 
-	/**
-	 * Constructor de clase.
-	 */
 	public RegisterClient() {
-		this.user = Login.user;
-		this.setTitle("Registrar nuevo cliente - Sesión de " + this.user);
+		this.user = LoginView.user;
+		this.setTitle("Registrar nuevo cliente - Sesiï¿½n de " + this.user);
 		this.setSize(480, 340);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
@@ -64,7 +55,8 @@ public class RegisterClient extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * Limpia los campos de texto.
+	 * Cleans the text fields for email, name, address, and phone number of the
+	 * client.
 	 */
 	public void clean() {
 		this.txtEmailClient.setText("");
@@ -73,9 +65,6 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.txtPhoneClient.setText("");
 	}
 
-	/**
-	 * Construye los componentes Swing en el Frame.
-	 */
 	public void initComponents() {
 
 		/**
@@ -87,7 +76,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.setContentPane(this.panelBackClient);
 
 		/**
-		 * Título de la ventana.
+		 * Tï¿½tulo de la ventana.
 		 */
 		this.labelTitle = new JLabel("Registro de Clientes");
 		this.labelTitle.setBounds(160, 10, 250, 20);
@@ -138,16 +127,16 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.txtEmailClient);
 
 		/**
-		 * Label Teléfono Cliente.
+		 * Label Telï¿½fono Cliente.
 		 */
-		this.labelPhoneClient = new JLabel("Teléfono:");
+		this.labelPhoneClient = new JLabel("Telï¿½fono:");
 		this.labelPhoneClient.setBounds(20, 170, 100, 25);
 		this.labelPhoneClient.setForeground(new Color(192, 192, 192));
 		this.labelPhoneClient.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackClient.add(this.labelPhoneClient);
 
 		/**
-		 * Campo de texto para ingresar el teléfono del Cliente a registrar.
+		 * Campo de texto para ingresar el telï¿½fono del Cliente a registrar.
 		 */
 		this.txtPhoneClient = new JTextField();
 		this.txtPhoneClient.setBounds(20, 190, 230, 25);
@@ -159,16 +148,16 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.txtPhoneClient);
 
 		/**
-		 * Label Dirección Cliente.
+		 * Label Direcciï¿½n Cliente.
 		 */
-		this.labelAdressClient = new JLabel("Dirección:");
+		this.labelAdressClient = new JLabel("Direcciï¿½n:");
 		this.labelAdressClient.setBounds(20, 230, 100, 25);
 		this.labelAdressClient.setForeground(new Color(192, 192, 192));
 		this.labelAdressClient.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackClient.add(this.labelAdressClient);
 
 		/**
-		 * Campo de texto para ingresar la dirección del cliente a registrar.
+		 * Campo de texto para ingresar la direcciï¿½n del cliente a registrar.
 		 */
 		this.txtAdressClient = new JTextField();
 		this.txtAdressClient.setBounds(20, 250, 230, 25);
@@ -188,7 +177,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.labelRegisterClient);
 
 		/**
-		 * Botón para registrar un Cliente en el sistema.
+		 * Botï¿½n para registrar un Cliente en el sistema.
 		 */
 		this.btnRegisterClient = new JButton();
 		this.btnRegisterClient.setBounds(300, 100, 120, 120);
@@ -224,7 +213,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 			if (name.equals("") || name.length() >= 35) {
 				this.txtNameClient.setBackground(Color.red);
 				if (name.length() >= 35) {
-					JOptionPane.showMessageDialog(null, "El campo NOMBRE no debe contener más de 35 caracteres");
+					JOptionPane.showMessageDialog(null, "El campo NOMBRE no debe contener mï¿½s de 35 caracteres");
 					this.txtNameClient.requestFocus();
 				}
 				validation++;
@@ -232,11 +221,11 @@ public class RegisterClient extends JFrame implements ActionListener {
 			if (mail.equals("") || mail.length() >= 40 || !(mail.contains("@") && mail.contains("."))) {
 				this.txtEmailClient.setBackground(Color.red);
 				if (mail.length() >= 40) {
-					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 40 caracteres");
+					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener mï¿½s de 40 caracteres");
 					this.txtEmailClient.requestFocus();
 				}
 				if (!(mail.contains("@") && mail.contains("."))) {
-					JOptionPane.showMessageDialog(null, "El campo EMAIL no es válido");
+					JOptionPane.showMessageDialog(null, "El campo EMAIL no es vï¿½lido");
 					this.txtEmailClient.requestFocus();
 				}
 				validation++;
@@ -244,7 +233,8 @@ public class RegisterClient extends JFrame implements ActionListener {
 			if (phone.equals("") || phone.length() >= 12) {
 				this.txtPhoneClient.setBackground(Color.red);
 				if (phone.length() >= 12 || phone.length() < 10) {
-					JOptionPane.showMessageDialog(null, "El campo TELÉFONO no debe contener más de 12 caracteres ni menos de 10");
+					JOptionPane.showMessageDialog(null,
+							"El campo TELï¿½FONO no debe contener mï¿½s de 12 caracteres ni menos de 10");
 					this.txtPhoneClient.requestFocus();
 				}
 				validation++;
@@ -252,7 +242,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 			if (adress.equals("") || adress.length() >= 60) {
 				this.txtAdressClient.setBackground(Color.red);
 				if (adress.length() >= 60) {
-					JOptionPane.showMessageDialog(null, "El campo DIRECCIÓN no debe contener más de 60 caracteres");
+					JOptionPane.showMessageDialog(null, "El campo DIRECCIï¿½N no debe contener mï¿½s de 60 caracteres");
 					this.txtAdressClient.requestFocus();
 				}
 				validation++;
@@ -263,7 +253,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 			 */
 			if (validation == 0) {
 				try {
-					Connection cn = (Connection) DatabaseConnection.conectar();
+					Connection cn = (Connection) DatabaseConnection.connect();
 					PreparedStatement pst = (PreparedStatement) cn
 							.prepareStatement("INSERT INTO clientes VALUES (?,?,?,?,?,?)");
 
@@ -274,7 +264,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 					pst.setString(5, adress);
 					pst.setString(6, this.user);
 					pst.executeUpdate();
-					
+
 					pst.close();
 					cn.close();
 
@@ -289,7 +279,7 @@ public class RegisterClient extends JFrame implements ActionListener {
 					this.dispose();
 				} catch (SQLException ex) {
 					System.err.println("Error en registrar Cliente " + ex);
-					JOptionPane.showMessageDialog(null, "¡¡Error al registrar cliente, contacte al Administrador!!");
+					JOptionPane.showMessageDialog(null, "ï¿½ï¿½Error al registrar cliente, contacte al Administrador!!");
 				}
 			} else if (validation == 4) {
 				JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");

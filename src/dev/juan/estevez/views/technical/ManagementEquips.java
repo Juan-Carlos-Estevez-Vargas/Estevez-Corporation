@@ -17,7 +17,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import dev.juan.estevez.utils.DatabaseConnection;
-import panel.utilities.Login;
+import dev.juan.estevez.views.LoginView;
 
 /**
  * Frame con la lista de equipos registrados en el sistema.
@@ -28,7 +28,7 @@ import panel.utilities.Login;
 public class ManagementEquips extends JFrame {
 
 	/**
-	 * Declaración de Variables.
+	 * Declaraciï¿½n de Variables.
 	 */
 	private static final long serialVersionUID = 1L;
 	public static int id_equip_update = 0;
@@ -44,10 +44,10 @@ public class ManagementEquips extends JFrame {
 	 * Constructor de Clase.
 	 */
 	public ManagementEquips() {
-		this.user = Login.user;
+		this.user = LoginView.user;
 		this.setSize(630, 340);
 		this.setResizable(false);
-		this.setTitle("Técnico - Sesión de " + this.user);
+		this.setTitle("Tï¿½cnico - Sesiï¿½n de " + this.user);
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -57,7 +57,7 @@ public class ManagementEquips extends JFrame {
 		 * Rellenando la tabla con los datos de la base de datos.
 		 */
 		try {
-			Connection cn = DatabaseConnection.conectar();
+			Connection cn = DatabaseConnection.connect();
 			PreparedStatement pst = cn.prepareStatement("SELECT id_equipo, tipo_equipo, marca, estatus FROM equipos");
 			ResultSet rs = pst.executeQuery();
 
@@ -126,7 +126,7 @@ public class ManagementEquips extends JFrame {
 		this.setContentPane(this.container);
 
 		/**
-		 * Título del Panel.
+		 * Tï¿½tulo del Panel.
 		 */
 		this.labelTitle = new JLabel("Equipos Registrados");
 		this.labelTitle.setBounds(210, 10, 250, 20);

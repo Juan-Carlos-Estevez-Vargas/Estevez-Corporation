@@ -24,10 +24,10 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import dev.juan.estevez.utils.DatabaseConnection;
-import panel.utilities.Login;
+import dev.juan.estevez.views.LoginView;
 
 /**
- * Frame encargado de registrar un equipo asociado a un cliente específico.
+ * Frame encargado de registrar un equipo asociado a un cliente especï¿½fico.
  *
  * @author Juan Carlos Estevez Vargas.
  *
@@ -35,7 +35,7 @@ import panel.utilities.Login;
 public class RegisterEquipment extends JFrame implements ActionListener {
 
 	/**
-	 * Declaración de Variables
+	 * Declaraciï¿½n de Variables
 	 */
 	private static final long serialVersionUID = 1L;
 	private int idClientUpdate;
@@ -62,8 +62,8 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 	 * Constructor de clase.
 	 */
 	public RegisterEquipment() {
-		this.user = Login.user;
-		this.setTitle("Registrar nuevo Equipo - Sesión de " + this.user);
+		this.user = LoginView.user;
+		this.setTitle("Registrar nuevo Equipo - Sesiï¿½n de " + this.user);
 		this.setSize(615, 400);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
@@ -79,7 +79,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		 * Recuperando el nombre del cliente.
 		 */
 		try {
-			Connection cn = (Connection) DatabaseConnection.conectar();
+			Connection cn = (Connection) DatabaseConnection.connect();
 			PreparedStatement pst = (PreparedStatement) cn
 					.prepareStatement("SELECT * FROM clientes WHERE id_cliente = '" + idClientUpdate + "'");
 			ResultSet rs = pst.executeQuery();
@@ -94,7 +94,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 			cn.close();
 		} catch (SQLException e) {
 			System.err.println("Error al cargar usuario " + e);
-			JOptionPane.showMessageDialog(null, "¡¡Error al cargar!! Contacte al Administrador");
+			JOptionPane.showMessageDialog(null, "ï¿½ï¿½Error al cargar!! Contacte al Administrador");
 		}
 	}
 
@@ -112,7 +112,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.setContentPane(this.panelBackClient);
 
 		/**
-		 * Título de la ventana.
+		 * Tï¿½tulo de la ventana.
 		 */
 		this.labelTitle = new JLabel();
 		this.labelTitle.setBounds(140, 10, 400, 30);
@@ -204,16 +204,16 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.txtModel);
 
 		/**
-		 * Label Número Serial del Equipo.
+		 * Label Nï¿½mero Serial del Equipo.
 		 */
-		this.labelSerialNumber = new JLabel("Número de Serie :");
+		this.labelSerialNumber = new JLabel("Nï¿½mero de Serie :");
 		this.labelSerialNumber.setBounds(10, 300, 200, 25);
 		this.labelSerialNumber.setForeground(new Color(192, 192, 192));
 		this.labelSerialNumber.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackClient.add(this.labelSerialNumber);
 
 		/**
-		 * Campo de texto para ingresar el número serial del equipo a registrar.
+		 * Campo de texto para ingresar el nï¿½mero serial del equipo a registrar.
 		 */
 		this.txtSerialNumber = new JTextField();
 		this.txtSerialNumber.setBounds(10, 320, 230, 25);
@@ -224,16 +224,16 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.txtSerialNumber);
 
 		/**
-		 * Label Daño Reportado y Observaciones.
+		 * Label Daï¿½o Reportado y Observaciones.
 		 */
-		this.labelObservations = new JLabel("Daño Reportado y Observaciones :");
+		this.labelObservations = new JLabel("Daï¿½o Reportado y Observaciones :");
 		this.labelObservations.setBounds(255, 60, 300, 25);
 		this.labelObservations.setForeground(new Color(192, 192, 192));
 		this.labelObservations.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBackClient.add(this.labelObservations);
 
 		/**
-		 * TextPane con las observaciones del técnico.
+		 * TextPane con las observaciones del tï¿½cnico.
 		 */
 		this.textPaneObservations = new JTextPane();
 		this.textPaneObservations.setForeground(Color.BLACK);
@@ -244,7 +244,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.panelBackClient.add(this.scrollObservations);
 
 		/**
-		 * Botón para ingresar el equipo en cuestión.
+		 * Botï¿½n para ingresar el equipo en cuestiï¿½n.
 		 */
 		this.btnRegisterEquip = new JButton("Registrar Equipo");
 		this.btnRegisterEquip.setBounds(375, 310, 210, 35);
@@ -278,7 +278,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 
 			day = Integer.toString(calendar.get(Calendar.DATE)); // Recuperamos el dia de ingreso del equipo
 			month = Integer.toString(calendar.get(Calendar.MONTH) + 1); // Recuperamos el mes de ingreso del equipo
-			year = Integer.toString(calendar.get(Calendar.YEAR)); // Recuperamos el año de ingreso del equipo
+			year = Integer.toString(calendar.get(Calendar.YEAR)); // Recuperamos el aï¿½o de ingreso del equipo
 
 			/**
 			 * Validacion de campos
@@ -286,7 +286,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 			if (model.equals("") || model.length() >= 50) {
 				this.txtModel.setBackground(Color.red);
 				if (model.length() >= 50) {
-					JOptionPane.showMessageDialog(null, "El campo MODELO no debe contener más de 50 caracteres");
+					JOptionPane.showMessageDialog(null, "El campo MODELO no debe contener mï¿½s de 50 caracteres");
 					this.txtModel.requestFocus();
 				}
 				validation++;
@@ -294,7 +294,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 			if (serialNumber.equals("") || serialNumber.length() >= 50) {
 				this.txtSerialNumber.setBackground(Color.red);
 				if (serialNumber.length() >= 50) {
-					JOptionPane.showMessageDialog(null, "El campo NÚMERO SERIAL no debe contener más de 50 caracteres");
+					JOptionPane.showMessageDialog(null, "El campo Nï¿½MERO SERIAL no debe contener mï¿½s de 50 caracteres");
 					this.txtModel.requestFocus();
 				}
 				validation++;
@@ -305,7 +305,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 
 			if (validation == 0) {
 				try {
-					Connection cn = (Connection) DatabaseConnection.conectar();
+					Connection cn = (Connection) DatabaseConnection.connect();
 					PreparedStatement pst = (PreparedStatement) cn
 							.prepareStatement("INSERT INTO equipos VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
@@ -338,7 +338,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 					clientInformation.setVisible(true);
 				} catch (Exception ex) {
 					System.err.println("Error en registrar el equipo " + ex);
-					JOptionPane.showMessageDialog(null, "¡¡Error al registrar el equipo!! Contacte al Administrador");
+					JOptionPane.showMessageDialog(null, "ï¿½ï¿½Error al registrar el equipo!! Contacte al Administrador");
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");

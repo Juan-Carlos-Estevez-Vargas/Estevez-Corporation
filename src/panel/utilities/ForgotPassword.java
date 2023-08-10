@@ -20,7 +20,7 @@ import com.mysql.jdbc.PreparedStatement;
 import dev.juan.estevez.utils.DatabaseConnection;
 
 /**
- * Vista para recuperar contraseña por si el usuario olvidó la misma.
+ * Vista para recuperar contraseï¿½a por si el usuario olvidï¿½ la misma.
  *
  * @author
  *
@@ -28,7 +28,7 @@ import dev.juan.estevez.utils.DatabaseConnection;
 public class ForgotPassword extends JFrame implements ActionListener {
 
 	/**
-	 * Declaración de Variables.
+	 * Declaraciï¿½n de Variables.
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel container;
@@ -44,7 +44,7 @@ public class ForgotPassword extends JFrame implements ActionListener {
 		initComponents();
 		this.setSize(360, 210);
 		this.setResizable(false);
-		this.setTitle("¿Olvidó su contraseña?");
+		this.setTitle("ï¿½Olvidï¿½ su contraseï¿½a?");
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
@@ -66,7 +66,7 @@ public class ForgotPassword extends JFrame implements ActionListener {
 		/**
 		 * Label Principal.
 		 */
-		this.labelTittle = new JLabel("¿Olvidó su contraseña?");
+		this.labelTittle = new JLabel("ï¿½Olvidï¿½ su contraseï¿½a?");
 		this.labelTittle.setFont(new java.awt.Font("Segoe UI", 0, 22));
 		this.labelTittle.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelTittle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -76,7 +76,7 @@ public class ForgotPassword extends JFrame implements ActionListener {
 		/**
 		 * Label New Password.
 		 */
-		this.labelEmailUser = new JLabel("Correo de recuperación.");
+		this.labelEmailUser = new JLabel("Correo de recuperaciï¿½n.");
 		this.labelEmailUser.setFont(new java.awt.Font("Segoe UI", 0, 18));
 		this.labelEmailUser.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelEmailUser.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -85,7 +85,7 @@ public class ForgotPassword extends JFrame implements ActionListener {
 
 		/**
 		 * Campo de texto de tipo JPasswordField para el nuevo password del usuario en
-		 * cuestión.
+		 * cuestiï¿½n.
 		 */
 		this.txtEmailUser = new JTextField();
 		this.txtEmailUser.setFont(new java.awt.Font("Segoe UI", 1, 16));
@@ -96,7 +96,7 @@ public class ForgotPassword extends JFrame implements ActionListener {
 		this.container.add(this.txtEmailUser);
 
 		/**
-		 * Botón para restaurar la contraseña del usuario en cuestión.
+		 * Botï¿½n para restaurar la contraseï¿½a del usuario en cuestiï¿½n.
 		 */
 		this.btnRestorePassword = new JButton("Validar");
 		this.btnRestorePassword.setFont(new java.awt.Font("Tahoma", 1, 18));
@@ -114,7 +114,7 @@ public class ForgotPassword extends JFrame implements ActionListener {
 		if (e.getSource() == this.btnRestorePassword) {
 			String email;
 			try {
-				Connection cn = (Connection) DatabaseConnection.conectar();
+				Connection cn = (Connection) DatabaseConnection.connect();
 				PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
 						"SELECT * FROM usuarios WHERE email = '" + this.txtEmailUser.getText().trim() + "'");
 				ResultSet rs = pst.executeQuery();
@@ -128,11 +128,11 @@ public class ForgotPassword extends JFrame implements ActionListener {
 					}
 				} else {
 					JOptionPane.showMessageDialog(null,
-							"La dirección de correo electrónico es errónea o no existe en el sistema.");
+							"La direcciï¿½n de correo electrï¿½nico es errï¿½nea o no existe en el sistema.");
 				}
 				cn.close();
 			} catch (SQLException ex) {
-				System.err.println("Error al intentar restaurar contraseña en ForgotPassword " + ex.getMessage());
+				System.err.println("Error al intentar restaurar contraseï¿½a en ForgotPassword " + ex.getMessage());
 			}
 
 		}

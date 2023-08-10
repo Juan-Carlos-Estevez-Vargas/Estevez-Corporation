@@ -18,94 +18,118 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import dev.juan.estevez.utils.DatabaseConnection;
-import panel.utilities.Login;
+import dev.juan.estevez.views.LoginView;
 
 /**
  * Vista con el listado de los usuario registrados en el sistema.
  *
  * @author Juan Carlos Estevez Vargas
- *
  */
 public class ManagementUsers extends JFrame {
 
-	/**
-	 * Declaración de Variables.
-	 */
 	private static final long serialVersionUID = 1L;
 	public static String user_update = "";
-	private JLabel title;
 	private JPanel container;
 	private JTable tableUsers;
 	private JScrollPane scrollPaneUsers;
 	private String user;
 	private DefaultTableModel model = new DefaultTableModel();
 
-	/**
-	 * Constructor de Clase.
-	 */
 	public ManagementUsers() {
-		this.user = Login.user;
+		this.user = LoginView.user;
 		this.setSize(630, 340);
 		this.setResizable(false);
-		this.setTitle("Usuarios registrados - Sesión de " + this.user);
+		this.setTitle("Usuarios registrados - Sesiï¿½n de " + this.user);
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.initComponents();
+		this.populateTable();
+		this.addTableMouseEvent();
+	}
 
-		/**
-		 * Conexion a la base de datos ya que se deben listar los usuarios tan pronto se
-		 * inicie su ejecución.
-		 */
+	/**
+	 * Populates the table with data from the usuarios table in the database.
+	 *
+	 * @throws SQLException if there is an error executing the SQL query
+	 */
+	private void populateTable() {
 		try {
-			Connection cn = DatabaseConnection.conectar();
-			PreparedStatement pst = cn
-					.prepareStatement("SELECT id_usuario, nombre_usuario, username, tipo_nivel, estatus FROM usuarios");
+			Connection cn = DatabaseConnection.connect();
+			PreparedStatement pst = cn.prepareStatement(
+					"SELECT id_usuario, nombre_usuario, username, tipo_nivel, estatus FROM usuarios");
 			ResultSet rs = pst.executeQuery();
 
-			/**
-			 * Creamos la tabla y la añadimos al JScrollPanel.
-			 */
-			this.tableUsers = new JTable(this.model);
-			this.tableUsers.setFont(new Font("serif", Font.BOLD, 14));
-			this.tableUsers.setForeground(Color.BLACK);
-			this.scrollPaneUsers = new JScrollPane(this.tableUsers);
-			this.scrollPaneUsers.setBounds(10, 55, 593, 230);
+			createTableAndScrollPane();
+			addColumnsToTable();
+			fillTableWithData(rs);
 
-			/**
-			 * Añadiendo las columnas a la tabla.
-			 */
-			this.model.addColumn(" ");
-			this.model.addColumn("Nombre Usuario");
-			this.model.addColumn("Username");
-			this.model.addColumn("Permisos");
-			this.model.addColumn("Estatus");
-
-			/**
-			 * Llenado de la tabla
-			 */
-			while (rs.next()) {
-				Object[] row = new Object[5];
-				for (int i = 0; i < 5; i++) {
-					row[i] = rs.getObject(i + 1);
-				}
-				this.model.addRow(row);
-			}
 			rs.close();
 			pst.close();
 			cn.close();
 		} catch (SQLException e) {
 			System.err.println("Error al llenar Tabla " + e);
-			JOptionPane.showMessageDialog(null, "¡¡Error al mostrar informacion!! Contacte al Administrador");
+			JOptionPane.showMessageDialog(null, "Â¡Error al mostrar informaciÃ³n! Contacte al Administrador");
 		}
+	}
 
-		/**
-		 * Eventos de la tabla para mostrar informacion de los usuario
-		 */
+	/**
+	 * Creates a table and scroll pane.
+	 *
+	 * @param None
+	 * @return None
+	 */
+	private void createTableAndScrollPane() {
+		tableUsers = new JTable(model);
+		tableUsers.setFont(new Font("serif", Font.BOLD, 14));
+		tableUsers.setForeground(Color.BLACK);
+
+		scrollPaneUsers = new JScrollPane(tableUsers);
+		scrollPaneUsers.setBounds(10, 55, 593, 230);
+		container.add(scrollPaneUsers);
+	}
+
+	/**
+	 * Adds columns to the table.
+	 */
+	private void addColumnsToTable() {
+		model.addColumn(" ");
+		model.addColumn("Nombre Usuario");
+		model.addColumn("Username");
+		model.addColumn("Permisos");
+		model.addColumn("Estatus");
+	}
+
+	/**
+	 * Fills the table with data from the given ResultSet.
+	 *
+	 * @param rs the ResultSet containing the data to be filled in the table
+	 * @throws SQLException if there is an error accessing the ResultSet
+	 */
+	private void fillTableWithData(ResultSet rs) throws SQLException {
+		while (rs.next()) {
+			Object[] row = new Object[5];
+			for (int i = 0; i < 5; i++) {
+				row[i] = rs.getObject(i + 1);
+			}
+			model.addRow(row);
+		}
+	}
+
+	/**
+	 * Adds a mouse event listener to the tableUsers object.
+	 * When the table is clicked, it retrieves the row and column index of the
+	 * clicked cell.
+	 * If the row index is valid, it retrieves the value at the specified column
+	 * index and assigns it to the user_update variable.
+	 * It creates a new instance of the UserInformation class and makes it visible.
+	 * Finally, it disposes the current window.
+	 */
+	private void addTableMouseEvent() {
 		tableUsers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int row_point = tableUsers.rowAtPoint(e.getPoint()); // Esta variable almacena la fila seleccionada
+				int row_point = tableUsers.rowAtPoint(e.getPoint());
 				int column_point = 2;
 
 				if (row_point > -1) {
@@ -116,30 +140,22 @@ public class ManagementUsers extends JFrame {
 				}
 			}
 		});
-		this.container.add(this.scrollPaneUsers);
 	}
 
 	/**
-	 * Construye los componentes Swing en el Frame.
+	 * Initializes the components of the Java function.
 	 */
-	public void initComponents() {
+	private void initComponents() {
+		JPanel container = new JPanel();
+		container.setBackground(new Color(46, 59, 104));
+		container.setLayout(null);
+		setContentPane(container);
 
-		/**
-		 * Panel Principal.
-		 */
-		this.container = new JPanel();
-		this.container.setBackground(new Color(46, 59, 104));
-		this.container.setLayout(null);
-		this.setContentPane(this.container);
-
-		/**
-		 * Título del Panel.
-		 */
-		this.title = new JLabel("Usuarios Registrados");
-		this.title.setBounds(210, 10, 250, 20);
-		this.title.setForeground(new Color(192, 192, 192));
-		this.title.setFont(new Font("serif", Font.BOLD, 20));
-		this.container.add(this.title);
+		JLabel title = new JLabel("Usuarios Registrados");
+		title.setBounds(210, 10, 250, 20);
+		title.setForeground(new Color(192, 192, 192));
+		title.setFont(new Font("serif", Font.BOLD, 20));
+		container.add(title);
 	}
 
 }

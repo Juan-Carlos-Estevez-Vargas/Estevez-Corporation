@@ -19,11 +19,11 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import dev.juan.estevez.utils.DatabaseConnection;
-import panel.utilities.Login;
+import dev.juan.estevez.views.LoginView;
 import panel.utilities.RestorePassword;
 
 /**
- * Panel principal del tipo de usuario Técnico.
+ * Panel principal del tipo de usuario Tï¿½cnico.
  *
  * @author
  *
@@ -31,7 +31,7 @@ import panel.utilities.RestorePassword;
 public class PanelTechnical extends JFrame implements ActionListener {
 
 	/**
-	 * Definición de Variables.
+	 * Definiciï¿½n de Variables.
 	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel labelTittle;
@@ -51,9 +51,9 @@ public class PanelTechnical extends JFrame implements ActionListener {
 	 * Constructor de clase.
 	 */
 	public PanelTechnical() {
-		this.user = Login.user;
+		this.user = LoginView.user;
 		this.setSize(630, 280);
-		this.setTitle("Técnico - Sesión de " + this.user);
+		this.setTitle("Tï¿½cnico - Sesiï¿½n de " + this.user);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
@@ -64,7 +64,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		 * Recuperando el nombre del usuario.
 		 */
 		try {
-			Connection cn = (Connection) DatabaseConnection.conectar();
+			Connection cn = (Connection) DatabaseConnection.connect();
 			PreparedStatement pst = (PreparedStatement) cn
 					.prepareStatement("SELECT nombre_usuario, password FROM usuarios WHERE username = '" + user + "'");
 			ResultSet rs = pst.executeQuery();
@@ -74,7 +74,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 				this.labelTittle.setText(nameUser);
 			}
 		} catch (SQLException e) {
-			System.err.println("Error en consultar Técnico");
+			System.err.println("Error en consultar Tï¿½cnico");
 		}
 
 	}
@@ -102,7 +102,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		this.panelBack.add(this.labelTittle);
 
 		/*
-		 * Botón para listar los equipos presentes en el sistema.
+		 * Botï¿½n para listar los equipos presentes en el sistema.
 		 */
 		this.btnManagementEquips = new JButton();
 		this.btnManagementEquips.setBounds(40, 80, 120, 100);
@@ -117,14 +117,14 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		/**
 		 * Label Listar Equipos existentes en el sistema.
 		 */
-		this.labelManagementEquips = new JLabel("Gestión de Equipos");
+		this.labelManagementEquips = new JLabel("Gestiï¿½n de Equipos");
 		this.labelManagementEquips.setBounds(45, 190, 120, 15);
 		this.labelManagementEquips.setForeground(new Color(192, 192, 192));
 		this.labelManagementEquips.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBack.add(this.labelManagementEquips);
 
 		/**
-		 * Botón encargado de mostrar la gráfica de marcas de los equipos registrados.
+		 * Botï¿½n encargado de mostrar la grï¿½fica de marcas de los equipos registrados.
 		 */
 		this.btnBrandChart = new JButton();
 		this.btnBrandChart.setBounds(250, 80, 120, 100);
@@ -137,25 +137,25 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		this.panelBack.add(this.btnBrandChart);
 
 		/**
-		 * Label Gráfica de Marcas.
+		 * Label Grï¿½fica de Marcas.
 		 */
-		this.labelBrandChart = new JLabel("Gráfica de Marcas");
+		this.labelBrandChart = new JLabel("Grï¿½fica de Marcas");
 		this.labelBrandChart.setBounds(250, 190, 120, 15);
 		this.labelBrandChart.setForeground(new Color(192, 192, 192));
 		this.labelBrandChart.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBack.add(this.labelBrandChart);
 
 		/**
-		 * Label Gráfica de Estado.
+		 * Label Grï¿½fica de Estado.
 		 */
-		this.labelStateGraph = new JLabel("Gráfica de Estado");
+		this.labelStateGraph = new JLabel("Grï¿½fica de Estado");
 		this.labelStateGraph.setBounds(460, 190, 120, 15);
 		this.labelStateGraph.setForeground(new Color(192, 192, 192));
 		this.labelStateGraph.setFont(new Font("serif", Font.BOLD, 14));
 		this.panelBack.add(this.labelStateGraph);
 
 		/**
-		 * Botón para mostrar la gráfica de estado de los equipos registrados en el
+		 * Botï¿½n para mostrar la grï¿½fica de estado de los equipos registrados en el
 		 * sistema.
 		 */
 		this.btnStateGraph = new JButton();
@@ -169,7 +169,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		this.panelBack.add(this.btnStateGraph);
 
 		/**
-		 * Botón Restaurar Contraseña.
+		 * Botï¿½n Restaurar Contraseï¿½a.
 		 */
 		this.btnRestorePass = new JButton();
 		this.btnRestorePass.setBounds(430, 20, 40, 30);
@@ -183,9 +183,9 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		this.panelBack.add(this.btnRestorePass);
 
 		/**
-		 * Botón Cerrar Sesión.
+		 * Botï¿½n Cerrar Sesiï¿½n.
 		 */
-		this.btnLogout = new JButton("Cerrar Sesión");
+		this.btnLogout = new JButton("Cerrar Sesiï¿½n");
 		this.btnLogout.setBounds(470, 20, 120, 30);
 		this.btnLogout.setFont(new Font("serif", Font.BOLD, 14));
 		this.btnLogout.setBackground(new Color(8, 85, 224));
@@ -201,7 +201,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		/**
-		 * Muestra el panel para restaurar la contraseña.
+		 * Muestra el panel para restaurar la contraseï¿½a.
 		 */
 		if (e.getSource() == this.btnRestorePass) {
 			RestorePassword restorePassword = new RestorePassword();
@@ -210,7 +210,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		}
 
 		/**
-		 * Redirección al panel con el listado de equipos registrados en el sistema.
+		 * Redirecciï¿½n al panel con el listado de equipos registrados en el sistema.
 		 */
 		if (e.getSource() == this.btnManagementEquips) {
 			ManagementEquips managementEquips = new ManagementEquips();
@@ -218,7 +218,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		}
 
 		/**
-		 * Redirección al panel con el reporte del estado de los equipos.
+		 * Redirecciï¿½n al panel con el reporte del estado de los equipos.
 		 */
 		if (e.getSource() == this.btnStateGraph) {
 			StateGraph stateGraph = new StateGraph();
@@ -226,7 +226,7 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		}
 
 		/**
-		 * Redirección al panel con el reporte de marcas de los equipos registrados en
+		 * Redirecciï¿½n al panel con el reporte de marcas de los equipos registrados en
 		 * el sistema.
 		 */
 		if (e.getSource() == this.btnBrandChart) {
@@ -235,15 +235,15 @@ public class PanelTechnical extends JFrame implements ActionListener {
 		}
 
 		/**
-		 * Cierra la sesión del usuario.
+		 * Cierra la sesiï¿½n del usuario.
 		 */
 		if (e.getSource() == this.btnLogout) {
-			if (JOptionPane.showConfirmDialog(null, "¿Está seguro de cerrar la sesión?") == 0) {
+			/*if (JOptionPane.showConfirmDialog(null, "ï¿½Estï¿½ seguro de cerrar la sesiï¿½n?") == 0) {
 				Login login = new Login();
 				login.setLocationRelativeTo(null);
 				login.setVisible(true);
 				this.dispose();
-			}
+			}*/
 		}
 
 	}
