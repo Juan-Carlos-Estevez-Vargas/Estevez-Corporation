@@ -19,9 +19,10 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import dev.juan.estevez.utils.DatabaseConnection;
+import dev.juan.estevez.views.LoginView;
 
 /**
- * Vista para recuperar contraseña.
+ * Vista para recuperar contraseï¿½a.
  *
  * @author
  *
@@ -29,7 +30,7 @@ import dev.juan.estevez.utils.DatabaseConnection;
 public class RestorePassword extends JFrame implements ActionListener {
 
 	/**
-	 * Declaración de Variables.
+	 * Declaraciï¿½n de Variables.
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel container;
@@ -54,10 +55,10 @@ public class RestorePassword extends JFrame implements ActionListener {
 		initComponents();
 		this.setSize(360, 280);
 		this.setResizable(false);
-		this.setTitle("Restaurar Contraseña");
+		this.setTitle("Restaurar Contraseï¿½a");
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		user = Login.user;
+		user = LoginView.user;
 	}
 
 	/**
@@ -77,7 +78,7 @@ public class RestorePassword extends JFrame implements ActionListener {
 		/**
 		 * Label Principal.
 		 */
-		this.labelTittle = new JLabel("Restaurar Contraseña");
+		this.labelTittle = new JLabel("Restaurar Contraseï¿½a");
 		this.labelTittle.setFont(new java.awt.Font("Segoe UI", 0, 22));
 		this.labelTittle.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelTittle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -87,7 +88,7 @@ public class RestorePassword extends JFrame implements ActionListener {
 		/**
 		 * Label New Password.
 		 */
-		this.labelNewPassword = new JLabel("Ingrese su nueva contraseña.");
+		this.labelNewPassword = new JLabel("Ingrese su nueva contraseï¿½a.");
 		this.labelNewPassword.setFont(new java.awt.Font("Segoe UI", 0, 18));
 		this.labelNewPassword.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelNewPassword.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -95,7 +96,8 @@ public class RestorePassword extends JFrame implements ActionListener {
 		this.container.add(this.labelNewPassword);
 
 		/**
-		 * Campo de texto de tipo JPasswordField para el nuevo password del usuario en cuestión.
+		 * Campo de texto de tipo JPasswordField para el nuevo password del usuario en
+		 * cuestiï¿½n.
 		 */
 		this.txtnewPasswordField = new JPasswordField();
 		this.txtnewPasswordField.setFont(new java.awt.Font("Segoe UI", 1, 16));
@@ -106,7 +108,7 @@ public class RestorePassword extends JFrame implements ActionListener {
 		this.container.add(this.txtnewPasswordField);
 
 		/**
-		 * Campo de texto para el nuevo password del usuario en cuestión.
+		 * Campo de texto para el nuevo password del usuario en cuestiï¿½n.
 		 */
 		this.txtNewPassword = new JTextField();
 		this.txtNewPassword.setFont(new java.awt.Font("Segoe UI", 1, 16));
@@ -117,7 +119,7 @@ public class RestorePassword extends JFrame implements ActionListener {
 		this.container.add(this.txtNewPassword);
 
 		/**
-		 * Botón para mostrar u ocultar el texto del campo de texto password.
+		 * Botï¿½n para mostrar u ocultar el texto del campo de texto password.
 		 */
 		this.btnEyeNewPassword = new JButton();
 		this.btnEyeNewPassword.setBounds(275, 70, 50, 30);
@@ -130,7 +132,7 @@ public class RestorePassword extends JFrame implements ActionListener {
 		/**
 		 * Label New Password.
 		 */
-		this.labelConfirmPassword = new JLabel("Vuelva a ingresar la contraseña.");
+		this.labelConfirmPassword = new JLabel("Vuelva a ingresar la contraseï¿½a.");
 		this.labelConfirmPassword.setFont(new java.awt.Font("Segoe UI", 0, 18));
 		this.labelConfirmPassword.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelConfirmPassword.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -138,7 +140,8 @@ public class RestorePassword extends JFrame implements ActionListener {
 		this.container.add(this.labelConfirmPassword);
 
 		/**
-		 * Campo de texto de tipo JPasswordFiel para el nuevo password del usuario en cuestión.
+		 * Campo de texto de tipo JPasswordFiel para el nuevo password del usuario en
+		 * cuestiï¿½n.
 		 */
 		this.txtConfirmPasswordField = new JPasswordField();
 		this.txtConfirmPasswordField.setFont(new java.awt.Font("Segoe UI", 1, 16));
@@ -149,7 +152,7 @@ public class RestorePassword extends JFrame implements ActionListener {
 		this.container.add(this.txtConfirmPasswordField);
 
 		/**
-		 * Campo de texto para el nuevo password del usuario en cuestión.
+		 * Campo de texto para el nuevo password del usuario en cuestiï¿½n.
 		 */
 		this.txtConfirmPassword = new JTextField();
 		this.txtConfirmPassword.setFont(new java.awt.Font("Segoe UI", 1, 16));
@@ -160,7 +163,7 @@ public class RestorePassword extends JFrame implements ActionListener {
 		this.container.add(this.txtConfirmPassword);
 
 		/**
-		 * Botón para mostrar u ocultar el texto del campo de texto password.
+		 * Botï¿½n para mostrar u ocultar el texto del campo de texto password.
 		 */
 		this.btnEyeConfirmPassword = new JButton();
 		this.btnEyeConfirmPassword.setBounds(275, 130, 50, 30);
@@ -171,7 +174,7 @@ public class RestorePassword extends JFrame implements ActionListener {
 		this.container.add(this.btnEyeConfirmPassword);
 
 		/**
-		 * Botón para restaurar la contraseña del usuario en cuestión.
+		 * Botï¿½n para restaurar la contraseï¿½a del usuario en cuestiï¿½n.
 		 */
 		this.btnRestorePassword = new JButton("Restaurar Password");
 		this.btnRestorePassword.setFont(new java.awt.Font("Tahoma", 1, 18));
@@ -191,7 +194,7 @@ public class RestorePassword extends JFrame implements ActionListener {
 
 			if (this.txtNewPassword.getText().trim().equals(this.txtConfirmPassword.getText().trim())) {
 				try {
-					Connection cn = (Connection) DatabaseConnection.conectar();
+					Connection cn = (Connection) DatabaseConnection.connect();
 					PreparedStatement pst = (PreparedStatement) cn.prepareStatement("UPDATE usuarios SET password = '"
 							+ this.txtnewPasswordField.getText().trim() + "'  WHERE username = '" + user + "'");
 					pst.executeUpdate();
@@ -199,9 +202,9 @@ public class RestorePassword extends JFrame implements ActionListener {
 					this.dispose();
 
 					/**
-					 * Llamado al Login para que inicie sesión con su nuevo password.
+					 * Llamado al Login para que inicie sesiï¿½n con su nuevo password.
 					 */
-					Login login = new Login();
+					LoginView login = new LoginView();
 					login.setVisible(true);
 					login.setLocationRelativeTo(null);
 				} catch (SQLException ex) {
@@ -215,7 +218,7 @@ public class RestorePassword extends JFrame implements ActionListener {
 		}
 
 		/**
-		 * Acción para que el usuario pueda visualizar el password digitado.
+		 * Acciï¿½n para que el usuario pueda visualizar el password digitado.
 		 */
 		if (e.getSource() == this.btnEyeNewPassword) {
 			if (!eyeEstateNewPassword) {
@@ -232,7 +235,7 @@ public class RestorePassword extends JFrame implements ActionListener {
 		}
 
 		/**
-		 * Acción para que el usuario pueda visualizar el password digitado.
+		 * Acciï¿½n para que el usuario pueda visualizar el password digitado.
 		 */
 		if (e.getSource() == this.btnEyeConfirmPassword) {
 			if (!eyeEstateConfirmPassword) {

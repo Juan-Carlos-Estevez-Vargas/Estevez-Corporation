@@ -13,7 +13,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import dev.juan.estevez.utils.DatabaseConnection;
-import panel.utilities.Login;
+import dev.juan.estevez.views.LoginView;
 
 /**
  * Reporte del estado de los equipos.
@@ -36,16 +36,16 @@ public class StateGraph extends JFrame {
 	 * Constructor de clase.
 	 */
 	public StateGraph() {
-		user = Login.user;
+		user = LoginView.user;
 		this.setSize(515, 360);
 		this.setResizable(false);
-		this.setTitle("Técnico - Sesión de " + user);
+		this.setTitle("Tï¿½cnico - Sesiï¿½n de " + user);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		try {
 
-			Connection cn = (Connection) DatabaseConnection.conectar();
+			Connection cn = (Connection) DatabaseConnection.connect();
 			PreparedStatement pst = (PreparedStatement) cn
 					.prepareStatement("SELECT estatus, COUNT(estatus) AS Cantidad FROM equipos GROUP BY estatus");
 			ResultSet rs = pst.executeQuery();
@@ -78,7 +78,7 @@ public class StateGraph extends JFrame {
 
 		} catch (SQLException e) {
 			System.err.println("Error en conectar con la base de datos " + e);
-			JOptionPane.showMessageDialog(null, "¡¡Error!! Contacte al Administrador");
+			JOptionPane.showMessageDialog(null, "ï¿½ï¿½Error!! Contacte al Administrador");
 		}
 
 	}
@@ -121,7 +121,7 @@ public class StateGraph extends JFrame {
 		g.fillRect(0, 0, 515, 360);
 
 		/**
-		 * Pintando la gráfica de barras.
+		 * Pintando la grï¿½fica de barras.
 		 */
 		g.setColor(Color.yellow);
 		g.fillRect(100, 100, longNewEntry, 40);
@@ -135,7 +135,7 @@ public class StateGraph extends JFrame {
 
 		g.setColor(Color.black);
 		g.fillRect(100, 200, longInReview, 40);
-		g.drawString("En Revisión", 10, 218);
+		g.drawString("En Revisiï¿½n", 10, 218);
 		g.drawString("Cantidad " + inReview, 10, 233);
 
 		g.setColor(Color.white);
@@ -150,7 +150,7 @@ public class StateGraph extends JFrame {
 
 		g.setColor(Color.white);
 		g.setFont(new Font("arial", Font.BOLD, 20));
-		g.drawString("Gráfica de estado del equipo", 150, 68);
+		g.drawString("Grï¿½fica de estado del equipo", 150, 68);
 
 	}
 

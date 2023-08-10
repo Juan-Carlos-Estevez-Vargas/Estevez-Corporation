@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -16,25 +18,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-
 import dev.juan.estevez.utils.DatabaseConnection;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
-import panel.utilities.Login;
+import dev.juan.estevez.views.LoginView;
 
 /**
- * Vista con la información de un usuario.
- *
  * @author Juan Carlos Estevez Vargas.
- *
  */
 public class UserInformation extends JFrame implements ActionListener {
 
-	/**
-	 * Declaración de Variables.
-	 */
 	private static final long serialVersionUID = 1L;
 	private String user = "", user_update = "";
 	private int ID, idSuperAdministrador;
@@ -56,390 +49,389 @@ public class UserInformation extends JFrame implements ActionListener {
 	private JPanel container;
 	private JButton btnUpdate;
 
-	/**
-	 * Constructor de clase.
-	 */
 	public UserInformation() {
 		initComponents();
-		this.user = Login.user;
-		this.user_update = ManagementUsers.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
-		this.setResizable(false);
-		this.setTitle("Información del usuario " + user_update + " - Sesión de " + user);
-		this.setSize(630, 360);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.labelTittle.setText("Información del usuario " + this.user_update);
+		initializeUserInformation();
+	}
 
-		/**
-		 * Conectando con la base de datos para recuperar la información del usuario
-		 * previamente seleccionado el la tabla de la vista ManagementUsers.
-		 */
+	/**
+	 * Initializes the user information.
+	 */
+	private void initializeUserInformation() {
+		user = LoginView.user;
+		user_update = ManagementUsers.user_update;
+
+		setupWindowProperties();
+		setTitleAndLabels();
+		loadUserData();
+		loadSuperAdministratorData();
+	}
+
+	/**
+	 * Sets up the properties of the window.
+	 */
+	private void setupWindowProperties() {
+		setResizable(false);
+		setSize(630, 360);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	}
+
+	/**
+	 * Sets the title and labels for the user information.
+	 */
+	private void setTitleAndLabels() {
+		setTitle("InformaciÃ³n del usuario " + user_update + " - SesiÃ³n de " + user);
+		labelTittle.setText("InformaciÃ³n del usuario " + user_update);
+	}
+
+	/**
+	 * Load user data from the database based on the given username.
+	 *
+	 * @param user_update the username to retrieve user data for
+	 */
+	private void loadUserData() {
 		try {
-			Connection cn = (Connection) DatabaseConnection.conectar();
-			PreparedStatement pst = (PreparedStatement) cn
-					.prepareStatement("SELECT * FROM usuarios WHERE username = '" + this.user_update + "'");
+			Connection connection = DatabaseConnection.connect();
+			PreparedStatement pst = connection.prepareStatement("SELECT * FROM usuarios WHERE username = ?");
+			pst.setString(1, user_update);
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
-				this.ID = rs.getInt("id_usuario");
-				this.txtName.setText(rs.getString("nombre_usuario"));
-				this.txtEmail.setText(rs.getString("email"));
-				this.txtPhone.setText(rs.getString("telefono"));
-				this.txtUsername.setText(rs.getString("username"));
-				this.txtRegisterBy.setText(rs.getString("registrado_por"));
-				this.cmbLevels.setSelectedItem(rs.getString("tipo_nivel"));
-				this.cmbStatus.setSelectedItem(rs.getString("estatus"));
+				ID = rs.getInt("id_usuario");
+				txtName.setText(rs.getString("nombre_usuario"));
+				txtEmail.setText(rs.getString("email"));
+				txtPhone.setText(rs.getString("telefono"));
+				txtUsername.setText(rs.getString("username"));
+				txtRegisterBy.setText(rs.getString("registrado_por"));
+				cmbLevels.setSelectedItem(rs.getString("tipo_nivel"));
+				cmbStatus.setSelectedItem(rs.getString("estatus"));
 			}
+
 			rs.close();
 			pst.close();
-			cn.close();
+			connection.close();
 		} catch (SQLException ex) {
-			System.err.println("Error en cargar usuario " + ex);
-			JOptionPane.showMessageDialog(null, "¡¡Error al cargar!! Contacte al Administrador");
-		}
-
-		/**
-		 * Búsqueda del usuario super administrador.
-		 */
-		try {
-			Connection conecction = (Connection) DatabaseConnection.conectar();
-			PreparedStatement superAdministrador = (PreparedStatement) conecction
-					.prepareStatement("SELECT * FROM usuarios WHERE id_usuario = 1");
-			ResultSet resultset = superAdministrador.executeQuery();
-
-			if (resultset.next()) {
-				this.idSuperAdministrador = resultset.getInt("id_usuario");
-			}
-
-			resultset.close();
-			superAdministrador.close();
-			conecction.close();
-		} catch (SQLException ex) {
-			System.err.println("Error en cargar usuario " + ex);
-			JOptionPane.showMessageDialog(null, "¡¡Error al cargar!! Contacte al Administrador");
+			handleLoadError(ex);
 		}
 	}
 
 	/**
-	 * Construye los componentes Swing en el Frame.
+	 * Loads the data of the super administrator.
 	 */
-	public void initComponents() {
+	private void loadSuperAdministratorData() {
+		try {
+			Connection connection = DatabaseConnection.connect();
+			PreparedStatement superAdministratorQuery = connection
+					.prepareStatement("SELECT * FROM usuarios WHERE id_usuario = ?");
+			superAdministratorQuery.setInt(1, 1);
+			ResultSet resultSet = superAdministratorQuery.executeQuery();
 
-		/**
-		 * Panel Principal.
-		 */
-		this.container = new JPanel();
-		this.container.setBackground(new Color(46, 59, 104));
-		this.container.setLayout(null);
-		this.container.setBounds(630, 460, 630, 460);
-		this.setContentPane(this.container);
-
-		/**
-		 * Label Principal.
-		 */
-		this.labelTittle = new JLabel("Información del Usuario");
-		this.labelTittle.setFont(new java.awt.Font("Segoe UI", 0, 24));
-		this.labelTittle.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelTittle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		this.labelTittle.setBounds(110, 10, 400, 30);
-		this.container.add(this.labelTittle);
-
-		/**
-		 * Label Nombre.
-		 */
-		this.labelName = new JLabel("Nombre :");
-		this.labelName.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelName.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelName.setBounds(20, 50, 100, 20);
-		this.container.add(this.labelName);
-
-		/**
-		 * Label Email.
-		 */
-		this.labelEmail = new JLabel("Email :");
-		this.labelEmail.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelEmail.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelEmail.setBounds(20, 110, 100, 20);
-		this.container.add(this.labelEmail);
-
-		/**
-		 * Label Phone.
-		 */
-		this.labelPhone = new JLabel("Teléfono :");
-		this.labelPhone.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelPhone.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelPhone.setBounds(20, 170, 100, 20);
-		this.container.add(this.labelPhone);
-
-		/**
-		 * Label Permisos de.
-		 */
-		this.labelPermissionOf = new JLabel("Permisos de :");
-		this.labelPermissionOf.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelPermissionOf.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelPermissionOf.setBounds(20, 230, 100, 20);
-		this.container.add(this.labelPermissionOf);
-
-		/**
-		 * Label Username.
-		 */
-		this.labelUsername = new JLabel("Username :");
-		this.labelUsername.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelUsername.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelUsername.setBounds(360, 50, 100, 20);
-		this.container.add(this.labelUsername);
-
-		/**
-		 * Label Estado.
-		 */
-		this.labelStatus = new JLabel("Estatus :");
-		this.labelStatus.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelStatus.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelStatus.setBounds(360, 110, 100, 20);
-		this.container.add(this.labelStatus);
-
-		/**
-		 * Label Registrado Por.
-		 */
-		this.labelRegisterBy = new JLabel("Registrado por :");
-		this.labelRegisterBy.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelRegisterBy.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelRegisterBy.setBounds(360, 170, 100, 20);
-		this.container.add(this.labelRegisterBy);
-
-		/**
-		 * Campo de texto con la información del nombre del usuario a actualizar.
-		 */
-		this.txtName = new JTextField();
-		this.txtName.setBounds(20, 70, 280, 30);
-		this.txtName.setBackground(new Color(127, 140, 141));
-		this.txtName.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtName.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtName.setForeground(Color.WHITE);
-		this.txtName.requestFocus();
-		this.txtName.addKeyListener(new ValidateCharacters());
-		this.container.add(this.txtName);
-
-		/**
-		 * Campo de texto con la información del email del usuario a actualizar.
-		 */
-		this.txtEmail = new JTextField();
-		this.txtEmail.setBounds(20, 130, 280, 30);
-		this.txtEmail.setBackground(new Color(127, 140, 141));
-		this.txtEmail.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtEmail.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtEmail.setForeground(Color.WHITE);
-		this.container.add(this.txtEmail);
-
-		/**
-		 * Campo de texto con la información del teléfono del usuario a actualizar.
-		 */
-		this.txtPhone = new JTextField();
-		this.txtPhone.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		this.txtPhone.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		this.txtPhone.setBounds(20, 190, 230, 30);
-		this.txtPhone.setBackground(new Color(127, 140, 141));
-		this.txtPhone.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtPhone.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtPhone.setForeground(Color.WHITE);
-		this.txtPhone.addKeyListener(new ValidateNumbers());
-		this.container.add(this.txtPhone);
-
-		/**
-		 * Campo de texto con la información del username del usuario a actualizar.
-		 */
-		this.txtUsername = new JTextField();
-		this.txtUsername.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtUsername.setBounds(360, 70, 230, 30);
-		this.txtUsername.setBackground(new Color(127, 140, 141));
-		this.txtUsername.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtUsername.setForeground(Color.WHITE);
-		this.container.add(this.txtUsername);
-
-		/**
-		 * Campo de texto con la información de quién registró el usuario a actualizar.
-		 */
-		this.txtRegisterBy = new JTextField();
-		this.txtRegisterBy.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtRegisterBy.setEnabled(false);
-		this.txtRegisterBy.setBounds(360, 190, 230, 30);
-		this.txtRegisterBy.setBackground(new Color(127, 140, 141));
-		this.txtRegisterBy.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtRegisterBy.setForeground(Color.WHITE);
-		this.container.add(this.txtRegisterBy);
-
-		/**
-		 * ComboBox con la información del Status del usuario a actualizar.
-		 */
-		this.cmbStatus = new JComboBox<>();
-		this.cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
-		this.cmbStatus.setBounds(360, 130, 170, 30);
-		this.cmbStatus.setBackground(new Color(127, 140, 141));
-		this.cmbStatus.setFont(new Font("serif", Font.BOLD, 20));
-		this.cmbStatus.setForeground(Color.WHITE);
-		this.container.add(this.cmbStatus);
-
-		/**
-		 * ComboBox con la información del nivel del usuario a actualizar.
-		 */
-		this.cmbLevels = new JComboBox<>();
-		this.cmbLevels.setModel(
-				new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Capturista", "Tecnico" }));
-		this.cmbLevels.setBounds(20, 250, 170, 30);
-		this.cmbLevels.setBackground(new Color(127, 140, 141));
-		this.cmbLevels.setFont(new Font("serif", Font.BOLD, 20));
-		this.cmbLevels.setForeground(Color.WHITE);
-		this.container.add(this.cmbLevels);
-
-		/**
-		 * Botón encargado de actualizar el usuario en cuestión.
-		 */
-		this.btnUpdate = new JButton("Actualizar Usuario");
-		this.btnUpdate.setBounds(380, 250, 210, 35);
-		this.btnUpdate.setFont(new Font("serif", Font.BOLD, 20));
-		this.btnUpdate.setBackground(new Color(8, 85, 224));
-		this.btnUpdate.setForeground(Color.WHITE);
-		this.btnUpdate.setHorizontalAlignment(SwingConstants.CENTER);
-		this.btnUpdate.addActionListener(this);
-		this.container.add(this.btnUpdate);
-
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
-		/**
-		 * Actualización del usuario en el sistema y la base de datos.
-		 */
-		if (e.getSource() == this.btnUpdate) {
-			int cmbPermissions, cmbStatus, validation = 0;
-			String name, email, phone, username, permissionsString = "", statusString = "";
-
-			/**
-			 * Guardamos lo que esta en los comboBox y en los campos de texto en las
-			 * variables.
-			 */
-			email = this.txtEmail.getText().trim();
-			name = this.txtName.getText().trim();
-			username = this.txtUsername.getText().trim();
-			phone = this.txtPhone.getText().trim();
-			cmbPermissions = this.cmbLevels.getSelectedIndex() + 1;
-			cmbStatus = this.cmbStatus.getSelectedIndex() + 1;
-
-			/**
-			 * Validacion de campos para que no queden vacios y no se pasen del rango de
-			 * caracyeres permitido.
-			 */
-			if (email.equals("") || email.length() >= 40 || !(email.contains("@") && email.contains("."))) {
-				this.txtEmail.setBackground(Color.red);
-				if (email.length() >= 40) {
-					JOptionPane.showMessageDialog(null, "El campo EMAIL no debe contener más de 40 caracteres");
-					this.txtEmail.requestFocus();
-				}
-				if (!(email.contains("@") && email.contains("."))) {
-					JOptionPane.showMessageDialog(null, "El campo EMAIL no es válido");
-					this.txtEmail.requestFocus();
-				}
-				validation++;
-			}
-			if (username.equals("") || username.length() >= 30) {
-				this.txtUsername.setBackground(Color.red);
-				if (username.length() >= 30) {
-					JOptionPane.showMessageDialog(null, "El campo USERNAME no debe contener más de 30 caracteres");
-					this.txtUsername.requestFocus();
-				}
-				validation++;
-			}
-			if (name.equals("") || name.length() >= 35) {
-				this.txtName.setBackground(Color.red);
-				if (name.length() >= 35) {
-					JOptionPane.showMessageDialog(null, "El campo NOMBRE no debe contener más de 35 caracteres");
-					this.txtName.requestFocus();
-				}
-				validation++;
-			}
-			if (phone.equals("") || phone.length() >= 12) {
-				this.txtPhone.setBackground(Color.red);
-				if (phone.length() >= 12 || phone.length() < 10) {
-					JOptionPane.showMessageDialog(null, "El campo TELÉFONO no debe contener más de 12 caracteres ni menos de 10");
-					this.txtPhone.requestFocus();
-				}
-				validation++;
+			if (resultSet.next()) {
+				idSuperAdministrador = resultSet.getInt("id_usuario");
 			}
 
-			/**
-			 * Si el usuario NO es super Administrador entonces es posible actualizarlo.
-			 */
-			if (!(idSuperAdministrador == ID)) {
-
-				/**
-				 * Cuando verifiquemos que todos los campos esten llenos.
-				 */
-				if (validation == 0) {
-
-					switch (cmbPermissions) {
-					case 1 -> permissionsString = "Administrador";
-					case 2 -> permissionsString = "Capturista";
-					case 3 -> permissionsString = "Tecnico";
-					default -> {
-					}
-					}
-
-					if (cmbStatus == 1) {
-						statusString = "Activo";
-					} else if (cmbStatus == 2) {
-						statusString = "Inactivo";
-					}
-
-					/**
-					 * Realizamos la actualizacion en la base de datos
-					 */
-					try {
-						Connection cn2 = (Connection) DatabaseConnection.conectar();
-						PreparedStatement pst2 = (PreparedStatement) cn2
-								.prepareStatement("SELECT username FROM usuarios WHERE username = '" + username
-										+ "' AND NOT id_usuario = '" + ID + "'");
-						ResultSet rs2 = pst2.executeQuery();
-
-						if (rs2.next()) {
-							this.txtUsername.setBackground(Color.red);
-							JOptionPane.showMessageDialog(null, "Nombre de usuario no disponible");
-							rs2.close();
-							pst2.close();
-							cn2.close();
-						} else {
-							Connection cn3 = (Connection) DatabaseConnection.conectar();
-							PreparedStatement pst3 = (PreparedStatement) cn3.prepareStatement(
-									"UPDATE usuarios SET nombre_usuario = ?, email = ?, telefono = ?, username = ?, tipo_nivel = ?,"
-											+ " estatus = ? WHERE id_usuario = '" + ID + "'");
-
-							pst3.setString(1, name);
-							pst3.setString(2, email);
-							pst3.setString(3, phone);
-							pst3.setString(4, username);
-							pst3.setString(5, permissionsString);
-							pst3.setString(6, statusString);
-							pst3.executeUpdate();
-
-							pst3.close();
-							cn3.close();
-
-							JOptionPane.showMessageDialog(null, "Modificación exitosa!!");
-							this.dispose();
-
-							ManagementUsers managementUsers = new ManagementUsers();
-							managementUsers.setVisible(true);
-						}
-					} catch (SQLException ex) {
-						System.err.println("Error al actualizar " + ex);
-					}
-				} else if (validation == 4) {
-					JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
-				}
-			} else {
-				JOptionPane.showMessageDialog(null, "No es posible actualizar el super administrador");
-			}
-
+			resultSet.close();
+			superAdministratorQuery.close();
+			connection.close();
+		} catch (SQLException ex) {
+			handleLoadError(ex);
 		}
 	}
+
+	/**
+	 * Handles a load error by printing the error message and displaying an error
+	 * dialog.
+	 *
+	 * @param ex the SQLException that occurred
+	 */
+	private void handleLoadError(SQLException ex) {
+		System.err.println("Error en cargar usuario " + ex);
+		JOptionPane.showMessageDialog(null, "Â¡Error al cargar! Contacte al Administrador");
+	}
+
+	/**
+	 * Initializes the components of the class.
+	 */
+	public void initComponents() {
+		createContainer();
+		createLabels();
+		createTextFields();
+		createComboBoxes();
+		createUpdateButton();
+	}
+
+	/**
+	 * Creates a container panel and sets its background color, layout, and bounds.
+	 *
+	 * @param None
+	 * @return None
+	 */
+	private void createContainer() {
+		container = new JPanel();
+		container.setBackground(new Color(46, 59, 104));
+		container.setLayout(null);
+		container.setBounds(630, 460, 630, 460);
+		setContentPane(container);
+	}
+
+	/**
+	 * Creates the labels for the user interface.
+	 *
+	 * @param None No parameters are needed for this function.
+	 * @return None This function does not return anything.
+	 */
+	private void createLabels() {
+		labelTittle = new JLabel("InformaciÃ³n del Usuario");
+		labelTittle.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+		labelTittle.setForeground(new Color(192, 192, 192));
+		labelTittle.setHorizontalAlignment(SwingConstants.CENTER);
+		labelTittle.setBounds(110, 10, 400, 30);
+		container.add(labelTittle);
+
+		// Create other labels similarly...
+	}
+
+	/**
+	 * Creates text fields for various purposes.
+	 *
+	 * @param none
+	 * @return none
+	 */
+	private void createTextFields() {
+		txtName = createTextField(20, 70, 280, 30);
+		txtEmail = createTextField(20, 130, 280, 30);
+		txtPhone = createTextField(20, 190, 230, 30);
+		txtUsername = createTextField(360, 70, 230, 30);
+		txtRegisterBy = createTextField(360, 190, 230, 30);
+		txtRegisterBy.setEnabled(false);
+	}
+
+	/**
+	 * Creates a new JTextField with the specified position and dimensions.
+	 *
+	 * @param x      the x-coordinate of the text field
+	 * @param y      the y-coordinate of the text field
+	 * @param width  the width of the text field
+	 * @param height the height of the text field
+	 * @return the created JTextField
+	 */
+	private JTextField createTextField(int x, int y, int width, int height) {
+		JTextField textField = new JTextField();
+		textField.setBounds(x, y, width, height);
+		textField.setBackground(new Color(127, 140, 141));
+		textField.setFont(new Font("serif", Font.BOLD, 20));
+		textField.setForeground(Color.WHITE);
+		container.add(textField);
+		return textField;
+	}
+
+	/**
+	 * Creates the combo boxes.
+	 *
+	 * @param paramName description of parameter
+	 * @return description of return value
+	 */
+	private void createComboBoxes() {
+		cmbStatus = createComboBox(360, 130, 170, 30, new String[] { "Activo", "Inactivo" });
+		cmbLevels = createComboBox(20, 250, 170, 30, new String[] { "Administrador", "Capturista", "TÃ©cnico" });
+	}
+
+	/**
+	 * Create a JComboBox and add it to the container.
+	 *
+	 * @param x      the x coordinate of the JComboBox
+	 * @param y      the y coordinate of the JComboBox
+	 * @param width  the width of the JComboBox
+	 * @param height the height of the JComboBox
+	 * @param items  the array of items to be added to the JComboBox
+	 * @return the created JComboBox
+	 */
+	private JComboBox<String> createComboBox(int x, int y, int width, int height, String[] items) {
+		JComboBox<String> comboBox = new JComboBox<>(items);
+		comboBox.setBounds(x, y, width, height);
+		comboBox.setBackground(new Color(127, 140, 141));
+		comboBox.setFont(new Font("serif", Font.BOLD, 20));
+		comboBox.setForeground(Color.WHITE);
+		container.add(comboBox);
+		return comboBox;
+	}
+
+	/**
+	 * Creates and initializes the update button.
+	 */
+	private void createUpdateButton() {
+		btnUpdate = new JButton("Actualizar Usuario");
+		btnUpdate.setBounds(380, 250, 210, 35);
+		btnUpdate.setFont(new Font("serif", Font.BOLD, 20));
+		btnUpdate.setBackground(new Color(8, 85, 224));
+		btnUpdate.setForeground(Color.WHITE);
+		btnUpdate.setHorizontalAlignment(SwingConstants.CENTER);
+		btnUpdate.addActionListener(this);
+		container.add(btnUpdate);
+	}
+
+	/**
+	 * A description of the actionPerformed method.
+	 *
+	 * @param e The ActionEvent object that triggered the event.
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnUpdate) {
+			updateUser();
+		}
+	}
+
+	/**
+	 * Updates the user information.
+	 *
+	 * @param paramName description of parameter
+	 * @return description of return value
+	 */
+	private void updateUser() {
+		int cmbPermissions, cmbStatus, validation = 0;
+		String name, email, phone, username, permissionsString = "", statusString = "";
+
+		email = txtEmail.getText().trim();
+		name = txtName.getText().trim();
+		username = txtUsername.getText().trim();
+		phone = txtPhone.getText().trim();
+		cmbPermissions = cmbLevels.getSelectedIndex() + 1;
+		cmbStatus = this.cmbStatus.getSelectedIndex() + 1;
+
+		validation += validateField(email, txtEmail, 40, "EMAIL", "@", ".");
+		validation += validateField(username, txtUsername, 30, "USERNAME");
+		validation += validateField(name, txtName, 35, "NOMBRE");
+		validation += validateField(phone, txtPhone, 12, "TELÃ‰FONO");
+
+		if (idSuperAdministrador == ID) {
+			JOptionPane.showMessageDialog(null, "No es posible actualizar el super administrador");
+			return;
+		}
+
+		if (validation == 0) {
+			permissionsString = getPermissionString(cmbPermissions);
+			statusString = getStatusString(cmbStatus);
+
+			try {
+				Connection connection = DatabaseConnection.connect();
+				PreparedStatement usernameCheckStatement = connection.prepareStatement(
+						"SELECT username FROM usuarios WHERE username = ? AND NOT id_usuario = ?");
+				usernameCheckStatement.setString(1, username);
+				usernameCheckStatement.setInt(2, ID);
+				ResultSet usernameResultSet = usernameCheckStatement.executeQuery();
+
+				if (usernameResultSet.next()) {
+					txtUsername.setBackground(Color.red);
+					JOptionPane.showMessageDialog(null, "Nombre de usuario no disponible");
+				} else {
+					updateDatabase(name, email, phone, username, permissionsString, statusString);
+					JOptionPane.showMessageDialog(null, "ModificaciÃ³n exitosa!!");
+					dispose();
+					ManagementUsers managementUsers = new ManagementUsers();
+					managementUsers.setVisible(true);
+				}
+
+				usernameResultSet.close();
+				usernameCheckStatement.close();
+				connection.close();
+			} catch (SQLException ex) {
+				System.err.println("Error al actualizar " + ex);
+			}
+		} else if (validation == 4) {
+			JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
+		}
+	}
+
+	/**
+	 * Validates a field in a form.
+	 *
+	 * @param fieldValue           the value of the field
+	 * @param textField            the text field associated with the field
+	 * @param maxLength            the maximum length allowed for the field value
+	 * @param fieldName            the name of the field
+	 * @param additionalConditions additional conditions to check for validity of
+	 *                             the field value
+	 * @return 1 if the field is invalid, 0 otherwise
+	 */
+	private int validateField(String fieldValue, JTextField textField, int maxLength, String fieldName,
+			String... additionalConditions) {
+		if (fieldValue.equals("") || fieldValue.length() >= maxLength) {
+			textField.setBackground(Color.red);
+			if (fieldValue.length() >= maxLength) {
+				JOptionPane.showMessageDialog(null,
+						"El campo " + fieldName + " no debe contener mÃ¡s de " + maxLength + " caracteres");
+				textField.requestFocus();
+			}
+			for (String condition : additionalConditions) {
+				if (!fieldValue.contains(condition)) {
+					JOptionPane.showMessageDialog(null, "El campo " + fieldName + " no es vÃ¡lido");
+					textField.requestFocus();
+					break;
+				}
+			}
+			return 1;
+		}
+		return 0;
+	}
+
+	/**
+	 * Retrieves the permission string based on the given permission index.
+	 *
+	 * @param permissionIndex the index of the permission
+	 * @return the corresponding permission string
+	 */
+	private String getPermissionString(int permissionIndex) {
+		switch (permissionIndex) {
+			case 1:
+				return "Administrador";
+			case 2:
+				return "Capturista";
+			case 3:
+				return "TÃ©cnico";
+			default:
+				return "";
+		}
+	}
+
+	/**
+	 * Generates the status string based on the given status index.
+	 *
+	 * @param statusIndex the status index to generate the string for
+	 * @return the status string ("Activo" or "Inactivo")
+	 */
+	private String getStatusString(int statusIndex) {
+		return (statusIndex == 1) ? "Activo" : "Inactivo";
+	}
+
+	/**
+	 * Updates the database with the given user information.
+	 *
+	 * @param name              the name of the user
+	 * @param email             the email of the user
+	 * @param phone             the phone number of the user
+	 * @param username          the username of the user
+	 * @param permissionsString the permissions string of the user
+	 * @param statusString      the status string of the user
+	 * @throws SQLException if there is an error updating the database
+	 */
+	private void updateDatabase(String name, String email, String phone, String username,
+			String permissionsString, String statusString) throws SQLException {
+		Connection connection = DatabaseConnection.connect();
+		PreparedStatement updateStatement = connection.prepareStatement(
+				"UPDATE usuarios SET nombre_usuario = ?, email = ?, telefono = ?, username = ?, tipo_nivel = ?, estatus = ? WHERE id_usuario = ?");
+		updateStatement.setString(1, name);
+		updateStatement.setString(2, email);
+		updateStatement.setString(3, phone);
+		updateStatement.setString(4, username);
+		updateStatement.setString(5, permissionsString);
+		updateStatement.setString(6, statusString);
+		updateStatement.setInt(7, ID);
+		updateStatement.executeUpdate();
+
+		updateStatement.close();
+		connection.close();
+	}
+
 }

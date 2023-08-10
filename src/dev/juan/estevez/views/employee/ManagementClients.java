@@ -14,22 +14,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 import dev.juan.estevez.utils.DatabaseConnection;
-import panel.utilities.Login;
+import dev.juan.estevez.views.LoginView;
 
 /**
- * Frame que lista los clientes registrados en el sistema.
- *
- * @author
- *
+ * @author Juan Carlos Estevez Vargas
  */
 public class ManagementClients extends JFrame {
 
-	/**
-	 * Declaración de Variables.
-	 */
 	private static final long serialVersionUID = 1L;
 	public static int id_cliente_update = 0;
 	public static String user_update = "";
@@ -40,65 +35,92 @@ public class ManagementClients extends JFrame {
 	private JScrollPane scrollPaneClients;
 	private DefaultTableModel model = new DefaultTableModel();
 
-	/**
-	 * Constructor de Clase.
-	 */
 	public ManagementClients() {
-		this.user = Login.user;
-		this.setSize(630, 340);
-		this.setResizable(false);
-		this.setTitle("Clientes registrados - Sesión de " + this.user);
-		this.setLocationRelativeTo(null);
-		this.setLayout(null);
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.initComponents();
+		initializeFrame();
+		initComponents();
+		populateTable();
+		addTableMouseListener();
+	}
 
-		/**
-		 * Rellenando la tabla con los datos de la base de datos.
-		 */
+	/**
+	 * Initializes the frame with the necessary settings and properties.
+	 */
+	private void initializeFrame() {
+		user = LoginView.user;
+		setSize(630, 340);
+		setResizable(false);
+		setTitle("Clientes registrados - SesiÃ³n de " + user);
+		setLocationRelativeTo(null);
+		setLayout(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	}
+
+	/**
+	 * Initializes and sets up the components for the GUI.
+	 */
+	private void initComponents() {
+		container = new JPanel();
+		container.setBackground(new Color(46, 59, 104));
+		container.setLayout(null);
+		setContentPane(container);
+
+		labelTitle = new JLabel("Clientes Registrados");
+		labelTitle.setBounds(210, 10, 250, 20);
+		labelTitle.setForeground(new Color(192, 192, 192));
+		labelTitle.setFont(new Font("serif", Font.BOLD, 20));
+		container.add(labelTitle);
+	}
+
+	/**
+	 * Populates the table with client data from the database.
+	 */
+	private void populateTable() {
 		try {
-			Connection cn = DatabaseConnection.conectar();
+			Connection cn = DatabaseConnection.connect();
 			PreparedStatement pst = cn.prepareStatement(
 					"SELECT id_cliente, nombre_cliente, mail_cliente, tel_cliente, ultima_modificacion FROM clientes");
 			ResultSet rs = pst.executeQuery();
 
-			this.tableClients = new JTable(this.model);
-			this.tableClients.setFont(new Font("serif", Font.BOLD, 14));
-			this.tableClients.setForeground(Color.BLACK);
-			this.scrollPaneClients = new JScrollPane(this.tableClients);
-			this.scrollPaneClients.setBounds(10, 55, 593, 230);
-			this.scrollPaneClients.setViewportView(this.tableClients);
+			model = new DefaultTableModel();
+			tableClients = new JTable(model);
+			tableClients.setFont(new Font("serif", Font.BOLD, 14));
+			tableClients.setForeground(Color.BLACK);
 
-			/**
-			 * Columnas de la tabla
-			 */
-			this.model.addColumn(" ");
-			this.model.addColumn("Nombre");
-			this.model.addColumn("Email");
-			this.model.addColumn("Teléfono");
-			this.model.addColumn("Midificado por");
+			scrollPaneClients = new JScrollPane(tableClients);
+			scrollPaneClients.setBounds(10, 55, 593, 230);
+			container.add(scrollPaneClients);
 
-			/**
-			 * Llenado de la tabla
-			 */
+			model.addColumn(" ");
+			model.addColumn("Nombre");
+			model.addColumn("Email");
+			model.addColumn("TelÃ©fono");
+			model.addColumn("Modificado por");
+
 			while (rs.next()) {
 				Object[] row = new Object[5];
 				for (int i = 0; i < 5; i++) {
 					row[i] = rs.getObject(i + 1);
 				}
-				this.model.addRow(row);
+				model.addRow(row);
 			}
-			
+
 			rs.close();
 			pst.close();
 			cn.close();
 		} catch (SQLException e) {
 			System.err.println("Error en el llenado de la tabla clientes " + e);
 		}
+	}
 
-		/**
-		 * Evento de accion para seleccionar cliente
-		 */
+	/**
+	 * Adds a mouse listener to the tableClients object. When the mouse is clicked
+	 * on a row of the table,
+	 * the id_cliente_update field is set to the value of the first column of that
+	 * row. It then creates
+	 * a ClientInformation object, sets it to visible, and disposes the current
+	 * frame.
+	 */
+	private void addTableMouseListener() {
 		tableClients.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -113,31 +135,6 @@ public class ManagementClients extends JFrame {
 				}
 			}
 		});
-		this.container.add(this.scrollPaneClients);
-
-	}
-
-	/**
-	 * Construye los componentes Swing en el Frame.
-	 */
-	public void initComponents() {
-
-		/**
-		 * Panel Principal.
-		 */
-		this.container = new JPanel();
-		this.container.setBackground(new Color(46, 59, 104));
-		this.container.setLayout(null);
-		this.setContentPane(this.container);
-
-		/**
-		 * Título del Panel.
-		 */
-		this.labelTitle = new JLabel("Clientes Registrados");
-		this.labelTitle.setBounds(210, 10, 250, 20);
-		this.labelTitle.setForeground(new Color(192, 192, 192));
-		this.labelTitle.setFont(new Font("serif", Font.BOLD, 20));
-		this.container.add(this.labelTitle);
 	}
 
 }

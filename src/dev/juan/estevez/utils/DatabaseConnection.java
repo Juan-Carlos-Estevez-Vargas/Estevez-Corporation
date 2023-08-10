@@ -7,18 +7,20 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
 	/**
-	 * Conexion con base de datos local
+	 * Connects to the local database.
 	 *
-	 * @return
+	 * @return the connection object
+	 * @throws SQLException if there was an error connecting to the database
 	 */
-	public static Connection conectar() {
+	public static Connection connect() throws SQLException {
 		try {
-			Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/estevez_corporation", "root", "");
-			return cn;
+			String url = "jdbc:mysql://localhost/estevez_corporation";
+			String user = "root";
+			String password = "";
+			return DriverManager.getConnection(url, user, password);
 		} catch (SQLException ex) {
-			System.out.println("Error en la conexion local " + ex);
+			throw new SQLException("Error connecting to the local database", ex);
 		}
-		return (null);
 	}
 
 }

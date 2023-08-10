@@ -13,20 +13,20 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import dev.juan.estevez.utils.DatabaseConnection;
-import panel.utilities.Login;
+import dev.juan.estevez.views.LoginView;
 
 /**
- * Gráfica de torta con la cantidad de equipos registrados en el sistema.
+ * Grï¿½fica de torta con la cantidad de equipos registrados en el sistema.
  *
  * @author
  *
  */
-public class MarkGraph extends JFrame{
+public class MarkGraph extends JFrame {
 
-	/**
-	 * Variables.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Variables.
+     */
+    private static final long serialVersionUID = 1L;
     private int[] vectorCantMarks = new int[11];
     private int hp, lenovo, dell, acer, apple, toshiba, brother, samsung, asus, alienware, xerox;
     private String[] vectorNameMarks = new String[11];
@@ -36,15 +36,15 @@ public class MarkGraph extends JFrame{
      * Constructor de clase.
      */
     public MarkGraph() {
-    	user = Login.user;
+        user = LoginView.user;
         this.setSize(550, 460);
         this.setResizable(false);
-        this.setTitle("Técnico - Sesión de " + user);
+        this.setTitle("Tï¿½cnico - Sesiï¿½n de " + user);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         try {
-            Connection cn = (Connection) DatabaseConnection.conectar();
+            Connection cn = (Connection) DatabaseConnection.connect();
             PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
                     "SELECT marca, COUNT(marca) AS Marcas FROM equipos GROUP BY marca");
             ResultSet rs = pst.executeQuery();
@@ -154,7 +154,8 @@ public class MarkGraph extends JFrame{
          * Marca dell Amarillo
          */
         g.setColor(new Color(247, 220, 111));
-        g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother, degreesDell);
+        g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother,
+                degreesDell);
         g.fillRect(310, 270, 20, 20);
         g.drawString(dell + " de Dell", 340, 285);
 
@@ -162,7 +163,8 @@ public class MarkGraph extends JFrame{
          * Marca hp Azul Marino
          */
         g.setColor(new Color(8, 85, 224));
-        g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell, degreesHp);
+        g.fillArc(25, 100, 270, 270,
+                degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell, degreesHp);
         g.fillRect(310, 300, 20, 20);
         g.drawString(hp + " de HP", 340, 315);
 
@@ -170,7 +172,9 @@ public class MarkGraph extends JFrame{
          * Marca lenovo Naranja
          */
         g.setColor(new Color(255, 0, 0));
-        g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell + degreesHp, degreesLenovo);
+        g.fillArc(25, 100, 270, 270,
+                degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell + degreesHp,
+                degreesLenovo);
         g.fillRect(310, 330, 20, 20);
         g.drawString(lenovo + " de Lenovo", 340, 345);
 
@@ -178,7 +182,8 @@ public class MarkGraph extends JFrame{
          * Marca samsung Rosa
          */
         g.setColor(new Color(215, 96, 140));
-        g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell + degreesHp + degreesLenovo, degreesSamsung);
+        g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother
+                + degreesDell + degreesHp + degreesLenovo, degreesSamsung);
         g.fillRect(430, 120, 20, 20);
         g.drawString(samsung + " de Samsung", 460, 135);
 
@@ -186,7 +191,8 @@ public class MarkGraph extends JFrame{
          * Marca toshiba Amarillo Canario
          */
         g.setColor(new Color(215, 196, 25));
-        g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell + degreesHp + degreesLenovo + degreesSamsung, degreesToshiba);
+        g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother
+                + degreesDell + degreesHp + degreesLenovo + degreesSamsung, degreesToshiba);
         g.fillRect(430, 150, 20, 20);
         g.drawString(toshiba + " de Toshiba", 460, 165);
 
@@ -194,12 +200,13 @@ public class MarkGraph extends JFrame{
          * Marca xerox Azul Celeste
          */
         g.setColor(new Color(93, 173, 226));
-        g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother + degreesDell + degreesHp + degreesLenovo + degreesSamsung + degreesToshiba, degreesXerox);
+        g.fillArc(25, 100, 270, 270, degreesAcer + degreesAlienware + degreesApple + degreesAsus + degreesBrother
+                + degreesDell + degreesHp + degreesLenovo + degreesSamsung + degreesToshiba, degreesXerox);
         g.fillRect(430, 180, 20, 20);
         g.drawString(xerox + " de Xerox", 460, 195);
 
         g.setColor(Color.white);
-		g.setFont(new Font("arial", Font.BOLD, 20));
-		g.drawString("Gráfica de marcas registradas", 150, 68);
+        g.setFont(new Font("arial", Font.BOLD, 20));
+        g.drawString("Grï¿½fica de marcas registradas", 150, 68);
     }
 }
