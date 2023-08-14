@@ -204,9 +204,11 @@ public class RestorePassword extends JFrame implements ActionListener {
 					/**
 					 * Llamado al Login para que inicie sesi�n con su nuevo password.
 					 */
-					LoginView login = new LoginView();
-					login.setVisible(true);
-					login.setLocationRelativeTo(null);
+					/*
+					 * LoginView login = new LoginView();
+					 * login.setVisible(true);
+					 * login.setLocationRelativeTo(null);
+					 */
 				} catch (SQLException ex) {
 					System.err.println("Error en consultar capturista");
 				}

@@ -1,7 +1,7 @@
-package dev.juan.estevez.main;
+package dev.juan.estevez;
 
-import dev.juan.estevez.controllers.LoginController;
-import dev.juan.estevez.persistence.LoginDAO;
+import dev.juan.estevez.controllers.UserController;
+import dev.juan.estevez.persistence.UserDAO;
 import dev.juan.estevez.views.LoginView;
 
 /**
@@ -18,8 +18,8 @@ public class Main {
      * @return       void
      */
     public static void main(String[] args) {
-        LoginDAO loginDAO = new LoginDAO(); 
-		LoginController loginController = new LoginController(loginDAO); // Inyectar el DAO en el controlador
+        UserDAO loginDAO = new UserDAO(); 
+		UserController loginController = new UserController(loginDAO);
         LoginView login = new LoginView(loginController);
         login.setLocationRelativeTo(null);
         login.setVisible(true);
