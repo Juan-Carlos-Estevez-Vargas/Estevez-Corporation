@@ -8,12 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.juan.estevez.models.User;
+import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.DatabaseConnection;
 import dev.juan.estevez.utils.Utils;
 
 public class UserDAO {
 
     private Connection connection = null;
+
+    private static final String SQL_GET_USERS = "SELECT * FROM usuarios";
+    private static final String SQL_GET_USER_BY_USERNAME_AND_PASSWORD = "SELECT * FROM usuarios WHERE username = ? AND password = ?";
+    private static final String SQL_REGISTER_USER = "INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_GET_USERNAME_BY_USERNAME = "SELECT username FROM usuarios WHERE username = ?";
 
     public UserDAO() {
         try {
@@ -33,8 +39,7 @@ public class UserDAO {
     public User getUserByUsernameAndPassword(String username, String password) {
         User user = null;
 
-        try (PreparedStatement pst = connection.prepareStatement(
-                "SELECT * FROM usuarios WHERE username = ? AND password = ?")) {
+        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_USER_BY_USERNAME_AND_PASSWORD)) {
             pst.setString(1, username);
             pst.setString(2, password);
 
@@ -47,7 +52,7 @@ public class UserDAO {
                 }
             }
         } catch (SQLException ex) {
-            Utils.handleQueryError(ex, "Error al obtener usuario");
+            Utils.handleQueryError(ex, Constants.USER_FETCH_ERROR_MESSAGE);
         }
 
         return user;
@@ -56,13 +61,12 @@ public class UserDAO {
     /**
      * Retrieves all users from the database.
      *
-     * @return          a list of User objects representing all the users in the database.
+     * @return a list of User objects representing all the users in the database.
      */
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
 
-        try (Connection cn = (Connection) DatabaseConnection.connect();
-                PreparedStatement pst = (PreparedStatement) cn.prepareStatement("SELECT * FROM usuarios");
+        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_USERS);
                 ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
@@ -76,10 +80,59 @@ public class UserDAO {
                 users.add(user);
             }
         } catch (SQLException ex) {
-           Utils.handleQueryError(ex, "Error al obtener el listado usuarios");
+            Utils.handleQueryError(ex, "Error al obtener el listado usuarios");
         }
 
         return users;
     }
+
+    /**
+     * Registers a new user in the system.
+     *
+     * @param  user  the User object containing user details
+     * @return       the number of records inserted
+     */
+    public int registerUser(User user) {
+        int recordsInserted = 0;
+
+		try (PreparedStatement pst = connection.prepareStatement(SQL_REGISTER_USER);) {
+			pst.setInt(1, 0);
+			pst.setString(2, user.getUserName());
+			pst.setString(3, user.getUserEmail());
+			pst.setString(4, user.getUserPhone());
+			pst.setString(5, user.getUsername());
+			pst.setString(6, user.getPassword());
+			pst.setString(7, user.getPermissions());
+			pst.setString(8, Constants.ACTIVE);
+			pst.setString(9, user.getRegisterBy());
+			recordsInserted = pst.executeUpdate();
+		} catch (SQLException ex) {
+            Utils.handleQueryError(ex, Constants.INTERNAL_REGISTER_USER_ERROR);
+		}
+
+        return recordsInserted;
+	}
+
+    /**
+     * Retrieves the username for a given username.
+     *
+     * @param  username  the username to search for
+     * @return           the username if found, null otherwise
+     */
+    public String getUsernameByUsername(String username) {
+        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_USERNAME_BY_USERNAME)) {
+            pst.setString(1, username);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString(Constants.USERNAME);
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException ex) {
+            Utils.handleQueryError(ex, Constants.USERNAME_COMPARISON_ERROR_MESSAGE);
+            return null;
+        }
+    } 
 
 }

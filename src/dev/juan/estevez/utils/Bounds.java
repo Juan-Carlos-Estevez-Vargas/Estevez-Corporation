@@ -25,4 +25,18 @@ public class Bounds {
     public static final int[] USER_LABEL_BOUNDS = { 40, 250, 210, 30 };
     public static final int[] USER_TEXT_BOUNDS = { 45, 285, 250, 30 };
 
+    // --- Register User Bounds ---
+    public static final int[] REGISTER_USERNAME_BOUNDS = { 320, 50, 100, 25 };
+    public static final int[] REGISTER_USER_BUTTON_BOUNDS = { 400, 120, 140, 120 };
+    public static final int[] REGISTER_USER_BOUNDS = { 415, 240, 150, 25 };
+    public static final int[] REGISTER_USER_EMAIL_BOUNDS = { 20, 110, 100, 25 };
+    public static final int[] REGISTER_USER_NAME_BOUNDS = { 20, 50, 100, 25 };
+    public static final int[] REGISTER_USER_PERMISIONS_OF_BOUNDS = { 20, 230, 100, 25 };
+    public static final int[] REGISTER_USER_PHONE_BOUNDS = { 20, 170, 100, 25 };
+    public static final int[] REGISTER_USER_TITLE_BOUNDS = { 210, 10, 250, 30 };
+    public static final int[] TEXT_FIELD_USERNAME_BOUNDS = { 320, 70, 230, 25 };
+    public static final int[] TEXT_FIELD_USER_EMAIL_BOUNDS = { 20, 130, 280, 25 };
+    public static final int[] TEXT_FIELD_USER_NAME_BOUNDS = { 20, 70, 280, 25 };
+    public static final int[] TEXT_FIELD_USER_PHONE_BOUNDS = { 20, 190, 230, 25 };
+
 }
