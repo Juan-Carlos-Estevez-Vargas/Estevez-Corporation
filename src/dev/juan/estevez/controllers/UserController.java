@@ -27,7 +27,33 @@ public class UserController {
         return user != null ? user : null;
     }
 
+    /**
+     * Retrieves a list of all users.
+     *
+     * @return a list of User objects representing all users
+     * @throws SQLException if there is an error retrieving the users from the database
+     */
     public List<User> getAllUsers() throws SQLException {
         return userDAO.getAllUsers();
+    }
+
+    /**
+     * Registers a user.
+     *
+     * @param  user  the user to register
+     * @return       the registration result
+     */
+    public int registerUser(User user) {
+        return userDAO.registerUser(user);
+    }
+
+    /**
+     * Retrieves the username by the given username.
+     *
+     * @param  username    the username to retrieve
+     * @return             the retrieved username
+     */
+    public String getUsernameByUsername(String username) {
+        return userDAO.getUsernameByUsername(username);
     }
 }

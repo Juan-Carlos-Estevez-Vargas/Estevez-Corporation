@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
@@ -19,7 +18,7 @@ import dev.juan.estevez.controllers.UserController;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.gui.GUIComponents;
-import dev.juan.estevez.views.administrator.AdministratorPanel;
+import dev.juan.estevez.views.administrator.AdministratorPanelView;
 import dev.juan.estevez.views.employee.EmployeePanel;
 import dev.juan.estevez.views.technical.PanelTechnical;
 import panel.utilities.ForgotPassword;
@@ -174,7 +173,7 @@ public final class LoginView extends JFrame implements ActionListener {
     private void openAppropriatePanel(String levelType) throws SQLException {
         switch (levelType) {
             case Constants.ROLE_ADMIN:
-                openPanel(new AdministratorPanel());
+                openPanel(new AdministratorPanelView());
                 break;
             case Constants.ROLE_CAPTURISTA:
                 openPanel(new EmployeePanel());

@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import dev.juan.estevez.utils.Constants;
+import dev.juan.estevez.utils.ValidateCharacters;
 
 public final class GUIComponents extends JFrame {
 

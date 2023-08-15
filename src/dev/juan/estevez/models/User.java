@@ -13,6 +13,7 @@ public class User {
 	private String levelType;
 	private String status;
 	private String registerBy;
+	private String permissions;
 
 	public User() {
 	}
@@ -101,6 +102,14 @@ public class User {
 
 	public void setRegisterBy(String registerBy) {
 		this.registerBy = registerBy;
+	}
+
+	public String getPermissions() {
+		return permissions;
+	}
+
+	public void setpermissions(String permissions) {
+		this.permissions = permissions;
 	}
 
 	@Override
