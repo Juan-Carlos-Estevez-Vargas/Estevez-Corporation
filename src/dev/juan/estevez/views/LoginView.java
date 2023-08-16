@@ -18,7 +18,7 @@ import dev.juan.estevez.controllers.UserController;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.gui.GUIComponents;
-import dev.juan.estevez.views.administrator.AdministratorPanelView;
+import dev.juan.estevez.views.admin.AdministratorPanelView;
 import dev.juan.estevez.views.employee.EmployeePanel;
 import dev.juan.estevez.views.technical.PanelTechnical;
 import panel.utilities.ForgotPassword;
@@ -75,7 +75,7 @@ public final class LoginView extends JFrame implements ActionListener {
         txtPassword2 = GUIComponents.createTextField(Bounds.PASSWORD_TEXT_BOUNDS, Constants.TEXT_FIELD_COLOR, Constants.LABEL_FONT, container);
         txtPassword2.setVisible(false);
 
-        btnEye = GUIComponents.createButton(Constants.EYE_ICON, Bounds.EYE_BUTTON_BOUNDS, Constants.BUTTON_BACKGROUND_COLOR, container);
+        btnEye = GUIComponents.createButton(Constants.EYE_ICON, Bounds.EYE_BUTTON_BOUNDS, Constants.BACKGROUND_COLOR, container);
         btnLogin = GUIComponents.createButton(Constants.SIGN_IN, Bounds.LOGIN_BUTTON_BOUNDS, Constants.BUTTON_COLOR, Constants.BUTTON_FONT, container);
         btnForgot = createForgotButton();
 
@@ -95,7 +95,7 @@ public final class LoginView extends JFrame implements ActionListener {
      */
     private JButton createForgotButton() {
         JButton btn = GUIComponents.createButton(Constants.FORGOT_TEXT, Bounds.FORGOT_BUTTON_BOUNDS,
-                Constants.BUTTON_BACKGROUND_COLOR, Constants.BUTTON_FONT, container);
+                Constants.BACKGROUND_COLOR, Constants.BUTTON_FONT, container);
         btn.setForeground(Constants.ERROR_COLOR);
         btn.setBorder(null);
         btn.setOpaque(true);

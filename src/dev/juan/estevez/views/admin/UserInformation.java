@@ -1,4 +1,4 @@
-package dev.juan.estevez.views.administrator;
+package dev.juan.estevez.views.admin;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -59,7 +59,7 @@ public class UserInformation extends JFrame implements ActionListener {
 	 */
 	private void initializeUserInformation() {
 		user = LoginView.user;
-		user_update = ManagementUsers.user_update;
+		user_update = ManagementUsersView.user_update;
 
 		setupWindowProperties();
 		setTitleAndLabels();
@@ -329,7 +329,7 @@ public class UserInformation extends JFrame implements ActionListener {
 					updateDatabase(name, email, phone, username, permissionsString, statusString);
 					JOptionPane.showMessageDialog(null, "Modificación exitosa!!");
 					dispose();
-					ManagementUsers managementUsers = new ManagementUsers();
+					ManagementUsersView managementUsers = new ManagementUsersView();
 					managementUsers.setVisible(true);
 				}
 

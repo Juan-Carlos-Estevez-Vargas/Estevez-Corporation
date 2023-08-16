@@ -10,7 +10,6 @@ public class Constants {
     // Colors
     public static final Color BACKGROUND_COLOR = new Color(46, 59, 104);
     public static final Color BUTTON_COLOR = new Color(8, 85, 224);
-    public static final Color BUTTON_BACKGROUND_COLOR = new Color(46, 59, 104);
     public static final Color ERROR_COLOR = new Color(192, 192, 192);
     public static final Color TEXT_FIELD_COLOR = new Color(127, 140, 141);
 
@@ -51,6 +50,7 @@ public class Constants {
     public static final String PRINT_USERS_TEXT = "Imprimir Usuarios";
     
     // ERRORS
+    public static final String ERROR_SHOWING_INFORMATION = "¡Error al mostrar información! Contacte al Administrador";
     public static final String INTERNAL_LOGIN_ERROR = "¡Error al iniciar sesión! Contacta al administrador.";
     public static final String INTERNAL_REGISTER_USER_ERROR = "¡Error al registrar usuario! Contacte al Administrador";
     public static final String GENERATE_ERROR_PDF = "¡Error al generar PDF! Contacte al Administrador";
@@ -64,6 +64,7 @@ public class Constants {
     public static final String USER_LIST_CREATED_SUCCESSFULLY = "Listado de usuarios creado correctamente";
     public static final String USER_NAME = "Nombre";
     public static final String USER_REGISTER_TEXT = "Registrar Usuario";
+    public static final String REGISTERED_USERS_TITLE = "Usuarios Registrados";
     
     // TOOLS
     public static final String ACTIVE = "Activo";

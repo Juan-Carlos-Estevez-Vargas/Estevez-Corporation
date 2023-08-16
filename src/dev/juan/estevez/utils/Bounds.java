@@ -4,9 +4,9 @@ public class Bounds {
 
     // --- Login Bounds ---
     public static final int[] ADMINISTRATOR_LABEL_TITLE_BOUNDS = { 10, 25, 410, 27 };
-    public static final int[] ADMINISTRATOR_MANAGE_USERS_LABEL_BOUNDS = { 250, 190, 120, 15 };    
+    public static final int[] ADMINISTRATOR_MANAGE_USERS_LABEL_BOUNDS = { 250, 190, 120, 15 };
     public static final int[] ADMINISTRATOR_PRINT_USERS_LABEL_BOUNDS = { 460, 190, 120, 15 };
-    public static final int[] ADMINISTRATOR_REGISTER_USER_LABEL_BOUNDS = { 45, 190, 120, 15 };    
+    public static final int[] ADMINISTRATOR_REGISTER_USER_LABEL_BOUNDS = { 45, 190, 120, 15 };
     public static final int[] ERROR_LABEL_BOUNDS = { 45, 390, 250, 25 };
     public static final int[] EYE_BUTTON_BOUNDS = { 270, 355, 50, 30 };
     public static final int[] FORGOT_BUTTON_BOUNDS = { 45, 515, 250, 35 };
@@ -39,4 +39,8 @@ public class Bounds {
     public static final int[] TEXT_FIELD_USER_NAME_BOUNDS = { 20, 70, 280, 25 };
     public static final int[] TEXT_FIELD_USER_PHONE_BOUNDS = { 20, 190, 230, 25 };
 
+    // MANAGE USERS
+    // public static final int[] SCROLL_PANE_USER_TABLE_BOUNDS = { 210, 10, 250, 30
+    // };
+    public static final int[] MANAGE_USER_TITLE_BOUNDS = { 210, 10, 250, 20 };
 }
