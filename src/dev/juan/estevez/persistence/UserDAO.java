@@ -74,6 +74,7 @@ public class UserDAO {
                 user.setUserName(rs.getString(2));
                 user.setUserEmail(rs.getString(3));
                 user.setUserPhone(rs.getString(4));
+                user.setUsername(rs.getString(5));
                 user.setLevelType(rs.getString(7));
                 user.setStatus(rs.getString(8));
                 user.setRegisterBy(rs.getString(9));
