@@ -3,18 +3,24 @@ package dev.juan.estevez.views;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import dev.juan.estevez.utils.Constants;
-import dev.juan.estevez.utils.Utils;
+import dev.juan.estevez.utils.StringUtils;
+import dev.juan.estevez.utils.enums.Colors;
+import dev.juan.estevez.utils.enums.Fonts;
+import dev.juan.estevez.utils.enums.Icons;
+import dev.juan.estevez.utils.enums.Roles;
+import dev.juan.estevez.utils.enums.States;
 import dev.juan.estevez.controllers.UserController;
+import dev.juan.estevez.interfaces.GUIInterface;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.gui.GUIComponents;
@@ -26,15 +32,14 @@ import panel.utilities.ForgotPassword;
 /**
  * @author Juan Carlos Estevez Vargas
  */
-public final class LoginView extends JFrame implements ActionListener {
+public final class LoginView extends JFrame implements ActionListener, GUIInterface {
 
     private static final long serialVersionUID = 1L;
     private JPanel container;
-    private JLabel jlLogo, jlUser, jlPassword, jlError;
+    private JLabel jlError;
     private JTextField txtUser;
     private JPasswordField txtPassword;
     private JButton btnLogin, btnEye, btnForgot;
-    private JSeparator separator;
     private boolean eyeEstate;
     public static String user = "";
     private JTextField txtPassword2;
@@ -46,41 +51,57 @@ public final class LoginView extends JFrame implements ActionListener {
         initComponents();
     }
 
-    /**
-     * Initializes the frame.
-     */
-    private void initializeFrame() {
+    @Override
+    public void initializeFrame() {
         setSize(350, 600);
         setTitle("Estevez Corporation");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
     }
 
-    /**
-     * Initializes and sets up the components of the UI.
-     */
-    private void initComponents() {
+    @Override
+    public void initComponents() {
+        setupMainPanel();
+        setupLabels();
+        setupTextFields();
+        setupButtons();
+        GUIComponents.createSeparator(Bounds.SEPARATOR_BOUNDS, container);
+        setupEvents();
+    }
+
+    @Override
+    public void setupMainPanel() {
         container = new JPanel();
-        container.setBackground(Constants.BACKGROUND_COLOR);
+        container.setBackground(Colors.BACKGROUND_COLOR.getValue());
         container.setLayout(null);
         setContentPane(container);
+    }
 
-        jlLogo = GUIComponents.createImageLabel(Constants.LOGIN_LOGO_URL, Bounds.LOGO_LABEL_BOUNDS, container);
-        jlUser = GUIComponents.createLabel(Constants.LOGIN_USER_TEXT, Bounds.USER_LABEL_BOUNDS, Constants.LABEL_FONT, Constants.ERROR_COLOR, container);
-        jlError = GUIComponents.createLabel("", Bounds.ERROR_LABEL_BOUNDS, Constants.ERROR_FONT, Constants.ERROR_COLOR, container);
-        jlPassword = GUIComponents.createLabel(Constants.LOGIN_PASSWORD_TEXT, Bounds.PASSWORD_LABEL_BOUNDS, Constants.LABEL_FONT, Constants.ERROR_COLOR, container);
+    @Override
+    public void setupLabels() {
+        GUIComponents.createImageLabel(Constants.LOGIN_LOGO_URL, Bounds.LOGO_LABEL_BOUNDS, container);
+        GUIComponents.createLabel(Constants.LOGIN_USER_TEXT, Bounds.USER_LABEL_BOUNDS, container);
+        GUIComponents.createLabel("", Bounds.ERROR_LABEL_BOUNDS, container).setFont(Fonts.ERROR_FONT.getValue());
+        GUIComponents.createLabel(Constants.LOGIN_PASSWORD_TEXT, Bounds.PASSWORD_LABEL_BOUNDS, container);
+    }
 
-        txtUser = GUIComponents.createTextField(Bounds.USER_TEXT_BOUNDS, Constants.TEXT_FIELD_COLOR, Constants.LABEL_FONT, container);
-        txtPassword = GUIComponents.createPasswordField(Bounds.PASSWORD_FIELD_BOUNDS, Constants.TEXT_FIELD_COLOR, Constants.LABEL_FONT, container);
-        txtPassword2 = GUIComponents.createTextField(Bounds.PASSWORD_TEXT_BOUNDS, Constants.TEXT_FIELD_COLOR, Constants.LABEL_FONT, container);
+    @Override
+    public void setupTextFields() {
+        txtUser = GUIComponents.createTextField(Bounds.USER_TEXT_BOUNDS, container);
+        txtPassword = GUIComponents.createPasswordField(Bounds.PASSWORD_FIELD_BOUNDS, container);
+        txtPassword2 = GUIComponents.createTextField(Bounds.PASSWORD_TEXT_BOUNDS, container);
         txtPassword2.setVisible(false);
+    }
 
-        btnEye = GUIComponents.createButton(Constants.EYE_ICON, Bounds.EYE_BUTTON_BOUNDS, Constants.BACKGROUND_COLOR, container);
-        btnLogin = GUIComponents.createButton(Constants.SIGN_IN, Bounds.LOGIN_BUTTON_BOUNDS, Constants.BUTTON_COLOR, Constants.BUTTON_FONT, container);
+    @Override
+    public void setupButtons() {
+        btnEye = GUIComponents.createButton(Icons.EYE_ICON.getValue(), Bounds.EYE_BUTTON_BOUNDS, Colors.BACKGROUND_COLOR.getValue(), container);
+        btnLogin = GUIComponents.createButton(Constants.SIGN_IN, Bounds.LOGIN_BUTTON_BOUNDS, Colors.BUTTON_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), container);
         btnForgot = createForgotButton();
+    }
 
-        separator = GUIComponents.createSeparator(Bounds.SEPARATOR_BOUNDS, Constants.ERROR_COLOR, container);
-
+    @Override
+    public void setupEvents() {
         btnEye.addActionListener(this);
         btnLogin.addActionListener(this);
         btnForgot.addActionListener(this);
@@ -95,8 +116,8 @@ public final class LoginView extends JFrame implements ActionListener {
      */
     private JButton createForgotButton() {
         JButton btn = GUIComponents.createButton(Constants.FORGOT_TEXT, Bounds.FORGOT_BUTTON_BOUNDS,
-                Constants.BACKGROUND_COLOR, Constants.BUTTON_FONT, container);
-        btn.setForeground(Constants.ERROR_COLOR);
+                Colors.BACKGROUND_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), container);
+        btn.setForeground(Colors.ERROR_COLOR.getValue());
         btn.setBorder(null);
         btn.setOpaque(true);
         return btn;
@@ -135,17 +156,22 @@ public final class LoginView extends JFrame implements ActionListener {
      * @throws SQLException if there is an error in the SQL query
      */
     private void performLogin() throws SQLException {
+        String password = new String(txtPassword.getPassword());
         String username = txtUser.getText().trim();
-        String password = txtPassword.getText().trim();
-
-        if (!username.isEmpty() || !password.isEmpty()) {
+    
+        if (!username.isEmpty() && !password.isEmpty()) {
             User user = loginController.getUserByUsernameAndPassword(username, password);
-            LoginView.user = user.getUserName();
-            handleUserLogin(user);
+            
+            if (user != null) {
+                LoginView.user = user.getUserName();
+                handleUserLogin(user);
+            } else {
+                handleLoginError();
+            }
         } else {
-            Utils.showEmptyFieldsMessage();
+            StringUtils.showEmptyFieldsMessage();
         }
-    }
+    }    
 
     /**
      * Handles the user login process.
@@ -157,7 +183,7 @@ public final class LoginView extends JFrame implements ActionListener {
         String levelType = user.getLevelType();
         String status = user.getStatus();
 
-        if (status.equalsIgnoreCase(Constants.ACTIVE)) {
+        if (status.equalsIgnoreCase(States.ACTIVE.getValue())) {
             openAppropriatePanel(levelType);
         } else {
             jlError.setText(Constants.INACTIVE_USER);
@@ -171,19 +197,14 @@ public final class LoginView extends JFrame implements ActionListener {
      * @throws SQLException if there is an error accessing the database
      */
     private void openAppropriatePanel(String levelType) throws SQLException {
-        switch (levelType) {
-            case Constants.ROLE_ADMIN:
-                openPanel(new AdministratorPanelView());
-                break;
-            case Constants.ROLE_CAPTURISTA:
-                openPanel(new EmployeePanel());
-                break;
-            case Constants.ROLE_TECH:
-                openPanel(new PanelTechnical());
-                break;
-            default:
-                jlError.setText(Constants.INACTIVE_USER);
-                break;
+        if (levelType.equals(Roles.ROLE_ADMIN.getValue())) {
+            openPanel(new AdministratorPanelView());
+        } else if (levelType.equals(Roles.ROLE_CAPTURISTA.getValue())) {
+            openPanel(new EmployeePanel());
+        } else if (levelType.equals(Roles.ROLE_TECH.getValue())) {
+            openPanel(new PanelTechnical());
+        } else {
+            jlError.setText(Constants.INACTIVE_USER);
         }
     }
 
@@ -192,7 +213,8 @@ public final class LoginView extends JFrame implements ActionListener {
      */
     private void togglePasswordVisibility() {
         if (!eyeEstate) {
-            txtPassword2.setText(txtPassword.getText());
+            String passwordEye = new String(txtPassword.getPassword());
+            txtPassword2.setText(passwordEye);
             txtPassword2.setVisible(true);
             txtPassword.setVisible(false);
             eyeEstate = true;
@@ -218,7 +240,7 @@ public final class LoginView extends JFrame implements ActionListener {
      */
     private void handleLoginError() {
         jlError.setText(Constants.LOGIN_ERROR_TEXT);
-        jlError.setFont(Constants.ERROR_FONT);
+        jlError.setFont(Fonts.ERROR_FONT.getValue());
         jlError.setHorizontalAlignment(SwingConstants.CENTER);
 
         txtUser.setText("");

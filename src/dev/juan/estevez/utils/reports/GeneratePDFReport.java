@@ -20,7 +20,8 @@ import dev.juan.estevez.controllers.UserController;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.persistence.UserDAO;
 import dev.juan.estevez.utils.Constants;
-import dev.juan.estevez.utils.Utils;
+import dev.juan.estevez.utils.StringUtils;
+import dev.juan.estevez.utils.enums.Users;
 
 public class GeneratePDFReport {
 
@@ -51,7 +52,7 @@ public class GeneratePDFReport {
 	 * @throws IOException       if there is an error with the image file
 	 */
 	private static void addHeader(Document document) throws DocumentException, IOException {
-		com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/dev/juan/estevez/assets/img/BannerPDF2.jpg");
+		com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance(Constants.PDF_BANNER_IMG);
 		header.scaleToFit(650, 1000);
 		header.setAlignment(Element.ALIGN_CENTER);
 		document.add(header);
@@ -83,12 +84,12 @@ public class GeneratePDFReport {
 		PdfPTable table = new PdfPTable(6);
 		table.setWidthPercentage(100);
 		table.setWidths(new float[] { 2, 3, 2, 1.5f, 1.5f, 3 });
-		table.addCell(Constants.USER_NAME);
-		table.addCell(Constants.EMAIL);
-		table.addCell(Constants.PHONE);
-		table.addCell(Constants.LEVEL);
-		table.addCell(Constants.STATUS);
-		table.addCell(Constants.REGISTERED_BY);
+		table.addCell(Users.NAME.getValue());
+		table.addCell(Users.EMAIL.getValue());
+		table.addCell(Users.PHONE.getValue());
+		table.addCell(Users.LEVEL.getValue());
+		table.addCell(Users.STATUS.getValue());
+		table.addCell(Users.REGISTERED_BY.getValue());
 
 		try {
 			List<User> users =  new UserController(new UserDAO()).getAllUsers();
@@ -104,7 +105,7 @@ public class GeneratePDFReport {
 			
 			document.add(table);
 		} catch (SQLException ex) {
-			Utils.handleQueryError(ex, "Error al generar lista de usuarios");
+			StringUtils.handleQueryError(ex, Constants.ERROR_GENERATING_USER_LIST);
 		}
 	}
 
