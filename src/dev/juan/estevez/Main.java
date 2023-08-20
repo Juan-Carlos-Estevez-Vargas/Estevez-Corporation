@@ -15,7 +15,6 @@ public class Main {
      * The main entry point for the Java application.
      *
      * @param  args  the command line arguments passed to the application
-     * @return       void
      */
     public static void main(String[] args) {
         UserDAO loginDAO = new UserDAO(); 

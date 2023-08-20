@@ -10,22 +10,25 @@ import java.util.List;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.DatabaseConnection;
-import dev.juan.estevez.utils.Utils;
+import dev.juan.estevez.utils.StringUtils;
+import dev.juan.estevez.utils.enums.States;
 
 public class UserDAO {
 
     private Connection connection = null;
 
     private static final String SQL_GET_USERS = "SELECT * FROM usuarios";
+    private static final String SQL_GET_USER_BY_ID = "SELECT * FROM usuarios WHERE id_usuario = ?";
+    private static final String SQL_GET_USER_BY_USERNAME = "SELECT * FROM usuarios WHERE username = ?";
     private static final String SQL_GET_USER_BY_USERNAME_AND_PASSWORD = "SELECT * FROM usuarios WHERE username = ? AND password = ?";
     private static final String SQL_REGISTER_USER = "INSERT INTO usuarios VALUES (?,?,?,?,?,?,?,?,?)";
-    private static final String SQL_GET_USERNAME_BY_USERNAME = "SELECT username FROM usuarios WHERE username = ?";
+    private static final String SQL_UPDATE_USER = "UPDATE usuarios SET nombre_usuario = ?, email = ?, telefono = ?, username = ?, tipo_nivel = ?, estatus = ? WHERE id_usuario = ?";
 
     public UserDAO() {
         try {
             this.connection = DatabaseConnection.connect();
         } catch (SQLException ex) {
-            Utils.handleQueryError(ex, "Error al conectar a la base de datos");
+            StringUtils.handleQueryError(ex, Constants.ERROR_DB_CONNECTION);
         }
     }
 
@@ -52,7 +55,7 @@ public class UserDAO {
                 }
             }
         } catch (SQLException ex) {
-            Utils.handleQueryError(ex, Constants.USER_FETCH_ERROR_MESSAGE);
+            StringUtils.handleQueryError(ex, Constants.USER_FETCH_ERROR_MESSAGE);
         }
 
         return user;
@@ -70,18 +73,10 @@ public class UserDAO {
                 ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
-                User user = new User();
-                user.setUserName(rs.getString(2));
-                user.setUserEmail(rs.getString(3));
-                user.setUserPhone(rs.getString(4));
-                user.setUsername(rs.getString(5));
-                user.setLevelType(rs.getString(7));
-                user.setStatus(rs.getString(8));
-                user.setRegisterBy(rs.getString(9));
-                users.add(user);
+                users.add(extractUserFromResultSet(rs));
             }
         } catch (SQLException ex) {
-            Utils.handleQueryError(ex, "Error al obtener el listado usuarios");
+            StringUtils.handleQueryError(ex, Constants.ERROR_GET_USER_LIST);
         }
 
         return users;
@@ -104,36 +99,107 @@ public class UserDAO {
 			pst.setString(5, user.getUsername());
 			pst.setString(6, user.getPassword());
 			pst.setString(7, user.getPermissions());
-			pst.setString(8, Constants.ACTIVE);
+			pst.setString(8, States.ACTIVE.getValue());
 			pst.setString(9, user.getRegisterBy());
 			recordsInserted = pst.executeUpdate();
 		} catch (SQLException ex) {
-            Utils.handleQueryError(ex, Constants.INTERNAL_REGISTER_USER_ERROR);
+            StringUtils.handleQueryError(ex, Constants.INTERNAL_REGISTER_USER_ERROR);
 		}
 
         return recordsInserted;
 	}
 
     /**
-     * Retrieves the username for a given username.
+     * Retrieves a user from the database by their username.
      *
-     * @param  username  the username to search for
-     * @return           the username if found, null otherwise
+     * @param  username  the username of the user to retrieve
+     * @return           the User object corresponding to the username, or null if not found
      */
-    public String getUsernameByUsername(String username) {
-        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_USERNAME_BY_USERNAME)) {
+    public User getUserByUsername(String username) {
+        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_USER_BY_USERNAME)) {
             pst.setString(1, username);
+            
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getString(Constants.USERNAME);
+                    return extractUserFromResultSet(rs);
                 } else {
                     return null;
                 }
             }
         } catch (SQLException ex) {
-            Utils.handleQueryError(ex, Constants.USERNAME_COMPARISON_ERROR_MESSAGE);
+            StringUtils.handleQueryError(ex, Constants.USER_FETCH_ERROR_MESSAGE);
             return null;
         }
-    } 
+    }   
 
+    /**
+     * Retrieves a user from the database based on the provided user ID.
+     *
+     * @param  id  the ID of the user to retrieve
+     * @return     the User object representing the retrieved user, or null if no user is found
+     */
+    public User getUserById(int id) {
+        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_USER_BY_ID)) {
+            pst.setInt(1, id);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return extractUserFromResultSet(rs);
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException ex) {
+            StringUtils.handleQueryError(ex, Constants.USER_FETCH_ERROR_MESSAGE);
+            return null;
+        }
+    }
+
+    /**
+     * Updates a user in the system.
+     *
+     * @param  user  the User object that contains the updated user information
+     * @return       the number of records that were inserted in the database
+     */
+    public int updateUser(User user) {
+        int recordsInserted = 0;
+
+		try (PreparedStatement pst = connection.prepareStatement(SQL_UPDATE_USER);) {
+			pst.setString(1, user.getUserName());
+			pst.setString(2, user.getUserEmail());
+			pst.setString(3, user.getUserPhone());
+			pst.setString(4, user.getUsername());
+			pst.setString(5, user.getPermissions());
+			pst.setString(6, user.getStatus());
+            pst.setInt(7, user.getUserID());
+			recordsInserted = pst.executeUpdate();
+		} catch (SQLException ex) {
+            StringUtils.handleQueryError(ex, Constants.INTERNAL_UPDATE_USER_ERROR);
+		}
+
+        return recordsInserted;
+	}
+
+    /**
+     * Extracts a User object from a ResultSet.
+     *
+     * @param  rs  the ResultSet containing the user data
+     * @return     the extracted User object
+     * @throws SQLException  if there is an error accessing the ResultSet
+     */
+    private User extractUserFromResultSet(ResultSet rs) throws SQLException {
+        if (rs == null) throw new SQLException("ResultSet is null.");
+
+        User user = new User();
+        user.setUserID(rs.getInt(1));
+        user.setUserName(rs.getString(2));
+        user.setUserEmail(rs.getString(3));
+        user.setUserPhone(rs.getString(4));
+        user.setUsername(rs.getString(5));
+        user.setLevelType(rs.getString(7));
+        user.setStatus(rs.getString(8));
+        user.setRegisterBy(rs.getString(9));
+
+        return user;
+    }
 }

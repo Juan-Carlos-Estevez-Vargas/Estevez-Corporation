@@ -5,6 +5,7 @@ import java.util.List;
 
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.persistence.UserDAO;
+import dev.juan.estevez.utils.StringUtils;
 
 public class UserController {
 
@@ -23,9 +24,13 @@ public class UserController {
      * @throws SQLException if there is an error executing the SQL query
      */
     public User getUserByUsernameAndPassword(String username, String password) throws SQLException {
-        User user = userDAO.getUserByUsernameAndPassword(username, password);
-        return user != null ? user : null;
-    }
+        if (username.isEmpty() || password.isEmpty()) {
+            StringUtils.showEmptyFieldsMessage();
+            return null;
+        }
+    
+        return userDAO.getUserByUsernameAndPassword(username, password);
+    }    
 
     /**
      * Retrieves a list of all users.
@@ -48,12 +53,32 @@ public class UserController {
     }
 
     /**
-     * Retrieves the username by the given username.
+     * Retrieves a user object based on the provided username.
      *
-     * @param  username    the username to retrieve
-     * @return             the retrieved username
+     * @param  username  the username of the user to retrieve
+     * @return           the User object corresponding to the provided username
      */
-    public String getUsernameByUsername(String username) {
-        return userDAO.getUsernameByUsername(username);
+    public User getUserByUsername(String username) {
+        return userDAO.getUserByUsername(username);
+    }
+
+    /**
+     * Retrieves a user by their ID.
+     *
+     * @param  id  the ID of the user
+     * @return     the user with the specified ID
+     */
+    public User getUserById(int id) {
+        return userDAO.getUserById(id);
+    }
+
+    /**
+     * Updates a user in the database.
+     *
+     * @param  user  the user to be updated
+     * @return       the number of rows affected
+     */
+    public int updateUser(User user) {
+        return userDAO.updateUser(user);
     }
 }
