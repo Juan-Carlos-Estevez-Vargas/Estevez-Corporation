@@ -25,7 +25,7 @@ import dev.juan.estevez.models.User;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.admin.AdministratorPanelView;
-import dev.juan.estevez.views.employee.EmployeePanel;
+import dev.juan.estevez.views.employee.EmployeePanelView;
 import dev.juan.estevez.views.technical.PanelTechnical;
 import panel.utilities.ForgotPassword;
 
@@ -200,7 +200,7 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
         if (levelType.equals(Roles.ROLE_ADMIN.getValue())) {
             openPanel(new AdministratorPanelView());
         } else if (levelType.equals(Roles.ROLE_CAPTURISTA.getValue())) {
-            openPanel(new EmployeePanel());
+            openPanel(new EmployeePanelView());
         } else if (levelType.equals(Roles.ROLE_TECH.getValue())) {
             openPanel(new PanelTechnical());
         } else {
