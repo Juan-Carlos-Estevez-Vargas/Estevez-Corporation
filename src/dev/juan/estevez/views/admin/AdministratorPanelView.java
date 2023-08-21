@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -16,15 +18,17 @@ import com.itextpdf.text.DocumentException;
 
 import dev.juan.estevez.controllers.UserController;
 import dev.juan.estevez.interfaces.GUIInterface;
+import dev.juan.estevez.models.User;
 import dev.juan.estevez.persistence.UserDAO;
+import dev.juan.estevez.reports.GeneratePDFReport;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.ViewUtils;
 import dev.juan.estevez.utils.enums.Colors;
 import dev.juan.estevez.utils.enums.Fonts;
 import dev.juan.estevez.utils.enums.Icons;
+import dev.juan.estevez.utils.enums.Users;
 import dev.juan.estevez.utils.gui.GUIComponents;
-import dev.juan.estevez.utils.reports.GeneratePDFReport;
 import dev.juan.estevez.views.LoginView;
 
 public class AdministratorPanelView extends JFrame implements ActionListener, GUIInterface {
@@ -116,22 +120,9 @@ public class AdministratorPanelView extends JFrame implements ActionListener, GU
         } else if (e.getSource() == btnManageUser) {
             ViewUtils.handleManageUser();
         } else if (e.getSource() == btnLogout) {
-            handleLogout();
+            ViewUtils.handleLogout(this);
         } else if (e.getSource() == btnPrintUsers) {
             handlePrintUsers();
-        }
-    }
-
-    /**
-     * Handles the logout functionality.
-     */
-    private void handleLogout() {
-        int confirmationResult = JOptionPane.showConfirmDialog(null, Constants.ARE_YOU_SURE_TO_LOGOUT);
-        if (confirmationResult == JOptionPane.OK_OPTION) {
-            LoginView loginView = new LoginView(new UserController(new UserDAO()));
-            loginView.setLocationRelativeTo(null);
-            loginView.setVisible(true);
-            dispose();
         }
     }
 
@@ -141,19 +132,60 @@ public class AdministratorPanelView extends JFrame implements ActionListener, GU
     private void handlePrintUsers() {
         JFileChooser fc = new JFileChooser();
         int response = fc.showSaveDialog(this);
-
+    
         if (response != JFileChooser.APPROVE_OPTION) {
             return;
         }
-
+    
         File chosenFile = fc.getSelectedFile();
         String outputPath = chosenFile.getAbsolutePath() + Constants.PDF_EXTENSION;
-
+    
         try {
-            GeneratePDFReport.createPDF(outputPath);
+            List<User> users = fetchAllUsers();
+            generateUserPDFReport(users, outputPath);
             JOptionPane.showMessageDialog(null, Constants.USER_LIST_CREATED_SUCCESSFULLY);
-        } catch (IOException | DocumentException ex) {
+        } catch (IOException | DocumentException | SQLException ex) {
             JOptionPane.showMessageDialog(null, Constants.GENERATE_ERROR_PDF);
         }
     }
+    
+    /**
+     * Fetches all users from the database.
+     *
+     * @throws SQLException if there is an error accessing the database
+     * @return a list of User objects representing all the users in the database
+     */
+    private List<User> fetchAllUsers() throws SQLException {
+        UserController userController = new UserController(new UserDAO());
+        return userController.getAllUsers();
+    }
+    
+    /**
+     * Generates a PDF report for a list of users and saves it to the specified output path.
+     *
+     * @param  users      the list of users
+     * @param  outputPath the path where the PDF report will be saved
+     * @throws IOException         if there is an error in the I/O operation
+     * @throws DocumentException   if there is an error in the PDF document generation
+     */
+    private void generateUserPDFReport(List<User> users, String outputPath) throws IOException, DocumentException {
+        String[] userHeaders = { Users.NAME.getValue(), Users.EMAIL.getValue(), Users.PHONE.getValue(),
+            Users.LEVEL.getValue(), Users.STATUS.getValue(), Users.REGISTERED_BY.getValue() };
+        List<String[]> userData = new ArrayList<>();
+    
+        for (User user : users) {
+            String[] userRow = {
+                user.getUserName(),
+                user.getUserEmail(),
+                user.getUserPhone(),
+                user.getLevelType(),
+                user.getStatus(),
+                user.getRegisterBy()
+            };
+            userData.add(userRow);
+        }
+    
+        GeneratePDFReport.generatePDFReport(userData, userHeaders, Constants.USER_LIST, outputPath);
+    }
+    
 }

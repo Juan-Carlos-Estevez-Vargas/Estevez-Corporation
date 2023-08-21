@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 
 public enum Icons {
 
+    ADD_CLIENT_ICON(new ImageIcon("src/dev/juan/estevez/assets/img/addClient.png")),
     ADD_USER_ICON(new ImageIcon("src/dev/juan/estevez/assets/img/addUser.png")),
     EYE_ICON(new ImageIcon("src/dev/juan/estevez/assets/img/ojo_opt.png")),
     INFORMATION_USER_ICON(new ImageIcon("src/dev/juan/estevez/assets/img/informationuser.png")),
