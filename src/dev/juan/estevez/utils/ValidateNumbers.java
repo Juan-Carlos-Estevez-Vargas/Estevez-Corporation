@@ -3,6 +3,9 @@ package dev.juan.estevez.utils;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * @author Juan Carlos Estevez Vargas
+ */
 public class ValidateNumbers extends KeyAdapter {
 
 	@Override

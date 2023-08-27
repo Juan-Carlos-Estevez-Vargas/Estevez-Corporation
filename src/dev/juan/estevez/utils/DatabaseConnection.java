@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class DatabaseConnection {
 
 	/**
@@ -14,12 +17,12 @@ public class DatabaseConnection {
 	 */
 	public static Connection connect() throws SQLException {
 		try {
-			String url = "jdbc:mysql://localhost/estevez_corporation";
-			String user = "root";
-			String password = "";
-			return DriverManager.getConnection(url, user, password);
+			final String URL = "jdbc:mysql://localhost/estevez_corporation";
+			final String USER = "root";
+			final String PASSWORD = "";
+			return DriverManager.getConnection(URL, USER, PASSWORD);
 		} catch (SQLException ex) {
-			throw new SQLException("Error connecting to the local database", ex);
+			throw new SQLException(Constants.ERROR_DB_CONNECTION, ex);
 		}
 	}
 

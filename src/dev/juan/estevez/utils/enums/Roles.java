@@ -1,5 +1,8 @@
 package dev.juan.estevez.utils.enums;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public enum Roles {
     
     ROLE_ADMIN("Administrador"),

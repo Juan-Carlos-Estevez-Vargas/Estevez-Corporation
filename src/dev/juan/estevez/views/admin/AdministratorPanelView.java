@@ -30,7 +30,11 @@ import dev.juan.estevez.utils.enums.Icons;
 import dev.juan.estevez.utils.enums.Users;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
+import panel.utilities.RestorePassword;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class AdministratorPanelView extends JFrame implements ActionListener, GUIInterface {
 
     private static final long serialVersionUID = 1L;
@@ -76,22 +80,18 @@ public class AdministratorPanelView extends JFrame implements ActionListener, GU
 
     @Override
     public void setupLabels() {
-        GUIComponents.createLabel(this.user, Bounds.ADMINISTRATOR_LABEL_TITLE_BOUNDS, panelBack);
-		GUIComponents.createLabel(Constants.USER_REGISTER_TEXT, Bounds.ADMINISTRATOR_REGISTER_USER_LABEL_BOUNDS, panelBack).setFont(Fonts.PANEL_LABEL_FONT.getValue());
-        GUIComponents.createLabel(Constants.MANAGE_USERS_TEXT, Bounds.ADMINISTRATOR_MANAGE_USERS_LABEL_BOUNDS, panelBack).setFont(Fonts.PANEL_LABEL_FONT.getValue());
-        GUIComponents.createLabel(Constants.PRINT_USERS_TEXT, Bounds.ADMINISTRATOR_PRINT_USERS_LABEL_BOUNDS, panelBack).setFont(Fonts.PANEL_LABEL_FONT.getValue());
-    }
-
-    @Override
-    public void setupTextFields() {   
+        GUIComponents.createLabel(this.user, Bounds.LABEL_ADMIN_TITLE, panelBack);
+		GUIComponents.createLabel(Constants.USER_REGISTER_TEXT, Bounds.LABEL_ADMIN_USER_REGISTER, panelBack).setFont(Fonts.PANEL_LABEL_FONT.getValue());
+        GUIComponents.createLabel(Constants.MANAGE_USERS_TEXT, Bounds.LABEL_ADMIN_MANAGE_USERS, panelBack).setFont(Fonts.PANEL_LABEL_FONT.getValue());
+        GUIComponents.createLabel(Constants.PRINT_USERS_TEXT, Bounds.LABEL_ADMIN_PRINT_USERS, panelBack).setFont(Fonts.PANEL_LABEL_FONT.getValue());
     }
 
     @Override
     public void setupButtons() {
-        btnRegisterUser = GUIComponents.createButton(Icons.ADD_USER_ICON.getValue(), Bounds.REGISTER_BUTTON_BOUNDS, null, panelBack);
-        btnManageUser = GUIComponents.createButton(Icons.INFORMATION_USER_ICON.getValue(), Bounds.MANAGE_USERS_BUTTON_BOUNDS, null, panelBack);
-        btnPrintUsers = GUIComponents.createButton(Icons.PRINT_USERS_ICON.getValue(), Bounds.PRINT_USERS_BUTTON_BOUNDS, null, panelBack);
-        btnRestorePass = GUIComponents.createButton(Icons.RESTORE_PASS_ICON.getValue(), Bounds.RESTORE_PASS_BUTTON_BOUNDS, null, panelBack);
+        btnRegisterUser = GUIComponents.createButton(Icons.ADD_USER_ICON.getValue(), Bounds.BUTTON_ADMIN_REGISTER, null, panelBack);
+        btnManageUser = GUIComponents.createButton(Icons.INFORMATION_USER_ICON.getValue(), Bounds.BUTTON_ADMIN_MANAGE_USERS, null, panelBack);
+        btnPrintUsers = GUIComponents.createButton(Icons.PRINT_USERS_ICON.getValue(), Bounds.BUTTON_ADMIN_PRINT_USERS, null, panelBack);
+        btnRestorePass = GUIComponents.createButton(Icons.RESTORE_PASS_ICON.getValue(), Bounds.BUTTON_RESTORE_PASSWORD, null, panelBack);
         btnLogout = GUIComponents.createLogoutButton(panelBack);
     }
 
@@ -104,21 +104,14 @@ public class AdministratorPanelView extends JFrame implements ActionListener, GU
         btnLogout.addActionListener(this);
     }
 
-    /**
-     * Overrides the actionPerformed method of the ActionListener interface.
-     * Checks the source of the action event and calls the appropriate handler method.
-     *
-     * @param  e  the ActionEvent object representing the user action
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnRestorePass) {
-            ViewUtils.handleRestorePassword();
-            dispose();
+            ViewUtils.openPanel(new RestorePassword());
         } else if (e.getSource() == btnRegisterUser) {
-            ViewUtils.handleRegisterUser();
+            ViewUtils.openPanel(new RegisterUserView());
         } else if (e.getSource() == btnManageUser) {
-            ViewUtils.handleManageUser();
+            ViewUtils.openPanel(new ManagementUsersView());
         } else if (e.getSource() == btnLogout) {
             ViewUtils.handleLogout(this);
         } else if (e.getSource() == btnPrintUsers) {
@@ -186,6 +179,11 @@ public class AdministratorPanelView extends JFrame implements ActionListener, GU
         }
     
         GeneratePDFReport.generatePDFReport(userData, userHeaders, Constants.USER_LIST, outputPath);
+    }
+
+    @Override
+    public void setupTextFields() {
+        throw new UnsupportedOperationException("Unimplemented method 'setupTextFields'");
     }
     
 }

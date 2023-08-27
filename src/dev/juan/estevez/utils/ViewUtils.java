@@ -6,62 +6,11 @@ import javax.swing.JOptionPane;
 import dev.juan.estevez.controllers.UserController;
 import dev.juan.estevez.persistence.UserDAO;
 import dev.juan.estevez.views.LoginView;
-import dev.juan.estevez.views.admin.ManagementUsersView;
-import dev.juan.estevez.views.admin.RegisterUserView;
-import dev.juan.estevez.views.employee.ManagementClients;
-import dev.juan.estevez.views.employee.RegisterClient;
-import panel.utilities.RestorePassword;
 
+/**
+ * @author Juan Carlos Estevez Vargas
+ */
 public class ViewUtils {
-
-    /**
-     * Opens a view of the specified class.
-     *
-     * @param  viewClass  the class of the view to be opened
-     */
-    private static void openView(Class<?> viewClass) {
-        try {
-            JFrame view = (JFrame) viewClass.getDeclaredConstructor().newInstance();
-            view.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Handles the restore password functionality.
-     */
-    public static void handleRestorePassword() {
-        openView(RestorePassword.class);
-    }
-
-    /**
-     * Handle the registration of a user.
-     */
-    public static void handleRegisterUser() {
-        openView(RegisterUserView.class);
-    }
-
-    /**
-     * A description of the entire Java function.
-     */
-    public static void handleManageUser() {
-        openView(ManagementUsersView.class);
-    }
-
-    /**
-     * Handles the registration of a client.
-     */
-    public static void handleRegisterClient() {
-        openView(RegisterClient.class);
-    }
-
-    /**
-     * Handles the management of clients.
-     */
-    public static void handleManageClients() {
-        openView(ManagementClients.class);
-    }
 
     /**
      * Handles the logout process.
@@ -76,5 +25,25 @@ public class ViewUtils {
             loginView.setVisible(true);
             frame.dispose();
         }
+    }
+
+    /**
+     * Opens a panel by disposing the current frame and making the panel visible.
+     *
+     * @param  panel  the panel to be opened
+     * @param  frame  the current frame to be disposed
+     */
+    public static void openPanel(JFrame panel, JFrame frame) {
+        frame.dispose();
+        panel.setVisible(true);
+    }
+
+    /**
+     * Opens the specified panel by setting its visibility to true.
+     *
+     * @param  panel  the JFrame panel to be opened
+     */
+    public static void openPanel(JFrame panel) {
+        panel.setVisible(true);
     }
 }

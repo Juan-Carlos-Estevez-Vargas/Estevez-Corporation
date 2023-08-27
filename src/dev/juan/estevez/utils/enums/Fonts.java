@@ -2,6 +2,9 @@ package dev.juan.estevez.utils.enums;
 
 import java.awt.Font;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public enum Fonts {
 
     BUTTON_FONT(new Font("serif", Font.BOLD, 22)),

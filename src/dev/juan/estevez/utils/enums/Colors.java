@@ -2,6 +2,9 @@ package dev.juan.estevez.utils.enums;
 
 import java.awt.Color;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public enum Colors {
 
     BACKGROUND_COLOR(new Color(46, 59, 104)),

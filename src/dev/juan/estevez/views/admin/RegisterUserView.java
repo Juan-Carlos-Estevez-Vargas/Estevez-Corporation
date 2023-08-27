@@ -21,7 +21,6 @@ import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
 import dev.juan.estevez.utils.enums.Colors;
-import dev.juan.estevez.utils.enums.Fonts;
 import dev.juan.estevez.utils.enums.Icons;
 import dev.juan.estevez.utils.enums.Roles;
 import dev.juan.estevez.utils.enums.Users;
@@ -67,7 +66,7 @@ public class RegisterUserView extends JFrame implements ActionListener, GUIInter
 		setupLabels();
         setupTextFields();
 		setupButtons();
-		setupPermissionsComboBox(Bounds.REGISTER_USER_PERMISIONS_CMB_BOUNDS);
+		GUIComponents.createComboBox(Bounds.CMB_REGISTER_USER_PERMISIONS, Roles.getAllValues(), panelBackUser);
 		setupEvents();
     }
 
@@ -81,26 +80,26 @@ public class RegisterUserView extends JFrame implements ActionListener, GUIInter
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel(Constants.USER_REGISTER_TEXT, Bounds.REGISTER_USER_TITLE_BOUNDS, panelBackUser);
-		GUIComponents.createLabel(Users.NAME.getValue(), Bounds.REGISTER_USER_NAME_BOUNDS, panelBackUser);
-		GUIComponents.createLabel(Users.EMAIL.getValue(), Bounds.REGISTER_USER_EMAIL_BOUNDS, panelBackUser);
-		GUIComponents.createLabel(Users.PHONE.getValue(), Bounds.REGISTER_USER_PHONE_BOUNDS, panelBackUser);
-		GUIComponents.createLabel(Users.PERMISIONS_OF.getValue(), Bounds.REGISTER_USER_PERMISIONS_OF_BOUNDS, panelBackUser);
-		GUIComponents.createLabel(Users.USERNAME.getValue(), Bounds.REGISTER_USERNAME_BOUNDS, panelBackUser);
-		GUIComponents.createLabel(Constants.USER_REGISTER_TEXT, Bounds.REGISTER_USER_BOUNDS, panelBackUser);
+		GUIComponents.createLabel(Constants.USER_REGISTER_TEXT, Bounds.LABEL_REGISTER_USER_TITLE, panelBackUser);
+		GUIComponents.createLabel(Users.NAME.getValue(), Bounds.LABEL_REGISTER_USER_NAME, panelBackUser);
+		GUIComponents.createLabel(Users.EMAIL.getValue(), Bounds.LABEL_REGISTER_USER_EMAIL, panelBackUser);
+		GUIComponents.createLabel(Users.PHONE.getValue(), Bounds.LABEL_REGISTER_USER_PHONE, panelBackUser);
+		GUIComponents.createLabel(Users.PERMISIONS_OF.getValue(), Bounds.LABEL_REGISTER_USER_PERMISIONS_OF, panelBackUser);
+		GUIComponents.createLabel(Users.USERNAME.getValue(), Bounds.LABEL_REGISTER_USER_USERNAME, panelBackUser);
+		GUIComponents.createLabel(Constants.USER_REGISTER_TEXT, Bounds.LABEL_REGISTER_USER, panelBackUser);
 	}
 
 	@Override
 	public void setupTextFields() {
-		txtNameUser = GUIComponents.createTextField(Bounds.TEXT_FIELD_USER_NAME_BOUNDS, panelBackUser);
-		txtEmailUser = GUIComponents.createTextField(Bounds.TEXT_FIELD_USER_EMAIL_BOUNDS, panelBackUser);
-		txtPhoneUser = GUIComponents.createTextField(Bounds.TEXT_FIELD_USER_PHONE_BOUNDS, panelBackUser);
-		txtUsername = GUIComponents.createTextField(Bounds.TEXT_FIELD_USERNAME_BOUNDS, panelBackUser);
+		txtNameUser = GUIComponents.createTextField(Bounds.TXT_REGISTER_USER_NAME, panelBackUser);
+		txtEmailUser = GUIComponents.createTextField(Bounds.TXT_REGISTER_USER_EMAIL, panelBackUser);
+		txtPhoneUser = GUIComponents.createTextField(Bounds.TXT_REGISTER_USER_PHONE, panelBackUser);
+		txtUsername = GUIComponents.createTextField(Bounds.TXT_REGISTER_USER_USERNAME, panelBackUser);
 	}
 
 	@Override
 	public void setupButtons() {
-		btnRegisterUser = GUIComponents.createButton(Icons.REGISTER_USER_BUTTON_ICON.getValue(), Bounds.REGISTER_USER_BUTTON_BOUNDS, Colors.BACKGROUND_COLOR.getValue(), panelBackUser);
+		btnRegisterUser = GUIComponents.createButton(Icons.REGISTER_USER_BUTTON_ICON.getValue(), Bounds.BUTTON_REGISTER_USER, Colors.BACKGROUND_COLOR.getValue(), panelBackUser);
 	}
 
 	@Override
@@ -122,26 +121,6 @@ public class RegisterUserView extends JFrame implements ActionListener, GUIInter
 		cmbPermissions.setSelectedIndex(0);
 	}
 
-	/**
-	 * Sets up the permissions combo box.
-	 */
-	private void setupPermissionsComboBox(int[] bounds) {
-		cmbPermissions = new JComboBox<>();
-		cmbPermissions.addItem(Roles.ROLE_ADMIN.getValue());
-		cmbPermissions.addItem(Roles.ROLE_TECH.getValue());
-		cmbPermissions.addItem(Roles.ROLE_CAPTURISTA.getValue());
-		cmbPermissions.setBounds(bounds[0], bounds[1], bounds[2], bounds[3]);
-		cmbPermissions.setBackground(Colors.TEXT_FIELD_COLOR.getValue());
-		cmbPermissions.setFont(Fonts.PANEL_LABEL_FONT.getValue());
-		cmbPermissions.setForeground(Color.WHITE);
-		panelBackUser.add(cmbPermissions);
-	}
-
-	/**
-	 * Performs an action when an event is triggered.
-	 *
-	 * @param e the event that triggered the action
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnRegisterUser) {
@@ -227,4 +206,5 @@ public class RegisterUserView extends JFrame implements ActionListener, GUIInter
 			dispose();
 		};	
 	}
+	
 }

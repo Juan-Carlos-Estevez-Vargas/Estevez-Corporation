@@ -13,6 +13,9 @@ import dev.juan.estevez.utils.DatabaseConnection;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.enums.States;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class UserDAO {
 
     private Connection connection = null;

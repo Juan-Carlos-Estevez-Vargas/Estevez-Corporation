@@ -5,6 +5,9 @@ import java.util.function.Predicate;
 
 import javax.swing.JTextField;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class FieldValidator {
 
     /**
@@ -75,6 +78,18 @@ public class FieldValidator {
     }
 
     /**
+     * Validates an address field.
+     *
+     * @param  address   the address to be validated
+     * @param  textField the text field containing the address
+     * @return           the result of the validation
+     */
+    public static int validateAdressField(String address, JTextField textField) {
+        return FieldValidator.validateField(address, textField, Constants.ADDRESS_NOT_AVAILABLE_MESSAGE,
+                FieldValidator::isInvalidAddress);
+    }
+
+    /**
      * Checks if the given email is invalid.
      *
      * @param  email	the email to be checked
@@ -102,6 +117,16 @@ public class FieldValidator {
      */
     private static boolean isInvalidUsername(String username) {
         return username.equals("") || isValidUsernameLength(username);
+    }
+
+    /**
+     * Checks if the given address is invalid.
+     *
+     * @param  address   the address to be checked
+     * @return          true if the address is invalid, false otherwise
+     */
+    private static boolean isInvalidAddress(String address) {
+        return address.equals("") || isValidAddressLength(address);
     }
 
     /**
@@ -152,6 +177,16 @@ public class FieldValidator {
      */
     private static boolean isValidPhoneLength(String phone) {
         return phone.length() >= 12 || phone.length() < 10;
+    }
+
+    /**
+     * Checks if the length of the given address is valid.
+     *
+     * @param  address  the address to be checked
+     * @return          true if the address length is greater than or equal to 60 or less than 4, false otherwise
+     */
+    private static boolean isValidAddressLength(String address) {
+        return address.length() >= 60 || address.length() < 4;
     }
 
 }

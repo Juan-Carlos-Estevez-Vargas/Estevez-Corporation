@@ -7,6 +7,9 @@ import javax.swing.JOptionPane;
 import dev.juan.estevez.utils.enums.Roles;
 import dev.juan.estevez.utils.enums.States;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class StringUtils {
 
     /**
