@@ -17,15 +17,14 @@ import dev.juan.estevez.persistence.UserDAO;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
+import dev.juan.estevez.utils.ViewUtils;
 import dev.juan.estevez.utils.enums.Colors;
 import dev.juan.estevez.utils.enums.Users;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
 /**
- * Vista con el listado de los usuario registrados en el sistema.
- *
- * @author Juan Carlos Estevez Vargas
+ * @author Juan Carlos Estevez Vargas.
  */
 public class ManagementUsersView extends JFrame implements GUIInterface {
 
@@ -48,18 +47,18 @@ public class ManagementUsersView extends JFrame implements GUIInterface {
 
 	@Override
 	public void initializeFrame() {
-        setSize(630, 340);
-        setTitle("Usuarios registrados - Sesión de " + this.user);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setResizable(false);
-        setLayout(null);
-        setLocationRelativeTo(null);
-    }
+		setSize(630, 340);
+		setTitle("Usuarios registrados - Sesión de " + this.user);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setResizable(false);
+		setLayout(null);
+		setLocationRelativeTo(null);
+	}
 
 	@Override
 	public void initComponents() {
 		setupMainPanel();
-		setupLabels();		
+		setupLabels();
 	}
 
 	@Override
@@ -72,9 +71,8 @@ public class ManagementUsersView extends JFrame implements GUIInterface {
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel(Constants.REGISTERED_USERS_TITLE, Bounds.MANAGE_USER_TITLE_BOUNDS, container);
+		GUIComponents.createLabel(Constants.REGISTERED_USERS_TITLE, Bounds.LABEL_MANAGE_TITLE, container);
 	}
-
 
 	/**
 	 * Populates the table with data from the usuarios table in the database.
@@ -97,7 +95,7 @@ public class ManagementUsersView extends JFrame implements GUIInterface {
 	 */
 	private void createTableAndScrollPane() {
 		tableUsers = GUIComponents.createTable(model, container);
-		GUIComponents.createScrollPanel(tableUsers, Bounds.MANAGE_USER_SCROLL_BOUNDS, container);
+		GUIComponents.createScrollPanel(tableUsers, Bounds.SCROLL_MANAGE, container);
 	}
 
 	/**
@@ -114,14 +112,19 @@ public class ManagementUsersView extends JFrame implements GUIInterface {
 	/**
 	 * Fills the table with data using the given list of users.
 	 *
-	 * @param  users  the list of users to fill the table with data
-	 * @throws SQLException  if there is an error accessing the database
+	 * @param users the list of users to fill the table with data
+	 * @throws SQLException if there is an error accessing the database
 	 */
 	private void fillTableWithData(List<User> users) throws SQLException {
 		if (users != null) {
 			for (User user : users) {
-				model.addRow(new Object[] { user.getUserID(), user.getUserName(), user.getUsername(), user.getLevelType(),
-						user.getStatus() });
+				model.addRow(new Object[] {
+						user.getUserID(),
+						user.getUserName(),
+						user.getUsername(),
+						user.getLevelType(),
+						user.getStatus()
+				});
 			}
 		}
 	}
@@ -129,7 +132,7 @@ public class ManagementUsersView extends JFrame implements GUIInterface {
 	/**
 	 * Adds a mouse event listener to the tableUsers object.
 	 *
-	 * @param  e  the MouseEvent object representing the mouse click event
+	 * @param e the MouseEvent object representing the mouse click event
 	 */
 	private void addTableMouseEvent() {
 		tableUsers.addMouseListener(new MouseAdapter() {
@@ -137,25 +140,13 @@ public class ManagementUsersView extends JFrame implements GUIInterface {
 			public void mouseClicked(MouseEvent e) {
 				int row = tableUsers.rowAtPoint(e.getPoint());
 				int column = 2;
-	
+
 				if (row >= 0) {
-					String username = (String) model.getValueAt(row, column);
-					openUserInformation(username);
+					user_update = (String) model.getValueAt(row, column);
+					ViewUtils.openPanel(new UserInformationView(), ManagementUsersView.this);
 				}
 			}
 		});
-	}
-	
-	/**
-	 * Opens the user information window.
-	 *
-	 * @param  username	the username of the user
-	 */
-	private void openUserInformation(String username) {
-		user_update = username;
-		UserInformationView userInformation = new UserInformationView();
-		userInformation.setVisible(true);
-		dispose();
 	}
 
 	@Override
@@ -172,5 +163,5 @@ public class ManagementUsersView extends JFrame implements GUIInterface {
 	public void setupEvents() {
 		throw new UnsupportedOperationException("Unimplemented method 'setupEvents'");
 	}
-	
+
 }

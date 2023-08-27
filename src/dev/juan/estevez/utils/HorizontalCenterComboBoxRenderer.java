@@ -5,6 +5,9 @@ import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class HorizontalCenterComboBoxRenderer extends DefaultListCellRenderer {
     
     @Override

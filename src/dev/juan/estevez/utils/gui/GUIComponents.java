@@ -22,6 +22,9 @@ import dev.juan.estevez.utils.HorizontalCenterComboBoxRenderer;
 import dev.juan.estevez.utils.enums.Colors;
 import dev.juan.estevez.utils.enums.Fonts;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public final class GUIComponents extends JFrame {
 
     /**

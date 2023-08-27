@@ -2,6 +2,9 @@ package dev.juan.estevez.models;
 
 import java.util.Objects;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class User {
 
 	private int userID;

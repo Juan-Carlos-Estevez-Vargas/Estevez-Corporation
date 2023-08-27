@@ -1,5 +1,8 @@
 package dev.juan.estevez.utils;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class Constants {
 
     // lOGIN VIEW
@@ -27,10 +30,12 @@ public class Constants {
     public static final String ERROR_SHOWING_INFORMATION = "¡Error al mostrar información! Contacte al Administrador";
     public static final String INTERNAL_LOGIN_ERROR = "¡Error al iniciar sesión! Contacta al administrador.";
     public static final String INTERNAL_REGISTER_USER_ERROR = "¡Error al registrar usuario! Contacte al Administrador";
+    public static final String INTERNAL_REGISTER_CLIENT_ERROR = "¡Error al registrar cliente! Contacte al Administrador";
     public static final String INTERNAL_UPDATE_USER_ERROR = "¡Error al actualizar usuario! Contacte al Administrador";
     public static final String GENERATE_ERROR_PDF = "¡Error al generar PDF! Contacte al Administrador";
     public static final String USERNAME_COMPARISON_ERROR_MESSAGE = "¡Error al comparar usuario! Contacte con el Administrador";
     public static final String USER_FETCH_ERROR_MESSAGE = "Error al obtener usuario";
+    public static final String CLIENT_FETCH_ERROR_MESSAGE = "Error al obtener cliente";
 
     // USER
     public static final String INACTIVE_USER = "Usuario Inactivo";
@@ -47,6 +52,7 @@ public class Constants {
     public static final String PRINT_CLIENTS_TEXT = "Imprimir Clientes";
     public static final String CLIENT_LIST_CREATED_SUCCESSFULLY = "Listado de clientes creado correctamente";
     public static final String CLIENT_LIST = "Listado de Clientes";
+    public static final String CLIENT_REGISTER = "Registrar Cliente";
 
     // TOOLS
     public static final String DEFAULT_PASSWORD = "1234";
@@ -61,6 +67,8 @@ public class Constants {
     public static final String NAME_LENGTH_LIMIT_MESSAGE = "El campo NOMBRE no debe contener más de 40 caracteres ni menos de 4";
     public static final String PHONE_LENGTH_LIMIT_MESSAGE = "El campo TELEFONO no debe contener más de 12 caracteres ni menos de 10";
     public static final String USERNAME_LENGTH_LIMIT_MESSAGE = "El campo USUARIO no debe contener más de 30 caracteres ni menos de 4";
+    public static final String ADDRESS_NOT_AVAILABLE_MESSAGE = "El campo DIRECCIÓN no debe contener más de 60 caracteres ni menos de 4";
     public static final String USERNAME_NOT_AVAILABLE_MESSAGE = "Nombre de usuario no disponible";
+    public static final String EMAIL_NOT_AVAILABLE_MESSAGE = "Correo Electrónico no disponible";
 
 }

@@ -7,6 +7,9 @@ import dev.juan.estevez.models.User;
 import dev.juan.estevez.persistence.UserDAO;
 import dev.juan.estevez.utils.StringUtils;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class UserController {
 
     private final UserDAO userDAO;

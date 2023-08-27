@@ -1,5 +1,8 @@
 package dev.juan.estevez.utils.enums;
 
+/**
+ * @author Juan Carlos Estevez Vargas.
+ */
 public enum States {
 
     ACTIVE("Activo"), INACTIVE("Inactivo");
