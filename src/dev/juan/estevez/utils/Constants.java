@@ -44,7 +44,9 @@ public class Constants {
     public static final String USER_LIST_CREATED_SUCCESSFULLY = "Listado de usuarios creado correctamente";
     public static final String USER_REGISTER_TEXT = "Registrar Usuario";
     public static final String REGISTERED_USERS_TITLE = "Usuarios Registrados";
+    public static final String REGISTERED_CLIENTS_TITLE = "Usuarios Registrados";
     public static final String UPDATED_USER = "Actualizar Usuario";
+    public static final String UPDATED_CLIENT = "Actualizar Cliente";
 
     // CLIENT
     public static final String CLIENT_REGISTER_TEXT = "Registrar Cliente";
@@ -53,6 +55,8 @@ public class Constants {
     public static final String CLIENT_LIST_CREATED_SUCCESSFULLY = "Listado de clientes creado correctamente";
     public static final String CLIENT_LIST = "Listado de Clientes";
     public static final String CLIENT_REGISTER = "Registrar Cliente";
+    public static final String EQUIPMENT_REGISTER = "Registrar Equipo";
+    public static final String CLIENT_PRINT = "Imprimir Clientes";
 
     // TOOLS
     public static final String DEFAULT_PASSWORD = "1234";

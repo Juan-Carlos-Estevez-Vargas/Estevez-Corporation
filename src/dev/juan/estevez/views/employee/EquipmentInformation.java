@@ -74,8 +74,8 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 		this.setSize(610, 500);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		idEquipment = ClientInformation.idEquipment;
-		idClientUpdate = ManagementClients.id_cliente_update;
+		idEquipment = ClientInformationView.idEquipment;
+		idClientUpdate = ManagementClientsView.id_cliente_update;
 
 		/*
 		 * Recuperamos el nombre del cliente

@@ -20,8 +20,10 @@ public class ClientDAO {
     private Connection connection = null;
 
     private static final String SQL_GET_CLIENTS = "SELECT * FROM clientes";
+    private static final String SQL_GET_CLIENT_BY_ID = "SELECT * FROM clientes WHERE id_cliente = ?";
     private static final String SQL_GET_CLIENT_BY_EMAIL = "SELECT * FROM clientes WHERE email = ?";
     private static final String SQL_REGISTER_CLIENT = "INSERT INTO clientes VALUES (?,?,?,?,?,?)";
+    private static final String SQL_UPDATE_CLIENT = "UPDATE clientes SET nombre_cliente = ?, mail_cliente = ?, tel_cliente = ?, dir_cliente = ?, ultima_modificacion = ? WHERE id_cliente = ?";
 
     public ClientDAO() {
         try {
@@ -77,6 +79,29 @@ public class ClientDAO {
     }
 
     /**
+     * Retrieves a client from the database by their ID.
+     *
+     * @param  id  the ID of the client
+     * @return     the client object if found, otherwise null
+     */
+    public Client getClientById(int id) {
+        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_CLIENT_BY_ID)) {
+            pst.setInt(1, id);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return extractClientFromResultSet(rs);
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException ex) {
+            StringUtils.handleQueryError(ex, Constants.CLIENT_FETCH_ERROR_MESSAGE);
+            return null;
+        }
+    }
+
+    /**
      * Registers a client in the system.
      *
      * @param  client  the client object to be registered
@@ -95,6 +120,30 @@ public class ClientDAO {
 			recordsInserted = pst.executeUpdate();
 		} catch (SQLException ex) {
             StringUtils.handleQueryError(ex, Constants.INTERNAL_REGISTER_CLIENT_ERROR);
+		}
+
+        return recordsInserted;
+	}
+
+    /**
+     * Updates a client in the database with the provided information.
+     *
+     * @param  client  the client object containing the updated information
+     * @return         the number of records inserted in the database
+     */
+    public int updateClient(Client client) {
+        int recordsInserted = 0;
+
+		try (PreparedStatement pst = connection.prepareStatement(SQL_UPDATE_CLIENT);) {
+			pst.setString(1, client.getClientName());
+			pst.setString(2, client.getClientEmail());
+			pst.setString(3, client.getClientPhone());
+			pst.setString(4, client.getClientAddress());
+            pst.setString(5, client.getLastModification());
+            pst.setInt(6, client.getClientID());
+			recordsInserted = pst.executeUpdate();
+		} catch (SQLException ex) {
+            StringUtils.handleQueryError(ex, Constants.INTERNAL_UPDATE_USER_ERROR);
 		}
 
         return recordsInserted;

@@ -47,4 +47,24 @@ public class ClientController {
         return clientDAO.registerClient(client);
     }
 
+    /**
+     * Updates a client in the system.
+     *
+     * @param  client  the client to be updated
+     * @return         the number of rows affected
+     */
+    public int updateClient(Client client) {
+        return clientDAO.updateClient(client);
+    }
+
+    /**
+     * Retrieves a client by their ID.
+     *
+     * @param  id  the ID of the client to retrieve
+     * @return     the client with the specified ID, or null if no client is found
+     */
+    public Client getClientById(int id) {
+        return clientDAO.getClientById(id);
+    }
+
 }

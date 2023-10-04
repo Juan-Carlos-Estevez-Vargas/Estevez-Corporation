@@ -71,9 +71,9 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 		this.setLocationRelativeTo(null);
 		this.initComponents();
 		this.txtNameClient.setText(this.nameClient);
-		this.idClientUpdate = ManagementClients.id_cliente_update;
-		this.nameClient = ManagementClients.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
-		idClientUpdate = ManagementClients.id_cliente_update;
+		this.idClientUpdate = ManagementClientsView.id_cliente_update;
+		this.nameClient = ManagementClientsView.user_update; // Guardamos el usuario seleccionado en la tabla usuarios
+		idClientUpdate = ManagementClientsView.id_cliente_update;
 
 		/**
 		 * Recuperando el nombre del cliente.
@@ -334,7 +334,7 @@ public class RegisterEquipment extends JFrame implements ActionListener {
 
 					JOptionPane.showMessageDialog(null, "Registro exitoso");
 					this.dispose();
-					ClientInformation clientInformation = new ClientInformation();
+					ClientInformationView clientInformation = new ClientInformationView();
 					clientInformation.setVisible(true);
 				} catch (Exception ex) {
 					System.err.println("Error en registrar el equipo " + ex);

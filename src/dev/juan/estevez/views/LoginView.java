@@ -28,6 +28,7 @@ import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.admin.AdministratorPanelView;
 import dev.juan.estevez.views.employee.EmployeePanelView;
 import dev.juan.estevez.views.technical.PanelTechnical;
+import javafx.scene.paint.Color;
 import panel.utilities.ForgotPassword;
 
 /**
@@ -43,7 +44,7 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
     private JLabel jlError;
     private JPanel container;
     private JPasswordField txtPassword;
-    private JTextField txtUser,txtPassword2;
+    private JTextField txtUser, txtPassword2;
 
     public LoginView(UserController loginController) {
         this.loginController = loginController;
@@ -81,6 +82,7 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
     public void setupLabels() {
         GUIComponents.createImageLabel(Constants.LOGIN_LOGO_URL, Bounds.LABEL_LOGIN_LOGO, container);
         GUIComponents.createLabel(Constants.LOGIN_USER_TEXT, Bounds.LABEL_LOGIN_USER, container);
+        jlError = GUIComponents.createLabel("", Bounds.LABEL_LOGIN_ERROR, container);
         GUIComponents.createLabel("", Bounds.LABEL_LOGIN_ERROR, container).setFont(Fonts.ERROR_FONT.getValue());
         GUIComponents.createLabel(Constants.LOGIN_PASSWORD_TEXT, Bounds.LABEL_LOGIN_PASSWORD, container);
     }
@@ -95,8 +97,10 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
 
     @Override
     public void setupButtons() {
-        btnEye = GUIComponents.createButton(Icons.EYE_ICON.getValue(), Bounds.BUTTON_LOGIN_EYE, Colors.BACKGROUND_COLOR.getValue(), container);
-        btnLogin = GUIComponents.createButton(Constants.SIGN_IN, Bounds.BUTTON_LOGIN, Colors.BUTTON_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), container);
+        btnEye = GUIComponents.createButton(Icons.EYE_ICON.getValue(), Bounds.BUTTON_LOGIN_EYE,
+                Colors.BACKGROUND_COLOR.getValue(), container);
+        btnLogin = GUIComponents.createButton(Constants.SIGN_IN, Bounds.BUTTON_LOGIN, Colors.BUTTON_COLOR.getValue(),
+                Fonts.BUTTON_FONT.getValue(), container);
         btnForgot = createForgotButton();
     }
 
@@ -115,7 +119,8 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
      *         border, and has an error color for the foreground.
      */
     private JButton createForgotButton() {
-        JButton btn = GUIComponents.createButton(Constants.FORGOT_TEXT, Bounds.BUTTON_LOGIN_FORGOT, Colors.BACKGROUND_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), container);
+        JButton btn = GUIComponents.createButton(Constants.FORGOT_TEXT, Bounds.BUTTON_LOGIN_FORGOT,
+                Colors.BACKGROUND_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), container);
         btn.setForeground(Colors.ERROR_COLOR.getValue());
         btn.setBorder(null);
         btn.setOpaque(true);
@@ -152,11 +157,11 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
     private void performLogin() throws SQLException {
         String password = new String(txtPassword.getPassword());
         String username = txtUser.getText().trim();
-    
+
         // TODO: validar tamaño en las entradas de usuario y contraseña
         if (!username.isEmpty() && !password.isEmpty()) {
             User user = loginController.getUserByUsernameAndPassword(username, password);
-            
+
             if (user != null) {
                 LoginView.user = user.getUserName();
                 handleUserLogin(user);
@@ -166,7 +171,7 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
         } else {
             StringUtils.showEmptyFieldsMessage();
         }
-    }    
+    }
 
     /**
      * Handles the user login process.
@@ -228,7 +233,9 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
     private void handleLoginError() {
         jlError.setText(Constants.LOGIN_ERROR_TEXT);
         jlError.setFont(Fonts.ERROR_FONT.getValue());
+        jlError.setForeground(Colors.ERROR_COLOR.getValue());
         jlError.setHorizontalAlignment(SwingConstants.CENTER);
+        jlError.setBounds(45, 390, 250, 25);
 
         txtUser.setText("");
         txtUser.requestFocus();
