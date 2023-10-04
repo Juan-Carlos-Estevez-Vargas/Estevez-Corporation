@@ -46,7 +46,7 @@ public class Bounds {
     public static final int[] LABEL_MANAGE_TITLE = { 210, 10, 250, 20 };
     // --- OtherS ---
     public static final int[] SCROLL_MANAGE = { 10, 55, 593, 230 };
-    // ++++ End Management Users Bounds +++
+    // ++++ End Management Users Bounds ++++
     
     // ++++++++++++++++++++++++++++++++++
     // ++++++ Register User Bounds ++++++
@@ -68,7 +68,7 @@ public class Bounds {
     public static final int[] BUTTON_REGISTER_USER = { 400, 120, 140, 120 };
     // --- Combo Boxes ---
     public static final int[] CMB_REGISTER_USER_PERMISIONS = { 20, 250, 170, 25 };
-    // ++++ End Register User Bounds +++
+    // ++++ End Register User Bounds ++++
     
     // +++++++++++++++++++++++++++++++++++++
     // ++++++ User Information Bounds ++++++
@@ -93,11 +93,35 @@ public class Bounds {
     // --- Combo Boxes ---
     public static final int[] CMB_USER_INFORMATION_LEVEL = { 20, 250, 280, 30 };
     public static final int[] CMB_USER_INFORMATION_STATUS = { 340, 130, 250, 30 };
-    // ++++ End User Information Bounds +++
-    
+    // ++++ End User Information Bounds ++++
+
+    // +++++++++++++++++++++++++++++++++++++++
+    // ++++++ Client Information Bounds ++++++
+    // +++++++++++++++++++++++++++++++++++++++
+    // --- Labels ---
+    public static final int[] LABEL_CLIENT_INFORMATION_ADDRESS = { 20, 230, 250, 20 };
+    public static final int[] LABEL_CLIENT_INFORMATION_EMAIL = { 20, 105, 280, 20 };
+    public static final int[] LABEL_CLIENT_INFORMATION_MODIFY_BY = { 20, 290, 250, 20 };
+    public static final int[] LABEL_CLIENT_INFORMATION_NAME = { 20, 45, 280, 20 };
+    public static final int[] LABEL_CLIENT_INFORMATION_PHONE = { 20, 165, 280, 20 };
+    public static final int[] LABEL_CLIENT_INFORMATION_TITLE = { 110, 10, 400, 30 };
+    // --- Text Fields ---
+    public static final int[] TXT_CLIENT_INFORMATION_ADDRESS = { 20, 250, 250, 30 };
+    public static final int[] TXT_CLIENT_INFORMATION_EMAIL = { 20, 130, 280, 30 };
+    public static final int[] TXT_CLIENT_INFORMATION_MODIFY_BY = { 20, 310, 250, 30 };
+    public static final int[] TXT_CLIENT_INFORMATION_NAME = { 20, 70, 280, 30 };
+    public static final int[] TXT_CLIENT_INFORMATION_PHONE = { 20, 190, 280, 30 };
+    // --- Buttons ---
+    public static final int[] BUTTON_CLIENT_INFORMATION_PRINT = { 500, 250, 250, 30 };
+    public static final int[] BUTTON_CLIENT_INFORMATION_EQUIPMENT_REGISTER = { 275, 255, 210, 30 };
+    public static final int[] BUTTON_CLIENT_INFORMATION_UPDATE = { 275, 305, 210, 30 };
+    // ++++ End Client Information Bounds ++++
+
+    // ++++++++++++++++++++++++++++++
+    // ++++++ Utilities Bounds ++++++
+    // ++++++++++++++++++++++++++++++
     public static final int[] BUTTON_LOGOUT = { 470, 20, 120, 30 };
     public static final int[] BUTTON_RESTORE_PASSWORD = { 430, 20, 40, 30 };
-
-
+    // ++++ End Utilities Bounds ++++
 
 }

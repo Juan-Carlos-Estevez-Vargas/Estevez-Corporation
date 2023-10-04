@@ -113,7 +113,7 @@ public class EmployeePanelView extends JFrame implements ActionListener, GUIInte
 		} else if (e.getSource() == btnLogout) {
 			ViewUtils.handleLogout(this);
 		} else if (e.getSource() == btnManageClient) {
-			ViewUtils.openPanel(new ManagementClients());
+			ViewUtils.openPanel(new ManagementClientsView());
 		} else if (e.getSource() == btnPrintClients) {
 			handlePrintClients();
 		}

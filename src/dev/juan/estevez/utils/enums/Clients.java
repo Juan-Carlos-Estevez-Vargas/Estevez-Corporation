@@ -9,7 +9,8 @@ public enum Clients {
     NAME("Nombre"),
     EMAIL("Correo"),
     PHONE("Teléfono"),
-    ADDRESS("Dirección");
+    ADDRESS("Dirección"),
+    MODIFY_BY("Última modificación por");
 
     private final String value;
 
