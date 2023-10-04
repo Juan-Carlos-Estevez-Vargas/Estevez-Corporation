@@ -10,6 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import dev.juan.estevez.controllers.ClientController;
+import dev.juan.estevez.enums.Clients;
+import dev.juan.estevez.enums.Colors;
+import dev.juan.estevez.enums.Fonts;
+import dev.juan.estevez.enums.Icons;
 import dev.juan.estevez.interfaces.GUIInterface;
 import dev.juan.estevez.models.Client;
 import dev.juan.estevez.persistence.ClientDAO;
@@ -19,10 +23,6 @@ import dev.juan.estevez.utils.FieldValidator;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
-import dev.juan.estevez.utils.enums.Clients;
-import dev.juan.estevez.utils.enums.Colors;
-import dev.juan.estevez.utils.enums.Fonts;
-import dev.juan.estevez.utils.enums.Icons;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 

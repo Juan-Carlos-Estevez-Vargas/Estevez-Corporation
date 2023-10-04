@@ -4,13 +4,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
 import dev.juan.estevez.controllers.UserController;
+import dev.juan.estevez.enums.Colors;
+import dev.juan.estevez.enums.Users;
 import dev.juan.estevez.interfaces.GUIInterface;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.persistence.UserDAO;
@@ -18,8 +18,6 @@ import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ViewUtils;
-import dev.juan.estevez.utils.enums.Colors;
-import dev.juan.estevez.utils.enums.Users;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 

@@ -1,4 +1,4 @@
-package dev.juan.estevez.utils.enums;
+package dev.juan.estevez.enums;
 
 /**
  * @author Juan Carlos Estevez Vargas.

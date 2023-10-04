@@ -16,6 +16,10 @@ import javax.swing.table.DefaultTableModel;
 
 import dev.juan.estevez.controllers.ClientController;
 import dev.juan.estevez.controllers.EquipmentController;
+import dev.juan.estevez.enums.Clients;
+import dev.juan.estevez.enums.Colors;
+import dev.juan.estevez.enums.Equipments;
+import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.interfaces.GUIInterface;
 import dev.juan.estevez.models.Client;
 import dev.juan.estevez.models.Equipment;
@@ -27,10 +31,6 @@ import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
 import dev.juan.estevez.utils.ViewUtils;
-import dev.juan.estevez.utils.enums.Clients;
-import dev.juan.estevez.utils.enums.Colors;
-import dev.juan.estevez.utils.enums.Equipments;
-import dev.juan.estevez.utils.enums.Fonts;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
