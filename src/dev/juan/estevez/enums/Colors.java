@@ -1,4 +1,4 @@
-package dev.juan.estevez.utils.enums;
+package dev.juan.estevez.enums;
 
 import java.awt.Color;
 

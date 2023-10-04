@@ -47,18 +47,18 @@ public class Bounds {
     // --- OtherS ---
     public static final int[] SCROLL_MANAGE = { 10, 55, 593, 230 };
     // ++++ End Management Users Bounds ++++
-    
+
     // ++++++++++++++++++++++++++++++++++
     // ++++++ Register User Bounds ++++++
     // ++++++++++++++++++++++++++++++++++
     // --- Labels ---
-    public static final int[] LABEL_REGISTER_USER = { 415, 240, 150, 25 };
-    public static final int[] LABEL_REGISTER_USER_EMAIL = { 20, 110, 100, 25 };
-    public static final int[] LABEL_REGISTER_USER_NAME = { 20, 50, 100, 25 };
-    public static final int[] LABEL_REGISTER_USER_PERMISIONS_OF = { 20, 230, 100, 25 };
-    public static final int[] LABEL_REGISTER_USER_PHONE = { 20, 170, 100, 25 };
+    public static final int[] LABEL_REGISTER_USER = { 415, 235, 150, 25 };
+    public static final int[] LABEL_REGISTER_USER_EMAIL = { 20, 105, 100, 25 };
+    public static final int[] LABEL_REGISTER_USER_NAME = { 20, 45, 100, 25 };
+    public static final int[] LABEL_REGISTER_USER_PERMISIONS_OF = { 20, 225, 150, 25 };
+    public static final int[] LABEL_REGISTER_USER_PHONE = { 20, 165, 100, 25 };
     public static final int[] LABEL_REGISTER_USER_TITLE = { 210, 10, 250, 30 };
-    public static final int[] LABEL_REGISTER_USER_USERNAME = { 320, 50, 100, 25 };
+    public static final int[] LABEL_REGISTER_USER_USERNAME = { 320, 45, 100, 25 };
     // --- Text Fields ---
     public static final int[] TXT_REGISTER_USER_EMAIL = { 20, 130, 280, 25 };
     public static final int[] TXT_REGISTER_USER_NAME = { 20, 70, 280, 25 };
@@ -69,7 +69,7 @@ public class Bounds {
     // --- Combo Boxes ---
     public static final int[] CMB_REGISTER_USER_PERMISIONS = { 20, 250, 170, 25 };
     // ++++ End Register User Bounds ++++
-    
+
     // +++++++++++++++++++++++++++++++++++++
     // ++++++ User Information Bounds ++++++
     // +++++++++++++++++++++++++++++++++++++

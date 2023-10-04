@@ -2,7 +2,6 @@ package dev.juan.estevez.utils.gui;
 
 import java.awt.Color;
 import java.awt.Font;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,11 +15,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-
+import dev.juan.estevez.enums.Colors;
+import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.HorizontalCenterComboBoxRenderer;
-import dev.juan.estevez.utils.enums.Colors;
-import dev.juan.estevez.utils.enums.Fonts;
 
 /**
  * @author Juan Carlos Estevez Vargas.
@@ -28,11 +26,13 @@ import dev.juan.estevez.utils.enums.Fonts;
 public final class GUIComponents extends JFrame {
 
     /**
-     * Creates a JPasswordField with the specified bounds and adds it to the specified container.
+     * Creates a JPasswordField with the specified bounds and adds it to the
+     * specified container.
      *
-     * @param  bounds    an array of integers representing the x, y, width, and height of the password field
-     * @param  container the JPanel to which the password field will be added
-     * @return           the created JPasswordField
+     * @param bounds    an array of integers representing the x, y, width, and
+     *                  height of the password field
+     * @param container the JPanel to which the password field will be added
+     * @return the created JPasswordField
      */
     public static JPasswordField createPasswordField(int[] bounds, JPanel container) {
         JPasswordField passwordField = new JPasswordField();
@@ -48,11 +48,13 @@ public final class GUIComponents extends JFrame {
     /**
      * Creates a JLabel with an image and adds it to a JPanel container.
      *
-     * @param  imagePath  the path of the image file
-     * @param  bounds     an array of integers representing the bounds of the JLabel in the container.
-     *                    The array must have four elements in the order: x-coordinate, y-coordinate, width, height.
-     * @param  container  the JPanel container to which the JLabel will be added
-     * @return            the created JLabel
+     * @param imagePath the path of the image file
+     * @param bounds    an array of integers representing the bounds of the JLabel
+     *                  in the container.
+     *                  The array must have four elements in the order:
+     *                  x-coordinate, y-coordinate, width, height.
+     * @param container the JPanel container to which the JLabel will be added
+     * @return the created JLabel
      */
     public static JLabel createImageLabel(String imagePath, int[] bounds, JPanel container) {
         JLabel label = new JLabel();
@@ -64,12 +66,14 @@ public final class GUIComponents extends JFrame {
     }
 
     /**
-     * Creates a JLabel with the specified text and bounds, and adds it to the given container.
+     * Creates a JLabel with the specified text and bounds, and adds it to the given
+     * container.
      *
-     * @param  text      the text to be displayed on the label
-     * @param  bounds    an array of integers representing the x, y, width, and height of the label
-     * @param  container the JPanel to which the label will be added
-     * @return           the created JLabel
+     * @param text      the text to be displayed on the label
+     * @param bounds    an array of integers representing the x, y, width, and
+     *                  height of the label
+     * @param container the JPanel to which the label will be added
+     * @return the created JLabel
      */
     public static JLabel createLabel(String text, int[] bounds, JPanel container) {
         JLabel label = new JLabel(text);
@@ -83,11 +87,13 @@ public final class GUIComponents extends JFrame {
     }
 
     /**
-     * Creates a JTextField with the specified bounds and adds it to the given container.
+     * Creates a JTextField with the specified bounds and adds it to the given
+     * container.
      *
-     * @param  bounds     an array of integers representing the x, y, width, and height of the text field
-     * @param  container  the JPanel container to which the text field will be added
-     * @return            the created JTextField
+     * @param bounds    an array of integers representing the x, y, width, and
+     *                  height of the text field
+     * @param container the JPanel container to which the text field will be added
+     * @return the created JTextField
      */
     public static JTextField createTextField(int[] bounds, JPanel container) {
         JTextField textField = new JTextField();
@@ -102,14 +108,16 @@ public final class GUIComponents extends JFrame {
     }
 
     /**
-     * Creates a JButton with the specified text, bounds, color, font, and container.
+     * Creates a JButton with the specified text, bounds, color, font, and
+     * container.
      *
-     * @param  text       the text to be displayed on the button
-     * @param  bounds     an array of integers representing the bounds of the button (x, y, width, height)
-     * @param  color      the background color of the button
-     * @param  font       the font of the button
-     * @param  container  the JPanel container to which the button will be added
-     * @return            the created JButton
+     * @param text      the text to be displayed on the button
+     * @param bounds    an array of integers representing the bounds of the button
+     *                  (x, y, width, height)
+     * @param color     the background color of the button
+     * @param font      the font of the button
+     * @param container the JPanel container to which the button will be added
+     * @return the created JButton
      */
     public static JButton createButton(String text, int[] bounds, Color color, Font font, JPanel container) {
         JButton button = new JButton(text);
@@ -125,11 +133,12 @@ public final class GUIComponents extends JFrame {
     /**
      * Creates a JButton with the specified icon, bounds, color, and container.
      *
-     * @param  icon      the icon to be displayed on the button
-     * @param  bounds    an array of integers representing the x, y, width, and height of the button's bounds
-     * @param  color     the background color of the button
-     * @param  container the JPanel container to which the button will be added
-     * @return           the created JButton
+     * @param icon      the icon to be displayed on the button
+     * @param bounds    an array of integers representing the x, y, width, and
+     *                  height of the button's bounds
+     * @param color     the background color of the button
+     * @param container the JPanel container to which the button will be added
+     * @return the created JButton
      */
     public static JButton createButton(ImageIcon icon, int[] bounds, Color color, JPanel container) {
         JButton button = new JButton();
@@ -146,27 +155,28 @@ public final class GUIComponents extends JFrame {
     /**
      * Creates a logout button and adds it to the specified container panel.
      *
-     * @param  container  the panel to which the logout button will be added
-     * @return            the created logout button
+     * @param container the panel to which the logout button will be added
+     * @return the created logout button
      */
     public static JButton createLogoutButton(JPanel container) {
         JButton btnLogout = new JButton(Constants.LOGOUT_TEXT);
-		btnLogout.setBounds(470, 20, 120, 30);
-		btnLogout.setFont(new Font("serif", Font.BOLD, 14));
-		btnLogout.setBackground(Colors.BUTTON_COLOR.getValue());
-		btnLogout.setForeground(Color.WHITE);
-		btnLogout.setHorizontalAlignment(SwingConstants.CENTER);
-		btnLogout.setFocusable(false);
-		container.add(btnLogout);    
-        return btnLogout;    
+        btnLogout.setBounds(470, 20, 120, 30);
+        btnLogout.setFont(new Font("serif", Font.BOLD, 14));
+        btnLogout.setBackground(Colors.BUTTON_COLOR.getValue());
+        btnLogout.setForeground(Color.WHITE);
+        btnLogout.setHorizontalAlignment(SwingConstants.CENTER);
+        btnLogout.setFocusable(false);
+        container.add(btnLogout);
+        return btnLogout;
     }
 
     /**
      * Creates a JSeparator with the given bounds and container.
      *
-     * @param  bounds    an array of integers representing the x, y, width, and height of the separator
-     * @param  container the JPanel container to add the separator to
-     * @return           the created JSeparator
+     * @param bounds    an array of integers representing the x, y, width, and
+     *                  height of the separator
+     * @param container the JPanel container to add the separator to
+     * @return the created JSeparator
      */
     public static JSeparator createSeparator(int[] bounds, JPanel container) {
         JSeparator separator = new JSeparator();
@@ -177,50 +187,55 @@ public final class GUIComponents extends JFrame {
     }
 
     /**
-     * Creates a JTable with the given DefaultTableModel and adds it to the specified JPanel container.
+     * Creates a JTable with the given DefaultTableModel and adds it to the
+     * specified JPanel container.
      *
-     * @param  model     the DefaultTableModel used to populate the JTable
-     * @param  container the JPanel container to which the JTable will be added
-     * @return           the created JTable
+     * @param model     the DefaultTableModel used to populate the JTable
+     * @param container the JPanel container to which the JTable will be added
+     * @return the created JTable
      */
     public static JTable createTable(DefaultTableModel model, JPanel container) {
         JTable table = new JTable(model);
-		table.setFont(Fonts.PANEL_LABEL_FONT.getValue());
-		table.setForeground(Color.BLACK);
+        table.setForeground(Color.BLACK);
+        table.setFont(Fonts.CONTENT_TABLE_FONT.getValue());
+        table.getTableHeader().setFont(Fonts.HEADER_TABLE_FONT.getValue());
+        container.add(table);
         return table;
     }
 
     /**
      * Creates a scroll panel containing a table and adds it to a container panel.
      *
-     * @param  table     the table to be added to the scroll panel
-     * @param  bounds    the bounds of the scroll panel
-     * @param  container the panel to which the scroll panel will be added
-     * @return           the created scroll panel
+     * @param table     the table to be added to the scroll panel
+     * @param bounds    the bounds of the scroll panel
+     * @param container the panel to which the scroll panel will be added
+     * @return the created scroll panel
      */
     public static JScrollPane createScrollPanel(JTable table, int[] bounds, JPanel container) {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(bounds[0], bounds[1], bounds[2], bounds[3]);
-		container.add(scrollPane);
+        container.add(scrollPane);
         return scrollPane;
     }
 
     /**
      * Creates a JComboBox and adds it to a JPanel container.
      *
-     * @param  bounds    an array consisting of the x, y, width, and height values of the JComboBox
-     * @param  items     an array of strings that will be used as the items in the JComboBox
-     * @param  container the JPanel container where the JComboBox will be added
-     * @return           the created JComboBox
+     * @param bounds    an array consisting of the x, y, width, and height values of
+     *                  the JComboBox
+     * @param items     an array of strings that will be used as the items in the
+     *                  JComboBox
+     * @param container the JPanel container where the JComboBox will be added
+     * @return the created JComboBox
      */
     public static JComboBox<String> createComboBox(int[] bounds, String[] items, JPanel container) {
-		JComboBox<String> comboBox = new JComboBox<>(items);
-		comboBox.setBounds(bounds[0], bounds[1], bounds[2], bounds[3]);
-		comboBox.setBackground(Colors.TEXT_FIELD_COLOR.getValue());
-		comboBox.setFont(Fonts.LABEL_FONT.getValue());
-		comboBox.setForeground(Color.WHITE);
+        JComboBox<String> comboBox = new JComboBox<>(items);
+        comboBox.setBounds(bounds[0], bounds[1], bounds[2], bounds[3]);
+        comboBox.setBackground(Colors.TEXT_FIELD_COLOR.getValue());
+        comboBox.setFont(Fonts.LABEL_FONT.getValue());
+        comboBox.setForeground(Color.WHITE);
         comboBox.setRenderer(new HorizontalCenterComboBoxRenderer());
-		container.add(comboBox);
-		return comboBox;
-	}
+        container.add(comboBox);
+        return comboBox;
+    }
 }

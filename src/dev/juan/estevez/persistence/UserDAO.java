@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.juan.estevez.enums.States;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.DatabaseConnection;
 import dev.juan.estevez.utils.StringUtils;
-import dev.juan.estevez.utils.enums.States;
 
 /**
  * @author Juan Carlos Estevez Vargas.

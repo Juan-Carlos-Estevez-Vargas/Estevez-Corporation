@@ -3,14 +3,16 @@ package dev.juan.estevez.views.admin;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import dev.juan.estevez.controllers.UserController;
+import dev.juan.estevez.enums.Colors;
+import dev.juan.estevez.enums.Icons;
+import dev.juan.estevez.enums.Roles;
+import dev.juan.estevez.enums.Users;
 import dev.juan.estevez.interfaces.GUIInterface;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.persistence.UserDAO;
@@ -20,10 +22,6 @@ import dev.juan.estevez.utils.FieldValidator;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
-import dev.juan.estevez.utils.enums.Colors;
-import dev.juan.estevez.utils.enums.Icons;
-import dev.juan.estevez.utils.enums.Roles;
-import dev.juan.estevez.utils.enums.Users;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
@@ -66,7 +64,7 @@ public class RegisterUserView extends JFrame implements ActionListener, GUIInter
 		setupLabels();
         setupTextFields();
 		setupButtons();
-		GUIComponents.createComboBox(Bounds.CMB_REGISTER_USER_PERMISIONS, Roles.getAllValues(), panelBackUser);
+		cmbPermissions = GUIComponents.createComboBox(Bounds.CMB_REGISTER_USER_PERMISIONS, Roles.getAllValues(), panelBackUser);
 		setupEvents();
     }
 

@@ -11,6 +11,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import dev.juan.estevez.controllers.ClientController;
+import dev.juan.estevez.enums.Clients;
+import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.interfaces.GUIInterface;
 import dev.juan.estevez.models.Client;
 import dev.juan.estevez.persistence.ClientDAO;
@@ -18,8 +20,6 @@ import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ViewUtils;
-import dev.juan.estevez.utils.enums.Clients;
-import dev.juan.estevez.utils.enums.Colors;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 

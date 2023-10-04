@@ -15,12 +15,12 @@ import javax.swing.SwingConstants;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ViewUtils;
-import dev.juan.estevez.utils.enums.Colors;
-import dev.juan.estevez.utils.enums.Fonts;
-import dev.juan.estevez.utils.enums.Icons;
-import dev.juan.estevez.utils.enums.Roles;
-import dev.juan.estevez.utils.enums.States;
 import dev.juan.estevez.controllers.UserController;
+import dev.juan.estevez.enums.Colors;
+import dev.juan.estevez.enums.Fonts;
+import dev.juan.estevez.enums.Icons;
+import dev.juan.estevez.enums.Roles;
+import dev.juan.estevez.enums.States;
 import dev.juan.estevez.interfaces.GUIInterface;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.utils.Bounds;
@@ -28,7 +28,6 @@ import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.admin.AdministratorPanelView;
 import dev.juan.estevez.views.employee.EmployeePanelView;
 import dev.juan.estevez.views.technical.PanelTechnical;
-import javafx.scene.paint.Color;
 import panel.utilities.ForgotPassword;
 
 /**

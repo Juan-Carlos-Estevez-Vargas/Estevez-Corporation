@@ -4,8 +4,8 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import dev.juan.estevez.utils.enums.Roles;
-import dev.juan.estevez.utils.enums.States;
+import dev.juan.estevez.enums.Roles;
+import dev.juan.estevez.enums.States;
 
 /**
  * @author Juan Carlos Estevez Vargas.

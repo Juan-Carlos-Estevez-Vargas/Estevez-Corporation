@@ -11,6 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import dev.juan.estevez.controllers.UserController;
+import dev.juan.estevez.enums.Colors;
+import dev.juan.estevez.enums.Fonts;
+import dev.juan.estevez.enums.Roles;
+import dev.juan.estevez.enums.States;
+import dev.juan.estevez.enums.Users;
 import dev.juan.estevez.interfaces.GUIInterface;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.persistence.UserDAO;
@@ -21,11 +26,6 @@ import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
 import dev.juan.estevez.utils.ViewUtils;
-import dev.juan.estevez.utils.enums.Colors;
-import dev.juan.estevez.utils.enums.Fonts;
-import dev.juan.estevez.utils.enums.Roles;
-import dev.juan.estevez.utils.enums.States;
-import dev.juan.estevez.utils.enums.Users;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
