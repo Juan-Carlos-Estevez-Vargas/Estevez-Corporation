@@ -7,15 +7,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import com.itextpdf.text.DocumentException;
-
 import dev.juan.estevez.controllers.ClientController;
 import dev.juan.estevez.enums.Clients;
 import dev.juan.estevez.enums.Colors;

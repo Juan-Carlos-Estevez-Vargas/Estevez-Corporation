@@ -48,6 +48,8 @@ public class Constants {
     public static final String UPDATED_USER = "Actualizar Usuario";
     public static final String UPDATED_CLIENT = "Actualizar Cliente";
 
+    public static final String UPDATED_EQUIPMENT = "Actualizar Equipo";
+
     // CLIENT
     public static final String CLIENT_REGISTER_TEXT = "Registrar Cliente";
     public static final String MANAGE_CLIENTS_TEXT = "Administrar Clientes";

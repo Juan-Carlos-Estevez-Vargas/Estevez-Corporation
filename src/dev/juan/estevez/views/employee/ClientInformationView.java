@@ -24,6 +24,7 @@ import dev.juan.estevez.interfaces.GUIInterface;
 import dev.juan.estevez.models.Client;
 import dev.juan.estevez.models.Equipment;
 import dev.juan.estevez.persistence.ClientDAO;
+import dev.juan.estevez.persistence.EquipmentDAO;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.FieldValidator;
@@ -62,6 +63,8 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		user_update = ManagementClientsView.user_update;
 		idClient = ManagementClientsView.id_cliente_update;
 		clientController = new ClientController(new ClientDAO());
+		equipmentController = new EquipmentController(new EquipmentDAO());
+		initializeFrame();
 		initComponents();
 		loadClientData();
 		loadEquipmentTable();
@@ -70,7 +73,7 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 
 	@Override
 	public void initializeFrame() {
-		setSize(680, 405);
+		setSize(930, 400);
 		setTitle("Información del cliente " + user_update + " - Sesión de " + user);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -92,7 +95,7 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		container = new JPanel();
 		container.setBackground(Colors.BACKGROUND_COLOR.getValue());
 		container.setLayout(null);
-		container.setBounds(630, 460, 630, 460);
+		container.setBounds(930, 400, 930, 400);
 		setContentPane(container);
 	}
 
@@ -118,9 +121,13 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 
 	@Override
 	public void setupButtons() {
-		btnUpdateClient = GUIComponents.createButton(Constants.UPDATED_CLIENT, Bounds.BUTTON_CLIENT_INFORMATION_UPDATE, Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
-		btnRegisterEquipment = GUIComponents.createButton(Constants.EQUIPMENT_REGISTER, Bounds.BUTTON_CLIENT_INFORMATION_EQUIPMENT_REGISTER, Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
-		btnPrint = GUIComponents.createButton(Constants.CLIENT_PRINT, Bounds.BUTTON_CLIENT_INFORMATION_PRINT, Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
+		btnUpdateClient = GUIComponents.createButton(Constants.UPDATED_CLIENT, Bounds.BUTTON_CLIENT_INFORMATION_UPDATE,
+				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
+		btnRegisterEquipment = GUIComponents.createButton(Constants.EQUIPMENT_REGISTER,
+				Bounds.BUTTON_CLIENT_INFORMATION_EQUIPMENT_REGISTER, Colors.BUTTON_COLOR.getValue(),
+				Fonts.LABEL_FONT.getValue(), container);
+		btnPrint = GUIComponents.createButton(Constants.CLIENT_PRINT, Bounds.BUTTON_CLIENT_INFORMATION_PRINT,
+				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
 	}
 
 	@Override
@@ -142,7 +149,6 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 			txtAdress.setText(client.getClientAddress());
 			txtModifyBy.setText(client.getLastModification());
 		}
-
 	}
 
 	/**
@@ -153,12 +159,13 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		if (equipment != null) {
 			createTableAndScrollPane();
 			addColumnsToTable();
+
 			try {
 				fillTableWithData(equipment);
 			} catch (SQLException e) {
 				StringUtils.handleQueryError(e, Constants.ERROR_SHOWING_INFORMATION);
 			}
-		}	
+		}
 	}
 
 	private void createTableAndScrollPane() {
@@ -167,7 +174,6 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 	}
 
 	private void addColumnsToTable() {
-		model.addColumn(Equipments.ID.getValue());
 		model.addColumn(Equipments.TYPE.getValue());
 		model.addColumn(Equipments.MARK.getValue());
 		model.addColumn(Equipments.STATUS.getValue());
@@ -176,7 +182,6 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 	private void fillTableWithData(Equipment equipment) throws SQLException {
 		if (equipment != null) {
 			model.addRow(new Object[] {
-					equipment.getEquipmentID(),
 					equipment.getEquipmentType(),
 					equipment.getMark(),
 					equipment.getStatus()
@@ -185,7 +190,7 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 	}
 
 	private void setupEquipmentTableEvent() {
-		tableEquipment.addMouseListener(new MouseAdapter() {
+		this.tableEquipment.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int row = tableEquipment.rowAtPoint(e.getPoint());
@@ -228,12 +233,12 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 	private void updateClient() {
 		Client client = createClientFromInputs();
 		int validation = validateClientFields(client);
-	
+
 		if (validation == 4) {
 			StringUtils.showMessage(Constants.EMPTY_FIELDS);
 			return;
 		}
-	
+
 		if (validation == 0) {
 			if (clientController.updateClient(client) == 1) {
 				StringUtils.showMessage(Constants.SUCCESSFUL_MODIFICATION);
@@ -278,6 +283,6 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 
 	private void handlePrintClients() {
 
-    }
+	}
 
 }

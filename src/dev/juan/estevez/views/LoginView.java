@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ViewUtils;
+import dev.juan.estevez.utils.bounds.LoginBounds;
 import dev.juan.estevez.controllers.UserController;
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Fonts;
@@ -23,11 +24,11 @@ import dev.juan.estevez.enums.Roles;
 import dev.juan.estevez.enums.States;
 import dev.juan.estevez.interfaces.GUIInterface;
 import dev.juan.estevez.models.User;
-import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.admin.AdministratorPanelView;
 import dev.juan.estevez.views.employee.EmployeePanelView;
 import dev.juan.estevez.views.technical.PanelTechnical;
+
 import panel.utilities.ForgotPassword;
 
 /**
@@ -65,7 +66,7 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
         setupLabels();
         setupTextFields();
         setupButtons();
-        GUIComponents.createSeparator(Bounds.SEPARATOR_LOGIN, container);
+        GUIComponents.createSeparator(LoginBounds.SEPARATOR_LOGIN, container);
         setupEvents();
     }
 
@@ -79,26 +80,26 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
 
     @Override
     public void setupLabels() {
-        GUIComponents.createImageLabel(Constants.LOGIN_LOGO_URL, Bounds.LABEL_LOGIN_LOGO, container);
-        GUIComponents.createLabel(Constants.LOGIN_USER_TEXT, Bounds.LABEL_LOGIN_USER, container);
-        jlError = GUIComponents.createLabel("", Bounds.LABEL_LOGIN_ERROR, container);
-        GUIComponents.createLabel("", Bounds.LABEL_LOGIN_ERROR, container).setFont(Fonts.ERROR_FONT.getValue());
-        GUIComponents.createLabel(Constants.LOGIN_PASSWORD_TEXT, Bounds.LABEL_LOGIN_PASSWORD, container);
+        GUIComponents.createImageLabel(Constants.LOGIN_LOGO_URL, LoginBounds.LABEL_LOGIN_LOGO, container);
+        GUIComponents.createLabel(Constants.LOGIN_USER_TEXT, LoginBounds.LABEL_LOGIN_USER, container);
+        jlError = GUIComponents.createLabel("", LoginBounds.LABEL_LOGIN_ERROR, container);
+        GUIComponents.createLabel("", LoginBounds.LABEL_LOGIN_ERROR, container).setFont(Fonts.ERROR_FONT.getValue());
+        GUIComponents.createLabel(Constants.LOGIN_PASSWORD_TEXT, LoginBounds.LABEL_LOGIN_PASSWORD, container);
     }
 
     @Override
     public void setupTextFields() {
-        txtUser = GUIComponents.createTextField(Bounds.TXT_LOGIN_USER, container);
-        txtPassword = GUIComponents.createPasswordField(Bounds.TXT_LOGIN_PASSWORD, container);
-        txtPassword2 = GUIComponents.createTextField(Bounds.TXT_LOGIN_PASSWORD2, container);
+        txtUser = GUIComponents.createTextField(LoginBounds.TXT_LOGIN_USER, container);
+        txtPassword = GUIComponents.createPasswordField(LoginBounds.TXT_LOGIN_PASSWORD, container);
+        txtPassword2 = GUIComponents.createTextField(LoginBounds.TXT_LOGIN_PASSWORD2, container);
         txtPassword2.setVisible(false);
     }
 
     @Override
     public void setupButtons() {
-        btnEye = GUIComponents.createButton(Icons.EYE_ICON.getValue(), Bounds.BUTTON_LOGIN_EYE,
+        btnEye = GUIComponents.createButton(Icons.EYE_ICON.getValue(), LoginBounds.BUTTON_LOGIN_EYE,
                 Colors.BACKGROUND_COLOR.getValue(), container);
-        btnLogin = GUIComponents.createButton(Constants.SIGN_IN, Bounds.BUTTON_LOGIN, Colors.BUTTON_COLOR.getValue(),
+        btnLogin = GUIComponents.createButton(Constants.SIGN_IN, LoginBounds.BUTTON_LOGIN, Colors.BUTTON_COLOR.getValue(),
                 Fonts.BUTTON_FONT.getValue(), container);
         btnForgot = createForgotButton();
     }
@@ -118,7 +119,7 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
      *         border, and has an error color for the foreground.
      */
     private JButton createForgotButton() {
-        JButton btn = GUIComponents.createButton(Constants.FORGOT_TEXT, Bounds.BUTTON_LOGIN_FORGOT,
+        JButton btn = GUIComponents.createButton(Constants.FORGOT_TEXT, LoginBounds.BUTTON_LOGIN_FORGOT,
                 Colors.BACKGROUND_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), container);
         btn.setForeground(Colors.ERROR_COLOR.getValue());
         btn.setBorder(null);
