@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import dev.juan.estevez.enums.Colors;
@@ -219,6 +220,21 @@ public final class GUIComponents extends JFrame {
     }
 
     /**
+     * Creates a JScrollPane with the given JTextPane and bounds.
+     *
+     * @param  pane   the JTextPane to be added to the scroll pane
+     * @param  bounds an integer array containing the x, y, width, and height
+     *                of the scroll pane
+     * @return        the created JScrollPane
+     */
+    public static JScrollPane createScrollPanel(JTextPane pane, int[] bounds) {
+        JScrollPane scrollPane = new JScrollPane(pane);
+        scrollPane.setBounds(bounds[0], bounds[1], bounds[2], bounds[3]);
+        scrollPane.setViewportView(pane);
+        return scrollPane;
+    }
+
+    /**
      * Creates a JComboBox and adds it to a JPanel container.
      *
      * @param bounds    an array consisting of the x, y, width, and height values of
@@ -237,5 +253,20 @@ public final class GUIComponents extends JFrame {
         comboBox.setRenderer(new HorizontalCenterComboBoxRenderer());
         container.add(comboBox);
         return comboBox;
+    }
+
+    /**
+     * Creates a JTextPane and adds it to the specified container panel.
+     *
+     * @param  bounds     an array of integers representing the bounds of the JTextPane
+     * @param  container  the JPanel container to which the JTextPane will be added
+     * @return            the created JTextPane
+     */
+    public static JTextPane createTextPane(int[] bounds, JPanel container) {
+        JTextPane textPane = new JTextPane();
+        textPane.setFont(Fonts.CONTENT_TABLE_FONT.getValue());
+        textPane.setForeground(Color.BLACK);
+        container.add(createScrollPanel(textPane, bounds));
+        return textPane;
     }
 }

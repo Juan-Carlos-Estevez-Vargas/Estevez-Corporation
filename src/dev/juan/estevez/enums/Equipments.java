@@ -4,11 +4,12 @@ package dev.juan.estevez.enums;
  * @author Juan Carlos Estevez Vargas.
  */
 public enum Equipments {
-    
+
     ADMISSION_DAY("Día de Ingreso"),
     ADMISSION_MONTH("Mes de Ingreso"),
     ADMISSION_YEAR("Año de Ingreso"),
     CLIENT_ID("ID Cliente"),
+    DATE_OF_ADMISSION("Fecha de Ingreso"),
     ID("ID"),
     LAST_MODIFICATION("Última Modificación"),
     MARK("Marca"),

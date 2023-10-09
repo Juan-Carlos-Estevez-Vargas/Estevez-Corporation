@@ -13,42 +13,49 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
+import dev.juan.estevez.controllers.ClientController;
+import dev.juan.estevez.controllers.EquipmentController;
+import dev.juan.estevez.enums.Clients;
+import dev.juan.estevez.enums.Colors;
+import dev.juan.estevez.enums.Equipments;
+import dev.juan.estevez.enums.Fonts;
+import dev.juan.estevez.interfaces.GUIInterface;
+import dev.juan.estevez.models.Client;
+import dev.juan.estevez.models.Equipment;
+import dev.juan.estevez.persistence.ClientDAO;
+import dev.juan.estevez.persistence.EquipmentDAO;
+import dev.juan.estevez.utils.Bounds;
+import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.DatabaseConnection;
+import dev.juan.estevez.utils.FieldValidator;
+import dev.juan.estevez.utils.StringUtils;
+import dev.juan.estevez.utils.ValidateCharacters;
+import dev.juan.estevez.utils.ValidateNumbers;
+import dev.juan.estevez.utils.ViewUtils;
+import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
 /**
- * Frame con la informaci�n del equipo asociado a un cliente espec�fico.
  *
- * @author
- *
+ * @author Juan Carlos Estevez Vargas
  */
-public class EquipmentInformation extends JFrame implements ActionListener {
+public class EquipmentInformation extends JFrame implements ActionListener, GUIInterface {
 
-	/**
-	 * Declaraci�n de Variables.
-	 */
 	private static final long serialVersionUID = 1L;
 	private String nameClient = "", user = "";
+	private DefaultTableModel model = new DefaultTableModel();
+	private EquipmentController equipmentController;
 	public static int idEquipment = 0;
 	public static int idClientUpdate = 0;
-	private JLabel labelTittle;
-	private JLabel labelName;
-	private JLabel labelTypeEquip;
-	private JLabel labelMark;
-	private JLabel labelModel;
-	private JLabel labelSerialNumber;
-	private JLabel labelModifyBy;
-	private JLabel labelDateOfAdmission;
-	private JLabel labelStatus;
-	private JLabel labelObservations;
-	private JLabel labelComments;
 	private JTextField txtName;
 	private JTextField txtModel;
 	private JTextField txtSerialNumber;
@@ -64,410 +71,224 @@ public class EquipmentInformation extends JFrame implements ActionListener {
 	private JPanel container;
 	private JButton btnUpdateEquipment;
 
-	/**
-	 * Constructor de clase.
-	 */
 	public EquipmentInformation() {
-		initComponents();
 		this.user = LoginView.user;
-		this.setResizable(false);
-		this.setSize(610, 500);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		idEquipment = ClientInformationView.idEquipment;
 		idClientUpdate = ManagementClientsView.id_cliente_update;
-
-		/*
-		 * Recuperamos el nombre del cliente
-		 */
-		try {
-			Connection cn = (Connection) DatabaseConnection.connect();
-			PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
-					"SELECT nombre_cliente FROM clientes WHERE id_cliente = '" + idClientUpdate + "'");
-			ResultSet rs = pst.executeQuery();
-
-			if (rs.next()) {
-				nameClient = rs.getString("nombre_cliente");
-				this.setTitle("Equipo del cliente " + nameClient);
-			}
-
-			rs.close();
-			pst.close();
-			cn.close();
-		} catch (SQLException e) {
-			System.err.println("Error al consultar el nombre del cliente " + e);
-		}
-
-		/**
-		 * Consultando la informaci�n general del equipo
-		 */
-		try {
-			Connection cn = (Connection) DatabaseConnection.connect();
-			PreparedStatement pst = (PreparedStatement) cn
-					.prepareStatement("SELECT * FROM equipos WHERE id_equipo = '" + idEquipment + "'");
-			ResultSet rs = pst.executeQuery();
-
-			if (rs.next()) {
-				this.txtTypeEquip.setText(rs.getString(3));
-				this.txtMark.setText(rs.getString(4));
-				this.txtStatus.setText(rs.getString(11));
-				this.txtModel.setText(rs.getString("modelo"));
-				this.txtSerialNumber.setText(rs.getString("num_serie"));
-				this.txtModifyBy.setText(rs.getString("ultima_modificacion"));
-				this.textPaneObservations.setText(rs.getString(10));
-
-				/**
-				 * Recuperando la fecha
-				 */
-				String dia = "", mes = "", annio = "";
-				dia = rs.getString("dia_ingreso");
-				mes = rs.getString("mes_ingreso");
-				annio = rs.getString("annio_ingreso");
-
-				this.txtDateOfAdmission.setText(dia + " del " + mes + " del " + annio);
-				this.txtName.setText(nameClient);
-				this.textPaneObservations.setText(rs.getString("observaciones"));
-				this.textPaneComments.setText(rs.getString("comentarios_tecnicos"));
-				this.labelComments
-						.setText("Comentarios y Actualizacion del t�cnico " + rs.getString("revision_tecnica_de"));
-
-				rs.close();
-				pst.close();
-				cn.close();
-			}
-		} catch (SQLException e) {
-			System.err.println("Error en consultar informaci�n del equipo " + e);
-		}
-	}
-
-	/**
-	 * Construye los componentes Swing en el Frame.
-	 */
-	public void initComponents() {
-
-		/**
-		 * Panel Principal.
-		 */
-		this.container = new JPanel();
-		this.container.setBackground(new Color(46, 59, 104));
-		this.container.setLayout(null);
-		this.container.setBounds(610, 500, 610, 500);
-		this.setContentPane(this.container);
-
-		/**
-		 * Label Principal.
-		 */
-		this.labelTittle = new JLabel("Informaci�n del Equipo");
-		this.labelTittle.setFont(new java.awt.Font("Segoe UI", 0, 24));
-		this.labelTittle.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelTittle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		this.labelTittle.setBounds(100, 10, 400, 30);
-		this.container.add(this.labelTittle);
-
-		/**
-		 * Label Nombre Cliente.
-		 */
-		this.labelName = new JLabel("Nombre del Cliente :");
-		this.labelName.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelName.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelName.setBounds(10, 60, 200, 20);
-		this.container.add(this.labelName);
-
-		/**
-		 * Label Tipo de Equipo.
-		 */
-		this.labelTypeEquip = new JLabel("Tipo de Equipo :");
-		this.labelTypeEquip.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelTypeEquip.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelTypeEquip.setBounds(10, 120, 200, 20);
-		this.container.add(this.labelTypeEquip);
-
-		/**
-		 * Label Marca.
-		 */
-		this.labelMark = new JLabel("Marca :");
-		this.labelMark.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelMark.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelMark.setBounds(10, 180, 100, 20);
-		this.container.add(this.labelMark);
-
-		/**
-		 * Label Modelo.
-		 */
-		this.labelModel = new JLabel("Modelo :");
-		this.labelModel.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelModel.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelModel.setBounds(10, 240, 100, 20);
-		this.container.add(this.labelModel);
-
-		/**
-		 * Label N�mero de Serie.
-		 */
-		this.labelSerialNumber = new JLabel("N�mero de Serie :");
-		this.labelSerialNumber.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelSerialNumber.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelSerialNumber.setBounds(10, 300, 200, 20);
-		this.container.add(this.labelSerialNumber);
-
-		/**
-		 * Label Modificado por.
-		 */
-		this.labelModifyBy = new JLabel("Modificado por :");
-		this.labelModifyBy.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelModifyBy.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelModifyBy.setBounds(10, 360, 200, 20);
-		this.container.add(this.labelModifyBy);
-
-		/**
-		 * Label Fecha de Ingreso.
-		 */
-		this.labelDateOfAdmission = new JLabel("Fecha de Ingreso :");
-		this.labelDateOfAdmission.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelDateOfAdmission.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelDateOfAdmission.setBounds(260, 60, 200, 20);
-		this.container.add(this.labelDateOfAdmission);
-
-		/**
-		 * Label Estado.
-		 */
-		this.labelStatus = new JLabel("Estatus :");
-		this.labelStatus.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelStatus.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelStatus.setBounds(460, 60, 100, 20);
-		this.container.add(this.labelStatus);
-
-		/**
-		 * Label Da�o Reportado y Observaciones.
-		 */
-		this.labelObservations = new JLabel("Da�o reportado y observaciones :");
-		this.labelObservations.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelObservations.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelObservations.setBounds(260, 110, 200, 20);
-		this.container.add(this.labelObservations);
-
-		/**
-		 * Label Comentarios y Actualizaci�n del T�cnico.
-		 */
-		this.labelComments = new JLabel("Comentarios y Actualizaci�n del T�cnico :");
-		this.labelComments.setFont(new java.awt.Font("Segoe UI", 1, 12));
-		this.labelComments.setForeground(new java.awt.Color(192, 192, 192));
-		this.labelComments.setBounds(260, 260, 300, 20);
-		this.container.add(this.labelComments);
-
-		/**
-		 * Campo de texto con la informaci�n del nombre del cliente.
-		 */
-		this.txtName = new JTextField();
-		this.txtName.setBounds(10, 80, 230, 30);
-		this.txtName.setBackground(new Color(127, 140, 141));
-		this.txtName.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtName.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtName.setForeground(Color.WHITE);
-		this.txtName.setEditable(false);
-		this.container.add(this.txtName);
-
-		/**
-		 * Campo de texto con la informaci�n del modelo del equipo.
-		 */
-		this.txtModel = new JTextField();
-		this.txtModel.setBounds(10, 260, 230, 30);
-		this.txtModel.setBackground(new Color(127, 140, 141));
-		this.txtModel.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtModel.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtModel.setForeground(Color.WHITE);
-		this.container.add(this.txtModel);
-
-		/**
-		 * Campo de texto con la informaci�n del n�mero de serie del equipo.
-		 */
-		this.txtSerialNumber = new JTextField();
-		this.txtSerialNumber.setFont(new java.awt.Font("Segoe UI", 1, 16));
-		this.txtSerialNumber.setBounds(10, 320, 230, 30);
-		this.txtSerialNumber.setBackground(new Color(127, 140, 141));
-		this.txtSerialNumber.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtSerialNumber.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtSerialNumber.setForeground(Color.WHITE);
-		this.container.add(this.txtSerialNumber);
-
-		/**
-		 * Campo de texto con la informaci�n de la fecha de ingreso del equipo.
-		 */
-		this.txtDateOfAdmission = new JTextField();
-		this.txtDateOfAdmission.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtDateOfAdmission.setBounds(260, 80, 180, 30);
-		this.txtDateOfAdmission.setBackground(new Color(127, 140, 141));
-		this.txtDateOfAdmission.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtDateOfAdmission.setForeground(Color.WHITE);
-		this.txtDateOfAdmission.setEnabled(false);
-		this.container.add(this.txtDateOfAdmission);
-
-		/**
-		 * Campo de texto con la informaci�n de qui�n modific� por �ltima vez el equipo.
-		 */
-		this.txtModifyBy = new JTextField();
-		this.txtModifyBy.setHorizontalAlignment(SwingConstants.CENTER);
-		this.txtModifyBy.setEnabled(false);
-		this.txtModifyBy.setBounds(10, 380, 230, 30);
-		this.txtModifyBy.setBackground(new Color(127, 140, 141));
-		this.txtModifyBy.setFont(new Font("serif", Font.BOLD, 20));
-		this.txtModifyBy.setForeground(Color.WHITE);
-		this.container.add(this.txtModifyBy);
-
-		/**
-		 * ComboBox con el estado de equipo.
-		 */
-		this.txtStatus = new JTextField();
-		this.txtStatus.setBounds(460, 80, 120, 30);
-		this.txtStatus.setBackground(new Color(127, 140, 141));
-		this.txtStatus.setFont(new Font("serif", Font.BOLD, 14));
-		this.txtStatus.setForeground(Color.WHITE);
-		this.txtStatus.setEnabled(false);
-		this.container.add(this.txtStatus);
-
-		/**
-		 * ComboBox con el tipo de equipo.
-		 */
-		this.txtTypeEquip = new JTextField();
-		this.txtTypeEquip.setBounds(10, 140, 170, 30);
-		this.txtTypeEquip.setBackground(new Color(127, 140, 141));
-		this.txtTypeEquip.setFont(new Font("serif", Font.BOLD, 14));
-		this.txtTypeEquip.setForeground(Color.WHITE);
-		this.txtTypeEquip.setEnabled(false);
-		this.container.add(this.txtTypeEquip);
-
-		/**
-		 * ComboBox con la marca del equipo.
-		 */
-		this.txtMark = new JTextField();
-		this.txtMark.setBounds(10, 200, 170, 30);
-		this.txtMark.setBackground(new Color(127, 140, 141));
-		this.txtMark.setFont(new Font("serif", Font.BOLD, 14));
-		this.txtMark.setForeground(Color.WHITE);
-		this.txtMark.setEnabled(false);
-		this.container.add(this.txtMark);
-
-		/**
-		 * TextPane con las observaciones generales del equipo.
-		 */
-		this.textPaneObservations = new JTextPane();
-		this.textPaneObservations.setForeground(Color.BLACK);
-		this.textPaneObservations.setFont(new Font("serif", Font.BOLD, 14));
-		this.scrollObservations = new JScrollPane(this.textPaneObservations);
-		this.scrollObservations.setBounds(260, 130, 320, 120);
-		this.scrollObservations.setViewportView(this.textPaneObservations);
-		this.container.add(this.scrollObservations);
-
-		/**
-		 * TextPane con las observaciones del t�cnico.
-		 */
-		this.textPaneComments = new JTextPane();
-		this.textPaneComments.setForeground(Color.BLACK);
-		this.textPaneComments.setFont(new Font("serif", Font.BOLD, 14));
-		this.textPaneComments.setEditable(false);
-		this.scrollComments = new JScrollPane(this.textPaneComments);
-		this.scrollComments.setBounds(260, 280, 320, 125);
-		this.scrollComments.setViewportView(this.textPaneComments);
-		this.container.add(this.scrollComments);
-
-		/**
-		 * Bot�n para actualizar el equipo en cuesti�n.
-		 */
-		this.btnUpdateEquipment = new JButton("Actualizar Equipo");
-		this.btnUpdateEquipment.setBounds(370, 415, 210, 35);
-		this.btnUpdateEquipment.setFont(new Font("serif", Font.BOLD, 20));
-		this.btnUpdateEquipment.setBackground(new Color(8, 85, 224));
-		this.btnUpdateEquipment.setForeground(Color.WHITE);
-		this.btnUpdateEquipment.setHorizontalAlignment(SwingConstants.CENTER);
-		this.btnUpdateEquipment.addActionListener(this);
-		this.container.add(this.btnUpdateEquipment);
-
-	}
-
-	/**
-	 * Limpia los campos de texto.
-	 */
-	public void clean() {
-		this.txtDateOfAdmission.setText("");
-		this.txtModel.setText("");
-		this.txtName.setText("");
-		this.txtSerialNumber.setText("");
+		equipmentController = new EquipmentController(new EquipmentDAO());
+		equipmentController = new EquipmentController(new EquipmentDAO());
+		initComponents();
+		//loadEquipmentData();
+		//loadEquipmentTable();
+		//setupEquipmentTableEvent();
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void initializeFrame() {
+		setSize(680, 405);
+		setTitle("Equipo del cliente " + user + " - Sesión de " + user);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	}
 
-		if (e.getSource() == this.btnUpdateEquipment) {
-			int validation = 0;
-			String typeEquip, mark, model, serialNumber, status, observations;
+	@Override
+	public void initComponents() {
+		setupMainPanel();
+		setupLabels();
+		setupTextFields();
+		setupTextPane();
+		setupButtons();
+		setupEvents();
+	}
 
-			typeEquip = this.txtTypeEquip.getText().trim();
-			mark = this.txtMark.getText().trim();
-			status = this.txtStatus.getText().trim();
-			model = this.txtModel.getText().trim();
-			serialNumber = this.txtSerialNumber.getText().trim();
-			observations = this.textPaneObservations.getText().trim();
+	@Override
+	public void setupMainPanel() {
+		container = new JPanel();
+		container.setBackground(Colors.BACKGROUND_COLOR.getValue());
+		container.setLayout(null);
+		container.setBounds(630, 460, 630, 460);
+		setContentPane(container);
+	}
 
-			/**
-			 * Validaci�n de campos.
-			 */
-			if (model.equals("") || model.length() >= 50) {
-				this.txtModel.setBackground(Color.red);
-				if (model.length() >= 50) {
-					JOptionPane.showMessageDialog(null, "El campo MODELO no debe contener m�s de 50 caracteres");
-					this.txtModel.requestFocus();
-				}
-				validation++;
-			}
-			if (serialNumber.equals("") || serialNumber.length() >= 50) {
-				this.txtSerialNumber.setBackground(Color.red);
-				if (serialNumber.length() >= 50) {
-					JOptionPane.showMessageDialog(null, "El campo N�MERO SERIAL no debe contener m�s de 50 caracteres");
-					this.txtModel.requestFocus();
-				}
-				validation++;
-			}
-			if (observations.equals("")) {
-				this.textPaneObservations.setText("Sin observaciones");
-			}
+	@Override
+	public void setupLabels() {
+		GUIComponents.createLabel("Información del Equipo " + user, Bounds.LABEL_EQUIPMENT_INFORMATION_TITLE,
+				container);
+		GUIComponents.createLabel("Nombre del Cliente", Bounds.LABEL_EQUIPMENT_CLIENT_NAME, container);
+		GUIComponents.createLabel(Equipments.TYPE.getValue(), Bounds.LABEL_EQUIPMENT_TYPE, container);
+		GUIComponents.createLabel(Equipments.MARK.getValue(), Bounds.LABEL_EQUIPMENT_MARK, container);
+		GUIComponents.createLabel(Equipments.MODEL.getValue(), Bounds.LABEL_EQUIPMENT_MODEL, container);
+		GUIComponents.createLabel(Equipments.SERIAL_NUMBER.getValue(), Bounds.LABEL_EQUIPMENT_SERIAL_NUMBER, container);
+		GUIComponents.createLabel(Equipments.LAST_MODIFICATION.getValue(), Bounds.LABEL_EQUIPMENT_LAST_MODIFICATION,
+				container);
+		GUIComponents.createLabel(Equipments.DATE_OF_ADMISSION.getValue(), Bounds.LABEL_EQUIPMENT_DATE_OF_ADMISSION,
+				container);
+		GUIComponents.createLabel(Equipments.STATUS.getValue(), Bounds.LABEL_EQUIPMENT_STATUS, container);
+		GUIComponents.createLabel(Equipments.OBSERVATION.getValue(), Bounds.LABEL_EQUIPMENT_OBSERVATION, container);
+		GUIComponents.createLabel(Equipments.TECHNICAL_COMMENTS.getValue(), Bounds.LABEL_EQUIPMENT_COMMENTS, container);
+	}
 
-			if (validation == 0) {
-				try {
-					Connection cn = (Connection) DatabaseConnection.connect();
-					PreparedStatement pst = (PreparedStatement) cn.prepareStatement(
-							"UPDATE equipos SET tipo_equipo = ?, marca = ?, modelo = ?, num_serie = ?, observaciones = ?, estatus = ?, "
-									+ "ultima_modificacion = ? WHERE id_equipo = '" + idEquipment + "'");
+	@Override
+	public void setupTextFields() {
+		txtName = GUIComponents.createTextField(Bounds.TXT_EQUIPMENT_NAME, container);
+		txtModel = GUIComponents.createTextField(Bounds.TXT_EQUIPMENT_MODEL, container);
+		txtSerialNumber = GUIComponents.createTextField(Bounds.TXT_EQUIPMENT_SERIAL_NUMBER, container);
+		txtDateOfAdmission = GUIComponents.createTextField(Bounds.TXT_EQUIPMENT_DATE_OF_ADMISSION, container);
+		txtModifyBy = GUIComponents.createTextField(Bounds.TXT_EQUIPMENT_MODIFY_BY, container);
+		txtStatus = GUIComponents.createTextField(Bounds.TXT_EQUIPMENT_STATUS, container);
+		txtTypeEquip = GUIComponents.createTextField(Bounds.TXT_EQUIPMENT_TYPE, container);
+		txtMark = GUIComponents.createTextField(Bounds.TXT_EQUIPMENT_MARK, container);
 
-					pst.setString(1, typeEquip);
-					pst.setString(2, mark);
-					pst.setString(3, model);
-					pst.setString(4, serialNumber);
-					pst.setString(5, observations);
-					pst.setString(6, status);
-					pst.setString(7, user);
-					pst.executeUpdate();
+		txtName.setEditable(false);
+		txtModifyBy.setEnabled(false);
+		txtDateOfAdmission.setEnabled(false);
+		txtStatus.setEnabled(false);
+		txtTypeEquip.setEnabled(false);
+		txtMark.setEnabled(false);
+	}
 
-					pst.close();
-					cn.close();
+	public void setupTextPane() {
+		textPaneObservations = GUIComponents.createTextPane(Bounds.EQUIPMENT_TEXT_PANE_OBSERVATIONS, container);
+		textPaneComments = GUIComponents.createTextPane(Bounds.EQUIPMENT_TEXT_PANE_COMMENTS, container);
+		textPaneComments.setEditable(false);
+	}
 
-					clean();
+	@Override
+	public void setupButtons() {
+		btnUpdateEquipment = GUIComponents.createButton(Constants.UPDATED_EQUIPMENT, Bounds.BUTTON_EQUIPMENT_UPDATE,
+				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
+	}
 
-					this.txtName.setBackground(Color.green);
-					this.txtDateOfAdmission.setBackground(Color.green);
-					this.txtModel.setBackground(Color.green);
-					this.txtSerialNumber.setBackground(Color.green);
-					this.txtModifyBy.setText(user);
+	@Override
+	public void setupEvents() {
+		txtName.addKeyListener(new ValidateCharacters());
+		btnUpdateEquipment.addActionListener(this);
+	}
 
-					JOptionPane.showMessageDialog(null, "Actualizaci�n correcta");
-					this.dispose();
-				} catch (SQLException ex) {
-					System.err.println("Error al actualizar equipo " + ex);
-					JOptionPane.showMessageDialog(null, "��Error al actualizar equipo!! Contacte al Administrador");
-				}
-			} else {
-				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
-			}
+	/*
+	private void loadClientData() {
+		Client client = clientController.getClientById(idClient);
 
+		if (client != null) {
+			txtName.setText(client.getClientName());
+			txtEmail.setText(client.getClientEmail());
+			txtPhone.setText(client.getClientPhone());
+			txtAdress.setText(client.getClientAddress());
+			txtModifyBy.setText(client.getLastModification());
 		}
 	}
 
+	private void loadEquipmentTable() {
+		Equipment equipment = equipmentController.getEquipmentByClientId(idClient);
+		if (equipment != null) {
+			createTableAndScrollPane();
+			addColumnsToTable();
+			try {
+				fillTableWithData(equipment);
+			} catch (SQLException e) {
+				StringUtils.handleQueryError(e, Constants.ERROR_SHOWING_INFORMATION);
+			}
+		}
+	}
+
+	private void createTableAndScrollPane() {
+		tableEquipment = GUIComponents.createTable(model, container);
+		GUIComponents.createScrollPanel(tableEquipment, Bounds.SCROLL_MANAGE, container);
+	}
+
+	private void addColumnsToTable() {
+		model.addColumn(Equipments.ID.getValue());
+		model.addColumn(Equipments.TYPE.getValue());
+		model.addColumn(Equipments.MARK.getValue());
+		model.addColumn(Equipments.STATUS.getValue());
+	}
+
+	private void fillTableWithData(Equipment equipment) throws SQLException {
+		if (equipment != null) {
+			model.addRow(new Object[] {
+					equipment.getEquipmentID(),
+					equipment.getEquipmentType(),
+					equipment.getMark(),
+					equipment.getStatus()
+			});
+		}
+	}
+
+	private void setupEquipmentTableEvent() {
+		this.tableEquipment.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = tableEquipment.rowAtPoint(e.getPoint());
+				int column = 0;
+
+				if (row > -1) {
+					idEquipment = (int) model.getValueAt(row, column);
+					ViewUtils.openPanel(new EquipmentInformation(), ClientInformationView.this);
+				}
+			}
+		});
+	}
+
+	public void clean() {
+		this.txtName.setText("");
+		this.txtAdress.setText("");
+		this.txtEmail.setText("");
+		this.txtPhone.setText("");
+	}
+*/
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		/*if (e.getSource() == btnRegisterEquipment) {
+			ViewUtils.openPanel(new RegisterEquipment());
+		} else if (e.getSource() == btnUpdateClient) {
+			updateClient();
+		} else if (e.getSource() == btnPrint) {
+			handlePrintClients();
+		}*/
+	}
+
+	/*
+	private void updateClient() {
+		Client client = createClientFromInputs();
+		int validation = validateClientFields(client);
+
+		if (validation == 4) {
+			StringUtils.showMessage(Constants.EMPTY_FIELDS);
+			return;
+		}
+
+		if (validation == 0) {
+			if (clientController.updateClient(client) == 1) {
+				StringUtils.showMessage(Constants.SUCCESSFUL_MODIFICATION);
+				clean();
+				setFieldsBackground(Color.green);
+				ViewUtils.openPanel(new ManagementClientsView(), this);
+			}
+		}
+	}
+
+	private Client createClientFromInputs() {
+		Client client = new Client();
+		client.setClientID(idClient);
+		client.setClientName(txtName.getText().trim());
+		client.setClientEmail(txtEmail.getText().trim());
+		client.setClientPhone(txtPhone.getText().trim());
+		client.setClientAddress(txtAdress.getText().trim());
+		client.setLastModification(user);
+		return client;
+	}
+
+	private int validateClientFields(Client client) {
+		int validation = FieldValidator.validateEmailField(client.getClientEmail(), txtEmail)
+				+ FieldValidator.validateNameField(client.getClientName(), txtName)
+				+ FieldValidator.validatePhoneField(client.getClientPhone(), txtPhone)
+				+ FieldValidator.validateAdressField(client.getClientAddress(), txtAdress);
+
+		return validation;
+	}
+
+	private void setFieldsBackground(Color color) {
+		txtName.setBackground(color);
+		txtEmail.setBackground(color);
+		txtAdress.setBackground(color);
+		txtPhone.setBackground(color);
+	}*/
 }

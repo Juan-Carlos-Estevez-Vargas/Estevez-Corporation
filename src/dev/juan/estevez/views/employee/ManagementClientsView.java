@@ -103,7 +103,6 @@ public class ManagementClientsView extends JFrame implements GUIInterface {
 	 * Adds columns to the table.
 	 */
 	private void addColumnsToTable() {
-		model.addColumn(" ");
 		model.addColumn(Clients.NAME.getValue());
 		model.addColumn(Clients.EMAIL.getValue());
 		model.addColumn(Clients.PHONE.getValue());
@@ -113,14 +112,13 @@ public class ManagementClientsView extends JFrame implements GUIInterface {
 	/**
 	 * Fills the table with data from the given list of clients.
 	 *
-	 * @param  clients  the list of clients to be displayed in the table
-	 * @throws SQLException  if there is an error accessing the database
+	 * @param clients the list of clients to be displayed in the table
+	 * @throws SQLException if there is an error accessing the database
 	 */
 	private void fillTableWithData(List<Client> clients) throws SQLException {
 		if (clients != null) {
 			for (Client client : clients) {
 				model.addRow(new Object[] {
-						client.getClientID(),
 						client.getClientName(),
 						client.getClientEmail(),
 						client.getClientPhone(),
@@ -140,10 +138,11 @@ public class ManagementClientsView extends JFrame implements GUIInterface {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int row = tableClients.rowAtPoint(e.getPoint());
-				int column = 2;
+				int column = 1;
 
 				if (row >= 0) {
-					id_cliente_update = (int) model.getValueAt(row, column);
+					Client clientDB = clientController.getClientByEmail((String) model.getValueAt(row, column));
+					id_cliente_update = clientDB.getClientID();
 					ViewUtils.openPanel(new ClientInformationView(), ManagementClientsView.this);
 				}
 			}

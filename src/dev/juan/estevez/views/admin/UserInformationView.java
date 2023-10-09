@@ -19,13 +19,13 @@ import dev.juan.estevez.enums.Users;
 import dev.juan.estevez.interfaces.GUIInterface;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.persistence.UserDAO;
-import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.FieldValidator;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
 import dev.juan.estevez.utils.ViewUtils;
+import dev.juan.estevez.utils.bounds.AdminBounds;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
@@ -89,29 +89,29 @@ public class UserInformationView extends JFrame implements ActionListener, GUIIn
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel("Información del usuario " + user_update, Bounds.LABEL_USER_INFORMATION_TITLE, container);
-		GUIComponents.createLabel(Users.NAME.getValue(), Bounds.LABEL_USER_INFORMATION_NAME, container);
-		GUIComponents.createLabel(Users.EMAIL.getValue(), Bounds.LABEL_USER_INFORMATION_EMAIL, container);
-		GUIComponents.createLabel(Users.PHONE.getValue(), Bounds.LABEL_USER_INFORMATION_PHONE, container);
-		GUIComponents.createLabel(Users.PERMISIONS_OF.getValue(), Bounds.LABEL_CMB_USER_INFORMATION_LEVEL, container);
-		GUIComponents.createLabel(Users.USERNAME.getValue(), Bounds.LABEL_USER_INFORMATION_USERNAME, container);
-		GUIComponents.createLabel(Users.STATUS.getValue(), Bounds.LABEL_CMB_USER_INFORMATION_STATUS, container);
-		GUIComponents.createLabel(Users.REGISTERED_BY.getValue(), Bounds.LABEL_USER_INFORMATION_REGISTER_BY, container);
+		GUIComponents.createLabel("Información del usuario " + user_update, AdminBounds.LABEL_USER_INFORMATION_TITLE, container);
+		GUIComponents.createLabel(Users.NAME.getValue(), AdminBounds.LABEL_USER_INFORMATION_NAME, container);
+		GUIComponents.createLabel(Users.EMAIL.getValue(), AdminBounds.LABEL_USER_INFORMATION_EMAIL, container);
+		GUIComponents.createLabel(Users.PHONE.getValue(), AdminBounds.LABEL_USER_INFORMATION_PHONE, container);
+		GUIComponents.createLabel(Users.PERMISIONS_OF.getValue(), AdminBounds.LABEL_CMB_USER_INFORMATION_LEVEL, container);
+		GUIComponents.createLabel(Users.USERNAME.getValue(), AdminBounds.LABEL_USER_INFORMATION_USERNAME, container);
+		GUIComponents.createLabel(Users.STATUS.getValue(), AdminBounds.LABEL_CMB_USER_INFORMATION_STATUS, container);
+		GUIComponents.createLabel(Users.REGISTERED_BY.getValue(), AdminBounds.LABEL_USER_INFORMATION_REGISTER_BY, container);
 	}
 
 	@Override
 	public void setupTextFields() {
-		txtName = GUIComponents.createTextField(Bounds.TXT_USER_INFORMATION_NAME, container);
-		txtEmail = GUIComponents.createTextField(Bounds.TXT_USER_INFORMATION_EMAIL, container);
-		txtPhone = GUIComponents.createTextField(Bounds.TXT_USER_INFORMATION_PHONE, container);
-		txtUsername = GUIComponents.createTextField(Bounds.TXT_USER_INFORMATION_USERNAME, container);
-		txtRegisterBy = GUIComponents.createTextField(Bounds.TXT_USER_INFORMATION_REGISTER_BY, container);
+		txtName = GUIComponents.createTextField(AdminBounds.TXT_USER_INFORMATION_NAME, container);
+		txtEmail = GUIComponents.createTextField(AdminBounds.TXT_USER_INFORMATION_EMAIL, container);
+		txtPhone = GUIComponents.createTextField(AdminBounds.TXT_USER_INFORMATION_PHONE, container);
+		txtUsername = GUIComponents.createTextField(AdminBounds.TXT_USER_INFORMATION_USERNAME, container);
+		txtRegisterBy = GUIComponents.createTextField(AdminBounds.TXT_USER_INFORMATION_REGISTER_BY, container);
 		txtRegisterBy.setEnabled(false);
 	}
 
 	@Override
 	public void setupButtons() {
-		btnUpdate = GUIComponents.createButton(Constants.UPDATED_USER, Bounds.BUTTON_USER_INFORMATION_UPDATE, Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
+		btnUpdate = GUIComponents.createButton(Constants.UPDATED_USER, AdminBounds.BUTTON_USER_INFORMATION_UPDATE, Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
 	}
 
 	@Override
@@ -159,8 +159,8 @@ public class UserInformationView extends JFrame implements ActionListener, GUIIn
 	 * @return description of return value
 	 */
 	private void createComboBoxes() {
-		cmbStatus = GUIComponents.createComboBox(Bounds.CMB_USER_INFORMATION_STATUS, States.getAllValues(), container);
-		cmbLevels = GUIComponents.createComboBox(Bounds.CMB_USER_INFORMATION_LEVEL, Roles.getAllValues(), container);
+		cmbStatus = GUIComponents.createComboBox(AdminBounds.CMB_USER_INFORMATION_STATUS, States.getAllValues(), container);
+		cmbLevels = GUIComponents.createComboBox(AdminBounds.CMB_USER_INFORMATION_LEVEL, Roles.getAllValues(), container);
 	}
 
 	/**
@@ -182,8 +182,8 @@ public class UserInformationView extends JFrame implements ActionListener, GUIIn
 		User user = createUserFromInputs();
 		int cmbPermissions = cmbLevels.getSelectedIndex() + 1;
 		int cmbStatus = this.cmbStatus.getSelectedIndex() + 1;
-	
 		int validation = validateUserFields(user);
+		
 		if (validation == 4) {
 			StringUtils.showMessage(Constants.EMPTY_FIELDS);
 			return;

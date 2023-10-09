@@ -3,12 +3,10 @@ package dev.juan.estevez.views.employee;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import dev.juan.estevez.controllers.ClientController;
 import dev.juan.estevez.enums.Clients;
 import dev.juan.estevez.enums.Colors;
@@ -23,6 +21,7 @@ import dev.juan.estevez.utils.FieldValidator;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
+import dev.juan.estevez.utils.bounds.EmployeeBounds;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
@@ -78,24 +77,24 @@ public class RegisterClientView extends JFrame implements ActionListener, GUIInt
 	@Override
     public void setupLabels() {
         GUIComponents.createLabel(Constants.CLIENT_REGISTER, Bounds.LABEL_ADMIN_TITLE, panelBackClient);
-		GUIComponents.createLabel(Clients.NAME.getValue(), Bounds.LABEL_REGISTER_USER_NAME, panelBackClient).setFont(Fonts.PANEL_LABEL_FONT.getValue());
-        GUIComponents.createLabel(Clients.EMAIL.getValue(), Bounds.LABEL_REGISTER_USER_EMAIL, panelBackClient).setFont(Fonts.PANEL_LABEL_FONT.getValue());
-    	GUIComponents.createLabel(Clients.PHONE.getValue(), Bounds.LABEL_REGISTER_USER_PHONE, panelBackClient).setFont(Fonts.PANEL_LABEL_FONT.getValue());
-		GUIComponents.createLabel(Clients.ADDRESS.getValue(), Bounds.LABEL_REGISTER_USER_PERMISIONS_OF, panelBackClient).setFont(Fonts.PANEL_LABEL_FONT.getValue());
-		GUIComponents.createLabel(Constants.CLIENT_REGISTER, Bounds.LABEL_REGISTER_USER, panelBackClient).setFont(Fonts.PANEL_LABEL_FONT.getValue());
+		GUIComponents.createLabel(Clients.NAME.getValue(), EmployeeBounds.LABEL_REGISTER_CLIENT_NAME, panelBackClient).setFont(Fonts.PANEL_LABEL_FONT.getValue());
+        GUIComponents.createLabel(Clients.EMAIL.getValue(), EmployeeBounds.LABEL_REGISTER_CLIENT_EMAIL, panelBackClient).setFont(Fonts.PANEL_LABEL_FONT.getValue());
+    	GUIComponents.createLabel(Clients.PHONE.getValue(), EmployeeBounds.LABEL_REGISTER_CLIENT_PHONE, panelBackClient).setFont(Fonts.PANEL_LABEL_FONT.getValue());
+		GUIComponents.createLabel(Clients.ADDRESS.getValue(), EmployeeBounds.LABEL_REGISTER_CLIENT_PERMISIONS_OF, panelBackClient).setFont(Fonts.PANEL_LABEL_FONT.getValue());
+		GUIComponents.createLabel(Constants.CLIENT_REGISTER, EmployeeBounds.LABEL_REGISTER_CLIENT, panelBackClient).setFont(Fonts.PANEL_LABEL_FONT.getValue());
     }
 
 	@Override
 	public void setupTextFields() {
-		txtNameClient = GUIComponents.createTextField(Bounds.TXT_REGISTER_USER_NAME, panelBackClient);
-		txtEmailClient = GUIComponents.createTextField(Bounds.TXT_REGISTER_USER_EMAIL, panelBackClient);
-		txtPhoneClient = GUIComponents.createTextField(Bounds.TXT_REGISTER_USER_PHONE, panelBackClient);
-		txtAdressClient = GUIComponents.createTextField(Bounds.TXT_REGISTER_USER_USERNAME, panelBackClient);
+		txtNameClient = GUIComponents.createTextField(EmployeeBounds.TXT_REGISTER_CLIENT_NAME, panelBackClient);
+		txtEmailClient = GUIComponents.createTextField(EmployeeBounds.TXT_REGISTER_CLIENT_EMAIL, panelBackClient);
+		txtPhoneClient = GUIComponents.createTextField(EmployeeBounds.TXT_REGISTER_CLIENT_PHONE, panelBackClient);
+		txtAdressClient = GUIComponents.createTextField(EmployeeBounds.TXT_REGISTER_CLIENT_USERNAME, panelBackClient);
 	}
 
 	@Override
 	public void setupButtons() {
-		btnRegisterClient = GUIComponents.createButton(Icons.REGISTER_CLIENT_ICON.getValue(), Bounds.BUTTON_REGISTER_USER, Colors.BACKGROUND_COLOR.getValue(), panelBackClient);
+		btnRegisterClient = GUIComponents.createButton(Icons.REGISTER_CLIENT_ICON.getValue(), EmployeeBounds.BUTTON_REGISTER_CLIENT, Colors.BACKGROUND_COLOR.getValue(), panelBackClient);
 	}
 
 	@Override

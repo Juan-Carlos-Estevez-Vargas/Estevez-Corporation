@@ -3,11 +3,13 @@ package dev.juan.estevez.views.admin;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import dev.juan.estevez.controllers.UserController;
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Icons;
@@ -16,12 +18,12 @@ import dev.juan.estevez.enums.Users;
 import dev.juan.estevez.interfaces.GUIInterface;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.persistence.UserDAO;
-import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.FieldValidator;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
+import dev.juan.estevez.utils.bounds.AdminBounds;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
@@ -64,7 +66,7 @@ public class RegisterUserView extends JFrame implements ActionListener, GUIInter
 		setupLabels();
         setupTextFields();
 		setupButtons();
-		cmbPermissions = GUIComponents.createComboBox(Bounds.CMB_REGISTER_USER_PERMISIONS, Roles.getAllValues(), panelBackUser);
+		cmbPermissions = GUIComponents.createComboBox(AdminBounds.CMB_REGISTER_USER_PERMISIONS, Roles.getAllValues(), panelBackUser);
 		setupEvents();
     }
 
@@ -78,26 +80,26 @@ public class RegisterUserView extends JFrame implements ActionListener, GUIInter
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel(Constants.USER_REGISTER_TEXT, Bounds.LABEL_REGISTER_USER_TITLE, panelBackUser);
-		GUIComponents.createLabel(Users.NAME.getValue(), Bounds.LABEL_REGISTER_USER_NAME, panelBackUser);
-		GUIComponents.createLabel(Users.EMAIL.getValue(), Bounds.LABEL_REGISTER_USER_EMAIL, panelBackUser);
-		GUIComponents.createLabel(Users.PHONE.getValue(), Bounds.LABEL_REGISTER_USER_PHONE, panelBackUser);
-		GUIComponents.createLabel(Users.PERMISIONS_OF.getValue(), Bounds.LABEL_REGISTER_USER_PERMISIONS_OF, panelBackUser);
-		GUIComponents.createLabel(Users.USERNAME.getValue(), Bounds.LABEL_REGISTER_USER_USERNAME, panelBackUser);
-		GUIComponents.createLabel(Constants.USER_REGISTER_TEXT, Bounds.LABEL_REGISTER_USER, panelBackUser);
+		GUIComponents.createLabel(Constants.USER_REGISTER_TEXT, AdminBounds.LABEL_REGISTER_USER_TITLE, panelBackUser);
+		GUIComponents.createLabel(Users.NAME.getValue(), AdminBounds.LABEL_REGISTER_USER_NAME, panelBackUser);
+		GUIComponents.createLabel(Users.EMAIL.getValue(), AdminBounds.LABEL_REGISTER_USER_EMAIL, panelBackUser);
+		GUIComponents.createLabel(Users.PHONE.getValue(), AdminBounds.LABEL_REGISTER_USER_PHONE, panelBackUser);
+		GUIComponents.createLabel(Users.PERMISIONS_OF.getValue(), AdminBounds.LABEL_REGISTER_USER_PERMISIONS_OF, panelBackUser);
+		GUIComponents.createLabel(Users.USERNAME.getValue(), AdminBounds.LABEL_REGISTER_USER_USERNAME, panelBackUser);
+		GUIComponents.createLabel(Constants.USER_REGISTER_TEXT, AdminBounds.LABEL_REGISTER_USER, panelBackUser);
 	}
 
 	@Override
 	public void setupTextFields() {
-		txtNameUser = GUIComponents.createTextField(Bounds.TXT_REGISTER_USER_NAME, panelBackUser);
-		txtEmailUser = GUIComponents.createTextField(Bounds.TXT_REGISTER_USER_EMAIL, panelBackUser);
-		txtPhoneUser = GUIComponents.createTextField(Bounds.TXT_REGISTER_USER_PHONE, panelBackUser);
-		txtUsername = GUIComponents.createTextField(Bounds.TXT_REGISTER_USER_USERNAME, panelBackUser);
+		txtNameUser = GUIComponents.createTextField(AdminBounds.TXT_REGISTER_USER_NAME, panelBackUser);
+		txtEmailUser = GUIComponents.createTextField(AdminBounds.TXT_REGISTER_USER_EMAIL, panelBackUser);
+		txtPhoneUser = GUIComponents.createTextField(AdminBounds.TXT_REGISTER_USER_PHONE, panelBackUser);
+		txtUsername = GUIComponents.createTextField(AdminBounds.TXT_REGISTER_USER_USERNAME, panelBackUser);
 	}
 
 	@Override
 	public void setupButtons() {
-		btnRegisterUser = GUIComponents.createButton(Icons.REGISTER_USER_BUTTON_ICON.getValue(), Bounds.BUTTON_REGISTER_USER, Colors.BACKGROUND_COLOR.getValue(), panelBackUser);
+		btnRegisterUser = GUIComponents.createButton(Icons.REGISTER_USER_BUTTON_ICON.getValue(), AdminBounds.BUTTON_REGISTER_USER, Colors.BACKGROUND_COLOR.getValue(), panelBackUser);
 	}
 
 	@Override

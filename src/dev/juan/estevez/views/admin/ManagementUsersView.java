@@ -4,10 +4,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import dev.juan.estevez.controllers.UserController;
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Users;
