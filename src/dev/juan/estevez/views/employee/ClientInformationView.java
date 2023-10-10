@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -101,7 +103,8 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel("Información del Cliente " + user_update, Bounds.LABEL_CLIENT_INFORMATION_TITLE, container);
+		GUIComponents.createLabel("Información del Cliente " + user_update, Bounds.LABEL_CLIENT_INFORMATION_TITLE,
+				container);
 		GUIComponents.createLabel(Clients.NAME.getValue(), Bounds.LABEL_CLIENT_INFORMATION_NAME, container);
 		GUIComponents.createLabel(Clients.EMAIL.getValue(), Bounds.LABEL_CLIENT_INFORMATION_EMAIL, container);
 		GUIComponents.createLabel(Clients.PHONE.getValue(), Bounds.LABEL_CLIENT_INFORMATION_PHONE, container);
@@ -155,13 +158,13 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 	 * Loads the equipment table from the database.
 	 */
 	private void loadEquipmentTable() {
-		Equipment equipment = equipmentController.getEquipmentByClientId(idClient);
-		if (equipment != null) {
+		List<Equipment> equipments = equipmentController.getEquipmentsByClientId(idClient);
+		if (!equipments.isEmpty()) {
 			createTableAndScrollPane();
 			addColumnsToTable();
 
 			try {
-				fillTableWithData(equipment);
+				fillTableWithData(equipments);
 			} catch (SQLException e) {
 				StringUtils.handleQueryError(e, Constants.ERROR_SHOWING_INFORMATION);
 			}
@@ -179,13 +182,17 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		model.addColumn(Equipments.STATUS.getValue());
 	}
 
-	private void fillTableWithData(Equipment equipment) throws SQLException {
-		if (equipment != null) {
-			model.addRow(new Object[] {
-					equipment.getEquipmentType(),
-					equipment.getMark(),
-					equipment.getStatus()
-			});
+	private void fillTableWithData(List<Equipment> equipmentList) throws SQLException {
+		DefaultTableModel model = (DefaultTableModel) tableEquipment.getModel();
+
+		for (Equipment equipment : equipmentList) {
+			if (equipment != null) {
+				model.addRow(new Object[] {
+						equipment.getEquipmentType(),
+						equipment.getMark(),
+						equipment.getStatus()
+				});
+			}
 		}
 	}
 

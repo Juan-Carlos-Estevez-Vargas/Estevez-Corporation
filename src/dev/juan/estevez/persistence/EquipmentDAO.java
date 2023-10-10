@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import dev.juan.estevez.models.Equipment;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.DatabaseConnection;
@@ -18,7 +22,8 @@ public class EquipmentDAO {
     private Connection connection = null;
 
     private static final String SQL_GET_EQIPMENT_BY_CLIENT_ID = "SELECT * FROM equipos WHERE id_cliente = ?";
-    
+    private static final String SQL_GET_EQIPMENTS_BY_CLIENT_ID = "SELECT * FROM equipos WHERE id_cliente = ?";
+
     public EquipmentDAO() {
         try {
             this.connection = DatabaseConnection.connect();
@@ -30,8 +35,9 @@ public class EquipmentDAO {
     /**
      * Retrieves the equipment associated with a specific client by client ID.
      *
-     * @param  id  the ID of the client
-     * @return     the equipment associated with the client, or null if no equipment is found
+     * @param id the ID of the client
+     * @return the equipment associated with the client, or null if no equipment is
+     *         found
      */
     public Equipment getEquipmentByClientId(int id) {
         try (PreparedStatement pst = connection.prepareStatement(SQL_GET_EQIPMENT_BY_CLIENT_ID)) {
@@ -51,10 +57,33 @@ public class EquipmentDAO {
     }
 
     /**
+     * Retrieves a list of equipments by client ID.
+     *
+     * @param  id  the client ID
+     * @return     a list of equipments associated with the client ID
+     */
+    public List<Equipment> getEquipmentsByClientId(int id) {
+        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_EQIPMENTS_BY_CLIENT_ID)) {
+            pst.setInt(1, id);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                List<Equipment> equipments = new ArrayList<>();
+                while (rs.next()) {
+                    equipments.add(extractEquipmentFromResultSet(rs));
+                }
+                return equipments;
+            }
+        } catch (SQLException ex) {
+            StringUtils.handleQueryError(ex, Constants.CLIENT_FETCH_ERROR_MESSAGE);
+            return Collections.emptyList();
+        }
+    }
+
+    /**
      * Extracts an Equipment object from a ResultSet.
      *
-     * @param  rs  the ResultSet containing the equipment data
-     * @return     the extracted Equipment object
+     * @param rs the ResultSet containing the equipment data
+     * @return the extracted Equipment object
      * @throws SQLException if the ResultSet is null
      */
     private Equipment extractEquipmentFromResultSet(ResultSet rs) throws SQLException {
