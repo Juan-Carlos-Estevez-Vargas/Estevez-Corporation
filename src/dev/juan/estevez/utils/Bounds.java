@@ -23,9 +23,9 @@ public class Bounds {
     // ++++++ Client Information Bounds ++++++
     // +++++++++++++++++++++++++++++++++++++++
     // --- Labels ---
-    public static final int[] LABEL_CLIENT_INFORMATION_ADDRESS = { 620, 230, 250, 20 };
+    public static final int[] LABEL_CLIENT_INFORMATION_ADDRESS = { 620, 225, 250, 20 };
     public static final int[] LABEL_CLIENT_INFORMATION_EMAIL = { 620, 105, 280, 20 };
-    public static final int[] LABEL_CLIENT_INFORMATION_MODIFY_BY = { 620, 290, 250, 20 };
+    public static final int[] LABEL_CLIENT_INFORMATION_MODIFY_BY = { 620, 285, 250, 20 };
     public static final int[] LABEL_CLIENT_INFORMATION_NAME = { 620, 45, 280, 20 };
     public static final int[] LABEL_CLIENT_INFORMATION_PHONE = { 620, 165, 280, 20 };
     public static final int[] LABEL_CLIENT_INFORMATION_TITLE = { 110, 10, 400, 30 };
