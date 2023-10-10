@@ -5,16 +5,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import com.itextpdf.text.DocumentException;
 
 import dev.juan.estevez.controllers.ClientController;
 import dev.juan.estevez.controllers.EquipmentController;
@@ -27,6 +33,7 @@ import dev.juan.estevez.models.Client;
 import dev.juan.estevez.models.Equipment;
 import dev.juan.estevez.persistence.ClientDAO;
 import dev.juan.estevez.persistence.EquipmentDAO;
+import dev.juan.estevez.reports.GeneratePDFReport;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.FieldValidator;
@@ -129,7 +136,7 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		btnRegisterEquipment = GUIComponents.createButton(Constants.EQUIPMENT_REGISTER,
 				EmployeeBounds.BUTTON_CLIENT_INFORMATION_EQUIPMENT_REGISTER, Colors.BUTTON_COLOR.getValue(),
 				Fonts.LABEL_FONT.getValue(), container);
-		btnPrint = GUIComponents.createButton(Constants.CLIENT_PRINT, EmployeeBounds.BUTTON_CLIENT_INFORMATION_PRINT,
+		btnPrint = GUIComponents.createButton(Constants.EQUIPMENT_PRINT, EmployeeBounds.BUTTON_CLIENT_INFORMATION_PRINT,
 				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
 	}
 
@@ -251,7 +258,7 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		} else if (e.getSource() == btnUpdateClient) {
 			updateClient();
 		} else if (e.getSource() == btnPrint) {
-			handlePrintClients();
+			handlePrintEquipments();
 		}
 	}
 
@@ -320,8 +327,44 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		txtPhone.setBackground(color);
 	}
 
-	private void handlePrintClients() {
-
+	private void handlePrintEquipments() {
+		JFileChooser fc = new JFileChooser();
+        int response = fc.showSaveDialog(this);
+    
+        if (response != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+    
+        File chosenFile = fc.getSelectedFile();
+        String outputPath = chosenFile.getAbsolutePath() + Constants.PDF_EXTENSION;
+    
+        try {
+            List<Equipment> equipments = equipmentController.getEquipmentsByClientId(idClient);
+            generateEquipmentsPDFReport(equipments, outputPath);
+            JOptionPane.showMessageDialog(null, Constants.EQUIPMENT_LIST_CREATED_SUCCESSFULLY);
+        } catch (IOException | DocumentException ex) {
+            JOptionPane.showMessageDialog(null, Constants.GENERATE_ERROR_PDF);
+        }
 	}
+
+	private void generateEquipmentsPDFReport(List<Equipment> equipments, String outputPath) throws IOException, DocumentException {
+        String[] equipmentHeaders = { Equipments.CLIENT_ID.getValue(), Equipments.MODEL.getValue(), 
+			Equipments.MARK.getValue(), Equipments.TYPE.getValue(), Equipments.STATUS.getValue() };
+        List<String[]> equipmentData = new ArrayList<>();
+    
+        for (Equipment equipment : equipments) {
+			String[] equipmentRow = {
+				String.valueOf(equipment.getClientID()), // TODO: buscar cliente por id y setear el name
+				equipment.getModel(),
+				equipment.getMark(),
+				equipment.getEquipmentType(),
+				equipment.getStatus()
+			};
+
+            equipmentData.add(equipmentRow);
+        }
+    
+        GeneratePDFReport.generatePDFReport(equipmentData, equipmentHeaders, Constants.EQUIPMENT_LIST, outputPath);
+    }
 
 }

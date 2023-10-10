@@ -54,11 +54,14 @@ public class Constants {
     public static final String CLIENT_REGISTER_TEXT = "Registrar Cliente";
     public static final String MANAGE_CLIENTS_TEXT = "Administrar Clientes";
     public static final String PRINT_CLIENTS_TEXT = "Imprimir Clientes";
+    public static final String EQUIPMENT_LIST_CREATED_SUCCESSFULLY = "Listado de equipos creado correctamente";
     public static final String CLIENT_LIST_CREATED_SUCCESSFULLY = "Listado de clientes creado correctamente";
     public static final String CLIENT_LIST = "Listado de Clientes";
+    public static final String EQUIPMENT_LIST = "Listado de Equipos";
     public static final String CLIENT_REGISTER = "Registrar Cliente";
     public static final String EQUIPMENT_REGISTER = "Registrar Equipo";
     public static final String CLIENT_PRINT = "Imprimir Clientes";
+    public static final String EQUIPMENT_PRINT = "Imprimir Equipos";
 
     // TOOLS
     public static final String DEFAULT_PASSWORD = "1234";
