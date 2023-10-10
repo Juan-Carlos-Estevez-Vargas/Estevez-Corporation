@@ -34,6 +34,7 @@ import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
 import dev.juan.estevez.utils.ViewUtils;
+import dev.juan.estevez.utils.bounds.EmployeeBounds;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
@@ -103,33 +104,32 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel("Información del Cliente " + user_update, Bounds.LABEL_CLIENT_INFORMATION_TITLE,
-				container);
-		GUIComponents.createLabel(Clients.NAME.getValue(), Bounds.LABEL_CLIENT_INFORMATION_NAME, container);
-		GUIComponents.createLabel(Clients.EMAIL.getValue(), Bounds.LABEL_CLIENT_INFORMATION_EMAIL, container);
-		GUIComponents.createLabel(Clients.PHONE.getValue(), Bounds.LABEL_CLIENT_INFORMATION_PHONE, container);
-		GUIComponents.createLabel(Clients.ADDRESS.getValue(), Bounds.LABEL_CLIENT_INFORMATION_ADDRESS, container);
-		GUIComponents.createLabel(Clients.MODIFY_BY.getValue(), Bounds.LABEL_CLIENT_INFORMATION_MODIFY_BY, container);
+		GUIComponents.createLabel("Información del Cliente " + user_update, EmployeeBounds.LABEL_CLIENT_INFORMATION_TITLE, container);
+		GUIComponents.createLabel(Clients.NAME.getValue(), EmployeeBounds.LABEL_CLIENT_INFORMATION_NAME, container);
+		GUIComponents.createLabel(Clients.EMAIL.getValue(), EmployeeBounds.LABEL_CLIENT_INFORMATION_EMAIL, container);
+		GUIComponents.createLabel(Clients.PHONE.getValue(), EmployeeBounds.LABEL_CLIENT_INFORMATION_PHONE, container);
+		GUIComponents.createLabel(Clients.ADDRESS.getValue(), EmployeeBounds.LABEL_CLIENT_INFORMATION_ADDRESS, container);
+		GUIComponents.createLabel(Clients.MODIFY_BY.getValue(), EmployeeBounds.LABEL_CLIENT_INFORMATION_MODIFY_BY, container);
 	}
 
 	@Override
 	public void setupTextFields() {
-		txtName = GUIComponents.createTextField(Bounds.TXT_CLIENT_INFORMATION_NAME, container);
-		txtEmail = GUIComponents.createTextField(Bounds.TXT_CLIENT_INFORMATION_EMAIL, container);
-		txtPhone = GUIComponents.createTextField(Bounds.TXT_CLIENT_INFORMATION_PHONE, container);
-		txtAdress = GUIComponents.createTextField(Bounds.TXT_CLIENT_INFORMATION_ADDRESS, container);
-		txtModifyBy = GUIComponents.createTextField(Bounds.TXT_CLIENT_INFORMATION_MODIFY_BY, container);
+		txtName = GUIComponents.createTextField(EmployeeBounds.TXT_CLIENT_INFORMATION_NAME, container);
+		txtEmail = GUIComponents.createTextField(EmployeeBounds.TXT_CLIENT_INFORMATION_EMAIL, container);
+		txtPhone = GUIComponents.createTextField(EmployeeBounds.TXT_CLIENT_INFORMATION_PHONE, container);
+		txtAdress = GUIComponents.createTextField(EmployeeBounds.TXT_CLIENT_INFORMATION_ADDRESS, container);
+		txtModifyBy = GUIComponents.createTextField(EmployeeBounds.TXT_CLIENT_INFORMATION_MODIFY_BY, container);
 		txtModifyBy.setEnabled(false);
 	}
 
 	@Override
 	public void setupButtons() {
-		btnUpdateClient = GUIComponents.createButton(Constants.UPDATED_CLIENT, Bounds.BUTTON_CLIENT_INFORMATION_UPDATE,
+		btnUpdateClient = GUIComponents.createButton(Constants.UPDATED_CLIENT, EmployeeBounds.BUTTON_CLIENT_INFORMATION_UPDATE,
 				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
 		btnRegisterEquipment = GUIComponents.createButton(Constants.EQUIPMENT_REGISTER,
-				Bounds.BUTTON_CLIENT_INFORMATION_EQUIPMENT_REGISTER, Colors.BUTTON_COLOR.getValue(),
+				EmployeeBounds.BUTTON_CLIENT_INFORMATION_EQUIPMENT_REGISTER, Colors.BUTTON_COLOR.getValue(),
 				Fonts.LABEL_FONT.getValue(), container);
-		btnPrint = GUIComponents.createButton(Constants.CLIENT_PRINT, Bounds.BUTTON_CLIENT_INFORMATION_PRINT,
+		btnPrint = GUIComponents.createButton(Constants.CLIENT_PRINT, EmployeeBounds.BUTTON_CLIENT_INFORMATION_PRINT,
 				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
 	}
 
@@ -142,6 +142,9 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		btnPrint.addActionListener(this);
 	}
 
+	/**
+	 * Loads the client data and populates the corresponding fields in the UI.
+	 */
 	private void loadClientData() {
 		Client client = clientController.getClientById(idClient);
 
@@ -171,17 +174,29 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		}
 	}
 
+	/**
+	 * Creates a table and scroll pane.
+	 */
 	private void createTableAndScrollPane() {
 		tableEquipment = GUIComponents.createTable(model, container);
 		GUIComponents.createScrollPanel(tableEquipment, Bounds.SCROLL_MANAGE, container);
 	}
 
+	/**
+	 * Adds columns to the table.
+	 */
 	private void addColumnsToTable() {
 		model.addColumn(Equipments.TYPE.getValue());
 		model.addColumn(Equipments.MARK.getValue());
 		model.addColumn(Equipments.STATUS.getValue());
 	}
 
+	/**
+	 * Fills the table with data from a list of Equipment objects.
+	 *
+	 * @param  equipmentList  the list of Equipment objects to populate the table with
+	 * @throws SQLException  if there is an error accessing the database
+	 */
 	private void fillTableWithData(List<Equipment> equipmentList) throws SQLException {
 		DefaultTableModel model = (DefaultTableModel) tableEquipment.getModel();
 
@@ -196,6 +211,9 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		}
 	}
 
+	/**
+	 * Sets up the event listener for the equipment table.
+	 */
 	private void setupEquipmentTableEvent() {
 		this.tableEquipment.addMouseListener(new MouseAdapter() {
 			@Override
@@ -237,6 +255,9 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		}
 	}
 
+	/**
+	 * Updates the client information based on the inputs provided.
+	 */
 	private void updateClient() {
 		Client client = createClientFromInputs();
 		int validation = validateClientFields(client);
@@ -256,6 +277,11 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		}
 	}
 
+	/**
+	 * Creates a client object from the input fields.
+	 *
+	 * @return  the created client object
+	 */
 	private Client createClientFromInputs() {
 		Client client = new Client();
 		client.setClientID(idClient);
@@ -267,6 +293,12 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		return client;
 	}
 
+	/**
+	 * Validates the fields of a client object and returns the total number of validation errors.
+	 *
+	 * @param  client  the client object to be validated
+	 * @return         the total number of validation errors
+	 */
 	private int validateClientFields(Client client) {
 		int validation = FieldValidator.validateEmailField(client.getClientEmail(), txtEmail)
 				+ FieldValidator.validateNameField(client.getClientName(), txtName)
