@@ -3,8 +3,8 @@ package dev.juan.estevez.utils;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import dev.juan.estevez.controllers.UserController;
 import dev.juan.estevez.persistence.UserDAO;
+import dev.juan.estevez.services.impl.UserService;
 import dev.juan.estevez.views.LoginView;
 
 /**
@@ -20,7 +20,7 @@ public class ViewUtils {
     public static void handleLogout(JFrame frame) {
         int confirmationResult = JOptionPane.showConfirmDialog(null, Constants.ARE_YOU_SURE_TO_LOGOUT);
         if (confirmationResult == JOptionPane.OK_OPTION) {
-            LoginView loginView = new LoginView(new UserController(new UserDAO()));
+            LoginView loginView = new LoginView(new UserService(new UserDAO()));
             loginView.setLocationRelativeTo(null);
             loginView.setVisible(true);
             frame.dispose();

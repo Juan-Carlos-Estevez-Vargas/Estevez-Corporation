@@ -3,7 +3,7 @@ package dev.juan.estevez.interfaces;
 /**
  * @author Juan Carlos Estevez Vargas.
  */
-public interface InitInterface {
+public interface IInit {
     
     void initComponents();
     void initializeFrame();

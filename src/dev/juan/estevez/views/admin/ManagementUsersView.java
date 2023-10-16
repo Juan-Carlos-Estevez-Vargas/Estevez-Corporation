@@ -9,13 +9,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
-import dev.juan.estevez.controllers.UserController;
 import dev.juan.estevez.enums.Colors;
+import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.enums.Users;
-import dev.juan.estevez.interfaces.GUIInterface;
+import dev.juan.estevez.interfaces.IGui;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.persistence.UserDAO;
+import dev.juan.estevez.services.impl.UserService;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
@@ -26,7 +28,7 @@ import dev.juan.estevez.views.LoginView;
 /**
  * @author Juan Carlos Estevez Vargas.
  */
-public class ManagementUsersView extends JFrame implements GUIInterface {
+public class ManagementUsersView extends JFrame implements IGui {
 
 	private static final long serialVersionUID = 1L;
 	public static String user_update = "";
@@ -34,11 +36,11 @@ public class ManagementUsersView extends JFrame implements GUIInterface {
 	private JTable tableUsers;
 	private String user;
 	private DefaultTableModel model = new DefaultTableModel();
-	private UserController userController;
+	private UserService userController;
 
 	public ManagementUsersView() {
 		this.user = LoginView.user;
-		userController = new UserController(new UserDAO());
+		userController = new UserService(new UserDAO());
 		initializeFrame();
 		initComponents();
 		populateTable();
@@ -71,7 +73,8 @@ public class ManagementUsersView extends JFrame implements GUIInterface {
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel(Constants.REGISTERED_USERS_TITLE, Bounds.LABEL_MANAGE_TITLE, container);
+		GUIComponents.createLabel(Constants.REGISTERED_USERS_TITLE, Bounds.LABEL_MANAGE_TITLE, container)
+				.setFont(Fonts.BUTTON_FONT.getValue());
 	}
 
 	/**
@@ -107,6 +110,13 @@ public class ManagementUsersView extends JFrame implements GUIInterface {
 		model.addColumn(Users.USERNAME.getValue());
 		model.addColumn(Users.PERMISIONS.getValue());
 		model.addColumn(Users.STATUS.getValue());
+
+		// Configurar la columna "id" como oculta
+		TableColumn idColumn = tableUsers.getColumnModel().getColumn(0);
+		idColumn.setMinWidth(0);
+		idColumn.setMaxWidth(0);
+		idColumn.setPreferredWidth(0);
+		idColumn.setResizable(false);
 	}
 
 	/**

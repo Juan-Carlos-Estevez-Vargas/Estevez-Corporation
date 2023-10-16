@@ -10,12 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import dev.juan.estevez.controllers.ClientController;
 import dev.juan.estevez.enums.Clients;
 import dev.juan.estevez.enums.Colors;
-import dev.juan.estevez.interfaces.GUIInterface;
+import dev.juan.estevez.interfaces.IGui;
 import dev.juan.estevez.models.Client;
 import dev.juan.estevez.persistence.ClientDAO;
+import dev.juan.estevez.services.impl.ClientService;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
@@ -26,7 +26,7 @@ import dev.juan.estevez.views.LoginView;
 /**
  * @author Juan Carlos Estevez Vargas
  */
-public class ManagementClientsView extends JFrame implements GUIInterface {
+public class ManagementClientsView extends JFrame implements IGui {
 
 	private static final long serialVersionUID = 1L;
 	public static int id_cliente_update = 0;
@@ -35,11 +35,11 @@ public class ManagementClientsView extends JFrame implements GUIInterface {
 	private String user;
 	private JTable tableClients;
 	private DefaultTableModel model = new DefaultTableModel();
-	private ClientController clientController;
+	private ClientService clientController;
 
 	public ManagementClientsView() {
 		this.user = LoginView.user;
-		clientController = new ClientController(new ClientDAO());
+		clientController = new ClientService(new ClientDAO());
 		initializeFrame();
 		initComponents();
 		populateTable();
@@ -82,7 +82,7 @@ public class ManagementClientsView extends JFrame implements GUIInterface {
 	 */
 	private void populateTable() {
 		try {
-			List<Client> clients = clientController.getAllClients();
+			List<Client> clients = clientController.getAll();
 			createTableAndScrollPane();
 			addColumnsToTable();
 			fillTableWithData(clients);
@@ -141,7 +141,7 @@ public class ManagementClientsView extends JFrame implements GUIInterface {
 				int column = 1;
 
 				if (row >= 0) {
-					Client clientDB = clientController.getClientByEmail((String) model.getValueAt(row, column));
+					Client clientDB = clientController.getByEmail((String) model.getValueAt(row, column));
 					id_cliente_update = clientDB.getClientID();
 					ViewUtils.openPanel(new ClientInformationView(), ManagementClientsView.this);
 				}
