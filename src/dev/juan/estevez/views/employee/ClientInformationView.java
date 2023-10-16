@@ -19,21 +19,22 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import com.itextpdf.text.DocumentException;
 
-import dev.juan.estevez.controllers.ClientController;
-import dev.juan.estevez.controllers.EquipmentController;
 import dev.juan.estevez.enums.Clients;
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Equipments;
 import dev.juan.estevez.enums.Fonts;
-import dev.juan.estevez.interfaces.GUIInterface;
+import dev.juan.estevez.interfaces.IGui;
 import dev.juan.estevez.models.Client;
 import dev.juan.estevez.models.Equipment;
 import dev.juan.estevez.persistence.ClientDAO;
 import dev.juan.estevez.persistence.EquipmentDAO;
 import dev.juan.estevez.reports.GeneratePDFReport;
+import dev.juan.estevez.services.impl.ClientService;
+import dev.juan.estevez.services.impl.EquipmentService;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.FieldValidator;
@@ -48,13 +49,13 @@ import dev.juan.estevez.views.LoginView;
 /**
  * @author Juan Carlos Estevez Vargas.
  */
-public class ClientInformationView extends JFrame implements ActionListener, GUIInterface {
+public class ClientInformationView extends JFrame implements ActionListener, IGui {
 
 	private static final long serialVersionUID = 1L;
 	private String user = "", user_update = "";
 	private DefaultTableModel model = new DefaultTableModel();
-	private ClientController clientController;
-	private EquipmentController equipmentController;
+	private ClientService clientController;
+	private EquipmentService equipmentController;
 	public static int idEquipment = 0;
 	public static int idClient = 0;
 	private JTextField txtName;
@@ -72,8 +73,8 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		this.user = LoginView.user;
 		user_update = ManagementClientsView.user_update;
 		idClient = ManagementClientsView.id_cliente_update;
-		clientController = new ClientController(new ClientDAO());
-		equipmentController = new EquipmentController(new EquipmentDAO());
+		clientController = new ClientService(new ClientDAO());
+		equipmentController = new EquipmentService(new EquipmentDAO());
 		initializeFrame();
 		initComponents();
 		loadClientData();
@@ -153,7 +154,7 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 	 * Loads the client data and populates the corresponding fields in the UI.
 	 */
 	private void loadClientData() {
-		Client client = clientController.getClientById(idClient);
+		Client client = clientController.getById(idClient);
 
 		if (client != null) {
 			txtName.setText(client.getClientName());
@@ -168,7 +169,7 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 	 * Loads the equipment table from the database.
 	 */
 	private void loadEquipmentTable() {
-		List<Equipment> equipments = equipmentController.getEquipmentsByClientId(idClient);
+		List<Equipment> equipments = equipmentController.getAllByClientId(idClient);
 		if (!equipments.isEmpty()) {
 			createTableAndScrollPane();
 			addColumnsToTable();
@@ -193,9 +194,17 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 	 * Adds columns to the table.
 	 */
 	private void addColumnsToTable() {
+		model.addColumn(Equipments.ID.getValue());
 		model.addColumn(Equipments.TYPE.getValue());
 		model.addColumn(Equipments.MARK.getValue());
 		model.addColumn(Equipments.STATUS.getValue());
+
+		// Configurar la columna "id" como oculta
+		TableColumn idColumn = tableEquipment.getColumnModel().getColumn(0);
+		idColumn.setMinWidth(0);
+		idColumn.setMaxWidth(0);
+		idColumn.setPreferredWidth(0);
+		idColumn.setResizable(false);	
 	}
 
 	/**
@@ -210,6 +219,7 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		for (Equipment equipment : equipmentList) {
 			if (equipment != null) {
 				model.addRow(new Object[] {
+						equipment.getEquipmentID(),
 						equipment.getEquipmentType(),
 						equipment.getMark(),
 						equipment.getStatus()
@@ -230,7 +240,7 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 
 				if (row > -1) {
 					idEquipment = (int) model.getValueAt(row, column);
-					ViewUtils.openPanel(new EquipmentInformation(), ClientInformationView.this);
+					ViewUtils.openPanel(new EquipmentInformation(idEquipment), ClientInformationView.this);
 				}
 			}
 		});
@@ -327,6 +337,9 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
 		txtPhone.setBackground(color);
 	}
 
+	/**
+	 * Handles the action of printing the equipments.
+	 */
 	private void handlePrintEquipments() {
 		JFileChooser fc = new JFileChooser();
         int response = fc.showSaveDialog(this);
@@ -339,7 +352,7 @@ public class ClientInformationView extends JFrame implements ActionListener, GUI
         String outputPath = chosenFile.getAbsolutePath() + Constants.PDF_EXTENSION;
     
         try {
-            List<Equipment> equipments = equipmentController.getEquipmentsByClientId(idClient);
+            List<Equipment> equipments = equipmentController.getAllByClientId(idClient);
             generateEquipmentsPDFReport(equipments, outputPath);
             JOptionPane.showMessageDialog(null, Constants.EQUIPMENT_LIST_CREATED_SUCCESSFULLY);
         } catch (IOException | DocumentException ex) {

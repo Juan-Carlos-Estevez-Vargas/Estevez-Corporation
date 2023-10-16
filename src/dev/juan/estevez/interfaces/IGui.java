@@ -3,7 +3,7 @@ package dev.juan.estevez.interfaces;
 /**
  * @author Juan Carlos Estevez Vargas.
  */
-public interface GUIInterface extends InitInterface {
+public interface IGui extends IInit {
     
     void setupLabels();
     void setupTextFields();

@@ -7,32 +7,34 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
-import dev.juan.estevez.controllers.UserController;
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.enums.Roles;
 import dev.juan.estevez.enums.States;
 import dev.juan.estevez.enums.Users;
-import dev.juan.estevez.interfaces.GUIInterface;
+import dev.juan.estevez.interfaces.IGui;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.persistence.UserDAO;
+import dev.juan.estevez.services.impl.UserService;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.FieldValidator;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
 import dev.juan.estevez.utils.ViewUtils;
-import dev.juan.estevez.utils.bounds.AdminBounds;
+import dev.juan.estevez.utils.bounds.admin.UserInformationBounds;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
 /**
  * @author Juan Carlos Estevez Vargas.
  */
-public class UserInformationView extends JFrame implements ActionListener, GUIInterface {
+public class UserInformationView extends JFrame implements ActionListener, IGui {
 
 	private static final long serialVersionUID = 1L;
 	private String user = "", user_update = "";
@@ -46,12 +48,12 @@ public class UserInformationView extends JFrame implements ActionListener, GUIIn
 	private JComboBox<String> cmbStatus;
 	private JPanel container;
 	private JButton btnUpdate;
-	private UserController userController;
+	private UserService userController;
 
 	public UserInformationView() {
 		this.user = LoginView.user;
 		user_update = ManagementUsersView.user_update;
-		userController = new UserController(new UserDAO());
+		userController = new UserService(new UserDAO());
 		initializeFrame();
 		initComponents();
 		loadUserData();
@@ -89,29 +91,34 @@ public class UserInformationView extends JFrame implements ActionListener, GUIIn
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel("Información del usuario " + user_update, AdminBounds.LABEL_USER_INFORMATION_TITLE, container);
-		GUIComponents.createLabel(Users.NAME.getValue(), AdminBounds.LABEL_USER_INFORMATION_NAME, container);
-		GUIComponents.createLabel(Users.EMAIL.getValue(), AdminBounds.LABEL_USER_INFORMATION_EMAIL, container);
-		GUIComponents.createLabel(Users.PHONE.getValue(), AdminBounds.LABEL_USER_INFORMATION_PHONE, container);
-		GUIComponents.createLabel(Users.PERMISIONS_OF.getValue(), AdminBounds.LABEL_CMB_USER_INFORMATION_LEVEL, container);
-		GUIComponents.createLabel(Users.USERNAME.getValue(), AdminBounds.LABEL_USER_INFORMATION_USERNAME, container);
-		GUIComponents.createLabel(Users.STATUS.getValue(), AdminBounds.LABEL_CMB_USER_INFORMATION_STATUS, container);
-		GUIComponents.createLabel(Users.REGISTERED_BY.getValue(), AdminBounds.LABEL_USER_INFORMATION_REGISTER_BY, container);
+		JLabel titleLabel = GUIComponents.createLabel("Información del usuario " + user_update,
+				UserInformationBounds.LABEL_TITLE, container);
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setFont(Fonts.BUTTON_FONT.getValue());
+
+		GUIComponents.createLabel(Users.NAME.getValue(), UserInformationBounds.LABEL_NAME, container);
+		GUIComponents.createLabel(Users.EMAIL.getValue(), UserInformationBounds.LABEL_EMAIL, container);
+		GUIComponents.createLabel(Users.PHONE.getValue(), UserInformationBounds.LABEL_PHONE, container);
+		GUIComponents.createLabel(Users.PERMISIONS_OF.getValue(), UserInformationBounds.LABEL_LEVEL, container);
+		GUIComponents.createLabel(Users.USERNAME.getValue(), UserInformationBounds.LABEL_USERNAME, container);
+		GUIComponents.createLabel(Users.STATUS.getValue(), UserInformationBounds.LABEL_STATUS, container);
+		GUIComponents.createLabel(Users.REGISTERED_BY.getValue(), UserInformationBounds.LABEL_REGISTER_BY, container);
 	}
 
 	@Override
 	public void setupTextFields() {
-		txtName = GUIComponents.createTextField(AdminBounds.TXT_USER_INFORMATION_NAME, container);
-		txtEmail = GUIComponents.createTextField(AdminBounds.TXT_USER_INFORMATION_EMAIL, container);
-		txtPhone = GUIComponents.createTextField(AdminBounds.TXT_USER_INFORMATION_PHONE, container);
-		txtUsername = GUIComponents.createTextField(AdminBounds.TXT_USER_INFORMATION_USERNAME, container);
-		txtRegisterBy = GUIComponents.createTextField(AdminBounds.TXT_USER_INFORMATION_REGISTER_BY, container);
+		txtName = GUIComponents.createTextField(UserInformationBounds.TXT_NAME, container);
+		txtEmail = GUIComponents.createTextField(UserInformationBounds.TXT_EMAIL, container);
+		txtPhone = GUIComponents.createTextField(UserInformationBounds.TXT_PHONE, container);
+		txtUsername = GUIComponents.createTextField(UserInformationBounds.TXT_USERNAME, container);
+		txtRegisterBy = GUIComponents.createTextField(UserInformationBounds.TXT_REGISTER_BY, container);
 		txtRegisterBy.setEnabled(false);
 	}
 
 	@Override
 	public void setupButtons() {
-		btnUpdate = GUIComponents.createButton(Constants.UPDATED_USER, AdminBounds.BUTTON_USER_INFORMATION_UPDATE, Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
+		btnUpdate = GUIComponents.createButton(Constants.UPDATED_USER, UserInformationBounds.BUTTON_UPDATE,
+				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
 	}
 
 	@Override
@@ -122,12 +129,13 @@ public class UserInformationView extends JFrame implements ActionListener, GUIIn
 	}
 
 	/**
-	 * This function loads the user data from the user controller based on the provided username.
+	 * This function loads the user data from the user controller based on the
+	 * provided username.
 	 *
-	 * @param  user_update  the username of the user
+	 * @param user_update the username of the user
 	 */
 	private void loadUserData() {
-		User user = userController.getUserByUsername(user_update);
+		User user = userController.getByUsername(user_update);
 
 		if (user != null) {
 			ID = user.getUserID();
@@ -145,11 +153,11 @@ public class UserInformationView extends JFrame implements ActionListener, GUIIn
 	 * Loads the data of the super administrator.
 	 */
 	private void loadSuperAdministratorData() {
-		User user = userController.getUserById(1);
+		User user = userController.getById(1);
 
 		if (user != null) {
 			idSuperAdministrador = user.getUserID();
-		} 
+		}
 	}
 
 	/**
@@ -159,8 +167,8 @@ public class UserInformationView extends JFrame implements ActionListener, GUIIn
 	 * @return description of return value
 	 */
 	private void createComboBoxes() {
-		cmbStatus = GUIComponents.createComboBox(AdminBounds.CMB_USER_INFORMATION_STATUS, States.getAllValues(), container);
-		cmbLevels = GUIComponents.createComboBox(AdminBounds.CMB_USER_INFORMATION_LEVEL, Roles.getAllValues(), container);
+		cmbStatus = GUIComponents.createComboBox(UserInformationBounds.CMB_STATUS, States.getAllValues(), container);
+		cmbLevels = GUIComponents.createComboBox(UserInformationBounds.CMB_LEVEL, Roles.getAllValues(), container);
 	}
 
 	/**
@@ -183,21 +191,21 @@ public class UserInformationView extends JFrame implements ActionListener, GUIIn
 		int cmbPermissions = cmbLevels.getSelectedIndex() + 1;
 		int cmbStatus = this.cmbStatus.getSelectedIndex() + 1;
 		int validation = validateUserFields(user);
-		
+
 		if (validation == 4) {
 			StringUtils.showMessage(Constants.EMPTY_FIELDS);
 			return;
 		}
-	
+
 		if (idSuperAdministrador == ID) {
 			StringUtils.showMessage(Constants.CANNOT_UPDATE_SUPER_ADMIN);
 			return;
 		}
-	
+
 		if (validation == 0) {
-			user.setpermissions(StringUtils.getPermissionsString(cmbPermissions));
+			user.setLevelType(StringUtils.getPermissionsString(cmbPermissions));
 			user.setStatus(StringUtils.getStatusString(cmbStatus));
-	
+
 			if (canUpdateUser(user)) {
 				if (userController.updateUser(user) == 1) {
 					StringUtils.showMessage(Constants.SUCCESSFUL_MODIFICATION);
@@ -209,22 +217,22 @@ public class UserInformationView extends JFrame implements ActionListener, GUIIn
 			}
 		}
 	}
-	
+
 	/**
 	 * Checks if the user can be updated.
 	 *
-	 * @param  user  the user to be updated
-	 * @return       true if the user can be updated, false otherwise
+	 * @param user the user to be updated
+	 * @return true if the user can be updated, false otherwise
 	 */
 	private boolean canUpdateUser(User user) {
-		User userNotAdmin = userController.getUserByUsername(user.getUsername());
+		User userNotAdmin = userController.getByUsername(user.getUsername());
 		return userNotAdmin == null || userNotAdmin.getUserID() == ID;
 	}
 
 	/**
 	 * Creates a new User object based on the inputs provided.
 	 *
-	 * @return  a User object populated with the values from the input fields
+	 * @return a User object populated with the values from the input fields
 	 */
 	private User createUserFromInputs() {
 		User user = new User();
@@ -239,8 +247,8 @@ public class UserInformationView extends JFrame implements ActionListener, GUIIn
 	/**
 	 * Validates the user fields and returns the total number of validation errors.
 	 *
-	 * @param  user  the user object containing the user's information
-	 * @return       the total number of validation errors
+	 * @param user the user object containing the user's information
+	 * @return the total number of validation errors
 	 */
 	private int validateUserFields(User user) {
 		int validation = FieldValidator.validateEmailField(user.getUserEmail(), txtEmail)
