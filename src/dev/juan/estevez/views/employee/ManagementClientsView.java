@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dev.juan.estevez.enums.Clients;
 import dev.juan.estevez.enums.Colors;
+import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.interfaces.IGui;
 import dev.juan.estevez.models.Client;
 import dev.juan.estevez.persistence.ClientDAO;
@@ -72,7 +73,8 @@ public class ManagementClientsView extends JFrame implements IGui {
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel(Constants.REGISTERED_CLIENTS_TITLE, Bounds.LABEL_MANAGE_TITLE, container);
+		GUIComponents.createLabel(Constants.REGISTERED_CLIENTS_TITLE, Bounds.LABEL_MANAGE_TITLE, container)
+		.setFont(Fonts.BUTTON_FONT.getValue());
 	}
 
 	/**
