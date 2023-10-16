@@ -13,15 +13,16 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import com.itextpdf.text.DocumentException;
-import dev.juan.estevez.controllers.ClientController;
+
 import dev.juan.estevez.enums.Clients;
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.enums.Icons;
-import dev.juan.estevez.interfaces.GUIInterface;
+import dev.juan.estevez.interfaces.IGui;
 import dev.juan.estevez.models.Client;
 import dev.juan.estevez.persistence.ClientDAO;
 import dev.juan.estevez.reports.GeneratePDFReport;
+import dev.juan.estevez.services.impl.ClientService;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.ViewUtils;
@@ -32,7 +33,7 @@ import panel.utilities.RestorePassword;
 /**
  * @author Juan Carlos Estevez Vargas
  */
-public class EmployeePanelView extends JFrame implements ActionListener, GUIInterface {
+public class EmployeePanelView extends JFrame implements ActionListener, IGui {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panelBack;
@@ -146,8 +147,8 @@ public class EmployeePanelView extends JFrame implements ActionListener, GUIInte
      * @throws  SQLException  if there is an error while fetching the clients
      */
     private List<Client> fetchAllClients() throws SQLException {
-        ClientController clientController = new ClientController(new ClientDAO());
-        return clientController.getAllClients();
+        ClientService clientController = new ClientService(new ClientDAO());
+        return clientController.getAll();
     }
     
     /**

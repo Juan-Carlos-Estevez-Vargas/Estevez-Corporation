@@ -7,14 +7,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import dev.juan.estevez.controllers.ClientController;
+
 import dev.juan.estevez.enums.Clients;
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.enums.Icons;
-import dev.juan.estevez.interfaces.GUIInterface;
+import dev.juan.estevez.interfaces.IGui;
 import dev.juan.estevez.models.Client;
 import dev.juan.estevez.persistence.ClientDAO;
+import dev.juan.estevez.services.impl.ClientService;
 import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.FieldValidator;
@@ -28,10 +29,10 @@ import dev.juan.estevez.views.LoginView;
 /**
  * @author Juan Carlos Estevez Vargas.
  */
-public class RegisterClientView extends JFrame implements ActionListener, GUIInterface {
+public class RegisterClientView extends JFrame implements ActionListener, IGui {
 
 	private static final long serialVersionUID = 1L;
-	private ClientController clientController;
+	private ClientService clientController;
 	private JTextField txtNameClient;
 	private JTextField txtEmailClient;
 	private JTextField txtPhoneClient;
@@ -43,7 +44,7 @@ public class RegisterClientView extends JFrame implements ActionListener, GUIInt
 	public RegisterClientView() {
 		this.user = LoginView.user;
 		initializeFrame();
-		clientController = new ClientController(new ClientDAO());
+		clientController = new ClientService(new ClientDAO());
 		initComponents();
 	}
 
@@ -169,7 +170,7 @@ public class RegisterClientView extends JFrame implements ActionListener, GUIInt
 	 * @param  client  the client object to handle
 	 */
 	private void handleValidClient(Client client) {
-		Client existingClient = clientController.getClientByEmail(client.getClientEmail());
+		Client existingClient = clientController.getByEmail(client.getClientEmail());
 	
 		if (existingClient != null && !existingClient.getClientEmail().equals(client.getClientEmail())) {
 			txtEmailClient.setBackground(Color.red);
@@ -188,7 +189,7 @@ public class RegisterClientView extends JFrame implements ActionListener, GUIInt
 	 * @param  client the client object to be registered
 	 */
 	private void registerClient(Client client) {
-		if (clientController.registerClient(client) == 1) {
+		if (clientController.createClient(client) == 1) {
 			clean();
 			txtEmailClient.setBackground(Color.green);
 			txtNameClient.setBackground(Color.green);

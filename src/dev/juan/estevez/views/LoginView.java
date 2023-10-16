@@ -16,14 +16,14 @@ import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ViewUtils;
 import dev.juan.estevez.utils.bounds.LoginBounds;
-import dev.juan.estevez.controllers.UserController;
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.enums.Icons;
 import dev.juan.estevez.enums.Roles;
 import dev.juan.estevez.enums.States;
-import dev.juan.estevez.interfaces.GUIInterface;
+import dev.juan.estevez.interfaces.IGui;
 import dev.juan.estevez.models.User;
+import dev.juan.estevez.services.impl.UserService;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.admin.AdministratorPanelView;
 import dev.juan.estevez.views.employee.EmployeePanelView;
@@ -34,19 +34,18 @@ import panel.utilities.ForgotPassword;
 /**
  * @author Juan Carlos Estevez Vargas
  */
-public final class LoginView extends JFrame implements ActionListener, GUIInterface {
+public final class LoginView extends JFrame implements ActionListener, IGui {
 
-    private static final long serialVersionUID = 1L;
     public static String user = "";
     private boolean eyeEstate;
-    private final UserController loginController;
+    private final UserService loginController;
     private JButton btnLogin, btnEye, btnForgot;
     private JLabel jlError;
     private JPanel container;
     private JPasswordField txtPassword;
     private JTextField txtUser, txtPassword2;
 
-    public LoginView(UserController loginController) {
+    public LoginView(UserService loginController) {
         this.loginController = loginController;
         initializeFrame();
         initComponents();
@@ -145,7 +144,7 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
         try {
             performLogin();
         } catch (SQLException ex) {
-            handleLoginError();
+            handleLoginError("Error en la base de datos");
         }
     }
 
@@ -160,13 +159,13 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
 
         // TODO: validar tamaño en las entradas de usuario y contraseña
         if (!username.isEmpty() && !password.isEmpty()) {
-            User user = loginController.getUserByUsernameAndPassword(username, password);
+            User user = loginController.getByUsernameAndPassword(username, password);
 
             if (user != null) {
                 LoginView.user = user.getUserName();
                 handleUserLogin(user);
             } else {
-                handleLoginError();
+                handleLoginError("Error de autenticación");
             }
         } else {
             StringUtils.showEmptyFieldsMessage();
@@ -230,7 +229,7 @@ public final class LoginView extends JFrame implements ActionListener, GUIInterf
      * Sets the error message, font, and alignment for the error label.
      * Clears and resets the user and password fields.
      */
-    private void handleLoginError() {
+    private void handleLoginError(String errorMessage) {
         jlError.setText(Constants.LOGIN_ERROR_TEXT);
         jlError.setFont(Fonts.ERROR_FONT.getValue());
         jlError.setForeground(Colors.ERROR_COLOR.getValue());
