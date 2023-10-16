@@ -38,20 +38,14 @@ public class ClientDAO implements CrudRepository<Client, Integer> {
     public int create(Client entity) {
         int recordsInserted = 0;
 
-        try (PreparedStatement pst = connection.prepareStatement(SQL_REGISTER,
-                PreparedStatement.RETURN_GENERATED_KEYS);) {
-            pst.setString(1, entity.getClientName());
-            pst.setString(2, entity.getClientEmail());
-            pst.setString(3, entity.getClientPhone());
-            pst.setString(4, entity.getClientAddress());
-            pst.setString(5, entity.getLastModification());
+        try (PreparedStatement pst = connection.prepareStatement(SQL_REGISTER);) {
+            pst.setInt(1, 0); // id_cliente - autoincrement
+            pst.setString(2, entity.getClientName());
+            pst.setString(3, entity.getClientEmail());
+            pst.setString(4, entity.getClientPhone());
+            pst.setString(5, entity.getClientAddress());
+            pst.setString(6, entity.getLastModification());
             recordsInserted = pst.executeUpdate();
-
-            try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    entity.setClientID(generatedKeys.getInt(1));
-                }
-            }
         } catch (SQLException ex) {
             StringUtils.handleQueryError(ex, Constants.INTERNAL_REGISTER_CLIENT_ERROR);
         }

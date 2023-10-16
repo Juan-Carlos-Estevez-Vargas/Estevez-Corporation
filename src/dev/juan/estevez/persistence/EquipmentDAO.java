@@ -23,7 +23,7 @@ public class EquipmentDAO implements CrudRepository<Equipment, Integer> {
 
     private static final String SQL_GET_BY_ID = "SELECT * FROM equipos WHERE id_equipo = ?";
     private static final String SQL_GET_BY_CLIENT_ID = "SELECT * FROM equipos WHERE id_cliente = ?";
-    private static final String SQL_UPDATE_EQUIPMENT = "UPDATE equipos SET marca = ?, modelo = ?, serie = ?, fecha_admision = ?, estatus = ? WHERE id_equipo = ?";
+    private static final String SQL_UPDATE_EQUIPMENT = "UPDATE equipos SET marca = ?, modelo = ?, num_serie = ?, tipo_equipo = ?, observaciones = ?, WHERE id_equipo = ?";
 
     public EquipmentDAO() {
         try {
@@ -68,8 +68,8 @@ public class EquipmentDAO implements CrudRepository<Equipment, Integer> {
             pst.setString(1, entity.getMark());
             pst.setString(2, entity.getModel());
             pst.setString(3, entity.getSerialNumber());
-            pst.setString(4, entity.getAdmissionDay());
-            pst.setString(5, entity.getStatus());
+            pst.setString(4, entity.getEquipmentType());
+            pst.setString(5, entity.getObservation());
             pst.setInt(6, entity.getEquipmentID());
             recordsInserted = pst.executeUpdate();
         } catch (SQLException ex) {
