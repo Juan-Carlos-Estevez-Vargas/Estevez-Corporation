@@ -18,10 +18,10 @@ import dev.juan.estevez.interfaces.IGui;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.persistence.UserDAO;
 import dev.juan.estevez.services.impl.UserService;
-import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ViewUtils;
+import dev.juan.estevez.utils.bounds.Bounds;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 

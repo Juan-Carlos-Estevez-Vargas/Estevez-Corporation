@@ -33,7 +33,7 @@ import dev.juan.estevez.views.LoginView;
  *
  * @author Juan Carlos Estevez Vargas
  */
-public class EquipmentInformation extends JFrame implements ActionListener, IGui {
+public class EquipmentInformationView extends JFrame implements ActionListener, IGui {
 
 	private String user = "";
 	private EquipmentService equipmentController;
@@ -53,7 +53,7 @@ public class EquipmentInformation extends JFrame implements ActionListener, IGui
 	private JPanel container;
 	private JButton btnUpdateEquipment;
 
-	public EquipmentInformation(int idEquipment) {
+	public EquipmentInformationView(int idEquipment) {
 		this.user = LoginView.user;
 		this.idEquipment = idEquipment;
 		idClientUpdate = ManagementClientsView.id_cliente_update;
@@ -95,8 +95,7 @@ public class EquipmentInformation extends JFrame implements ActionListener, IGui
 
 	@Override
 	public void setupLabels() {
-		JLabel labelTitle = GUIComponents.createLabel("Información del Equipo " + user, EquipInfoBounds.LABEL_TITLE,
-				container);
+		JLabel labelTitle = GUIComponents.createLabel("Información del Equipo " + user, EquipInfoBounds.LABEL_TITLE, container);
 		labelTitle.setFont(Fonts.BUTTON_FONT.getValue());
 		labelTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -105,10 +104,8 @@ public class EquipmentInformation extends JFrame implements ActionListener, IGui
 		GUIComponents.createLabel(Equipments.MARK.getValue(), EquipInfoBounds.LABEL_MARK, container);
 		GUIComponents.createLabel(Equipments.MODEL.getValue(), EquipInfoBounds.LABEL_MODEL, container);
 		GUIComponents.createLabel(Equipments.SERIAL_NUMBER.getValue(), EquipInfoBounds.LABEL_SERIAL_NUMBER, container);
-		GUIComponents.createLabel(Equipments.LAST_MODIFICATION.getValue(), EquipInfoBounds.LABEL_LAST_MODIFICATION,
-				container);
-		GUIComponents.createLabel(Equipments.DATE_OF_ADMISSION.getValue(), EquipInfoBounds.LABEL_DATE_OF_ADMISSION,
-				container);
+		GUIComponents.createLabel(Equipments.LAST_MODIFICATION.getValue(), EquipInfoBounds.LABEL_LAST_MODIFICATION, container);
+		GUIComponents.createLabel(Equipments.DATE_OF_ADMISSION.getValue(), EquipInfoBounds.LABEL_DATE_OF_ADMISSION,	container);
 		GUIComponents.createLabel(Equipments.STATUS.getValue(), EquipInfoBounds.LABEL_STATUS, container);
 		GUIComponents.createLabel(Equipments.OBSERVATION.getValue(), EquipInfoBounds.LABEL_OBSERVATION, container);
 		GUIComponents.createLabel(Equipments.TECHNICAL_COMMENTS.getValue(), EquipInfoBounds.LABEL_COMMENTS, container);

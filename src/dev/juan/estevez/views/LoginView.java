@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ViewUtils;
-import dev.juan.estevez.utils.bounds.LoginBounds;
+import dev.juan.estevez.utils.bounds.auth.LoginBounds;
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.enums.Icons;

@@ -1,4 +1,4 @@
-package dev.juan.estevez.utils;
+package dev.juan.estevez.utils.bounds;
 
 /**
  * @author Juan Carlos Estevez Vargas.

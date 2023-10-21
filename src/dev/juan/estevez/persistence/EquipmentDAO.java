@@ -23,6 +23,7 @@ public class EquipmentDAO implements CrudRepository<Equipment, Integer> {
 
     private static final String SQL_GET_BY_ID = "SELECT * FROM equipos WHERE id_equipo = ?";
     private static final String SQL_GET_BY_CLIENT_ID = "SELECT * FROM equipos WHERE id_cliente = ?";
+    private static final String SQL_INSERT = "INSERT INTO equipos (id_cliente, tipo_equipo, marca, modelo, num_serie, observaciones, estatus, ultima_modificacion, VALUES(?,?,?,?,?,?,?,?);";
     private static final String SQL_UPDATE_EQUIPMENT = "UPDATE equipos SET marca = ?, modelo = ?, num_serie = ?, tipo_equipo = ?, observaciones = ?, WHERE id_equipo = ?";
 
     public EquipmentDAO() {
@@ -35,7 +36,23 @@ public class EquipmentDAO implements CrudRepository<Equipment, Integer> {
 
     @Override
     public int create(Equipment entity) {
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        int recordsInserted = 0;
+
+        try (PreparedStatement pst = connection.prepareStatement(SQL_INSERT);) {
+            pst.setInt(1, entity.getClientID());
+            pst.setString(2, entity.getEquipmentType());
+            pst.setString(3, entity.getMark());
+            pst.setString(4, entity.getModel());
+            pst.setString(5, entity.getSerialNumber());
+            pst.setString(6, entity.getObservation());
+            pst.setString(7, entity.getStatus());
+            pst.setString(8, entity.getLastModification());
+            recordsInserted = pst.executeUpdate();
+        } catch (SQLException ex) {
+            StringUtils.handleQueryError(ex, Constants.INTERNAL_UPDATE_USER_ERROR);
+        }
+
+        return recordsInserted;
     }
 
     @Override

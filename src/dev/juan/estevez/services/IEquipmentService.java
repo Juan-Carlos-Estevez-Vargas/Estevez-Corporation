@@ -13,4 +13,6 @@ public interface IEquipmentService {
 
     int updateEquipment(Equipment equipment);
 
+    int create(Equipment equipment);
+
 }

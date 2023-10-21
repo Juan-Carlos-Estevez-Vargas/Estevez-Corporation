@@ -20,16 +20,28 @@ public class EquipmentService implements IEquipmentService {
     public int updateEquipment(Equipment equipment) {
         return equipmentDAO.update(equipment);
     }
+
     @Override
     public Equipment getById(int id) {
         return equipmentDAO.findById(id);
     }
+
     @Override
     public List<Equipment> getAllByClientId(int clientId) {
         return equipmentDAO.findAllByClientId(clientId);
     }
+
     @Override
     public Equipment getByClientId(int clientId) {
         return equipmentDAO.findByClientId(clientId);
+    }
+
+    @Override
+    public int create(Equipment equipment) {
+        if (equipment == null) {
+            return 0;
+        }
+
+        return equipmentDAO.create(equipment);
     }
 }

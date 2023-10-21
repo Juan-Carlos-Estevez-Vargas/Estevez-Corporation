@@ -36,13 +36,13 @@ import dev.juan.estevez.persistence.EquipmentDAO;
 import dev.juan.estevez.reports.CustomPDFReport;
 import dev.juan.estevez.services.impl.ClientService;
 import dev.juan.estevez.services.impl.EquipmentService;
-import dev.juan.estevez.utils.Bounds;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.FieldValidator;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ValidateNumbers;
 import dev.juan.estevez.utils.ViewUtils;
+import dev.juan.estevez.utils.bounds.Bounds;
 import dev.juan.estevez.utils.bounds.cap.ClientInfoBounds;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
@@ -248,7 +248,7 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 
 				if (row > -1) {
 					idEquipment = (int) model.getValueAt(row, column);
-					ViewUtils.openPanel(new EquipmentInformation(idEquipment), ClientInformationView.this);
+					ViewUtils.openPanel(new EquipmentInformationView(idEquipment), ClientInformationView.this);
 				}
 			}
 		});
@@ -272,7 +272,7 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnRegisterEquipment) {
-			ViewUtils.openPanel(new RegisterEquipment());
+			ViewUtils.openPanel(new RegisterEquipmentView());
 		} else if (e.getSource() == btnUpdateClient) {
 			updateClient();
 		} else if (e.getSource() == btnPrint) {

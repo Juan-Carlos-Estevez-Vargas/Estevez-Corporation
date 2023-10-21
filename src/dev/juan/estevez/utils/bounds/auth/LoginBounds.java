@@ -1,4 +1,4 @@
-package dev.juan.estevez.utils.bounds;
+package dev.juan.estevez.utils.bounds.auth;
 
 public class LoginBounds {
 
