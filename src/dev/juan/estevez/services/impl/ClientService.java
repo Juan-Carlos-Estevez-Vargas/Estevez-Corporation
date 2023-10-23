@@ -6,6 +6,7 @@ import dev.juan.estevez.services.IClientService;
 import java.util.List;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public class ClientService implements IClientService {
@@ -18,6 +19,10 @@ public class ClientService implements IClientService {
 
     @Override
     public int createClient(Client client) {
+        if (client == null) {
+            return 0;
+        }
+
         return clientDAO.create(client);
     }
 
@@ -43,6 +48,10 @@ public class ClientService implements IClientService {
 
     @Override
     public int updateClient(Client client) {
+        if (client == null) {
+            return 0;
+        }
+
         return clientDAO.update(client);
     }
 

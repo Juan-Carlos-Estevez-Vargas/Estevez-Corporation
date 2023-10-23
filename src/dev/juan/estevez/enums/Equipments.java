@@ -1,25 +1,25 @@
 package dev.juan.estevez.enums;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public enum Equipments {
 
-    ADMISSION_DAY("Día de Ingreso"),
-    ADMISSION_MONTH("Mes de Ingreso"),
-    ADMISSION_YEAR("Año de Ingreso"),
-    CLIENT_ID("ID Cliente"),
-    DATE_OF_ADMISSION("Fecha de Ingreso"),
     ID("ID"),
-    LAST_MODIFICATION("Última Modificación"),
+    TYPE("Tipo"),
     MARK("Marca"),
     MODEL("Modelo"),
-    OBSERVATION("Observación"),
-    SERIAL_NUMBER("Número Serial"),
     STATUS("Estatus"),
+    CLIENT_ID("ID Cliente"),
+    OBSERVATIONS("Observaciones"),
+    SERIAL_NUMBER("Número Serial"),
+    CREATION_DATE("Fecha de Creación"),
+    DATE_OF_ADMISSION("Fecha de Ingreso"),
+    LAST_MODIFICATION("Última Modificación"),
+    MODIFICATION_DATE("Fecha de Modificación"),
     TECHNICAL_COMMENTS("Comentarios Técnicos"),
-    TECHNICAL_REVISION_OF("Revisión Técnica de"),
-    TYPE("Tipo");
+    TECHNICAL_REVISION_OF("Revisión Técnica de");
 
     private final String value;
 

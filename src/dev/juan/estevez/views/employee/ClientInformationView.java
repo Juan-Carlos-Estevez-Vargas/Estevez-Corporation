@@ -37,17 +37,20 @@ import dev.juan.estevez.reports.CustomPDFReport;
 import dev.juan.estevez.services.impl.ClientService;
 import dev.juan.estevez.services.impl.EquipmentService;
 import dev.juan.estevez.utils.Constants;
-import dev.juan.estevez.utils.FieldValidator;
 import dev.juan.estevez.utils.StringUtils;
-import dev.juan.estevez.utils.ValidateCharacters;
-import dev.juan.estevez.utils.ValidateNumbers;
 import dev.juan.estevez.utils.ViewUtils;
 import dev.juan.estevez.utils.bounds.Bounds;
 import dev.juan.estevez.utils.bounds.cap.ClientInfoBounds;
+import dev.juan.estevez.utils.constants.CapConstants;
+import dev.juan.estevez.utils.constants.ReportConstants;
 import dev.juan.estevez.utils.gui.GUIComponents;
+import dev.juan.estevez.utils.validators.FieldValidator;
+import dev.juan.estevez.utils.validators.ValidateCharacters;
+import dev.juan.estevez.utils.validators.ValidateNumbers;
 import dev.juan.estevez.views.LoginView;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public class ClientInformationView extends JFrame implements ActionListener, IGui {
@@ -66,7 +69,7 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 	private JTextField txtAdress;
 	private JTextField txtModifyBy;
 	private JTable tableEquipment;
-	private JPanel container;
+	private JPanel panel;
 	private JButton btnRegisterEquipment;
 	private JButton btnUpdateClient;
 	private JButton btnPrint;
@@ -87,7 +90,7 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 	@Override
 	public void initializeFrame() {
 		setSize(930, 400);
-		setTitle("Información del cliente " + user_update + " - Sesión de " + user);
+		setTitle(String.format(CapConstants.CLIENT_INFO_PANEL_SESION, user_update, user));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setLayout(null);
@@ -105,46 +108,45 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 
 	@Override
 	public void setupMainPanel() {
-		container = new JPanel();
-		container.setBackground(Colors.BACKGROUND_COLOR.getValue());
-		container.setLayout(null);
-		container.setBounds(930, 400, 930, 400);
-		setContentPane(container);
+		panel = new JPanel();
+		panel.setBackground(Colors.BACKGROUND_COLOR.getValue());
+		panel.setLayout(null);
+		panel.setBounds(930, 400, 930, 400);
+		setContentPane(panel);
 	}
 
 	@Override
 	public void setupLabels() {
-		labelTitle = GUIComponents.createLabel("Información del Cliente " + user_update,
-				ClientInfoBounds.LABEL_TITLE, container);
+		labelTitle = GUIComponents.createLabel(String.format(CapConstants.CLIENT_INFO_TITLE, user_update), ClientInfoBounds.LABEL_TITLE, panel);
 		labelTitle.setFont(Fonts.BUTTON_FONT.getValue());
 		labelTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
-		GUIComponents.createLabel(Clients.NAME.getValue(), ClientInfoBounds.LABEL_NAME, container);
-		GUIComponents.createLabel(Clients.EMAIL.getValue(), ClientInfoBounds.LABEL_EMAIL, container);
-		GUIComponents.createLabel(Clients.PHONE.getValue(), ClientInfoBounds.LABEL_PHONE, container);
-		GUIComponents.createLabel(Clients.ADDRESS.getValue(), ClientInfoBounds.LABEL_ADDRESS, container);
-		GUIComponents.createLabel(Clients.MODIFY_BY.getValue(), ClientInfoBounds.LABEL_MODIFY_BY, container);
+		GUIComponents.createLabel(Clients.NAME.getValue(), ClientInfoBounds.LABEL_NAME, panel);
+		GUIComponents.createLabel(Clients.EMAIL.getValue(), ClientInfoBounds.LABEL_EMAIL, panel);
+		GUIComponents.createLabel(Clients.PHONE.getValue(), ClientInfoBounds.LABEL_PHONE, panel);
+		GUIComponents.createLabel(Clients.ADDRESS.getValue(), ClientInfoBounds.LABEL_ADDRESS, panel);
+		GUIComponents.createLabel(Clients.MODIFY_BY.getValue(), ClientInfoBounds.LABEL_MODIFY_BY, panel);
 	}
 
 	@Override
 	public void setupTextFields() {
-		txtName = GUIComponents.createTextField(ClientInfoBounds.TXT_NAME, container);
-		txtEmail = GUIComponents.createTextField(ClientInfoBounds.TXT_EMAIL, container);
-		txtPhone = GUIComponents.createTextField(ClientInfoBounds.TXT_PHONE, container);
-		txtAdress = GUIComponents.createTextField(ClientInfoBounds.TXT_ADDRESS, container);
-		txtModifyBy = GUIComponents.createTextField(ClientInfoBounds.TXT_MODIFY_BY, container);
+		txtName = GUIComponents.createTextField(ClientInfoBounds.TXT_NAME, panel);
+		txtEmail = GUIComponents.createTextField(ClientInfoBounds.TXT_EMAIL, panel);
+		txtPhone = GUIComponents.createTextField(ClientInfoBounds.TXT_PHONE, panel);
+		txtAdress = GUIComponents.createTextField(ClientInfoBounds.TXT_ADDRESS, panel);
+		txtModifyBy = GUIComponents.createTextField(ClientInfoBounds.TXT_MODIFY_BY, panel);
 		txtModifyBy.setEnabled(false);
 	}
 
 	@Override
 	public void setupButtons() {
-		btnUpdateClient = GUIComponents.createButton(Constants.UPDATED_CLIENT, ClientInfoBounds.BUTTON_UPDATE,
-				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
-		btnRegisterEquipment = GUIComponents.createButton(Constants.EQUIPMENT_REGISTER,
+		btnUpdateClient = GUIComponents.createButton(CapConstants.UPDATE_CLIENT, ClientInfoBounds.BUTTON_UPDATE,
+				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), panel);
+		btnRegisterEquipment = GUIComponents.createButton(CapConstants.EQUIPMENT_REGISTER,
 				ClientInfoBounds.BUTTON_REGISTER_EQUIP, Colors.BUTTON_COLOR.getValue(),
-				Fonts.LABEL_FONT.getValue(), container);
-		btnPrint = GUIComponents.createButton(Constants.EQUIPMENT_PRINT, ClientInfoBounds.BUTTON_PRINT,
-				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
+				Fonts.LABEL_FONT.getValue(), panel);
+		btnPrint = GUIComponents.createButton(CapConstants.EQUIPMENT_PRINT, ClientInfoBounds.BUTTON_PRINT,
+				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), panel);
 	}
 
 	@Override
@@ -163,12 +165,12 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 		Client client = clientController.getById(idClient);
 
 		if (client != null) {
-			txtName.setText(client.getClientName());
-			txtEmail.setText(client.getClientEmail());
-			txtPhone.setText(client.getClientPhone());
-			txtAdress.setText(client.getClientAddress());
+			txtName.setText(client.getName());
+			txtEmail.setText(client.getEmail());
+			txtPhone.setText(client.getPhone());
+			txtAdress.setText(client.getAddress());
 			txtModifyBy.setText(client.getLastModification());
-			labelTitle.setText(labelTitle.getText() + " " + client.getClientName());
+			labelTitle.setText(labelTitle.getText() + " " + client.getName());
 		}
 	}
 
@@ -194,8 +196,8 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 	 * Creates a table and scroll pane.
 	 */
 	private void createTableAndScrollPane() {
-		tableEquipment = GUIComponents.createTable(model, container);
-		GUIComponents.createScrollPanel(tableEquipment, Bounds.SCROLL_MANAGE, container);
+		tableEquipment = GUIComponents.createTable(model, panel);
+		GUIComponents.createScrollPanel(tableEquipment, Bounds.SCROLL_MANAGE, panel);
 	}
 
 	/**
@@ -227,8 +229,8 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 		for (Equipment equipment : equipmentList) {
 			if (equipment != null) {
 				model.addRow(new Object[] {
-						equipment.getEquipmentID(),
-						equipment.getEquipmentType(),
+						equipment.getId(),
+						equipment.getType(),
 						equipment.getMark(),
 						equipment.getStatus()
 				});
@@ -254,9 +256,6 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 		});
 	}
 
-	/**
-	 * Clears the text fields for name, address, email, and phone number.
-	 */
 	public void clean() {
 		this.txtName.setText("");
 		this.txtAdress.setText("");
@@ -264,11 +263,6 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 		this.txtPhone.setText("");
 	}
 
-	/**
-	 * Handles the action performed when an event is triggered.
-	 *
-	 * @param e the ActionEvent object representing the event
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnRegisterEquipment) {
@@ -309,11 +303,11 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 	 */
 	private Client createClientFromInputs() {
 		Client client = new Client();
-		client.setClientID(idClient);
-		client.setClientName(txtName.getText().trim());
-		client.setClientEmail(txtEmail.getText().trim());
-		client.setClientPhone(txtPhone.getText().trim());
-		client.setClientAddress(txtAdress.getText().trim());
+		client.setId(idClient);
+		client.setName(txtName.getText().trim());
+		client.setEmail(txtEmail.getText().trim());
+		client.setPhone(txtPhone.getText().trim());
+		client.setAddress(txtAdress.getText().trim());
 		client.setLastModification(user);
 		return client;
 	}
@@ -326,10 +320,10 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 	 * @return the total number of validation errors
 	 */
 	private int validateClientFields(Client client) {
-		int validation = FieldValidator.validateEmailField(client.getClientEmail(), txtEmail)
-				+ FieldValidator.validateNameField(client.getClientName(), txtName)
-				+ FieldValidator.validatePhoneField(client.getClientPhone(), txtPhone)
-				+ FieldValidator.validateAdressField(client.getClientAddress(), txtAdress);
+		int validation = FieldValidator.validateEmailField(client.getEmail(), txtEmail)
+				+ FieldValidator.validateNameField(client.getName(), txtName)
+				+ FieldValidator.validatePhoneField(client.getPhone(), txtPhone)
+				+ FieldValidator.validateAdressField(client.getAddress(), txtAdress);
 
 		return validation;
 	}
@@ -358,14 +352,14 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 		}
 
 		File chosenFile = fc.getSelectedFile();
-		String outputPath = chosenFile.getAbsolutePath() + Constants.PDF_EXTENSION;
+		String outputPath = chosenFile.getAbsolutePath() + ReportConstants.PDF_EXTENSION;
 
 		try {
 			List<Equipment> equipments = equipmentController.getAllByClientId(idClient);
 			CustomPDFReport.generateEquipmentsPDFReport(equipments, outputPath);
-			JOptionPane.showMessageDialog(null, Constants.EQUIPMENT_LIST_CREATED_SUCCESSFULLY);
+			JOptionPane.showMessageDialog(null, ReportConstants.PDF_REPORT_CREATED);
 		} catch (IOException | DocumentException ex) {
-			JOptionPane.showMessageDialog(null, Constants.GENERATE_ERROR_PDF);
+			JOptionPane.showMessageDialog(null, ReportConstants.GENERATE_PDF_ERROR);
 		}
 	}
 

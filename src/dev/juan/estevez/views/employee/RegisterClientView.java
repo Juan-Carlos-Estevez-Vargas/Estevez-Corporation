@@ -19,15 +19,18 @@ import dev.juan.estevez.models.Client;
 import dev.juan.estevez.persistence.ClientDAO;
 import dev.juan.estevez.services.impl.ClientService;
 import dev.juan.estevez.utils.Constants;
-import dev.juan.estevez.utils.FieldValidator;
 import dev.juan.estevez.utils.StringUtils;
-import dev.juan.estevez.utils.ValidateCharacters;
-import dev.juan.estevez.utils.ValidateNumbers;
 import dev.juan.estevez.utils.bounds.cap.RegisterClientBounds;
+import dev.juan.estevez.utils.constants.CapConstants;
+import dev.juan.estevez.utils.constants.ValidFieldsConstants;
 import dev.juan.estevez.utils.gui.GUIComponents;
+import dev.juan.estevez.utils.validators.FieldValidator;
+import dev.juan.estevez.utils.validators.ValidateCharacters;
+import dev.juan.estevez.utils.validators.ValidateNumbers;
 import dev.juan.estevez.views.LoginView;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public class RegisterClientView extends JFrame implements ActionListener, IGui {
@@ -52,7 +55,7 @@ public class RegisterClientView extends JFrame implements ActionListener, IGui {
 	@Override
 	public void initializeFrame() {
 		setSize(590, 340);
-		setTitle("Registrar nuevo cliente - Sesión de " + user);
+		setTitle(String.format(CapConstants.REGISTER_CLIENT_SESION, this.user));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setLayout(null);
@@ -78,7 +81,7 @@ public class RegisterClientView extends JFrame implements ActionListener, IGui {
 
 	@Override
 	public void setupLabels() {
-		JLabel labelTitle = GUIComponents.createLabel(Constants.CLIENT_REGISTER, RegisterClientBounds.LABEL_TITLE, panel);
+		JLabel labelTitle = GUIComponents.createLabel(CapConstants.CLIENT_REGISTER, RegisterClientBounds.LABEL_TITLE, panel);
 		labelTitle.setFont(Fonts.BUTTON_FONT.getValue());
 		labelTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -86,7 +89,7 @@ public class RegisterClientView extends JFrame implements ActionListener, IGui {
 		GUIComponents.createLabel(Clients.EMAIL.getValue(), RegisterClientBounds.LABEL_EMAIL, panel);
 		GUIComponents.createLabel(Clients.PHONE.getValue(), RegisterClientBounds.LABEL_PHONE, panel);
 		GUIComponents.createLabel(Clients.ADDRESS.getValue(), RegisterClientBounds.LABEL_ADDRESS, panel);
-		GUIComponents.createLabel(Constants.CLIENT_REGISTER, RegisterClientBounds.LABEL_REGISTER, panel);
+		GUIComponents.createLabel(CapConstants.CLIENT_REGISTER, RegisterClientBounds.LABEL_REGISTER, panel);
 	}
 
 	@Override
@@ -99,7 +102,7 @@ public class RegisterClientView extends JFrame implements ActionListener, IGui {
 
 	@Override
 	public void setupButtons() {
-		btnRegisterClient = GUIComponents.createButton(Icons.REGISTER_CLIENT_ICON.getValue(),
+		btnRegisterClient = GUIComponents.createButton(Icons.REGISTER_CLIENT.getValue(),
 				RegisterClientBounds.BUTTON_REGISTER, Colors.BACKGROUND_COLOR.getValue(), panel);
 	}
 
@@ -110,10 +113,6 @@ public class RegisterClientView extends JFrame implements ActionListener, IGui {
 		btnRegisterClient.addActionListener(this);
 	}
 
-	/**
-	 * Cleans the text fields for email, name, address, and phone number of the
-	 * client.
-	 */
 	public void clean() {
 		this.txtEmailClient.setText("");
 		this.txtNameClient.setText("");
@@ -149,10 +148,10 @@ public class RegisterClientView extends JFrame implements ActionListener, IGui {
 	 */
 	private Client createClientFromInputs() {
 		Client client = new Client();
-		client.setClientName(txtNameClient.getText().trim());
-		client.setClientEmail(txtEmailClient.getText().trim());
-		client.setClientPhone(txtPhoneClient.getText().trim());
-		client.setClientAddress(txtAdressClient.getText().trim());
+		client.setName(txtNameClient.getText().trim());
+		client.setEmail(txtEmailClient.getText().trim());
+		client.setPhone(txtPhoneClient.getText().trim());
+		client.setAddress(txtAdressClient.getText().trim());
 		return client;
 	}
 
@@ -164,10 +163,10 @@ public class RegisterClientView extends JFrame implements ActionListener, IGui {
 	 * @return the total number of validation errors
 	 */
 	private int validateClientFields(Client client) {
-		int validation = FieldValidator.validateEmailField(client.getClientEmail(), txtEmailClient)
-				+ FieldValidator.validateNameField(client.getClientName(), txtNameClient)
-				+ FieldValidator.validatePhoneField(client.getClientPhone(), txtPhoneClient)
-				+ FieldValidator.validateAdressField(client.getClientAddress(), txtAdressClient);
+		int validation = FieldValidator.validateEmailField(client.getEmail(), txtEmailClient)
+				+ FieldValidator.validateNameField(client.getName(), txtNameClient)
+				+ FieldValidator.validatePhoneField(client.getPhone(), txtPhoneClient)
+				+ FieldValidator.validateAdressField(client.getAddress(), txtAdressClient);
 		return validation;
 	}
 
@@ -177,26 +176,17 @@ public class RegisterClientView extends JFrame implements ActionListener, IGui {
 	 * @param client the client object to handle
 	 */
 	private void handleValidClient(Client client) {
-		Client existingClient = clientController.getByEmail(client.getClientEmail());
+		Client existingClient = clientController.getByEmail(client.getEmail());
 
-		if (existingClient != null && !existingClient.getClientEmail().equals(client.getClientEmail())) {
+		if (existingClient != null && !existingClient.getEmail().equals(client.getEmail())) {
 			txtEmailClient.setBackground(Color.red);
-			StringUtils.showMessage(Constants.EMAIL_NOT_AVAILABLE_MESSAGE);
+			StringUtils.showMessage(ValidFieldsConstants.EMAIL_NOT_AVAILABLE);
 		} else {
 			client.setLastModification(user);
 			registerClient(client);
 		}
 	}
 
-	/**
-	 * Registers a client by calling the registerClient method of the
-	 * clientController.
-	 * If the registration is successful, it performs some UI updates, shows a
-	 * success message,
-	 * and closes the current window.
-	 *
-	 * @param client the client object to be registered
-	 */
 	private void registerClient(Client client) {
 		if (clientController.createClient(client) == 1) {
 			clean();
@@ -204,7 +194,7 @@ public class RegisterClientView extends JFrame implements ActionListener, IGui {
 			txtNameClient.setBackground(Color.green);
 			txtPhoneClient.setBackground(Color.green);
 			txtAdressClient.setBackground(Color.green);
-			StringUtils.showMessage(Constants.REGISTRATION_SUCCESS_MESSAGE);
+			StringUtils.showMessage(Constants.SUCCESSFUL_REGISTRATION);
 			dispose();
 		}
 	}

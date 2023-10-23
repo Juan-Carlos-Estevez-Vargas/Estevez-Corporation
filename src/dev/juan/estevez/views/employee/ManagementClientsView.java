@@ -21,10 +21,12 @@ import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ViewUtils;
 import dev.juan.estevez.utils.bounds.Bounds;
+import dev.juan.estevez.utils.constants.CapConstants;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas
  */
 public class ManagementClientsView extends JFrame implements IGui {
@@ -32,7 +34,7 @@ public class ManagementClientsView extends JFrame implements IGui {
 	private static final long serialVersionUID = 1L;
 	public static int id_cliente_update = 0;
 	public static String user_update = "";
-	private JPanel container;
+	private JPanel panel;
 	private String user;
 	private JTable tableClients;
 	private DefaultTableModel model = new DefaultTableModel();
@@ -50,7 +52,7 @@ public class ManagementClientsView extends JFrame implements IGui {
 	@Override
 	public void initializeFrame() {
 		setSize(630, 340);
-		setTitle("Usuarios registrados - Sesión de " + this.user);
+		setTitle(String.format(CapConstants.MANAGE_CLIENTS_SESION, this.user));
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setLayout(null);
@@ -65,16 +67,16 @@ public class ManagementClientsView extends JFrame implements IGui {
 
 	@Override
 	public void setupMainPanel() {
-		container = new JPanel();
-		container.setBackground(Colors.BACKGROUND_COLOR.getValue());
-		container.setLayout(null);
-		setContentPane(container);
+		panel = new JPanel();
+		panel.setBackground(Colors.BACKGROUND_COLOR.getValue());
+		panel.setLayout(null);
+		setContentPane(panel);
 	}
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel(Constants.REGISTERED_CLIENTS_TITLE, Bounds.LABEL_MANAGE_TITLE, container)
-		.setFont(Fonts.BUTTON_FONT.getValue());
+		GUIComponents.createLabel(CapConstants.MANAGE_CLIENTS_SESION, Bounds.LABEL_MANAGE_TITLE, panel)
+				.setFont(Fonts.BUTTON_FONT.getValue());
 	}
 
 	/**
@@ -97,8 +99,8 @@ public class ManagementClientsView extends JFrame implements IGui {
 	 * Creates a table and scroll pane.
 	 */
 	private void createTableAndScrollPane() {
-		tableClients = GUIComponents.createTable(model, container);
-		GUIComponents.createScrollPanel(tableClients, Bounds.SCROLL_MANAGE, container);
+		tableClients = GUIComponents.createTable(model, panel);
+		GUIComponents.createScrollPanel(tableClients, Bounds.SCROLL_MANAGE, panel);
 	}
 
 	/**
@@ -121,9 +123,9 @@ public class ManagementClientsView extends JFrame implements IGui {
 		if (clients != null) {
 			for (Client client : clients) {
 				model.addRow(new Object[] {
-						client.getClientName(),
-						client.getClientEmail(),
-						client.getClientPhone(),
+						client.getName(),
+						client.getEmail(),
+						client.getPhone(),
 						client.getLastModification()
 				});
 			}
@@ -144,7 +146,7 @@ public class ManagementClientsView extends JFrame implements IGui {
 
 				if (row >= 0) {
 					Client clientDB = clientController.getByEmail((String) model.getValueAt(row, column));
-					id_cliente_update = clientDB.getClientID();
+					id_cliente_update = clientDB.getId();
 					ViewUtils.openPanel(new ClientInformationView(), ManagementClientsView.this);
 				}
 			}

@@ -2,6 +2,8 @@ package dev.juan.estevez.utils.gui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.List;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,12 +18,13 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Fonts;
-import dev.juan.estevez.utils.Constants;
-import dev.juan.estevez.utils.HorizontalCenterComboBoxRenderer;
+import dev.juan.estevez.utils.constants.AuthConstants;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public final class GUIComponents extends JFrame {
@@ -160,7 +163,7 @@ public final class GUIComponents extends JFrame {
      * @return the created logout button
      */
     public static JButton createLogoutButton(JPanel container) {
-        JButton btnLogout = new JButton(Constants.LOGOUT_TEXT);
+        JButton btnLogout = new JButton(AuthConstants.LOGOUT_TEXT);
         btnLogout.setBounds(470, 20, 120, 30);
         btnLogout.setFont(new Font("serif", Font.BOLD, 14));
         btnLogout.setBackground(Colors.BUTTON_COLOR.getValue());
@@ -222,10 +225,10 @@ public final class GUIComponents extends JFrame {
     /**
      * Creates a JScrollPane with the given JTextPane and bounds.
      *
-     * @param  pane   the JTextPane to be added to the scroll pane
-     * @param  bounds an integer array containing the x, y, width, and height
-     *                of the scroll pane
-     * @return        the created JScrollPane
+     * @param pane   the JTextPane to be added to the scroll pane
+     * @param bounds an integer array containing the x, y, width, and height
+     *               of the scroll pane
+     * @return the created JScrollPane
      */
     public static JScrollPane createScrollPanel(JTextPane pane, int[] bounds) {
         JScrollPane scrollPane = new JScrollPane(pane);
@@ -235,20 +238,19 @@ public final class GUIComponents extends JFrame {
     }
 
     /**
-     * Creates a JComboBox and adds it to a JPanel container.
+     * Creates a JComboBox with the given bounds, list of items, and container.
      *
-     * @param bounds    an array consisting of the x, y, width, and height values of
-     *                  the JComboBox
-     * @param items     an array of strings that will be used as the items in the
-     *                  JComboBox
-     * @param container the JPanel container where the JComboBox will be added
-     * @return the created JComboBox
+     * @param  bounds     an array of integers representing the x, y, width, and height of the JComboBox
+     * @param  items      a list of strings representing the items in the JComboBox
+     * @param  container  the JPanel container in which the JComboBox will be added
+     * @return            the created JComboBox
      */
-    public static JComboBox<String> createComboBox(int[] bounds, String[] items, JPanel container) {
-        JComboBox<String> comboBox = new JComboBox<>(items);
+    public static JComboBox<String> createComboBox(int[] bounds, List<String> items, JPanel container) {
+        String[] itemsArray = items.toArray(new String[items.size()]);
+        JComboBox<String> comboBox = new JComboBox<>(itemsArray);
         comboBox.setBounds(bounds[0], bounds[1], bounds[2], bounds[3]);
         comboBox.setBackground(Colors.TEXT_FIELD_COLOR.getValue());
-        comboBox.setFont(Fonts.LABEL_FONT.getValue());
+        comboBox.setFont(Fonts.PANEL_LABEL_FONT.getValue());
         comboBox.setForeground(Color.WHITE);
         comboBox.setRenderer(new HorizontalCenterComboBoxRenderer());
         container.add(comboBox);
@@ -258,9 +260,10 @@ public final class GUIComponents extends JFrame {
     /**
      * Creates a JTextPane and adds it to the specified container panel.
      *
-     * @param  bounds     an array of integers representing the bounds of the JTextPane
-     * @param  container  the JPanel container to which the JTextPane will be added
-     * @return            the created JTextPane
+     * @param bounds    an array of integers representing the bounds of the
+     *                  JTextPane
+     * @param container the JPanel container to which the JTextPane will be added
+     * @return the created JTextPane
      */
     public static JTextPane createTextPane(int[] bounds, JPanel container) {
         JTextPane textPane = new JTextPane();

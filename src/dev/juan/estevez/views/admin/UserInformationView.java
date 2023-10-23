@@ -3,6 +3,8 @@ package dev.juan.estevez.views.admin;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,24 +16,29 @@ import javax.swing.SwingConstants;
 
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Fonts;
-import dev.juan.estevez.enums.Roles;
 import dev.juan.estevez.enums.States;
 import dev.juan.estevez.enums.Users;
 import dev.juan.estevez.interfaces.IGui;
+import dev.juan.estevez.models.Role;
 import dev.juan.estevez.models.User;
+import dev.juan.estevez.models.UserRole;
+import dev.juan.estevez.persistence.RoleDAO;
 import dev.juan.estevez.persistence.UserDAO;
+import dev.juan.estevez.services.impl.RoleService;
 import dev.juan.estevez.services.impl.UserService;
 import dev.juan.estevez.utils.Constants;
-import dev.juan.estevez.utils.FieldValidator;
 import dev.juan.estevez.utils.StringUtils;
-import dev.juan.estevez.utils.ValidateCharacters;
-import dev.juan.estevez.utils.ValidateNumbers;
 import dev.juan.estevez.utils.ViewUtils;
 import dev.juan.estevez.utils.bounds.admin.UserInformationBounds;
+import dev.juan.estevez.utils.constants.AdminConstants;
 import dev.juan.estevez.utils.gui.GUIComponents;
+import dev.juan.estevez.utils.validators.FieldValidator;
+import dev.juan.estevez.utils.validators.ValidateCharacters;
+import dev.juan.estevez.utils.validators.ValidateNumbers;
 import dev.juan.estevez.views.LoginView;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public class UserInformationView extends JFrame implements ActionListener, IGui {
@@ -39,21 +46,20 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 	private static final long serialVersionUID = 1L;
 	private String user = "", user_update = "";
 	private int ID, idSuperAdministrador;
-	private JTextField txtName;
-	private JTextField txtEmail;
-	private JTextField txtPhone;
-	private JTextField txtUsername;
-	private JTextField txtRegisterBy;
-	private JComboBox<String> cmbLevels;
-	private JComboBox<String> cmbStatus;
-	private JPanel container;
+	private JTextField txtName, txtEmail, txtPhone, txtUsername, txtRegisterBy;
+	private JComboBox<String> cmbRoles, cmbStatus;
+	private JPanel panel;
 	private JButton btnUpdate;
 	private UserService userController;
+	private RoleService roleService;
+	private List<Role> roles;
 
 	public UserInformationView() {
 		this.user = LoginView.user;
 		user_update = ManagementUsersView.user_update;
 		userController = new UserService(new UserDAO());
+		roleService = new RoleService(new RoleDAO());
+		roles = roleService.getAll();
 		initializeFrame();
 		initComponents();
 		loadUserData();
@@ -63,7 +69,7 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 	@Override
 	public void initializeFrame() {
 		setSize(630, 360);
-		setTitle("Información del usuario " + user_update + " - Sesión de " + user);
+		setTitle(String.format(AdminConstants.USER_INFORMATION_SESION, user_update, user));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setLayout(null);
@@ -82,43 +88,43 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 
 	@Override
 	public void setupMainPanel() {
-		container = new JPanel();
-		container.setBackground(Colors.BACKGROUND_COLOR.getValue());
-		container.setLayout(null);
-		container.setBounds(630, 460, 630, 460);
-		setContentPane(container);
+		panel = new JPanel();
+		panel.setBackground(Colors.BACKGROUND_COLOR.getValue());
+		panel.setLayout(null);
+		panel.setBounds(630, 460, 630, 460);
+		setContentPane(panel);
 	}
 
 	@Override
 	public void setupLabels() {
-		JLabel titleLabel = GUIComponents.createLabel("Información del usuario " + user_update,
-				UserInformationBounds.LABEL_TITLE, container);
+		JLabel titleLabel = GUIComponents.createLabel(String.format(AdminConstants.USER_INFORMATION_TITLE, user_update),
+				UserInformationBounds.LABEL_TITLE, panel);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(Fonts.BUTTON_FONT.getValue());
 
-		GUIComponents.createLabel(Users.NAME.getValue(), UserInformationBounds.LABEL_NAME, container);
-		GUIComponents.createLabel(Users.EMAIL.getValue(), UserInformationBounds.LABEL_EMAIL, container);
-		GUIComponents.createLabel(Users.PHONE.getValue(), UserInformationBounds.LABEL_PHONE, container);
-		GUIComponents.createLabel(Users.PERMISIONS_OF.getValue(), UserInformationBounds.LABEL_LEVEL, container);
-		GUIComponents.createLabel(Users.USERNAME.getValue(), UserInformationBounds.LABEL_USERNAME, container);
-		GUIComponents.createLabel(Users.STATUS.getValue(), UserInformationBounds.LABEL_STATUS, container);
-		GUIComponents.createLabel(Users.REGISTERED_BY.getValue(), UserInformationBounds.LABEL_REGISTER_BY, container);
+		GUIComponents.createLabel(Users.NAME.getValue(), UserInformationBounds.LABEL_NAME, panel);
+		GUIComponents.createLabel(Users.EMAIL.getValue(), UserInformationBounds.LABEL_EMAIL, panel);
+		GUIComponents.createLabel(Users.PHONE.getValue(), UserInformationBounds.LABEL_PHONE, panel);
+		GUIComponents.createLabel(Users.PERMISIONS_OF.getValue(), UserInformationBounds.LABEL_LEVEL, panel);
+		GUIComponents.createLabel(Users.USERNAME.getValue(), UserInformationBounds.LABEL_USERNAME, panel);
+		GUIComponents.createLabel(Users.STATUS.getValue(), UserInformationBounds.LABEL_STATUS, panel);
+		GUIComponents.createLabel(Users.REGISTERED_BY.getValue(), UserInformationBounds.LABEL_REGISTER_BY, panel);
 	}
 
 	@Override
 	public void setupTextFields() {
-		txtName = GUIComponents.createTextField(UserInformationBounds.TXT_NAME, container);
-		txtEmail = GUIComponents.createTextField(UserInformationBounds.TXT_EMAIL, container);
-		txtPhone = GUIComponents.createTextField(UserInformationBounds.TXT_PHONE, container);
-		txtUsername = GUIComponents.createTextField(UserInformationBounds.TXT_USERNAME, container);
-		txtRegisterBy = GUIComponents.createTextField(UserInformationBounds.TXT_REGISTER_BY, container);
+		txtName = GUIComponents.createTextField(UserInformationBounds.TXT_NAME, panel);
+		txtEmail = GUIComponents.createTextField(UserInformationBounds.TXT_EMAIL, panel);
+		txtPhone = GUIComponents.createTextField(UserInformationBounds.TXT_PHONE, panel);
+		txtUsername = GUIComponents.createTextField(UserInformationBounds.TXT_USERNAME, panel);
+		txtRegisterBy = GUIComponents.createTextField(UserInformationBounds.TXT_REGISTER_BY, panel);
 		txtRegisterBy.setEnabled(false);
 	}
 
 	@Override
 	public void setupButtons() {
-		btnUpdate = GUIComponents.createButton(Constants.UPDATED_USER, UserInformationBounds.BUTTON_UPDATE,
-				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
+		btnUpdate = GUIComponents.createButton(AdminConstants.UPDATE_USER, UserInformationBounds.BUTTON_UPDATE,
+				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), panel);
 	}
 
 	@Override
@@ -138,13 +144,14 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 		User user = userController.getByUsername(user_update);
 
 		if (user != null) {
-			ID = user.getUserID();
-			txtName.setText(user.getUserName());
-			txtEmail.setText(user.getUserEmail());
-			txtPhone.setText(user.getUserPhone());
+			UserRole userRole = userController.getRoleListByUser(user).get(0);
+			ID = user.getId();
+			txtName.setText(user.getName());
+			txtEmail.setText(user.getEmail());
+			txtPhone.setText(user.getPhone());
 			txtUsername.setText(user.getUsername());
 			txtRegisterBy.setText(user.getRegisterBy());
-			cmbLevels.setSelectedItem(user.getLevelType());
+			cmbRoles.setSelectedItem(userRole.getRole().getRoleName());
 			cmbStatus.setSelectedItem(user.getStatus());
 		}
 	}
@@ -153,22 +160,28 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 	 * Loads the data of the super administrator.
 	 */
 	private void loadSuperAdministratorData() {
+		// TODO: crear nuevo perfil pal super admin con funcionalidades explicitas de el
+		// como crear nuevas cosas como categoias estados roles, etc
 		User user = userController.getById(1);
 
 		if (user != null) {
-			idSuperAdministrador = user.getUserID();
+			idSuperAdministrador = user.getId();
 		}
 	}
 
-	/**
-	 * Creates the combo boxes.
-	 *
-	 * @param paramName description of parameter
-	 * @return description of return value
-	 */
 	private void createComboBoxes() {
-		cmbStatus = GUIComponents.createComboBox(UserInformationBounds.CMB_STATUS, States.getAllValues(), container);
-		cmbLevels = GUIComponents.createComboBox(UserInformationBounds.CMB_LEVEL, Roles.getAllValues(), container);
+		List<String> statusOptions = createStatusOptions();
+		List<String> roleNames = getRoleNames();
+
+		cmbStatus = GUIComponents.createComboBox(UserInformationBounds.CMB_STATUS, statusOptions, panel);
+		cmbRoles = GUIComponents.createComboBox(UserInformationBounds.CMB_LEVEL, roleNames, panel);
+	}
+
+	private List<String> createStatusOptions() {
+		List<String> options = new ArrayList<>();
+		options.add(String.valueOf(States.ACTIVE));
+		options.add(String.valueOf(States.INACTIVE));
+		return options;
 	}
 
 	/**
@@ -188,8 +201,8 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 	 */
 	private void updateUser() {
 		User user = createUserFromInputs();
-		int cmbPermissions = cmbLevels.getSelectedIndex() + 1;
-		int cmbStatus = this.cmbStatus.getSelectedIndex() + 1;
+		Role role = roles.get(cmbRoles.getSelectedIndex());
+		int cmbStatusIndex = cmbStatus.getSelectedIndex() + 1;
 		int validation = validateUserFields(user);
 
 		if (validation == 4) {
@@ -198,22 +211,21 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 		}
 
 		if (idSuperAdministrador == ID) {
-			StringUtils.showMessage(Constants.CANNOT_UPDATE_SUPER_ADMIN);
+			StringUtils.showMessage(AdminConstants.CANNOT_UPDATE_SUPER_ADMIN);
 			return;
 		}
 
 		if (validation == 0) {
-			user.setLevelType(StringUtils.getPermissionsString(cmbPermissions));
-			user.setStatus(StringUtils.getStatusString(cmbStatus));
+			user.setStatus(StringUtils.getStatusString(cmbStatusIndex));
 
-			if (canUpdateUser(user)) {
-				if (userController.updateUser(user) == 1) {
+			if (canUpdateUser(user, role)) {
+				if (userController.updateUser(user, role) == 1) {
 					StringUtils.showMessage(Constants.SUCCESSFUL_MODIFICATION);
 					ViewUtils.openPanel(new ManagementUsersView(), this);
 				}
 			} else {
 				txtUsername.setBackground(Color.red);
-				StringUtils.showMessage(Constants.USERNAME_NOT_AVAILABLE_MESSAGE);
+				StringUtils.showMessage(AdminConstants.USERNAME_NOT_AVAILABLE);
 			}
 		}
 	}
@@ -224,9 +236,9 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 	 * @param user the user to be updated
 	 * @return true if the user can be updated, false otherwise
 	 */
-	private boolean canUpdateUser(User user) {
+	private boolean canUpdateUser(User user, Role role) {
 		User userNotAdmin = userController.getByUsername(user.getUsername());
-		return userNotAdmin == null || userNotAdmin.getUserID() == ID;
+		return userNotAdmin == null || userNotAdmin.getId() == ID;
 	}
 
 	/**
@@ -236,11 +248,11 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 	 */
 	private User createUserFromInputs() {
 		User user = new User();
-		user.setUserID(ID);
-		user.setUserEmail(txtEmail.getText().trim());
-		user.setUserName(txtName.getText().trim());
+		user.setId(ID);
+		user.setEmail(txtEmail.getText().trim());
+		user.setName(txtName.getText().trim());
 		user.setUsername(txtUsername.getText().trim());
-		user.setUserPhone(txtPhone.getText().trim());
+		user.setPhone(txtPhone.getText().trim());
 		return user;
 	}
 
@@ -251,12 +263,21 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 	 * @return the total number of validation errors
 	 */
 	private int validateUserFields(User user) {
-		int validation = FieldValidator.validateEmailField(user.getUserEmail(), txtEmail)
-				+ FieldValidator.validateNameField(user.getUserName(), txtName)
-				+ FieldValidator.validatePhoneField(user.getUserPhone(), txtPhone)
+		int validation = FieldValidator.validateEmailField(user.getEmail(), txtEmail)
+				+ FieldValidator.validateNameField(user.getName(), txtName)
+				+ FieldValidator.validatePhoneField(user.getPhone(), txtPhone)
 				+ FieldValidator.validateUsernameField(user.getUsername(), txtUsername);
 
 		return validation;
+	}
+
+	private List<String> getRoleNames() {
+		List<String> roleNames = new ArrayList<>();
+
+		for (Role role : roles) {
+			roleNames.add(role.getRoleName());
+		}
+		return roleNames;
 	}
 
 }

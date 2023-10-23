@@ -1,5 +1,9 @@
 package dev.juan.estevez.utils.bounds.cap;
 
+/**
+ * 
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class EquipInfoBounds {
 
     // --- Labels ---

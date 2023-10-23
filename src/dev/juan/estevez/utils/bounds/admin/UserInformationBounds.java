@@ -1,5 +1,9 @@
 package dev.juan.estevez.utils.bounds.admin;
 
+/**
+ * 
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class UserInformationBounds {
 
     // --- Labels ---

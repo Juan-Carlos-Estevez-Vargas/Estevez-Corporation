@@ -3,6 +3,8 @@ package dev.juan.estevez.views.admin;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,40 +15,46 @@ import javax.swing.JTextField;
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.enums.Icons;
-import dev.juan.estevez.enums.Roles;
+import dev.juan.estevez.enums.States;
 import dev.juan.estevez.enums.Users;
 import dev.juan.estevez.interfaces.IGui;
+import dev.juan.estevez.models.Role;
 import dev.juan.estevez.models.User;
+import dev.juan.estevez.persistence.RoleDAO;
 import dev.juan.estevez.persistence.UserDAO;
+import dev.juan.estevez.services.impl.RoleService;
 import dev.juan.estevez.services.impl.UserService;
 import dev.juan.estevez.utils.Constants;
-import dev.juan.estevez.utils.FieldValidator;
 import dev.juan.estevez.utils.StringUtils;
-import dev.juan.estevez.utils.ValidateCharacters;
-import dev.juan.estevez.utils.ValidateNumbers;
 import dev.juan.estevez.utils.bounds.admin.RegisterUserBounds;
+import dev.juan.estevez.utils.constants.AdminConstants;
 import dev.juan.estevez.utils.gui.GUIComponents;
+import dev.juan.estevez.utils.validators.FieldValidator;
+import dev.juan.estevez.utils.validators.ValidateCharacters;
+import dev.juan.estevez.utils.validators.ValidateNumbers;
 import dev.juan.estevez.views.LoginView;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public class RegisterUserView extends JFrame implements ActionListener, IGui {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField txtNameUser;
-	private JTextField txtEmailUser;
-	private JTextField txtPhoneUser;
-	private JTextField txtUsername;
+	private JTextField txtName, txtEmail, txtPhone, txtUsername;
 	private JPanel panel;
-	private JButton btnRegisterUser;
-	private JComboBox<String> cmbPermissions;
+	private JButton btnRegister;
+	private JComboBox<String> cmbRoles;
 	private String user;
-	private UserService userController;
+	private RoleService roleService;
+	private UserService userService;
+	private List<Role> roles;
 
 	public RegisterUserView() {
 		this.user = LoginView.user;
-		userController = new UserService(new UserDAO());
+		userService = new UserService(new UserDAO());
+		roleService = new RoleService(new RoleDAO());
+		roles = roleService.getAll();
 		initializeFrame();
 		initComponents();
 	}
@@ -54,7 +62,7 @@ public class RegisterUserView extends JFrame implements ActionListener, IGui {
 	@Override
 	public void initializeFrame() {
 		setSize(590, 340);
-		setTitle("Registrar Usuario - Sesión de " + user);
+		setTitle(String.format(AdminConstants.REGISTER_USER_SESION, user));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setLayout(null);
@@ -67,7 +75,7 @@ public class RegisterUserView extends JFrame implements ActionListener, IGui {
 		setupLabels();
 		setupTextFields();
 		setupButtons();
-		cmbPermissions = GUIComponents.createComboBox(RegisterUserBounds.CMB_PERMISIONS, Roles.getAllValues(), panel);
+		cmbRoles = GUIComponents.createComboBox(RegisterUserBounds.CMB_PERMISIONS, getRoleNames(), panel);
 		setupEvents();
 	}
 
@@ -81,52 +89,48 @@ public class RegisterUserView extends JFrame implements ActionListener, IGui {
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel(Constants.USER_REGISTER_TEXT, RegisterUserBounds.LABEL_TITLE, panel)
+		GUIComponents.createLabel(AdminConstants.USER_REGISTER, RegisterUserBounds.LABEL_TITLE, panel)
 				.setFont(Fonts.BUTTON_FONT.getValue());
 		GUIComponents.createLabel(Users.NAME.getValue(), RegisterUserBounds.LABEL_NAME, panel);
 		GUIComponents.createLabel(Users.EMAIL.getValue(), RegisterUserBounds.LABEL_EMAIL, panel);
 		GUIComponents.createLabel(Users.PHONE.getValue(), RegisterUserBounds.LABEL_PHONE, panel);
 		GUIComponents.createLabel(Users.PERMISIONS_OF.getValue(), RegisterUserBounds.LABEL_PERMISIONS_OF, panel);
 		GUIComponents.createLabel(Users.USERNAME.getValue(), RegisterUserBounds.LABEL_USERNAME, panel);
-		GUIComponents.createLabel(Constants.USER_REGISTER_TEXT, RegisterUserBounds.LABEL_REGISTER_USER, panel);
+		GUIComponents.createLabel(AdminConstants.USER_REGISTER, RegisterUserBounds.LABEL_REGISTER_USER, panel);
 	}
 
 	@Override
 	public void setupTextFields() {
-		txtNameUser = GUIComponents.createTextField(RegisterUserBounds.TXT_NAME, panel);
-		txtEmailUser = GUIComponents.createTextField(RegisterUserBounds.TXT_EMAIL, panel);
-		txtPhoneUser = GUIComponents.createTextField(RegisterUserBounds.TXT_PHONE, panel);
+		txtName = GUIComponents.createTextField(RegisterUserBounds.TXT_NAME, panel);
+		txtEmail = GUIComponents.createTextField(RegisterUserBounds.TXT_EMAIL, panel);
+		txtPhone = GUIComponents.createTextField(RegisterUserBounds.TXT_PHONE, panel);
 		txtUsername = GUIComponents.createTextField(RegisterUserBounds.TXT_USERNAME, panel);
 	}
 
 	@Override
 	public void setupButtons() {
-		btnRegisterUser = GUIComponents.createButton(Icons.REGISTER_USER_BUTTON_ICON.getValue(),
+		btnRegister = GUIComponents.createButton(Icons.REGISTER_USER_BUTTON.getValue(),
 				RegisterUserBounds.BUTTON_REGISTER_USER, Colors.BACKGROUND_COLOR.getValue(), panel);
 	}
 
 	@Override
 	public void setupEvents() {
-		txtNameUser.addKeyListener(new ValidateCharacters());
-		txtPhoneUser.addKeyListener(new ValidateNumbers());
-		btnRegisterUser.addActionListener(this);
+		txtName.addKeyListener(new ValidateCharacters());
+		txtPhone.addKeyListener(new ValidateNumbers());
+		btnRegister.addActionListener(this);
 	}
 
-	/**
-	 * Clears all the input fields and resets the permissions dropdown to the
-	 * default value.
-	 */
 	public void clean() {
-		txtEmailUser.setText("");
-		txtNameUser.setText("");
-		txtPhoneUser.setText("");
+		txtEmail.setText("");
+		txtName.setText("");
+		txtPhone.setText("");
 		txtUsername.setText("");
-		cmbPermissions.setSelectedIndex(0);
+		cmbRoles.setSelectedIndex(0);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnRegisterUser) {
+		if (e.getSource() == btnRegister) {
 			validateAndRegisterUser();
 		}
 	}
@@ -152,10 +156,10 @@ public class RegisterUserView extends JFrame implements ActionListener, IGui {
 	 */
 	private User createUserFromInputs() {
 		User user = new User();
-		user.setUserEmail(txtEmailUser.getText().trim());
-		user.setUserPhone(txtPhoneUser.getText().trim());
+		user.setEmail(txtEmail.getText().trim());
+		user.setPhone(txtPhone.getText().trim());
 		user.setUsername(txtUsername.getText().trim());
-		user.setUserName(txtNameUser.getText().trim());
+		user.setName(txtName.getText().trim());
 		return user;
 	}
 
@@ -166,9 +170,10 @@ public class RegisterUserView extends JFrame implements ActionListener, IGui {
 	 * @return the total number of validation errors
 	 */
 	private int validateUserFields(User user) {
-		int validation = FieldValidator.validateEmailField(user.getUserEmail(), txtEmailUser)
-				+ FieldValidator.validateNameField(user.getUserName(), txtNameUser)
-				+ FieldValidator.validatePhoneField(user.getUserPhone(), txtPhoneUser);
+		int validation = FieldValidator.validateEmailField(user.getEmail(), txtEmail)
+				+ FieldValidator.validateNameField(user.getName(), txtName)
+				+ FieldValidator.validatePhoneField(user.getPhone(), txtPhone)
+				+ FieldValidator.validateUsernameField(user.getUsername(), txtUsername);
 		return validation;
 	}
 
@@ -178,19 +183,17 @@ public class RegisterUserView extends JFrame implements ActionListener, IGui {
 	 * @param user the user object
 	 */
 	private void handleValidUser(User user) {
-		int permissionsCmb = cmbPermissions.getSelectedIndex() + 1;
-		String permissionsString = StringUtils.getPermissionsString(permissionsCmb);
-		User existingUser = userController.getByUsername(user.getUsername());
+		Role role = roles.get(cmbRoles.getSelectedIndex());
+		User existingUser = userService.getByUsername(user.getUsername());
 
 		if (existingUser != null && !existingUser.getUsername().equals(user.getUsername())) {
 			txtUsername.setBackground(Color.red);
-			StringUtils.showMessage(Constants.USERNAME_NOT_AVAILABLE_MESSAGE);
+			StringUtils.showMessage(AdminConstants.USERNAME_NOT_AVAILABLE);
 		} else {
-			user.setLevelType(permissionsString);
-			user.setStatus("Activo");
+			user.setStatus(States.ACTIVE.getValue());
 			user.setPassword(Constants.DEFAULT_PASSWORD);
 			user.setRegisterBy(this.user);
-			registerUser(user);
+			registerUser(user, role);
 		}
 	}
 
@@ -199,16 +202,25 @@ public class RegisterUserView extends JFrame implements ActionListener, IGui {
 	 *
 	 * @param user the user to be registered
 	 */
-	private void registerUser(User user) {
-		if (userController.createUser(user) == 1) {
+	private void registerUser(User user, Role role) {
+		if (userService.createUser(user, role) == 1) {
 			clean();
-			txtEmailUser.setBackground(Color.green);
-			txtNameUser.setBackground(Color.green);
-			txtPhoneUser.setBackground(Color.green);
+			txtEmail.setBackground(Color.green);
+			txtName.setBackground(Color.green);
+			txtPhone.setBackground(Color.green);
 			txtUsername.setBackground(Color.green);
-			StringUtils.showMessage(Constants.REGISTRATION_SUCCESS_MESSAGE);
+			StringUtils.showMessage(AdminConstants.REGISTRATION_SUCCESS);
 			dispose();
 		}
+	}
+
+	private List<String> getRoleNames() {
+		List<String> roleNames = new ArrayList<>();
+
+		for (Role role : roles) {
+			roleNames.add(role.getRoleName());
+		}
+		return roleNames;
 	}
 
 }

@@ -14,6 +14,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
 import dev.juan.estevez.enums.Colors;
+import dev.juan.estevez.enums.EquipStates;
 import dev.juan.estevez.enums.Equipments;
 import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.enums.States;
@@ -28,10 +29,12 @@ import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ViewUtils;
 import dev.juan.estevez.utils.bounds.cap.EquipRegister;
+import dev.juan.estevez.utils.constants.CapConstants;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public class RegisterEquipmentView extends JFrame implements ActionListener, IGui {
@@ -48,7 +51,7 @@ public class RegisterEquipmentView extends JFrame implements ActionListener, IGu
 	private JTextPane textPaneObservations;
 	private JScrollPane scrollObservations;
 	private JLabel labelTitle;
-	private JPanel container;
+	private JPanel panel;
 	private JButton btnRegisterEquip;
 	private String user;
 	private String nameClient;
@@ -66,7 +69,7 @@ public class RegisterEquipmentView extends JFrame implements ActionListener, IGu
 	@Override
 	public void initializeFrame() {
 		setSize(615, 400);
-		setTitle("Registrar nuevo Equipo - Sesión de " + user);
+		setTitle(String.format(CapConstants.REGISTER_EQUIPMENT_SESION, user));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setLayout(null);
@@ -75,11 +78,11 @@ public class RegisterEquipmentView extends JFrame implements ActionListener, IGu
 
 	@Override
 	public void setupMainPanel() {
-		container = new JPanel();
-		container.setBackground(Colors.BACKGROUND_COLOR.getValue());
-		container.setLayout(null);
-		container.setBounds(615, 400, 615, 400);
-		setContentPane(container);
+		panel = new JPanel();
+		panel.setBackground(Colors.BACKGROUND_COLOR.getValue());
+		panel.setLayout(null);
+		panel.setBounds(615, 400, 615, 400);
+		setContentPane(panel);
 	}
 
 	@Override
@@ -95,43 +98,44 @@ public class RegisterEquipmentView extends JFrame implements ActionListener, IGu
 
 	@Override
 	public void setupLabels() {
-		JLabel labelTitle = GUIComponents.createLabel("Registrar Equipo", EquipRegister.LABEL_TITLE, container);
+		JLabel labelTitle = GUIComponents.createLabel(CapConstants.EQUIPMENT_REGISTER, EquipRegister.LABEL_TITLE,
+				panel);
 		labelTitle.setFont(Fonts.BUTTON_FONT.getValue());
 		labelTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
-		GUIComponents.createLabel("Nombre del Cliente", EquipRegister.LABEL_NAME, container);
-		GUIComponents.createLabel(Equipments.TYPE.getValue(), EquipRegister.LABEL_TYPE, container);
-		GUIComponents.createLabel(Equipments.MARK.getValue(), EquipRegister.LABEL_MARK, container);
-		GUIComponents.createLabel(Equipments.MODEL.getValue(), EquipRegister.LABEL_MODEL, container);
-		GUIComponents.createLabel(Equipments.SERIAL_NUMBER.getValue(), EquipRegister.LABEL_SERIAL_NUMBER, container);
-		GUIComponents.createLabel(Equipments.OBSERVATION.getValue(), EquipRegister.LABEL_OBSERVATION, container);
+		GUIComponents.createLabel(CapConstants.CLIENT_NAME, EquipRegister.LABEL_NAME, panel);
+		GUIComponents.createLabel(Equipments.TYPE.getValue(), EquipRegister.LABEL_TYPE, panel);
+		GUIComponents.createLabel(Equipments.MARK.getValue(), EquipRegister.LABEL_MARK, panel);
+		GUIComponents.createLabel(Equipments.MODEL.getValue(), EquipRegister.LABEL_MODEL, panel);
+		GUIComponents.createLabel(Equipments.SERIAL_NUMBER.getValue(), EquipRegister.LABEL_SERIAL_NUMBER, panel);
+		GUIComponents.createLabel(Equipments.OBSERVATIONS.getValue(), EquipRegister.LABEL_OBSERVATION, panel);
 	}
 
 	@Override
 	public void setupTextFields() {
-		txtName = GUIComponents.createTextField(EquipRegister.TXT_NAME, container);
-		txtModel = GUIComponents.createTextField(EquipRegister.TXT_MODEL, container);
-		txtSerialNumber = GUIComponents.createTextField(EquipRegister.TXT_SERIAL_NUMBER, container);
+		txtName = GUIComponents.createTextField(EquipRegister.TXT_NAME, panel);
+		txtModel = GUIComponents.createTextField(EquipRegister.TXT_MODEL, panel);
+		txtSerialNumber = GUIComponents.createTextField(EquipRegister.TXT_SERIAL_NUMBER, panel);
 		txtName.setEditable(false);
 	}
 
 	public void setupTextPane() {
-		textPaneObservations = GUIComponents.createTextPane(EquipRegister.TEXT_PANE_OBSERVATIONS, container);
+		textPaneObservations = GUIComponents.createTextPane(EquipRegister.TEXT_PANE_OBSERVATIONS, panel);
 	}
 
 	private void setupComboBoxes() {
-		cmbType = GUIComponents.createComboBox(EquipRegister.CMB_TYPE,
-				new String[] { "Laptop", "Desktop", "Impresora", "Multifuncional" }, container);
-		cmbMark = GUIComponents.createComboBox(EquipRegister.CMB_MARK,
-				new String[] { "Acer", "Alienware", "Apple", "Asus", "Brother",
-						"Dell", "HP", "Lenovo", "Samsung", "Toshiba", "Xerox" },
-				container);
+		// cmbType = GUIComponents.createComboBox(EquipRegister.CMB_TYPE,
+		// new String[] { "Laptop", "Desktop", "Impresora", "Multifuncional" }, panel);
+		// cmbMark = GUIComponents.createComboBox(EquipRegister.CMB_MARK,
+		// new String[] { "Acer", "Alienware", "Apple", "Asus", "Brother",
+		// "Dell", "HP", "Lenovo", "Samsung", "Toshiba", "Xerox" },
+		// panel);
 	}
 
 	@Override
 	public void setupButtons() {
-		btnRegisterEquip = GUIComponents.createButton(Constants.EQUIPMENT_REGISTER, EquipRegister.BUTTON_REGISTER,
-				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
+		btnRegisterEquip = GUIComponents.createButton(CapConstants.EQUIPMENT_REGISTER, EquipRegister.BUTTON_REGISTER,
+				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), panel);
 	}
 
 	@Override
@@ -143,7 +147,7 @@ public class RegisterEquipmentView extends JFrame implements ActionListener, IGu
 		Client client = clientController.getById(idClientUpdate);
 
 		if (client != null) {
-			txtName.setText(client.getClientName());
+			txtName.setText(client.getName());
 		}
 
 		// TODO: Obtener los equipos y marcas desde base de datos y no dejarlos quemados
@@ -255,7 +259,7 @@ public class RegisterEquipmentView extends JFrame implements ActionListener, IGu
 
 		if (validation == 0) {
 			if (equipmentController.create(equipment) == 1) {
-				StringUtils.showMessage(Constants.SUCCESSFUL_MODIFICATION);
+				StringUtils.showMessage(Constants.SUCCESSFUL_REGISTRATION);
 				ViewUtils.openPanel(new ClientInformationView(), this);
 			}
 		}
@@ -263,12 +267,12 @@ public class RegisterEquipmentView extends JFrame implements ActionListener, IGu
 
 	private Equipment createEquipmentFromInputs() {
 		Equipment equipment = new Equipment();
-		equipment.setEquipmentType(cmbMark.getSelectedItem().toString());
+		equipment.setType(cmbMark.getSelectedItem().toString());
 		equipment.setMark(cmbMark.getSelectedItem().toString());
 		equipment.setModel(txtModel.getText());
 		equipment.setSerialNumber(txtSerialNumber.getText());
-		equipment.setObservation(textPaneObservations.getText());
-		equipment.setStatus("Nuevo Ingreso");
+		equipment.setObservations(textPaneObservations.getText());
+		equipment.setStatus(EquipStates.NEW_ENTRY.getValue());
 		equipment.setLastModification(user);
 		return equipment;
 	}

@@ -4,10 +4,10 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import dev.juan.estevez.enums.Roles;
 import dev.juan.estevez.enums.States;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public class StringUtils {
@@ -35,39 +35,20 @@ public class StringUtils {
     /**
      * Display a message in a dialog box.
      *
-     * @param  message  the message to be displayed
+     * @param message the message to be displayed
      */
     public static void showMessage(String message) {
         JOptionPane.showMessageDialog(null, message);
     }
 
     /**
-	 * Returns the corresponding permissions string based on the given permissionsCmb value.
-	 *
-	 * @param  permissionsCmb   the permissions combination value
-	 * @return                  the corresponding permissions string
-	 */
-	public static String getPermissionsString(int permissionsCmb) {
-		switch (permissionsCmb) {
-			case 1:
-				return Roles.ROLE_ADMIN.getValue();
-			case 3:
-				return Roles.ROLE_CAPTURISTA.getValue();
-			case 2:
-				return Roles.ROLE_TECH.getValue();
-			default:
-				return "";
-		}
-	}
-
-    /**
-	 * Generates the status string based on the given status index.
-	 *
-	 * @param statusIndex the status index to generate the string for
-	 * @return the status string ("Activo" or "Inactivo")
-	 */
-	public static String getStatusString(int statusIndex) {
-		return (statusIndex == 1) ? States.ACTIVE.getValue() : States.INACTIVE.getValue();
-	}
+     * Generates the status string based on the given status index.
+     *
+     * @param statusIndex the status index to generate the string for
+     * @return the status string ("Activo" or "Inactivo")
+     */
+    public static String getStatusString(int statusIndex) {
+        return (statusIndex == 1) ? States.ACTIVE.getValue() : States.INACTIVE.getValue();
+    }
 
 }

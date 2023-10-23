@@ -1,10 +1,13 @@
-package dev.juan.estevez.utils;
+package dev.juan.estevez.utils.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import dev.juan.estevez.utils.constants.DbConstants;
+
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public class DatabaseConnection {
@@ -22,7 +25,7 @@ public class DatabaseConnection {
 			final String PASSWORD = "";
 			return DriverManager.getConnection(URL, USER, PASSWORD);
 		} catch (SQLException ex) {
-			throw new SQLException(Constants.ERROR_DB_CONNECTION, ex);
+			throw new SQLException(DbConstants.ERROR_DB_CONNECTION, ex);
 		}
 	}
 

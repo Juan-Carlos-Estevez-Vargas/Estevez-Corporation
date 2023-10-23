@@ -1,11 +1,13 @@
 package dev.juan.estevez.enums;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public enum States {
 
-    ACTIVE("Activo"), INACTIVE("Inactivo");
+    ACTIVE("ACTIVO"),
+    INACTIVE("INACTIVO");
 
     private final String value;
 
@@ -18,9 +20,10 @@ public enum States {
     }
 
     /**
-     * Retrieves all the values from the States enum and returns them as an array of strings.
+     * Retrieves all the values from the States enum and returns them as an array of
+     * strings.
      *
-     * @return  an array of strings containing all the values from the States enum
+     * @return an array of strings containing all the values from the States enum
      */
     public static String[] getAllValues() {
         States[] states = States.values();

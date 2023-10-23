@@ -2,6 +2,8 @@ package dev.juan.estevez.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
@@ -16,6 +18,8 @@ import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ViewUtils;
 import dev.juan.estevez.utils.bounds.auth.LoginBounds;
+import dev.juan.estevez.utils.constants.AuthConstants;
+import dev.juan.estevez.utils.constants.DbConstants;
 import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.enums.Icons;
@@ -25,6 +29,7 @@ import dev.juan.estevez.interfaces.IGui;
 import dev.juan.estevez.models.User;
 import dev.juan.estevez.services.impl.UserService;
 import dev.juan.estevez.utils.gui.GUIComponents;
+import dev.juan.estevez.utils.validators.FieldValidator;
 import dev.juan.estevez.views.admin.AdministratorPanelView;
 import dev.juan.estevez.views.employee.EmployeePanelView;
 import dev.juan.estevez.views.technical.PanelTechnical;
@@ -41,7 +46,7 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
     private final UserService loginController;
     private JButton btnLogin, btnEye, btnForgot;
     private JLabel jlError;
-    private JPanel container;
+    private JPanel panel;
     private JPasswordField txtPassword;
     private JTextField txtUser, txtPassword2;
 
@@ -54,7 +59,7 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
     @Override
     public void initializeFrame() {
         setSize(350, 600);
-        setTitle("Estevez Corporation");
+        setTitle(Constants.APP_TITLE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
     }
@@ -65,46 +70,56 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
         setupLabels();
         setupTextFields();
         setupButtons();
-        GUIComponents.createSeparator(LoginBounds.SEPARATOR_LOGIN, container);
+        GUIComponents.createSeparator(LoginBounds.SEPARATOR_LOGIN, panel);
         setupEvents();
     }
 
     @Override
     public void setupMainPanel() {
-        container = new JPanel();
-        container.setBackground(Colors.BACKGROUND_COLOR.getValue());
-        container.setLayout(null);
-        setContentPane(container);
+        panel = new JPanel();
+        panel.setBackground(Colors.BACKGROUND_COLOR.getValue());
+        panel.setLayout(null);
+        setContentPane(panel);
     }
 
     @Override
     public void setupLabels() {
-        GUIComponents.createImageLabel(Constants.LOGIN_LOGO_URL, LoginBounds.LABEL_LOGIN_LOGO, container);
-        GUIComponents.createLabel(Constants.LOGIN_USER_TEXT, LoginBounds.LABEL_LOGIN_USER, container);
-        jlError = GUIComponents.createLabel("", LoginBounds.LABEL_LOGIN_ERROR, container);
-        GUIComponents.createLabel("", LoginBounds.LABEL_LOGIN_ERROR, container).setFont(Fonts.ERROR_FONT.getValue());
-        GUIComponents.createLabel(Constants.LOGIN_PASSWORD_TEXT, LoginBounds.LABEL_LOGIN_PASSWORD, container);
+        GUIComponents.createImageLabel(AuthConstants.LOGO_URL, LoginBounds.LABEL_LOGIN_LOGO, panel);
+        GUIComponents.createLabel(AuthConstants.LABEL_USER, LoginBounds.LABEL_LOGIN_USER, panel);
+        GUIComponents.createLabel(AuthConstants.LABEL_PASSWORD, LoginBounds.LABEL_LOGIN_PASSWORD, panel);
+
+        jlError = GUIComponents.createLabel("", LoginBounds.LABEL_LOGIN_ERROR, panel);
+        jlError.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
     @Override
     public void setupTextFields() {
-        txtUser = GUIComponents.createTextField(LoginBounds.TXT_LOGIN_USER, container);
-        txtPassword = GUIComponents.createPasswordField(LoginBounds.TXT_LOGIN_PASSWORD, container);
-        txtPassword2 = GUIComponents.createTextField(LoginBounds.TXT_LOGIN_PASSWORD2, container);
+        txtUser = GUIComponents.createTextField(LoginBounds.TXT_LOGIN_USER, panel);
+        txtPassword = GUIComponents.createPasswordField(LoginBounds.TXT_LOGIN_PASSWORD, panel);
+        txtPassword2 = GUIComponents.createTextField(LoginBounds.TXT_LOGIN_PASSWORD2, panel);
         txtPassword2.setVisible(false);
     }
 
     @Override
     public void setupButtons() {
-        btnEye = GUIComponents.createButton(Icons.EYE_ICON.getValue(), LoginBounds.BUTTON_LOGIN_EYE,
-                Colors.BACKGROUND_COLOR.getValue(), container);
-        btnLogin = GUIComponents.createButton(Constants.SIGN_IN, LoginBounds.BUTTON_LOGIN, Colors.BUTTON_COLOR.getValue(),
-                Fonts.BUTTON_FONT.getValue(), container);
+        btnEye = GUIComponents.createButton(Icons.EYE.getValue(), LoginBounds.BUTTON_LOGIN_EYE,
+                Colors.BACKGROUND_COLOR.getValue(), panel);
+        btnLogin = GUIComponents.createButton(AuthConstants.SIGN_IN, LoginBounds.BUTTON_LOGIN,
+                Colors.BUTTON_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), panel);
         btnForgot = createForgotButton();
     }
 
     @Override
     public void setupEvents() {
+        txtPassword.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    performLoginAction();
+                }
+            }
+        });
+
         btnEye.addActionListener(this);
         btnLogin.addActionListener(this);
         btnForgot.addActionListener(this);
@@ -118,8 +133,8 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
      *         border, and has an error color for the foreground.
      */
     private JButton createForgotButton() {
-        JButton btn = GUIComponents.createButton(Constants.FORGOT_TEXT, LoginBounds.BUTTON_LOGIN_FORGOT,
-                Colors.BACKGROUND_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), container);
+        JButton btn = GUIComponents.createButton(AuthConstants.FORGOT_TEXT, LoginBounds.BUTTON_LOGIN_FORGOT,
+                Colors.BACKGROUND_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), panel);
         btn.setForeground(Colors.ERROR_COLOR.getValue());
         btn.setBorder(null);
         btn.setOpaque(true);
@@ -137,14 +152,11 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
         }
     }
 
-    /**
-     * Perform the login action.
-     */
     private void performLoginAction() {
         try {
             performLogin();
         } catch (SQLException ex) {
-            handleLoginError("Error en la base de datos");
+            handleLoginError(DbConstants.ERROR_DB_CONNECTION);
         }
     }
 
@@ -156,20 +168,27 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
     private void performLogin() throws SQLException {
         String password = new String(txtPassword.getPassword());
         String username = txtUser.getText().trim();
+        int validation = validateFields(username, password);
 
-        // TODO: validar tamaño en las entradas de usuario y contraseña
-        if (!username.isEmpty() && !password.isEmpty()) {
+        if (!username.isEmpty() && !password.isEmpty() && validation == 0) {
             User user = loginController.getByUsernameAndPassword(username, password);
 
             if (user != null) {
-                LoginView.user = user.getUserName();
+                LoginView.user = user.getName();
                 handleUserLogin(user);
             } else {
-                handleLoginError("Error de autenticación");
+                handleLoginError(AuthConstants.AUTH_ERROR);
             }
         } else {
             StringUtils.showEmptyFieldsMessage();
         }
+    }
+
+    private int validateFields(String username, String password) {
+        int validation = FieldValidator.validateUsernameField(username, txtUser)
+                + FieldValidator.validateUsernameField(password, txtPassword2)
+                + FieldValidator.validatePasswordField(password, txtPassword);
+        return validation;
     }
 
     /**
@@ -179,13 +198,16 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
      * @throws SQLException if there is an error accessing the database
      */
     private void handleUserLogin(User user) throws SQLException {
-        String levelType = user.getLevelType();
+        // TODO: el level type validarlo su el usuario tiene mas roles preguntarle como
+        // desea ingresa
+        // si admin o que
+        String levelType = loginController.getRoleListByUser(user).get(0).getRole().getRoleName();
         String status = user.getStatus();
 
         if (status.equalsIgnoreCase(States.ACTIVE.getValue())) {
             openAppropriatePanel(levelType);
         } else {
-            jlError.setText(Constants.INACTIVE_USER);
+            jlError.setText(AuthConstants.INACTIVE_USER);
         }
     }
 
@@ -203,7 +225,7 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
         } else if (levelType.equals(Roles.ROLE_TECH.getValue())) {
             ViewUtils.openPanel(new PanelTechnical(), this);
         } else {
-            jlError.setText(Constants.INACTIVE_USER);
+            jlError.setText(AuthConstants.INACTIVE_USER);
         }
     }
 
@@ -230,10 +252,9 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
      * Clears and resets the user and password fields.
      */
     private void handleLoginError(String errorMessage) {
-        jlError.setText(Constants.LOGIN_ERROR_TEXT);
+        jlError.setText(AuthConstants.CREDENTIALS_ERROR);
         jlError.setFont(Fonts.ERROR_FONT.getValue());
         jlError.setForeground(Colors.ERROR_COLOR.getValue());
-        jlError.setHorizontalAlignment(SwingConstants.CENTER);
         jlError.setBounds(45, 390, 250, 25);
 
         txtUser.setText("");

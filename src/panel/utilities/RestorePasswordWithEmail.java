@@ -18,7 +18,7 @@ import javax.swing.JTextPane;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-import dev.juan.estevez.utils.DatabaseConnection;
+import dev.juan.estevez.utils.database.DatabaseConnection;
 
 /*
 import javax.mail.*;
@@ -26,7 +26,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;*/
 
 /**
- * Vista para recuperar contraseña.
+ * Vista para recuperar contraseï¿½a.
  *
  * @author Juan Carlos Estevez Vargas.
  *
@@ -34,7 +34,7 @@ import javax.mail.internet.MimeMessage;*/
 public class RestorePasswordWithEmail extends JFrame /*implements ActionListener*/ {
 
 	/**
-	 * Declaración de Variables.
+	 * Declaraciï¿½n de Variables.
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel container;
@@ -52,7 +52,7 @@ public class RestorePasswordWithEmail extends JFrame /*implements ActionListener
 		initComponents();
 		this.setSize(360, 280);
 		this.setResizable(false);
-		this.setTitle("Restaurar Contraseña");
+		this.setTitle("Restaurar Contraseï¿½a");
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.email = email;
@@ -75,7 +75,7 @@ public class RestorePasswordWithEmail extends JFrame /*implements ActionListener
 		/**
 		 * Label Principal.
 		 */
-		this.labelTittle = new JLabel("Restaurar Contraseña");
+		this.labelTittle = new JLabel("Restaurar Contraseï¿½a");
 		this.labelTittle.setFont(new java.awt.Font("Segoe UI", 0, 22));
 		this.labelTittle.setForeground(new java.awt.Color(192, 192, 192));
 		this.labelTittle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -103,14 +103,14 @@ public class RestorePasswordWithEmail extends JFrame /*implements ActionListener
 		this.textPaneIndications.setFont(new Font("serif", Font.BOLD, 14));
 		this.textPaneIndications.setEditable(false);
 		this.textPaneIndications.setText(
-				"A continuación, se enviará la nueva contraseña generada por el sistema a tu correo electrónico, por favor revisa en spam o notificaciones, cuando tengas la clave ingresa al sistema y cambiala inmediatamente.");
+				"A continuaciï¿½n, se enviarï¿½ la nueva contraseï¿½a generada por el sistema a tu correo electrï¿½nico, por favor revisa en spam o notificaciones, cuando tengas la clave ingresa al sistema y cambiala inmediatamente.");
 		this.scrollIndications = new JScrollPane(this.textPaneIndications);
 		this.scrollIndications.setBounds(20, 75, 300, 80);
 		this.scrollIndications.setViewportView(this.textPaneIndications);
 		this.container.add(this.scrollIndications);
 
 		/**
-		 * Botón para restaurar la contraseña del usuario en cuestión.
+		 * Botï¿½n para restaurar la contraseï¿½a del usuario en cuestiï¿½n.
 		 */
 		this.btnRestorePassword = new JButton("Restaurar Password");
 		this.btnRestorePassword.setFont(new java.awt.Font("Tahoma", 1, 18));
@@ -136,13 +136,13 @@ public class RestorePasswordWithEmail extends JFrame /*implements ActionListener
 					cn.close();
 					this.dispose();
 					
-					JOptionPane.showMessageDialog(null, "Contraseña enviada al correo");
+					JOptionPane.showMessageDialog(null, "Contraseï¿½a enviada al correo");
 
 					Login login = new Login();
 					login.setVisible(true);
 					login.setLocationRelativeTo(null);
 				} catch (SQLException ex) {
-					JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado. Contacta al Administrador");
+					JOptionPane.showMessageDialog(null, "Ocurriï¿½ un error inesperado. Contacta al Administrador");
 				}
 			}
 		}
@@ -174,7 +174,7 @@ public class RestorePasswordWithEmail extends JFrame /*implements ActionListener
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailReceived));
 			message.setSubject(affair);
 			newPasswordGenerated = "Sqrt.983@*kjdg";
-			messageToSend = "Tu nueva contraseña es la siguiente:\n\n" + newPasswordGenerated
+			messageToSend = "Tu nueva contraseï¿½a es la siguiente:\n\n" + newPasswordGenerated
 					+ "\n\nSe recomienda cambiarla tan pronto ingreses al sistema.";
 			message.setText(messageToSend);
 
@@ -186,7 +186,7 @@ public class RestorePasswordWithEmail extends JFrame /*implements ActionListener
 		} catch (MessagingException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"¡Ocurrió un error al intentar enviar la clave al correo electrónico! Contacta al Administrador");
+					"ï¿½Ocurriï¿½ un error al intentar enviar la clave al correo electrï¿½nico! Contacta al Administrador");
 		}
 		return newPasswordGenerated;
 	}*/

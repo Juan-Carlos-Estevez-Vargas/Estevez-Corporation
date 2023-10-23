@@ -2,7 +2,9 @@ package dev.juan.estevez.services.impl;
 
 import java.util.List;
 
+import dev.juan.estevez.models.Role;
 import dev.juan.estevez.models.User;
+import dev.juan.estevez.models.UserRole;
 import dev.juan.estevez.persistence.UserDAO;
 import dev.juan.estevez.services.IUserService;
 import dev.juan.estevez.utils.StringUtils;
@@ -24,19 +26,21 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int updateUser(User user) {
-        if (user == null) {
+    public int updateUser(User user, Role role) {
+        if (user == null || role == null) {
             return 0;
         }
-        return userDAO.update(user);
+
+        return userDAO.update(user, role);
     }
 
     @Override
-    public int createUser(User user) {
-        if (user == null) {
+    public int createUser(User user, Role role) {
+        if (user == null || role == null) {
             return 0;
         }
-        return userDAO.create(user);
+
+        return userDAO.create(user, role);
     }
 
     @Override
@@ -55,6 +59,7 @@ public class UserService implements IUserService {
             StringUtils.showEmptyFieldsMessage();
             return null;
         }
+
         return userDAO.findByUsername(username);
     }
 
@@ -64,6 +69,16 @@ public class UserService implements IUserService {
             StringUtils.showEmptyFieldsMessage();
             return null;
         }
+
         return userDAO.findByUsernameAndPassword(username, password);
+    }
+
+    @Override
+    public List<UserRole> getRoleListByUser(User user) {
+        if (user == null) {
+            return null;
+        }
+
+        return userDAO.findRoleListByUser(user);
     }
 }

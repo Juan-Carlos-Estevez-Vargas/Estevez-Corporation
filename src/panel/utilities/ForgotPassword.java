@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-import dev.juan.estevez.utils.DatabaseConnection;
+import dev.juan.estevez.utils.database.DatabaseConnection;
 
 /**
  * Vista para recuperar contrase�a por si el usuario olvid� la misma.

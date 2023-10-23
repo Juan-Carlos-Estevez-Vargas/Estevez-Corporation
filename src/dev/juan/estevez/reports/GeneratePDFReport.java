@@ -15,24 +15,26 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import dev.juan.estevez.utils.Constants;
+import dev.juan.estevez.utils.constants.ReportConstants;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public class GeneratePDFReport {
 
-	public static void generatePDFReport(List<String[]> data, String[] headers, String title, String outputPath) throws IOException, DocumentException {
-        Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(outputPath));
-        document.open();
+	public static void generatePDFReport(List<String[]> data, String[] headers, String title, String outputPath)
+			throws IOException, DocumentException {
+		Document document = new Document();
+		PdfWriter.getInstance(document, new FileOutputStream(outputPath));
+		document.open();
 
 		addHeader(document);
-        addTitle(document, title);
-        addDataTable(document, data, headers);
+		addTitle(document, title);
+		addDataTable(document, data, headers);
 
-        document.close();
-    }
+		document.close();
+	}
 
 	/**
 	 * Adds a header to the given document.
@@ -42,7 +44,7 @@ public class GeneratePDFReport {
 	 * @throws IOException       if there is an error with the image file
 	 */
 	private static void addHeader(Document document) throws DocumentException, IOException {
-		com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance(Constants.PDF_BANNER_IMG);
+		com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance(ReportConstants.PDF_BANNER_IMG);
 		header.scaleToFit(650, 1000);
 		header.setAlignment(Element.ALIGN_CENTER);
 		document.add(header);
@@ -57,7 +59,8 @@ public class GeneratePDFReport {
 	 *                           document
 	 */
 	private static void addTitle(Document document, String titleText) throws DocumentException {
-		Paragraph titleParagraph = new Paragraph(titleText,	FontFactory.getFont("Tahoma", 18, Font.BOLD, BaseColor.DARK_GRAY));
+		Paragraph titleParagraph = new Paragraph(titleText,
+				FontFactory.getFont("Tahoma", 18, Font.BOLD, BaseColor.DARK_GRAY));
 		titleParagraph.setAlignment(Element.ALIGN_CENTER);
 		document.add(titleParagraph);
 		document.add(Chunk.NEWLINE);
@@ -66,26 +69,28 @@ public class GeneratePDFReport {
 	/**
 	 * Adds a data table to the document.
 	 *
-	 * @param  document  the document to add the table to
-	 * @param  data      the data to populate the table with
-	 * @param  headers   the headers of the table columns
-	 * @throws DocumentException if there is an error adding the table to the document
+	 * @param document the document to add the table to
+	 * @param data     the data to populate the table with
+	 * @param headers  the headers of the table columns
+	 * @throws DocumentException if there is an error adding the table to the
+	 *                           document
 	 */
-	private static void addDataTable(Document document, List<String[]> data, String[] headers) throws DocumentException {
-        PdfPTable table = new PdfPTable(headers.length);
-        table.setWidthPercentage(100);
+	private static void addDataTable(Document document, List<String[]> data, String[] headers)
+			throws DocumentException {
+		PdfPTable table = new PdfPTable(headers.length);
+		table.setWidthPercentage(100);
 
-        for (String header : headers) {
-            table.addCell(header);
-        }
+		for (String header : headers) {
+			table.addCell(header);
+		}
 
-        for (String[] rowData : data) {
-            for (String value : rowData) {
-                table.addCell(value);
-            }
-        }
+		for (String[] rowData : data) {
+			for (String value : rowData) {
+				table.addCell(value);
+			}
+		}
 
-        document.add(table);
-    }
-	
+		document.add(table);
+	}
+
 }

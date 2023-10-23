@@ -16,7 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import dev.juan.estevez.utils.DatabaseConnection;
+import dev.juan.estevez.utils.database.DatabaseConnection;
 import dev.juan.estevez.views.LoginView;
 
 /**

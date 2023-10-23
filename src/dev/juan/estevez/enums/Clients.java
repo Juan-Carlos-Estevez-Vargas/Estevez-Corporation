@@ -1,6 +1,7 @@
 package dev.juan.estevez.enums;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public enum Clients {
@@ -10,7 +11,9 @@ public enum Clients {
     EMAIL("Correo"),
     PHONE("Teléfono"),
     ADDRESS("Dirección"),
-    MODIFY_BY("Última modificación por");
+    MODIFY_BY("Última modificación por"),
+    CREATION_DATE("Fecha de creación"),
+    MODIFICATION_DATE("Última modificación");
 
     private final String value;
 

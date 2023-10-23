@@ -1,4 +1,4 @@
-package dev.juan.estevez.utils;
+package dev.juan.estevez.utils.gui;
 
 import java.awt.Component;
 
@@ -6,6 +6,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public class HorizontalCenterComboBoxRenderer extends DefaultListCellRenderer {

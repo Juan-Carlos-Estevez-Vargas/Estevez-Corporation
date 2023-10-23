@@ -1,6 +1,7 @@
 package dev.juan.estevez.utils.bounds;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public class Bounds {

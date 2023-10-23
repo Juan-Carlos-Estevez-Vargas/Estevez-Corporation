@@ -23,10 +23,11 @@ import dev.juan.estevez.services.impl.ClientService;
 import dev.juan.estevez.services.impl.EquipmentService;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
-import dev.juan.estevez.utils.ValidateCharacters;
 import dev.juan.estevez.utils.ViewUtils;
 import dev.juan.estevez.utils.bounds.cap.EquipInfoBounds;
+import dev.juan.estevez.utils.constants.CapConstants;
 import dev.juan.estevez.utils.gui.GUIComponents;
+import dev.juan.estevez.utils.validators.ValidateCharacters;
 import dev.juan.estevez.views.LoginView;
 
 /**
@@ -50,7 +51,7 @@ public class EquipmentInformationView extends JFrame implements ActionListener, 
 	private JTextField txtMark;
 	private JTextPane textPaneObservations;
 	private JTextPane textPaneComments;
-	private JPanel container;
+	private JPanel panel;
 	private JButton btnUpdateEquipment;
 
 	public EquipmentInformationView(int idEquipment) {
@@ -67,7 +68,7 @@ public class EquipmentInformationView extends JFrame implements ActionListener, 
 	@Override
 	public void initializeFrame() {
 		setSize(640, 500);
-		setTitle("Equipo del cliente " + user + " - Sesión de " + user);
+		setTitle(String.format(CapConstants.EQUIPMENT_INFO_PANEL_SESION, this.user));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setLayout(null);
@@ -86,41 +87,41 @@ public class EquipmentInformationView extends JFrame implements ActionListener, 
 
 	@Override
 	public void setupMainPanel() {
-		container = new JPanel();
-		container.setBackground(Colors.BACKGROUND_COLOR.getValue());
-		container.setLayout(null);
-		container.setBounds(640, 500, 640, 500);
-		setContentPane(container);
+		panel = new JPanel();
+		panel.setBackground(Colors.BACKGROUND_COLOR.getValue());
+		panel.setLayout(null);
+		panel.setBounds(640, 500, 640, 500);
+		setContentPane(panel);
 	}
 
 	@Override
 	public void setupLabels() {
-		JLabel labelTitle = GUIComponents.createLabel("Información del Equipo " + user, EquipInfoBounds.LABEL_TITLE, container);
+		JLabel labelTitle = GUIComponents.createLabel(String.format(CapConstants.EQUIPMENT_INFO_TITLE, this.user), EquipInfoBounds.LABEL_TITLE,	panel);
 		labelTitle.setFont(Fonts.BUTTON_FONT.getValue());
 		labelTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
-		GUIComponents.createLabel("Nombre del Cliente", EquipInfoBounds.LABEL_NAME, container);
-		GUIComponents.createLabel(Equipments.TYPE.getValue(), EquipInfoBounds.LABEL_TYPE, container);
-		GUIComponents.createLabel(Equipments.MARK.getValue(), EquipInfoBounds.LABEL_MARK, container);
-		GUIComponents.createLabel(Equipments.MODEL.getValue(), EquipInfoBounds.LABEL_MODEL, container);
-		GUIComponents.createLabel(Equipments.SERIAL_NUMBER.getValue(), EquipInfoBounds.LABEL_SERIAL_NUMBER, container);
-		GUIComponents.createLabel(Equipments.LAST_MODIFICATION.getValue(), EquipInfoBounds.LABEL_LAST_MODIFICATION, container);
-		GUIComponents.createLabel(Equipments.DATE_OF_ADMISSION.getValue(), EquipInfoBounds.LABEL_DATE_OF_ADMISSION,	container);
-		GUIComponents.createLabel(Equipments.STATUS.getValue(), EquipInfoBounds.LABEL_STATUS, container);
-		GUIComponents.createLabel(Equipments.OBSERVATION.getValue(), EquipInfoBounds.LABEL_OBSERVATION, container);
-		GUIComponents.createLabel(Equipments.TECHNICAL_COMMENTS.getValue(), EquipInfoBounds.LABEL_COMMENTS, container);
+		GUIComponents.createLabel(CapConstants.CLIENT_NAME, EquipInfoBounds.LABEL_NAME, panel);
+		GUIComponents.createLabel(Equipments.TYPE.getValue(), EquipInfoBounds.LABEL_TYPE, panel);
+		GUIComponents.createLabel(Equipments.MARK.getValue(), EquipInfoBounds.LABEL_MARK, panel);
+		GUIComponents.createLabel(Equipments.MODEL.getValue(), EquipInfoBounds.LABEL_MODEL, panel);
+		GUIComponents.createLabel(Equipments.SERIAL_NUMBER.getValue(), EquipInfoBounds.LABEL_SERIAL_NUMBER, panel);
+		GUIComponents.createLabel(Equipments.LAST_MODIFICATION.getValue(), EquipInfoBounds.LABEL_LAST_MODIFICATION,	panel);
+		GUIComponents.createLabel(Equipments.DATE_OF_ADMISSION.getValue(), EquipInfoBounds.LABEL_DATE_OF_ADMISSION,	panel);
+		GUIComponents.createLabel(Equipments.STATUS.getValue(), EquipInfoBounds.LABEL_STATUS, panel);
+		GUIComponents.createLabel(Equipments.OBSERVATIONS.getValue(), EquipInfoBounds.LABEL_OBSERVATION, panel);
+		GUIComponents.createLabel(Equipments.TECHNICAL_COMMENTS.getValue(), EquipInfoBounds.LABEL_COMMENTS, panel);
 	}
 
 	@Override
 	public void setupTextFields() {
-		txtName = GUIComponents.createTextField(EquipInfoBounds.TXT_NAME, container);
-		txtModel = GUIComponents.createTextField(EquipInfoBounds.TXT_MODEL, container);
-		txtSerialNumber = GUIComponents.createTextField(EquipInfoBounds.TXT_SERIAL_NUMBER, container);
-		txtDateOfAdmission = GUIComponents.createTextField(EquipInfoBounds.TXT_DATE_OF_ADMISSION, container);
-		txtModifyBy = GUIComponents.createTextField(EquipInfoBounds.TXT_MODIFY_BY, container);
-		txtStatus = GUIComponents.createTextField(EquipInfoBounds.TXT_STATUS, container);
-		txtTypeEquip = GUIComponents.createTextField(EquipInfoBounds.TXT_TYPE, container);
-		txtMark = GUIComponents.createTextField(EquipInfoBounds.TXT_MARK, container);
+		txtName = GUIComponents.createTextField(EquipInfoBounds.TXT_NAME, panel);
+		txtModel = GUIComponents.createTextField(EquipInfoBounds.TXT_MODEL, panel);
+		txtSerialNumber = GUIComponents.createTextField(EquipInfoBounds.TXT_SERIAL_NUMBER, panel);
+		txtDateOfAdmission = GUIComponents.createTextField(EquipInfoBounds.TXT_DATE_OF_ADMISSION, panel);
+		txtModifyBy = GUIComponents.createTextField(EquipInfoBounds.TXT_MODIFY_BY, panel);
+		txtStatus = GUIComponents.createTextField(EquipInfoBounds.TXT_STATUS, panel);
+		txtTypeEquip = GUIComponents.createTextField(EquipInfoBounds.TXT_TYPE, panel);
+		txtMark = GUIComponents.createTextField(EquipInfoBounds.TXT_MARK, panel);
 
 		txtName.setEditable(false);
 		txtModifyBy.setEnabled(false);
@@ -131,15 +132,15 @@ public class EquipmentInformationView extends JFrame implements ActionListener, 
 	}
 
 	public void setupTextPane() {
-		textPaneObservations = GUIComponents.createTextPane(EquipInfoBounds.TEXT_PANE_OBSERVATIONS, container);
-		textPaneComments = GUIComponents.createTextPane(EquipInfoBounds.TEXT_PANE_COMMENTS, container);
+		textPaneObservations = GUIComponents.createTextPane(EquipInfoBounds.TEXT_PANE_OBSERVATIONS, panel);
+		textPaneComments = GUIComponents.createTextPane(EquipInfoBounds.TEXT_PANE_COMMENTS, panel);
 		textPaneComments.setEditable(false);
 	}
 
 	@Override
 	public void setupButtons() {
-		btnUpdateEquipment = GUIComponents.createButton(Constants.UPDATED_EQUIPMENT, EquipInfoBounds.BUTTON_UPDATE,
-				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), container);
+		btnUpdateEquipment = GUIComponents.createButton(CapConstants.UPDATE_EQUIP, EquipInfoBounds.BUTTON_UPDATE,
+				Colors.BUTTON_COLOR.getValue(), Fonts.LABEL_FONT.getValue(), panel);
 	}
 
 	@Override
@@ -153,16 +154,15 @@ public class EquipmentInformationView extends JFrame implements ActionListener, 
 		Equipment equipment = equipmentController.getById(idEquipment);
 
 		if (client != null && equipment != null) {
-			txtName.setText(client.getClientName());
+			txtName.setText(client.getName());
 			txtModel.setText(equipment.getModel());
 			txtMark.setText(equipment.getMark());
 			txtSerialNumber.setText(equipment.getSerialNumber());
-			txtDateOfAdmission.setText(equipment.getAdmissionDay() + "/" + equipment.getAdmissionMonth() + "/"
-					+ equipment.getAdmissionYear());
+			txtDateOfAdmission.setText(equipment.getAdmissionDate().toString());
 			txtStatus.setText(equipment.getStatus());
-			txtTypeEquip.setText(equipment.getEquipmentType());
+			txtTypeEquip.setText(equipment.getType());
 			txtModifyBy.setText(client.getLastModification());
-			textPaneObservations.setText(equipment.getObservation());
+			textPaneObservations.setText(equipment.getObservations());
 			textPaneComments.setText(equipment.getTechnicalComments());
 		}
 	}
@@ -193,12 +193,12 @@ public class EquipmentInformationView extends JFrame implements ActionListener, 
 
 	private Equipment createEquipmentFromInputs() {
 		Equipment equipment = new Equipment();
-		equipment.setEquipmentID(idEquipment);
-		equipment.setEquipmentType(txtTypeEquip.getText());
+		equipment.setId(idEquipment);
+		equipment.setType(txtTypeEquip.getText());
 		equipment.setModel(txtModel.getText());
 		equipment.setMark(txtMark.getText());
 		equipment.setSerialNumber(txtSerialNumber.getText());
-		equipment.setObservation(textPaneObservations.getText());
+		equipment.setObservations(textPaneObservations.getText());
 		return equipment;
 	}
 

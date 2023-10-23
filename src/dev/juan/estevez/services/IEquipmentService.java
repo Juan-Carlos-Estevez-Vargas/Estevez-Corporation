@@ -3,6 +3,10 @@ package dev.juan.estevez.services;
 import dev.juan.estevez.models.Equipment;
 import java.util.List;
 
+/**
+ * 
+ * @author Juan Carlos Estevez Vargas.
+ */
 public interface IEquipmentService {
 
     Equipment getById(int id);

@@ -16,23 +16,26 @@ import dev.juan.estevez.enums.Fonts;
 import dev.juan.estevez.enums.Users;
 import dev.juan.estevez.interfaces.IGui;
 import dev.juan.estevez.models.User;
+import dev.juan.estevez.models.UserRole;
 import dev.juan.estevez.persistence.UserDAO;
 import dev.juan.estevez.services.impl.UserService;
 import dev.juan.estevez.utils.Constants;
 import dev.juan.estevez.utils.StringUtils;
 import dev.juan.estevez.utils.ViewUtils;
 import dev.juan.estevez.utils.bounds.Bounds;
+import dev.juan.estevez.utils.constants.AdminConstants;
 import dev.juan.estevez.utils.gui.GUIComponents;
 import dev.juan.estevez.views.LoginView;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public class ManagementUsersView extends JFrame implements IGui {
 
 	private static final long serialVersionUID = 1L;
 	public static String user_update = "";
-	private JPanel container;
+	private JPanel panel;
 	private JTable tableUsers;
 	private String user;
 	private DefaultTableModel model = new DefaultTableModel();
@@ -50,7 +53,7 @@ public class ManagementUsersView extends JFrame implements IGui {
 	@Override
 	public void initializeFrame() {
 		setSize(630, 340);
-		setTitle("Usuarios registrados - Sesión de " + this.user);
+		setTitle(String.format(AdminConstants.MANAGEMENT_USERS_SESION, this.user));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setLayout(null);
@@ -65,15 +68,15 @@ public class ManagementUsersView extends JFrame implements IGui {
 
 	@Override
 	public void setupMainPanel() {
-		container = new JPanel();
-		container.setBackground(Colors.BACKGROUND_COLOR.getValue());
-		container.setLayout(null);
-		setContentPane(container);
+		panel = new JPanel();
+		panel.setBackground(Colors.BACKGROUND_COLOR.getValue());
+		panel.setLayout(null);
+		setContentPane(panel);
 	}
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel(Constants.REGISTERED_USERS_TITLE, Bounds.LABEL_MANAGE_TITLE, container)
+		GUIComponents.createLabel(AdminConstants.REGISTERED_USERS_TITLE, Bounds.LABEL_MANAGE_TITLE, panel)
 				.setFont(Fonts.BUTTON_FONT.getValue());
 	}
 
@@ -97,15 +100,15 @@ public class ManagementUsersView extends JFrame implements IGui {
 	 * Creates a table and scroll pane.
 	 */
 	private void createTableAndScrollPane() {
-		tableUsers = GUIComponents.createTable(model, container);
-		GUIComponents.createScrollPanel(tableUsers, Bounds.SCROLL_MANAGE, container);
+		tableUsers = GUIComponents.createTable(model, panel);
+		GUIComponents.createScrollPanel(tableUsers, Bounds.SCROLL_MANAGE, panel);
 	}
 
 	/**
 	 * Adds columns to the table.
 	 */
 	private void addColumnsToTable() {
-		model.addColumn(" ");
+		model.addColumn("");
 		model.addColumn(Users.NAME.getValue());
 		model.addColumn(Users.USERNAME.getValue());
 		model.addColumn(Users.PERMISIONS.getValue());
@@ -128,11 +131,13 @@ public class ManagementUsersView extends JFrame implements IGui {
 	private void fillTableWithData(List<User> users) throws SQLException {
 		if (users != null) {
 			for (User user : users) {
+				List<UserRole> roles = userController.getRoleListByUser(user);
 				model.addRow(new Object[] {
-						user.getUserID(),
-						user.getUserName(),
+						user.getId(),
+						user.getName(),
 						user.getUsername(),
-						user.getLevelType(),
+						// TODO: Buscra alternativa para mostrar los roles
+						roles.get(0).getRole().getRoleName(),
 						user.getStatus()
 				});
 			}

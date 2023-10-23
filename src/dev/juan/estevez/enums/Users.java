@@ -1,19 +1,20 @@
 package dev.juan.estevez.enums;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public enum Users {
-    
+
     NAME("Nombre"),
-    EMAIL("Correo"),
     LEVEL("Nivel"),
+    EMAIL("Correo"),
+    PHONE("Teléfono"),
+    STATUS("Estado"),
+    USERNAME("Usuario"),
     PERMISIONS("Permisos"),
     PERMISIONS_OF("Permisos de"),
-    PHONE("Teléfono"),
-    REGISTERED_BY("Registrado por"),
-    STATUS("Estado"),
-    USERNAME("Usuario");
+    REGISTERED_BY("Registrado por");
 
     private final String value;
 

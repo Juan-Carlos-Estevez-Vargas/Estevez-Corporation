@@ -1,13 +1,14 @@
 package dev.juan.estevez.enums;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public enum Roles {
-    
-    ROLE_ADMIN("Administrador"),
-    ROLE_CAPTURISTA("Capturista"),
-    ROLE_TECH("Tecnico");
+
+    ROLE_TECH("TECNICO"),
+    ROLE_ADMIN("ADMINISTRADOR"),
+    ROLE_CAPTURISTA("CAPTURISTA");
 
     private final String value;
 
@@ -20,9 +21,10 @@ public enum Roles {
     }
 
     /**
-     * Retrieves all the values from the Roles enum and returns them as an array of strings.
+     * Retrieves all the values from the Roles enum and returns them as an array of
+     * strings.
      *
-     * @return  an array of strings containing all the values from the Roles enum
+     * @return an array of strings containing all the values from the Roles enum
      */
     public static String[] getAllValues() {
         Roles[] roles = Roles.values();

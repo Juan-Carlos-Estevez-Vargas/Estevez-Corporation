@@ -1,5 +1,9 @@
 package dev.juan.estevez.utils.bounds.auth;
 
+/**
+ * 
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class LoginBounds {
 
     // --- Labels ---

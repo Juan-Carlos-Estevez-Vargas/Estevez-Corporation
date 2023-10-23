@@ -18,6 +18,10 @@ public class EquipmentService implements IEquipmentService {
 
     @Override
     public int updateEquipment(Equipment equipment) {
+        if (equipment == null) {
+            return 0;
+        }
+
         return equipmentDAO.update(equipment);
     }
 

@@ -3,6 +3,7 @@ package dev.juan.estevez.enums;
 import java.awt.Color;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas.
  */
 public enum Colors {

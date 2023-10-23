@@ -1,5 +1,9 @@
 package dev.juan.estevez.utils.bounds.admin;
 
+/**
+ * 
+ * @author Juan Carlos Estevez Vargas.
+ */
 public class RegisterUserBounds {
 
     // --- Labels ---
@@ -18,6 +22,6 @@ public class RegisterUserBounds {
     // --- Buttons ---
     public static final int[] BUTTON_REGISTER_USER = { 380, 120, 140, 120 };
     // --- Combo Boxes ---
-    public static final int[] CMB_PERMISIONS = { 20, 250, 170, 25 };
+    public static final int[] CMB_PERMISIONS = { 20, 250, 230, 25 };
 
 }

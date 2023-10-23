@@ -2,6 +2,10 @@ package dev.juan.estevez.persistence.repository;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Juan Carlos Estevez Vargas.
+ */
 public interface CrudRepository<T, ID> {
 
     int create(T entity);

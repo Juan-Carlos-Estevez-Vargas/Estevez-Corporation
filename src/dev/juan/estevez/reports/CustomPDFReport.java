@@ -12,9 +12,10 @@ import dev.juan.estevez.enums.Users;
 import dev.juan.estevez.models.Client;
 import dev.juan.estevez.models.Equipment;
 import dev.juan.estevez.models.User;
-import dev.juan.estevez.utils.Constants;
+import dev.juan.estevez.utils.constants.ReportConstants;
 
 /**
+ * 
  * @author Juan Carlos Estevez Vargas
  */
 public class CustomPDFReport {
@@ -43,17 +44,17 @@ public class CustomPDFReport {
 
         for (User user : users) {
             String[] userRow = {
-                    user.getUserName(),
-                    user.getUserEmail(),
-                    user.getUserPhone(),
-                    user.getLevelType(),
+                    user.getName(),
+                    user.getEmail(),
+                    user.getPhone(),
+                    //user.getRoleList().get(0).getRoleName(),
                     user.getStatus(),
                     user.getRegisterBy()
             };
             userData.add(userRow);
         }
 
-        GeneratePDFReport.generatePDFReport(userData, userHeaders, Constants.USER_LIST, outputPath);
+        GeneratePDFReport.generatePDFReport(userData, userHeaders, ReportConstants.USER_LIST, outputPath);
     }
 
     /**
@@ -79,17 +80,17 @@ public class CustomPDFReport {
 
         for (Client client : clients) {
             String[] clientRow = {
-                    String.valueOf(client.getClientID()),
-                    client.getClientName(),
-                    client.getClientEmail(),
-                    client.getClientPhone(),
-                    client.getClientAddress()
+                    String.valueOf(client.getId()),
+                    client.getName(),
+                    client.getEmail(),
+                    client.getPhone(),
+                    client.getAddress()
             };
 
             clientData.add(clientRow);
         }
 
-        GeneratePDFReport.generatePDFReport(clientData, clientHeaders, Constants.CLIENT_LIST, outputPath);
+        GeneratePDFReport.generatePDFReport(clientData, clientHeaders, ReportConstants.CLIENT_LIST, outputPath);
     }
 
     /**
@@ -114,17 +115,17 @@ public class CustomPDFReport {
 
         for (Equipment equipment : equipments) {
             String[] equipmentRow = {
-                    String.valueOf(equipment.getClientID()), // TODO: buscar cliente por id y setear el name
+                    String.valueOf(equipment.getClientId()), // TODO: buscar cliente por id y setear el name
                     equipment.getModel(),
                     equipment.getMark(),
-                    equipment.getEquipmentType(),
+                    equipment.getType(),
                     equipment.getStatus()
             };
 
             equipmentData.add(equipmentRow);
         }
 
-        GeneratePDFReport.generatePDFReport(equipmentData, equipmentHeaders, Constants.EQUIPMENT_LIST, outputPath);
+        GeneratePDFReport.generatePDFReport(equipmentData, equipmentHeaders, ReportConstants.EQUIPMENT_LIST, outputPath);
     }
 
 }
