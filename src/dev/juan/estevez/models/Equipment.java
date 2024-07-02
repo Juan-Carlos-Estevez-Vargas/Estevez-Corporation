@@ -1,13 +1,19 @@
 package dev.juan.estevez.models;
 
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
  * @author Juan Carlos Estevez Vargas.
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Equipment {
 
 	private int id;
@@ -23,9 +29,6 @@ public class Equipment {
 	private String lastModification;
 	private String technicalComments;
 	private String technicalRevisionOf;
-
-	public Equipment() {
-	}
 
 	public Equipment(int id, int clientId, String type, String mark, String model,
 			String serialNumber, LocalDateTime admissionDate, String observations, String status,

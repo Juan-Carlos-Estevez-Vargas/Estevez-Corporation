@@ -226,16 +226,16 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 	private void fillTableWithData(List<Equipment> equipmentList) throws SQLException {
 		DefaultTableModel model = (DefaultTableModel) tableEquipment.getModel();
 
-		for (Equipment equipment : equipmentList) {
+		equipmentList.forEach(equipment -> {
 			if (equipment != null) {
 				model.addRow(new Object[] {
-						equipment.getId(),
-						equipment.getType(),
-						equipment.getMark(),
-						equipment.getStatus()
+					equipment.getId(),
+					equipment.getType(),
+					equipment.getMark(),
+					equipment.getStatus()
 				});
 			}
-		}
+		});
 	}
 
 	/**
@@ -302,14 +302,14 @@ public class ClientInformationView extends JFrame implements ActionListener, IGu
 	 * @return the created client object
 	 */
 	private Client createClientFromInputs() {
-		Client client = new Client();
-		client.setId(idClient);
-		client.setName(txtName.getText().trim());
-		client.setEmail(txtEmail.getText().trim());
-		client.setPhone(txtPhone.getText().trim());
-		client.setAddress(txtAdress.getText().trim());
-		client.setLastModification(user);
-		return client;
+		return Client.builder()
+			.id(idClient)
+			.name(txtName.getText().trim())
+			.email(txtEmail.getText().trim())
+			.phone(txtPhone.getText().trim())
+			.address(txtAdress.getText().trim())
+			.lastModification(user)
+			.build();
 	}
 
 	/**

@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -89,8 +88,10 @@ public class RegisterUserView extends JFrame implements ActionListener, IGui {
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel(AdminConstants.USER_REGISTER, RegisterUserBounds.LABEL_TITLE, panel)
-				.setFont(Fonts.BUTTON_FONT.getValue());
+		GUIComponents
+			.createLabel(AdminConstants.USER_REGISTER, RegisterUserBounds.LABEL_TITLE, panel)
+			.setFont(Fonts.BUTTON_FONT.getValue());
+
 		GUIComponents.createLabel(Users.NAME.getValue(), RegisterUserBounds.LABEL_NAME, panel);
 		GUIComponents.createLabel(Users.EMAIL.getValue(), RegisterUserBounds.LABEL_EMAIL, panel);
 		GUIComponents.createLabel(Users.PHONE.getValue(), RegisterUserBounds.LABEL_PHONE, panel);
@@ -109,7 +110,8 @@ public class RegisterUserView extends JFrame implements ActionListener, IGui {
 
 	@Override
 	public void setupButtons() {
-		btnRegister = GUIComponents.createButton(Icons.REGISTER_USER_BUTTON.getValue(),
+		btnRegister = GUIComponents
+			.createButton(Icons.REGISTER_USER_BUTTON.getValue(), 
 				RegisterUserBounds.BUTTON_REGISTER_USER, Colors.BACKGROUND_COLOR.getValue(), panel);
 	}
 
@@ -155,12 +157,12 @@ public class RegisterUserView extends JFrame implements ActionListener, IGui {
 	 * @return a User object populated with the values from the input fields
 	 */
 	private User createUserFromInputs() {
-		User user = new User();
-		user.setEmail(txtEmail.getText().trim());
-		user.setPhone(txtPhone.getText().trim());
-		user.setUsername(txtUsername.getText().trim());
-		user.setName(txtName.getText().trim());
-		return user;
+		return User.builder()
+			.email(txtEmail.getText().trim())
+			.phone(txtPhone.getText().trim())
+			.username(txtUsername.getText().trim())
+			.name(txtName.getText().trim())
+			.build();
 	}
 
 	/**
@@ -216,10 +218,7 @@ public class RegisterUserView extends JFrame implements ActionListener, IGui {
 
 	private List<String> getRoleNames() {
 		List<String> roleNames = new ArrayList<>();
-
-		for (Role role : roles) {
-			roleNames.add(role.getRoleName());
-		}
+		roles.forEach(role -> roleNames.add(role.getRoleName()));
 		return roleNames;
 	}
 

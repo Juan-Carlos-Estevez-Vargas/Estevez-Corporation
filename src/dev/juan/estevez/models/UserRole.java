@@ -1,25 +1,22 @@
 package dev.juan.estevez.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
  * @author Juan Carlos Estevez Vargas.
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserRole {
 
     private int id;
     private User user;
     private Role role;
-
-    public UserRole() {
-    }
-
-    public UserRole(int id, User user, Role role) {
-        this.id = id;
-        this.user = user;
-        this.role = role;
-    }
 
 }

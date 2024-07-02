@@ -58,19 +58,7 @@ public class ClientDAO implements CrudRepository<Client, Integer> {
 
     @Override
     public Client findById(Integer id) {
-        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_BY_ID)) {
-            pst.setInt(1, id);
-
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    return extractFromResultSet(rs);
-                }
-            }
-        } catch (SQLException ex) {
-            StringUtils.handleQueryError(ex, DbConstants.CLIENT_FETCH_ERROR);
-        }
-
-        return null;
+        return findClientByField(SQL_GET_BY_ID, id);
     }
 
     @Override
@@ -79,7 +67,6 @@ public class ClientDAO implements CrudRepository<Client, Integer> {
 
         try (PreparedStatement pst = connection.prepareStatement(SQL_GET_ALL);
                 ResultSet rs = pst.executeQuery()) {
-
             while (rs.next()) {
                 clients.add(extractFromResultSet(rs));
             }
@@ -116,9 +103,12 @@ public class ClientDAO implements CrudRepository<Client, Integer> {
     }
 
     public Client findByEmail(String email) {
-        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_BY_EMAIL)) {
-            pst.setString(1, email);
-
+        return findClientByField(SQL_GET_BY_EMAIL, email);
+    }
+    
+    private Client findClientByField(String sql, Object field) {
+        try (PreparedStatement pst = connection.prepareStatement(sql)) {
+            pst.setObject(1, field);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     return extractFromResultSet(rs);
@@ -127,22 +117,19 @@ public class ClientDAO implements CrudRepository<Client, Integer> {
         } catch (SQLException ex) {
             StringUtils.handleQueryError(ex, DbConstants.CLIENT_FETCH_ERROR);
         }
-
         return null;
     }
 
     private Client extractFromResultSet(ResultSet rs) throws SQLException {
-        if (rs == null)
-            throw new SQLException("ResultSet is null.");
+        if (rs == null) throw new SQLException("ResultSet is null.");
 
-        Client client = new Client();
-        client.setId(rs.getInt("id_cliente"));
-        client.setName(rs.getString("nombre_cliente"));
-        client.setEmail(rs.getString("mail_cliente"));
-        client.setPhone(rs.getString("tel_cliente"));
-        client.setAddress(rs.getString("dir_cliente"));
-        client.setLastModification(rs.getString("ultima_modificacion_por"));
-
-        return client;
+        return Client.builder()
+            .id(rs.getInt("id_cliente"))
+            .name(rs.getString("nombre_cliente"))
+            .email(rs.getString("mail_cliente"))
+            .phone(rs.getString("tel_cliente"))
+            .address(rs.getString("dir_cliente"))
+            .lastModification(rs.getString("ultima_modificacion_por"))
+            .build();
     }
 }

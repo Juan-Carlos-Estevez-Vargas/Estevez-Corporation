@@ -192,14 +192,14 @@ public class EquipmentInformationView extends JFrame implements ActionListener, 
 	}
 
 	private Equipment createEquipmentFromInputs() {
-		Equipment equipment = new Equipment();
-		equipment.setId(idEquipment);
-		equipment.setType(txtTypeEquip.getText());
-		equipment.setModel(txtModel.getText());
-		equipment.setMark(txtMark.getText());
-		equipment.setSerialNumber(txtSerialNumber.getText());
-		equipment.setObservations(textPaneObservations.getText());
-		return equipment;
+		return Equipment.builder()
+			.id(idEquipment)
+			.type(txtTypeEquip.getText())
+			.model(txtModel.getText())
+			.mark(txtMark.getText())
+			.serialNumber(txtSerialNumber.getText())
+			.observations(textPaneObservations.getText())
+			.build();
 	}
 
 	private int validateFields(Equipment equipment) {

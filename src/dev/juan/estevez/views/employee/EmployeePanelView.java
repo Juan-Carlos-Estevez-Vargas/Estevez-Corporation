@@ -79,12 +79,18 @@ public class EmployeePanelView extends JFrame implements ActionListener, IGui {
     @Override
     public void setupLabels() {
         GUIComponents.createLabel(this.user, Bounds.LABEL_ADMIN_TITLE, panel);
-        GUIComponents.createLabel(CapConstants.CLIENT_REGISTER, Bounds.LABEL_ADMIN_USER_REGISTER, panel)
-                .setFont(Fonts.PANEL_LABEL_FONT.getValue());
-        GUIComponents.createLabel(CapConstants.MANAGE_CLIENTS, Bounds.LABEL_ADMIN_MANAGE_USERS, panel)
-                .setFont(Fonts.PANEL_LABEL_FONT.getValue());
-        GUIComponents.createLabel(CapConstants.PRINT_CLIENTS, Bounds.LABEL_ADMIN_PRINT_USERS, panel)
-                .setFont(Fonts.PANEL_LABEL_FONT.getValue());
+
+        GUIComponents
+            .createLabel(CapConstants.CLIENT_REGISTER, Bounds.LABEL_ADMIN_USER_REGISTER, panel)
+            .setFont(Fonts.PANEL_LABEL_FONT.getValue());
+
+        GUIComponents
+            .createLabel(CapConstants.MANAGE_CLIENTS, Bounds.LABEL_ADMIN_MANAGE_USERS, panel)
+            .setFont(Fonts.PANEL_LABEL_FONT.getValue());
+
+        GUIComponents
+            .createLabel(CapConstants.PRINT_CLIENTS, Bounds.LABEL_ADMIN_PRINT_USERS, panel)
+            .setFont(Fonts.PANEL_LABEL_FONT.getValue());
     }
 
     @Override

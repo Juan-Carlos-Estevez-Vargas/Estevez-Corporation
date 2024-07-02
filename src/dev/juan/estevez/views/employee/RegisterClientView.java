@@ -147,12 +147,12 @@ public class RegisterClientView extends JFrame implements ActionListener, IGui {
 	 *         set based on the input values
 	 */
 	private Client createClientFromInputs() {
-		Client client = new Client();
-		client.setName(txtNameClient.getText().trim());
-		client.setEmail(txtEmailClient.getText().trim());
-		client.setPhone(txtPhoneClient.getText().trim());
-		client.setAddress(txtAdressClient.getText().trim());
-		return client;
+		return Client.builder()
+			.name(txtNameClient.getText().trim())
+			.email(txtEmailClient.getText().trim())
+			.phone(txtPhoneClient.getText().trim())
+			.address(txtAdressClient.getText().trim())
+			.build();
 	}
 
 	/**

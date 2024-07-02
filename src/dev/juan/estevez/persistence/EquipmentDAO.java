@@ -59,19 +59,7 @@ public class EquipmentDAO implements CrudRepository<Equipment, Integer> {
 
     @Override
     public Equipment findById(Integer id) {
-        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_BY_ID)) {
-            pst.setInt(1, id);
-
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    return extractFromResultSet(rs);
-                }
-            }
-        } catch (SQLException ex) {
-            StringUtils.handleQueryError(ex, DbConstants.EQUIPMENT_FETCH_ERROR);
-        }
-
-        return null;
+        return findEquipmentByField(SQL_GET_BY_ID, id);
     }
 
     @Override
@@ -106,27 +94,16 @@ public class EquipmentDAO implements CrudRepository<Equipment, Integer> {
     }
 
     public List<Equipment> findAllByClientId(int id) {
-        List<Equipment> equipments = new ArrayList<>();
-
-        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_BY_CLIENT_ID)) {
-            pst.setInt(1, id);
-
-            try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    equipments.add(extractFromResultSet(rs));
-                }
-            }
-        } catch (SQLException ex) {
-            StringUtils.handleQueryError(ex, DbConstants.EQUIPMENTS_FETCH_ERROR);
-        }
-
-        return equipments;
+        return findEquipmentsByField(SQL_GET_BY_CLIENT_ID, id);
     }
 
     public Equipment findByClientId(int id) {
-        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_BY_CLIENT_ID)) {
-            pst.setInt(1, id);
+        return findEquipmentByField(SQL_GET_BY_CLIENT_ID, id);
+    }
 
+    private Equipment findEquipmentByField(String sql, Object field) {
+        try (PreparedStatement pst = connection.prepareStatement(sql)) {
+            pst.setObject(1, field);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     return extractFromResultSet(rs);
@@ -135,24 +112,38 @@ public class EquipmentDAO implements CrudRepository<Equipment, Integer> {
         } catch (SQLException ex) {
             StringUtils.handleQueryError(ex, DbConstants.EQUIPMENT_FETCH_ERROR);
         }
-
         return null;
     }
 
+    private List<Equipment> findEquipmentsByField(String sql, Object field) {
+        List<Equipment> equipments = new ArrayList<>();
+        try (PreparedStatement pst = connection.prepareStatement(sql)) {
+            pst.setObject(1, field);
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    equipments.add(extractFromResultSet(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            StringUtils.handleQueryError(ex, DbConstants.EQUIPMENTS_FETCH_ERROR);
+        }
+        return equipments;
+    }
+
     private Equipment extractFromResultSet(ResultSet rs) throws SQLException {
-        Equipment equipment = new Equipment();
-        equipment.setId(rs.getInt("id_equipo"));
-        equipment.setClientId(rs.getInt("id_cliente"));
-        equipment.setType(rs.getString("tipo_equipo"));
-        equipment.setMark(rs.getString("marca"));
-        equipment.setModel(rs.getString("modelo"));
-        equipment.setSerialNumber(rs.getString("num_serie"));
-        equipment.setAdmissionDate((LocalDateTime) rs.getObject("fecha_ingreso"));
-        equipment.setObservations(rs.getString("observaciones"));
-        equipment.setStatus(rs.getString("estatus"));
-        equipment.setLastModification(rs.getString("ultima_modificacion_por"));
-        equipment.setTechnicalComments(rs.getString("comentarios_tecnicos"));
-        equipment.setTechnicalRevisionOf(rs.getString("revision_tecnica_de"));
-        return equipment;
+        return Equipment.builder()
+            .id(rs.getInt("id_equipo"))
+            .clientId(rs.getInt("id_cliente"))
+            .type(rs.getString("tipo_equipo"))
+            .mark(rs.getString("marca"))
+            .model(rs.getString("modelo"))
+            .serialNumber(rs.getString("num_serie"))
+            .admissionDate((LocalDateTime) rs.getObject("fecha_ingreso"))
+            .observations(rs.getString("observaciones"))
+            .status(rs.getString("estatus"))
+            .lastModification(rs.getString("ultima_modificacion_por"))
+            .technicalComments(rs.getString("comentarios_tecnicos"))
+            .technicalRevisionOf(rs.getString("revision_tecnica_de"))
+            .build();
     }
 }

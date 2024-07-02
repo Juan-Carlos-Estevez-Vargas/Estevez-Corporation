@@ -75,8 +75,7 @@ public class GeneratePDFReport {
 	 * @throws DocumentException if there is an error adding the table to the
 	 *                           document
 	 */
-	private static void addDataTable(Document document, List<String[]> data, String[] headers)
-			throws DocumentException {
+	private static void addDataTable(Document document, List<String[]> data, String[] headers) throws DocumentException {
 		PdfPTable table = new PdfPTable(headers.length);
 		table.setWidthPercentage(100);
 

@@ -8,7 +8,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
@@ -17,7 +16,6 @@ import dev.juan.estevez.enums.Colors;
 import dev.juan.estevez.enums.EquipStates;
 import dev.juan.estevez.enums.Equipments;
 import dev.juan.estevez.enums.Fonts;
-import dev.juan.estevez.enums.States;
 import dev.juan.estevez.interfaces.IGui;
 import dev.juan.estevez.models.Client;
 import dev.juan.estevez.models.Equipment;
@@ -46,15 +44,11 @@ public class RegisterEquipmentView extends JFrame implements ActionListener, IGu
 	private JTextField txtName;
 	private JTextField txtModel;
 	private JTextField txtSerialNumber;
-	private JComboBox<String> cmbType;
 	private JComboBox<String> cmbMark;
 	private JTextPane textPaneObservations;
-	private JScrollPane scrollObservations;
-	private JLabel labelTitle;
 	private JPanel panel;
 	private JButton btnRegisterEquip;
 	private String user;
-	private String nameClient;
 
 	public RegisterEquipmentView() {
 		user = LoginView.user;
@@ -98,8 +92,7 @@ public class RegisterEquipmentView extends JFrame implements ActionListener, IGu
 
 	@Override
 	public void setupLabels() {
-		JLabel labelTitle = GUIComponents.createLabel(CapConstants.EQUIPMENT_REGISTER, EquipRegister.LABEL_TITLE,
-				panel);
+		JLabel labelTitle = GUIComponents.createLabel(CapConstants.EQUIPMENT_REGISTER, EquipRegister.LABEL_TITLE, panel);
 		labelTitle.setFont(Fonts.BUTTON_FONT.getValue());
 		labelTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -266,15 +259,15 @@ public class RegisterEquipmentView extends JFrame implements ActionListener, IGu
 	}
 
 	private Equipment createEquipmentFromInputs() {
-		Equipment equipment = new Equipment();
-		equipment.setType(cmbMark.getSelectedItem().toString());
-		equipment.setMark(cmbMark.getSelectedItem().toString());
-		equipment.setModel(txtModel.getText());
-		equipment.setSerialNumber(txtSerialNumber.getText());
-		equipment.setObservations(textPaneObservations.getText());
-		equipment.setStatus(EquipStates.NEW_ENTRY.getValue());
-		equipment.setLastModification(user);
-		return equipment;
+		return Equipment.builder()
+			.type(cmbMark.getSelectedItem().toString())
+			.mark(cmbMark.getSelectedItem().toString())
+			.model(txtModel.getText())
+			.serialNumber(txtSerialNumber.getText())
+			.observations(textPaneObservations.getText())
+			.status(EquipStates.NEW_ENTRY.getValue())
+			.lastModification(user)
+			.build();
 	}
 
 	private int validateFields(Equipment equipment) {
