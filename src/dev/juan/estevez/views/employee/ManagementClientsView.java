@@ -75,8 +75,9 @@ public class ManagementClientsView extends JFrame implements IGui {
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel(CapConstants.MANAGE_CLIENTS_SESION, Bounds.LABEL_MANAGE_TITLE, panel)
-				.setFont(Fonts.BUTTON_FONT.getValue());
+		GUIComponents
+			.createLabel(CapConstants.MANAGE_CLIENTS_SESION, Bounds.LABEL_MANAGE_TITLE, panel)
+			.setFont(Fonts.BUTTON_FONT.getValue());
 	}
 
 	/**
@@ -121,14 +122,14 @@ public class ManagementClientsView extends JFrame implements IGui {
 	 */
 	private void fillTableWithData(List<Client> clients) throws SQLException {
 		if (clients != null) {
-			for (Client client : clients) {
+			clients.forEach(client -> {
 				model.addRow(new Object[] {
-						client.getName(),
-						client.getEmail(),
-						client.getPhone(),
-						client.getLastModification()
+					client.getName(),
+					client.getEmail(),
+					client.getPhone(),
+					client.getLastModification()
 				});
-			}
+			});
 		}
 	}
 

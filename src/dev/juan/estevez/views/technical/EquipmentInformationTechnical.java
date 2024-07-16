@@ -33,9 +33,6 @@ import dev.juan.estevez.views.LoginView;
  */
 public class EquipmentInformationTechnical extends JFrame implements ActionListener {
 
-	/**
-	 * Declaraci�n de Variables.
-	 */
 	private static final long serialVersionUID = 1L;
 	private String user = "";
 	public static int idEquipment = 0;
@@ -118,9 +115,6 @@ public class EquipmentInformationTechnical extends JFrame implements ActionListe
 	 */
 	public void initComponents() {
 
-		/**
-		 * Panel Principal.
-		 */
 		this.container = new JPanel();
 		this.container.setBackground(new Color(46, 59, 104));
 		this.container.setLayout(null);

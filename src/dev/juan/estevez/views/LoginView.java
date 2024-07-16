@@ -102,10 +102,8 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
 
     @Override
     public void setupButtons() {
-        btnEye = GUIComponents.createButton(Icons.EYE.getValue(), LoginBounds.BUTTON_LOGIN_EYE,
-                Colors.BACKGROUND_COLOR.getValue(), panel);
-        btnLogin = GUIComponents.createButton(AuthConstants.SIGN_IN, LoginBounds.BUTTON_LOGIN,
-                Colors.BUTTON_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), panel);
+        btnEye = GUIComponents.createButton(Icons.EYE.getValue(), LoginBounds.BUTTON_LOGIN_EYE, Colors.BACKGROUND_COLOR.getValue(), panel);
+        btnLogin = GUIComponents.createButton(AuthConstants.SIGN_IN, LoginBounds.BUTTON_LOGIN, Colors.BUTTON_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), panel);
         btnForgot = createForgotButton();
     }
 
@@ -125,16 +123,8 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
         btnForgot.addActionListener(this);
     }
 
-    /**
-     * Creates a `JButton` for the "Forgot" functionality.
-     *
-     * @return A `JButton` with the label "Forgot", styled with the specified
-     *         background color and font. The button is set to be opaque, with no
-     *         border, and has an error color for the foreground.
-     */
     private JButton createForgotButton() {
-        JButton btn = GUIComponents.createButton(AuthConstants.FORGOT_TEXT, LoginBounds.BUTTON_LOGIN_FORGOT,
-                Colors.BACKGROUND_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), panel);
+        JButton btn = GUIComponents.createButton(AuthConstants.FORGOT_TEXT, LoginBounds.BUTTON_LOGIN_FORGOT, Colors.BACKGROUND_COLOR.getValue(), Fonts.BUTTON_FONT.getValue(), panel);
         btn.setForeground(Colors.ERROR_COLOR.getValue());
         btn.setBorder(null);
         btn.setOpaque(true);
@@ -160,11 +150,6 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
         }
     }
 
-    /**
-     * Performs the login operation.
-     *
-     * @throws SQLException if there is an error in the SQL query
-     */
     private void performLogin() throws SQLException {
         String password = new String(txtPassword.getPassword());
         String username = txtUser.getText().trim();
@@ -191,12 +176,6 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
         return validation;
     }
 
-    /**
-     * Handles the user login process.
-     *
-     * @param user the user object containing login information
-     * @throws SQLException if there is an error accessing the database
-     */
     private void handleUserLogin(User user) throws SQLException {
         // TODO: el level type validarlo su el usuario tiene mas roles preguntarle como
         // desea ingresa
@@ -211,12 +190,6 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
         }
     }
 
-    /**
-     * Opens the appropriate panel based on the given level type.
-     *
-     * @param levelType the level type to determine which panel to open
-     * @throws SQLException if there is an error accessing the database
-     */
     private void openAppropriatePanel(String levelType) throws SQLException {
         if (levelType.equals(Roles.ROLE_ADMIN.getValue())) {
             ViewUtils.openPanel(new AdministratorPanelView(), this);
@@ -229,9 +202,6 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
         }
     }
 
-    /**
-     * Toggles the visibility of the password field.
-     */
     private void togglePasswordVisibility() {
         if (!eyeEstate) {
             String passwordEye = new String(txtPassword.getPassword());
@@ -240,17 +210,13 @@ public final class LoginView extends JFrame implements ActionListener, IGui {
             txtPassword.setVisible(false);
             eyeEstate = true;
         } else {
-            txtPassword.setText(txtPassword2.getText());
+            txtPassword.setText(txtPassword2.getText().trim());
             txtPassword2.setVisible(false);
             txtPassword.setVisible(true);
             eyeEstate = false;
         }
     }
 
-    /**
-     * Sets the error message, font, and alignment for the error label.
-     * Clears and resets the user and password fields.
-     */
     private void handleLoginError(String errorMessage) {
         jlError.setText(AuthConstants.CREDENTIALS_ERROR);
         jlError.setFont(Fonts.ERROR_FONT.getValue());

@@ -39,19 +39,7 @@ public class RoleDAO implements CrudRepository<Role, Integer> {
 
     @Override
     public Role findById(Integer id) {
-        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_BY_ID_ROLE)) {
-            pst.setInt(1, id);
-
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    return extractFromResultSet(rs);
-                }
-            }
-        } catch (SQLException ex) {
-            StringUtils.handleQueryError(ex, DbConstants.ROLE_FETCH_ERROR);
-        }
-
-        return null;
+        return findRoleByField(SQL_GET_BY_ID_ROLE, id);
     }
 
     @Override
@@ -60,7 +48,6 @@ public class RoleDAO implements CrudRepository<Role, Integer> {
 
         try (PreparedStatement pst = connection.prepareStatement(SQL_GET_ALL);
                 ResultSet rs = pst.executeQuery()) {
-
             while (rs.next()) {
                 roles.add(extractFromResultSet(rs));
             }
@@ -81,15 +68,27 @@ public class RoleDAO implements CrudRepository<Role, Integer> {
         throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
     }
 
+    private Role findRoleByField(String sql, Object field) {
+        try (PreparedStatement pst = connection.prepareStatement(sql)) {
+            pst.setObject(1, field);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return extractFromResultSet(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            StringUtils.handleQueryError(ex, DbConstants.ROLE_FETCH_ERROR);
+        }
+        return null;
+    }
+
     private Role extractFromResultSet(ResultSet rs) throws SQLException {
-        if (rs == null)
-            throw new SQLException("ResultSet is null.");
+        if (rs == null) throw new SQLException("ResultSet is null.");
 
-        Role role = new Role();
-        role.setRoleID(rs.getInt("id_rol"));
-        role.setRoleName(rs.getString("nombre_rol"));
-
-        return role;
+        return Role.builder()
+            .roleID(rs.getInt("id_rol"))
+            .roleName(rs.getString("nombre_rol"))
+            .build();
     }
 
 }

@@ -97,7 +97,8 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 
 	@Override
 	public void setupLabels() {
-		JLabel titleLabel = GUIComponents.createLabel(String.format(AdminConstants.USER_INFORMATION_TITLE, user_update),
+		JLabel titleLabel = GUIComponents
+			.createLabel(String.format(AdminConstants.USER_INFORMATION_TITLE, user_update),
 				UserInformationBounds.LABEL_TITLE, panel);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(Fonts.BUTTON_FONT.getValue());
@@ -247,13 +248,13 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 	 * @return a User object populated with the values from the input fields
 	 */
 	private User createUserFromInputs() {
-		User user = new User();
-		user.setId(ID);
-		user.setEmail(txtEmail.getText().trim());
-		user.setName(txtName.getText().trim());
-		user.setUsername(txtUsername.getText().trim());
-		user.setPhone(txtPhone.getText().trim());
-		return user;
+		return User.builder()
+			.id(ID)
+			.email(txtEmail.getText().trim())
+			.name(txtName.getText().trim())
+			.username(txtUsername.getText().trim())
+			.phone(txtPhone.getText().trim())
+			.build();
 	}
 
 	/**
@@ -273,10 +274,7 @@ public class UserInformationView extends JFrame implements ActionListener, IGui 
 
 	private List<String> getRoleNames() {
 		List<String> roleNames = new ArrayList<>();
-
-		for (Role role : roles) {
-			roleNames.add(role.getRoleName());
-		}
+		roles.forEach(role -> roleNames.add(role.getRoleName()));
 		return roleNames;
 	}
 

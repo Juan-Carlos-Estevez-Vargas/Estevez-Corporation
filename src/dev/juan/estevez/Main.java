@@ -11,9 +11,7 @@ import dev.juan.estevez.views.LoginView;
 public class Main {
 
     public static void main(String[] args) {
-        UserDAO loginDAO = new UserDAO(); 
-		UserService loginController = new UserService(loginDAO);
-        LoginView login = new LoginView(loginController);
+        LoginView login = new LoginView(new UserService(new UserDAO()));
         login.setLocationRelativeTo(null);
         login.setVisible(true);
     }

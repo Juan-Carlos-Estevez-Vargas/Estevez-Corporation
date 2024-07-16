@@ -2,12 +2,16 @@ package dev.juan.estevez.models;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 /**
  * 
  * @author Juan Carlos Estevez Vargas.
  */
+@Builder
+@AllArgsConstructor
 @Data
 public class Client {
 

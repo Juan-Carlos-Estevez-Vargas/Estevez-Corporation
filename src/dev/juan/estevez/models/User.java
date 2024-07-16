@@ -1,13 +1,20 @@
 package dev.juan.estevez.models;
 
 import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
  * @author Juan Carlos Estevez Vargas.
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
 	private int id;
@@ -20,9 +27,6 @@ public class User {
 	private String registerBy;
 	private LocalDateTime registerDate;
 	private LocalDateTime modificationDate;
-
-	public User() {
-	}
 
 	public User(int id, String name, String email, String phone, String username,
 			String password, String status, String registerBy) {

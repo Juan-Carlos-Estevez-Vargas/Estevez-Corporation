@@ -66,11 +66,10 @@ public class UserDAO implements CrudRepository<User, Integer> {
             int lastInsertedId = getLastInsertedId(pst);
             if (lastInsertedId > 0) {
                 entity.setId(lastInsertedId);
-
-                UserRole userHasRole = new UserRole();
-                userHasRole.setRole(role);
-                userHasRole.setUser(entity);
-                userHasRoleDAO.create(userHasRole);
+                userHasRoleDAO.create(UserRole.builder()
+                    .user(entity)
+                    .role(role)
+                    .build());
             }
         } catch (SQLException ex) {
             StringUtils.handleQueryError(ex, DbConstants.REGISTER_USER_ERROR);
@@ -95,19 +94,7 @@ public class UserDAO implements CrudRepository<User, Integer> {
 
     @Override
     public User findById(Integer id) {
-        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_BY_ID)) {
-            pst.setInt(1, id);
-
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    return extractUserFromResultSet(rs);
-                }
-            }
-        } catch (SQLException ex) {
-            StringUtils.handleQueryError(ex, DbConstants.USER_FETCH_ERROR);
-        }
-
-        return null;
+        return findUserByField(SQL_GET_BY_ID, id);
     }
 
     @Override
@@ -116,7 +103,6 @@ public class UserDAO implements CrudRepository<User, Integer> {
 
         try (PreparedStatement pst = connection.prepareStatement(SQL_GET_ALL);
                 ResultSet rs = pst.executeQuery()) {
-
             while (rs.next()) {
                 users.add(extractUserFromResultSet(rs));
             }
@@ -169,19 +155,7 @@ public class UserDAO implements CrudRepository<User, Integer> {
     }
 
     public User findByUsername(String username) {
-        try (PreparedStatement pst = connection.prepareStatement(SQL_GET_BY_USERNAME)) {
-            pst.setString(1, username);
-
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    return extractUserFromResultSet(rs);
-                }
-            }
-        } catch (SQLException ex) {
-            StringUtils.handleQueryError(ex, DbConstants.USER_FETCH_ERROR);
-        }
-
-        return null;
+        return findUserByField(SQL_GET_BY_USERNAME, username);
     }
 
     public User findByUsernameAndPassword(String username, String password) {
@@ -206,7 +180,6 @@ public class UserDAO implements CrudRepository<User, Integer> {
 
         try (PreparedStatement pst = connection.prepareStatement(SQL_GET_ROLES_BY_USER)) {
             pst.setInt(1, user.getId());
-
             try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
                     roles.add(mapResultSetToUserRole(rs, user));
@@ -220,27 +193,39 @@ public class UserDAO implements CrudRepository<User, Integer> {
     }
 
     private UserRole mapResultSetToUserRole(ResultSet rs, User user) throws SQLException {
-        UserRole userRole = new UserRole();
-        userRole.setRole(roleDAO.findById(rs.getInt("id_rol")));
-        userRole.setUser(user);
-        return userRole;
+        return UserRole.builder()
+            .role(roleDAO.findById(rs.getInt("id_rol")))
+            .user(user)
+            .build();
+    }
+
+    private User findUserByField(String sql, Object field) {
+        try (PreparedStatement pst = connection.prepareStatement(sql)) {
+            pst.setObject(1, field);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return extractUserFromResultSet(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            StringUtils.handleQueryError(ex, DbConstants.USER_FETCH_ERROR);
+        }
+        return null;
     }
 
     private User extractUserFromResultSet(ResultSet rs) throws SQLException {
-        if (rs == null)
-            throw new SQLException("ResultSet is null.");
+        if (rs == null) throw new SQLException("ResultSet is null.");
 
-        User user = new User();
-        user.setId(rs.getInt("id_usuario"));
-        user.setName(rs.getString("nombre_usuario"));
-        user.setEmail(rs.getString("email"));
-        user.setPhone(rs.getString("telefono"));
-        user.setUsername(rs.getString("username"));
-        user.setPassword(rs.getString("password"));
-        user.setStatus(rs.getString("estatus"));
-        user.setRegisterBy(rs.getString("registrado_por"));
-
-        return user;
+        return User.builder()
+            .id(rs.getInt("id_usuario"))
+            .name(rs.getString("nombre_usuario"))
+            .email(rs.getString("email"))
+            .phone(rs.getString("telefono"))
+            .username(rs.getString("username"))
+            .password(rs.getString("password"))
+            .status(rs.getString("estatus"))
+            .registerBy(rs.getString("registrado_por"))
+            .build();
     }
 
 }

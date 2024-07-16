@@ -80,13 +80,21 @@ public class AdministratorPanelView extends JFrame implements ActionListener, IG
 
     @Override
     public void setupLabels() {
-        GUIComponents.createLabel(this.user, Bounds.LABEL_ADMIN_TITLE, panel).setFont(Fonts.BUTTON_FONT.getValue());
-        GUIComponents.createLabel(AdminConstants.USER_REGISTER, Bounds.LABEL_ADMIN_USER_REGISTER, panel)
-                .setFont(Fonts.PANEL_LABEL_FONT.getValue());
-        GUIComponents.createLabel(AdminConstants.MANAGE_USERS, Bounds.LABEL_ADMIN_MANAGE_USERS, panel)
-                .setFont(Fonts.PANEL_LABEL_FONT.getValue());
-        GUIComponents.createLabel(AdminConstants.PRINT_USERS, Bounds.LABEL_ADMIN_PRINT_USERS, panel)
-                .setFont(Fonts.PANEL_LABEL_FONT.getValue());
+        GUIComponents
+            .createLabel(this.user, Bounds.LABEL_ADMIN_TITLE, panel)
+            .setFont(Fonts.BUTTON_FONT.getValue());
+
+        GUIComponents
+            .createLabel(AdminConstants.USER_REGISTER, Bounds.LABEL_ADMIN_USER_REGISTER, panel)
+            .setFont(Fonts.PANEL_LABEL_FONT.getValue());
+
+        GUIComponents
+            .createLabel(AdminConstants.MANAGE_USERS, Bounds.LABEL_ADMIN_MANAGE_USERS, panel)
+            .setFont(Fonts.PANEL_LABEL_FONT.getValue());
+
+        GUIComponents
+            .createLabel(AdminConstants.PRINT_USERS, Bounds.LABEL_ADMIN_PRINT_USERS, panel)
+            .setFont(Fonts.PANEL_LABEL_FONT.getValue());
     }
 
     @Override

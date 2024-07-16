@@ -76,8 +76,9 @@ public class ManagementUsersView extends JFrame implements IGui {
 
 	@Override
 	public void setupLabels() {
-		GUIComponents.createLabel(AdminConstants.REGISTERED_USERS_TITLE, Bounds.LABEL_MANAGE_TITLE, panel)
-				.setFont(Fonts.BUTTON_FONT.getValue());
+		GUIComponents
+			.createLabel(AdminConstants.REGISTERED_USERS_TITLE, Bounds.LABEL_MANAGE_TITLE, panel)
+			.setFont(Fonts.BUTTON_FONT.getValue());
 	}
 
 	/**
@@ -130,17 +131,17 @@ public class ManagementUsersView extends JFrame implements IGui {
 	 */
 	private void fillTableWithData(List<User> users) throws SQLException {
 		if (users != null) {
-			for (User user : users) {
+			users.forEach(user -> {
 				List<UserRole> roles = userController.getRoleListByUser(user);
 				model.addRow(new Object[] {
-						user.getId(),
-						user.getName(),
-						user.getUsername(),
-						// TODO: Buscra alternativa para mostrar los roles
-						roles.get(0).getRole().getRoleName(),
-						user.getStatus()
+					user.getId(),
+					user.getName(),
+					user.getUsername(),
+					// TODO: Buscra alternativa para mostrar los roles
+					roles.get(0).getRole().getRoleName(),
+					user.getStatus()
 				});
-			}
+			});
 		}
 	}
 
